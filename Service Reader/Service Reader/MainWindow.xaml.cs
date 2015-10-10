@@ -24,5 +24,40 @@ namespace Service_Reader
         {
             InitializeComponent();
         }
+
+        private void DownloadCanvasData_Click(object sender, RoutedEventArgs e)
+        {
+            DateTime dtSubmissionsStart = new DateTime();
+            DateTime dtSubmissionsEnd = new DateTime();
+            if (dtSubmissionsFrom.SelectedDate == null)
+            {
+                MessageBox.Show("You must select a start date");
+                return;
+            }
+            else
+            {
+                dtSubmissionsStart = (DateTime)dtSubmissionsFrom.SelectedDate;
+            }
+            if (dtSubmissionsTo.SelectedDate == null)
+            {
+                MessageBox.Show("You must select an end date");
+                return;
+            }
+            else
+            {
+                dtSubmissionsEnd = (DateTime)dtSubmissionsTo.SelectedDate;
+            }
+
+            if (dtSubmissionsStart > dtSubmissionsEnd)
+            {
+                MessageBox.Show("Start date must be before end date.");
+                return;
+            }
+
+            //Now we need to download all the data for the selected range
+            string canvasUsername = "";
+            
+            
+        }
     }
 }
