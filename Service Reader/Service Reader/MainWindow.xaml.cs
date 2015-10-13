@@ -56,7 +56,14 @@ namespace Service_Reader
 
             //Now we need to download all the data for the selected range
             string canvasUsername = "";
-            
+            InputBox usernameInput = new InputBox("Please enter your canvas username:");
+            usernameInput.ShowDialog();
+            canvasUsername = usernameInput.getReturnValue;
+            if (canvasUsername == "")
+            {
+                MessageBox.Show("You must enter a username");
+                return;
+            }
             
         }
     }
