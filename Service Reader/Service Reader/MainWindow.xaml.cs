@@ -64,6 +64,19 @@ namespace Service_Reader
                 MessageBox.Show("You must enter a username");
                 return;
             }
+            string canvasPassword = "";
+            InputBoxPassword passwordInput = new InputBoxPassword("Please enter your canvas password:");
+            passwordInput.ShowDialog();
+            canvasPassword = passwordInput.getReturnValue;
+            if (canvasPassword == "")
+            {
+                MessageBox.Show("You must enter a password");
+                return;
+            }
+
+            object canvasResults = null;
+            //canvasResults = https://www.gocanvas.com/apiv2/submissions.xml?username=r.town@mtt.uk.com&password=canvasMTT1H!&form_id=1285373
+
             
         }
     }

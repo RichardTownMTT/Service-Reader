@@ -1,3 +1,18 @@
 C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\bin\Debug\Service Reader.exe.config
 C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\Service Reader.exe
 C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\Service Reader.pdb
+C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\bin\Debug\Service Reader.exe
+C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\bin\Debug\Service Reader.pdb
+C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\Service Reader.csprojResolveAssemblyReference.cache
+C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\InputBox.g.cs
+C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\MainWindow.g.cs
+C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\App.g.cs
+C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\Service Reader_MarkupCompile.cache
+C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\Service Reader_MarkupCompile.lref
+C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\MainWindow.baml
+C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\InputBox.baml
+C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\Service Reader.g.resources
+C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\Service_Reader.Properties.Resources.resources
+C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\Service Reader.csproj.GenerateResource.Cache
+C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\InputBoxPassword.g.cs
+C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\InputBoxPassword.baml
