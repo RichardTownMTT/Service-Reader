@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Net;
+using System.Xml;
 
 namespace Service_Reader
 {
@@ -74,10 +76,13 @@ namespace Service_Reader
                 return;
             }
 
-            object canvasResults = null;
-            //canvasResults = https://www.gocanvas.com/apiv2/submissions.xml?username=r.town@mtt.uk.com&password=canvasMTT1H!&form_id=1285373
+            XmlDocument canvasXML = new XmlDocument();
+            canvasXML = CanvasDownload.downloadXml(canvasUsername, canvasPassword);
+
 
             
+
+
         }
     }
 }
