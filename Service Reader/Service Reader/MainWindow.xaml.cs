@@ -76,8 +76,13 @@ namespace Service_Reader
                 return;
             }
 
+            string fromDate = "";
+            fromDate = dtSubmissionsStart.Month + "/" + dtSubmissionsStart.Day + "/" + dtSubmissionsStart.Year;
+            string endDate = "";
+            endDate = dtSubmissionsEnd.Month + "/" + dtSubmissionsEnd.Day + "/" + dtSubmissionsEnd.Year;
+
             XmlDocument canvasXML = new XmlDocument();
-            canvasXML = CanvasDownload.downloadXml(canvasUsername, canvasPassword);
+            canvasXML = CanvasDownload.downloadXml(canvasUsername, canvasPassword, fromDate, endDate);
 
 
             

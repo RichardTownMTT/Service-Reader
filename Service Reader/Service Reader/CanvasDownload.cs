@@ -10,11 +10,11 @@ namespace Service_Reader
 {
     class CanvasDownload
     {
-        public static XmlDocument downloadXml(string canvasUsername, string canvasPassword)
+        public static XmlDocument downloadXml(string canvasUsername, string canvasPassword, string beginDate, string endDate)
         {
             XmlDocument retval = new XmlDocument();
 
-            string canvasUrl = "https://www.gocanvas.com/apiv2/submissions.xml?username=" + canvasUsername + "&password=" + canvasPassword + "&form_id=1285373";
+            string canvasUrl = "https://www.gocanvas.com/apiv2/submissions.xml?username=" + canvasUsername + "&password=" + canvasPassword + "&form_id=1285373&begin_date=" + beginDate + "&end_date=" + endDate;
 
             string canvasResults = null;
             WebClient downloadClient = new WebClient();
