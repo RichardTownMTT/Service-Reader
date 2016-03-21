@@ -82,7 +82,7 @@ namespace Service_Reader
             endDate = dtSubmissionsEnd.Month + "/" + dtSubmissionsEnd.Day + "/" + dtSubmissionsEnd.Year;
 
             XmlDocument canvasXML = new XmlDocument();
-            canvasXML = CanvasDownload.downloadXml(canvasUsername, canvasPassword, fromDate, endDate);
+            canvasXML = ParseServiceSheets.downloadXml(canvasUsername, canvasPassword, fromDate, endDate);
 
 
             
