@@ -14,15 +14,35 @@ namespace Service_Reader
         private string userFirstName = "";
         private string userSurname = "";
         private int submissionNo = 0;
+        private string customer = "";
+        private string address1 = "";
+        private string address2 = "";
+        private string townCity = "";
+        private string postcode = "";
+        private string customerContact = "";
+        private string customerPhone = "";
+        private string machineMakeModel = "";
+        private string machineSerial = "";
+        private string machineController = "";
+        private DateTime jobStart;
+        private string customerOrderNo = "";
+        private string mttJobNumber = "";
+        private string jobDescription = "";
+
 
         private static string SUBMISSION_NUMBER = "SubmissionNumber";
         private static string SUBMISSION_VERSION = "Version";
         private static string USERNAME = "UserName";
         private static string FIRST_NAME = "FirstName";
         private static string SURNAME = "LastName";
+
+        //XML tags
         private static string SECTIONS = "Sections";
         private static string SECTION = "Section";
         private static string SECTION_NAME = "Name";
+        private static string JOB_DETAILS = "Job details";
+        private static string TIME_SHEET = "Time Sheet";
+        private static string JOB_SIGNOFF = "Job Signoff";
 
         public static ServiceSubmission createSubmissionForXml(XElement submissionXml)
         {
@@ -40,6 +60,26 @@ namespace Service_Reader
             foreach (XElement sectionXml in sectionsXml.Elements())
             {
                 string sectionName = sectionXml.Element(SECTION_NAME).Value;
+                if (sectionName.Equals(JOB_DETAILS) ) 
+                {
+                    XElement screensXml = sectionXml.Element("Screens");
+                    XElement screenXml = screensXml.Element("Screen");
+                    XElement responsesXml = screenXml.Element("Responses");
+                    //Parse the job details
+
+                    var customerXML = responsesXml.Elements("Response").Where(x => x.Element("Label").Value == "Customer");
+                    XElement result = customerXML.First();
+
+                    retval.customer = result.Element("Value").Value;
+                }
+                else if (sectionName.Equals(TIME_SHEET))
+                {
+
+                }
+                else if (sectionName .Equals(JOB_SIGNOFF))
+                {
+
+                }
             }
 
 
