@@ -36,7 +36,7 @@ namespace Service_Reader
             int noOfSubmissions = 0;
             noOfSubmissions = submissions.Descendants("Submission").Count();
 
-            ServiceSubmission[] allSubmissions = new ServiceSubmission [noOfSubmissions-1];
+            ServiceSubmission[] allSubmissions = new ServiceSubmission [noOfSubmissions];
             int submissionCounter = 0;
 
             foreach (XElement submissionXml in submissions.Elements())
