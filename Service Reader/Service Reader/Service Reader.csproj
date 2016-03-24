@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ServiceDay.cs" />
     <Compile Include="ServiceSubmission.cs" />
     <Page Include="InputBox.xaml">
       <SubType>Designer</SubType>

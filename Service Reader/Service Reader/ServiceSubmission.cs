@@ -48,6 +48,7 @@ namespace Service_Reader
         public string customerSignName { get; set; } = "";
         public DateTime dtSigned { get; set; }
         public string mttEngSignatureUrl = "";
+        public ServiceDay[] serviceTimesheets { get; set; }
 
 
         //XML Labels
@@ -148,7 +149,7 @@ namespace Service_Reader
                     XElement screensXml = sectionXml.Element(SCREENS);
                     XElement screenXml = screensXml.Element(SCREEN);
                     XElement responseGroupsXml = screenXml.Element(RESPONSE_GROUPS);
-
+                    retval.serviceTimesheets = ServiceDay.createDays(responseGroupsXml);
                 }
                 else if (sectionName .Equals(JOB_SIGNOFF))
                 {
