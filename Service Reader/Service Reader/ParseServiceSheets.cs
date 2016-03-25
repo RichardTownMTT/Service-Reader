@@ -11,10 +11,8 @@ namespace Service_Reader
 {
     class ParseServiceSheets
     {
-        public static XmlDocument downloadXml(string canvasUsername, string canvasPassword, string beginDate, string endDate)
+        public static ServiceSubmission[] downloadXml(string canvasUsername, string canvasPassword, string beginDate, string endDate)
         {
-            XmlDocument retval = new XmlDocument();
-
             string canvasUrl = "https://www.gocanvas.com/apiv2/submissions.xml?username=" + canvasUsername + "&password=" + canvasPassword + "&form_id=1285373&begin_date=" + beginDate + "&end_date=" + endDate;
 
             XDocument xDoc = XDocument.Load(canvasUrl);
@@ -25,13 +23,14 @@ namespace Service_Reader
 
             XElement submissions = rootElement.Element("Submissions");
 
-            parseSubmissions(submissions);
+            ServiceSubmission[] allSubmissions;
+            allSubmissions = parseSubmissions(submissions);
             
 
-            return retval;
+            return allSubmissions;
         }
 
-        private static void parseSubmissions(XElement submissions)
+        private static ServiceSubmission[] parseSubmissions(XElement submissions)
         {
             int noOfSubmissions = 0;
             noOfSubmissions = submissions.Descendants("Submission").Count();
@@ -48,7 +47,7 @@ namespace Service_Reader
 
                 submissionCounter++;
             }
-
+            return allSubmissions;
         }
     }
 }

@@ -22,6 +22,7 @@ namespace Service_Reader
     /// </summary>
     public partial class MainWindow : Window
     {
+        private ServiceSubmission[] allSubmissions;
         public MainWindow()
         {
             InitializeComponent();
@@ -81,12 +82,35 @@ namespace Service_Reader
             string endDate = "";
             endDate = dtSubmissionsEnd.Month + "/" + dtSubmissionsEnd.Day + "/" + dtSubmissionsEnd.Year;
 
-            XmlDocument canvasXML = new XmlDocument();
-            canvasXML = ParseServiceSheets.downloadXml(canvasUsername, canvasPassword, fromDate, endDate);
+            
+            allSubmissions = ParseServiceSheets.downloadXml(canvasUsername, canvasPassword, fromDate, endDate);
 
-
+            displaySubmissions(allSubmissions);
             
 
+
+        }
+
+        private void displaySubmissions(ServiceSubmission[] allSubmissions)
+        {
+            var itemList = new List<ServiceSubmission>();
+
+            foreach (ServiceSubmission currentSubmission in allSubmissions)
+            {
+                itemList.Add(currentSubmission);
+            }
+            
+        //link business data to CollectionViewSource
+        CollectionViewSource itemCollectionViewSource;
+        itemCollectionViewSource = (CollectionViewSource)(FindResource("ItemCollectionViewSource"));
+        itemCollectionViewSource.Source = itemList;
+        }
+
+        private void btnViewJobDetails_Click(object sender, RoutedEventArgs e)
+        {
+            ServiceSubmission selectedService = (ServiceSubmission)JobSheetOverview.SelectedItem;
+            ServiceSubmissionDetails viewSubmission = new ServiceSubmissionDetails(selectedService);
+            viewSubmission.Show();
 
         }
     }

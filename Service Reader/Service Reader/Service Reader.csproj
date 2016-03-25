@@ -57,6 +57,9 @@
     </ApplicationDefinition>
     <Compile Include="ServiceDay.cs" />
     <Compile Include="ServiceSubmission.cs" />
+    <Compile Include="ServiceSubmissionDetails.xaml.cs">
+      <DependentUpon>ServiceSubmissionDetails.xaml</DependentUpon>
+    </Compile>
     <Page Include="InputBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -84,6 +87,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ServiceSubmissionDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

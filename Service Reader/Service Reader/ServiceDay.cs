@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Service_Reader
 {
-    class ServiceDay
+    public class ServiceDay
     {
         public DateTime dtServiceDay { get; set; }
         public DateTime travelStartTime { get; set; }

@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace Service_Reader
 {
-    class ServiceSubmission
+    public class ServiceSubmission
     {
         public int submissionVersion {get; set;} = 0;
         public string username { get; set; } = "";

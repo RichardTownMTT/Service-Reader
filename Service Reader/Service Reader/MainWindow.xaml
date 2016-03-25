@@ -5,13 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Service_Reader"
         mc:Ignorable="d"
-        Title="MainWindow" >
+        Title="MainWindow" Width="772" WindowState="Maximized" Height="554.5" >
+    <Window.Resources>
+        <CollectionViewSource x:Key="ItemCollectionViewSource"  CollectionViewType="ListCollectionView"/>
+    </Window.Resources>
     <Grid>
         <DatePicker x:Name="dtSubmissionsFrom" HorizontalAlignment="Left" Margin="178,97,0,0" VerticalAlignment="Top"/>
         <Label x:Name="label" Content="From" HorizontalAlignment="Left" Margin="124,97,0,0" VerticalAlignment="Top" Height="24"/>
         <DatePicker x:Name="dtSubmissionsTo" HorizontalAlignment="Left" Margin="359,96,0,0" VerticalAlignment="Top"/>
         <Label x:Name="label_Copy" Content="To" HorizontalAlignment="Left" Margin="305,96,0,0" VerticalAlignment="Top" Height="24"/>
         <Button x:Name="DownloadCanvasData" Content="Download Sheets" HorizontalAlignment="Left" Margin="484,96,0,0" VerticalAlignment="Top" Width="124" Click="DownloadCanvasData_Click"/>
+        <DataGrid x:Name="JobSheetOverview"
+            DataContext="{StaticResource ItemCollectionViewSource}"
+            ItemsSource="{Binding}"
+            AutoGenerateColumns="True"
+            CanUserAddRows="False" HorizontalAlignment="Left" Height="290" Margin="10,184,0,0" VerticalAlignment="Top" Width="727">
+        </DataGrid>
+        <Button x:Name="btnViewJobDetails" Content="View" HorizontalAlignment="Left" Height="34" Margin="528,479,0,0" VerticalAlignment="Top" Width="104" Click="btnViewJobDetails_Click"/>
 
     </Grid>
 </Window>
