@@ -85,14 +85,22 @@ namespace Service_Reader
             
             allSubmissions = ParseServiceSheets.downloadXml(canvasUsername, canvasPassword, fromDate, endDate);
 
-            displaySubmissions(allSubmissions);
-            
+            //If allsubmissions is null, then an error has occured
+            if (allSubmissions != null)
+            {
+                displaySubmissions(allSubmissions);
+            }
 
 
         }
 
         private void displaySubmissions(ServiceSubmission[] allSubmissions)
         {
+            if (allSubmissions.Length == 0)
+            {
+                MessageBox.Show("No submissions to display");
+                return;
+            }
             var itemList = new List<ServiceSubmission>();
 
             foreach (ServiceSubmission currentSubmission in allSubmissions)
@@ -100,10 +108,10 @@ namespace Service_Reader
                 itemList.Add(currentSubmission);
             }
             
-        //link business data to CollectionViewSource
-        CollectionViewSource itemCollectionViewSource;
-        itemCollectionViewSource = (CollectionViewSource)(FindResource("ItemCollectionViewSource"));
-        itemCollectionViewSource.Source = itemList;
+        
+            CollectionViewSource itemCollectionViewSource;
+            itemCollectionViewSource = (CollectionViewSource)(FindResource("ItemCollectionViewSource"));
+            itemCollectionViewSource.Source = itemList;
         }
 
         private void btnViewJobDetails_Click(object sender, RoutedEventArgs e)

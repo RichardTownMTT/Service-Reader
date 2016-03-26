@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ImageCache.cs" />
     <Compile Include="ServiceDay.cs" />
     <Compile Include="ServiceSubmission.cs" />
     <Compile Include="ServiceSubmissionDetails.xaml.cs">

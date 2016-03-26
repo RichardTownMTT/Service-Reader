@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Windows;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,8 +15,26 @@ namespace Service_Reader
         {
             string canvasUrl = "https://www.gocanvas.com/apiv2/submissions.xml?username=" + canvasUsername + "&password=" + canvasPassword + "&form_id=1285373&begin_date=" + beginDate + "&end_date=" + endDate;
 
-            XDocument xDoc = XDocument.Load(canvasUrl);
-            XElement rootElement = xDoc.Root;
+            XElement rootElement;
+
+            try
+            {
+                XDocument xDoc = XDocument.Load(canvasUrl);
+                rootElement = xDoc.Root;
+            }
+            catch
+            {
+                MessageBox.Show("Unable to download data.");
+                return null;
+            }
+
+            //Need to check for errors
+            string errorCode = validateCanvasXml(rootElement);
+
+            if (!errorCode.Equals(""))
+            {
+                return null;
+            }
             
             XElement totalPagesNode = rootElement.Element("TotalPages");
             string noOfPages = totalPagesNode.Value;
@@ -28,6 +46,26 @@ namespace Service_Reader
             
 
             return allSubmissions;
+        }
+
+        private static string validateCanvasXml(XElement rootElement)
+        {
+            string retval = "";
+            string errorMessage = "";
+            XElement resultXML = rootElement.Element("Error");
+
+            if (resultXML != null)
+            {
+                retval = resultXML.Element("ErrorCode").Value;
+                errorMessage = resultXML.Element("Description").Value;
+            }
+
+            if (!retval.Equals(""))
+            {
+                MessageBox.Show(errorMessage);
+            }
+
+            return retval;
         }
 
         private static ServiceSubmission[] parseSubmissions(XElement submissions)

@@ -18,9 +18,18 @@
         <DataGrid x:Name="JobSheetOverview"
             DataContext="{StaticResource ItemCollectionViewSource}"
             ItemsSource="{Binding}"
-            AutoGenerateColumns="True"
+            AutoGenerateColumns="False"
+            IsReadOnly="True"
             CanUserAddRows="False" HorizontalAlignment="Left" Height="290" Margin="10,184,0,0" VerticalAlignment="Top" Width="727">
-        </DataGrid>
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding submissionNo}" Header="Submission No"/>
+                <DataGridTextColumn Binding="{Binding userFirstName}" Header="Engineer First Name"/>
+                <DataGridTextColumn Binding="{Binding userSurname}" Header="Engineer Surname"/>
+                <DataGridTextColumn Binding="{Binding jobStart}" Header="Job Start Date"/>
+                <DataGridTextColumn Binding="{Binding customer}" Header="Customer"/>
+                <DataGridTextColumn Binding="{Binding jobDescription}" Header="Job Description"/>
+            </DataGrid.Columns>
+            </DataGrid>
         <Button x:Name="btnViewJobDetails" Content="View" HorizontalAlignment="Left" Height="34" Margin="528,479,0,0" VerticalAlignment="Top" Width="104" Click="btnViewJobDetails_Click"/>
 
     </Grid>
