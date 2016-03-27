@@ -1,16 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Service_Reader
 {
@@ -19,10 +11,9 @@ namespace Service_Reader
     /// </summary>
     public partial class ServiceSubmissionDetails : Window
     {
-
-        private ImageCache[] cachedSheetImages;
+        
            
-        public ServiceSubmissionDetails(ServiceSubmission serviceSheet)
+        public ServiceSubmissionDetails(ServiceSubmission serviceSheet, string username, string password)
         {
             InitializeComponent();
 
@@ -38,7 +29,7 @@ namespace Service_Reader
             txtMakeModel.Text = serviceSheet.machineMakeModel;
             txtMachineSerial.Text = serviceSheet.machineSerial;
             txtMachineController.Text = serviceSheet.machineController;
-            dtJobStart.SelectedDate = serviceSheet.jobStart;
+            dtJobStart.SelectedDate = Convert.ToDateTime(serviceSheet.getJobStart);
             txtCustomerOrderNo.Text = serviceSheet.customerOrderNo;
             txtMttJobNo.Text = serviceSheet.mttJobNumber;
             txtJobDescription.Text = serviceSheet.jobDescription;
@@ -69,15 +60,12 @@ namespace Service_Reader
             txtEngineerSignature.Text = serviceSheet.mttEngSignatureUrl;
 
             //retrieveImages(serviceSheet);
+            
+
+            imgEngineerSignature.Source = CanvasDataReader.getImage(serviceSheet.mttEngSignatureUrl, username, password);
 
         }
 
-        private void retrieveImages(ServiceSubmission serviceSheet)
-        {
-            string image1Url = serviceSheet.image1Url;
-            ImageCache.addImage(image1Url, cachedSheetImages);
-
-        }
 
         private void displayTimesheets(ServiceDay[] allTimesheets)
         {

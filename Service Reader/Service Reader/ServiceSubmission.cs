@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace Service_Reader
@@ -24,7 +21,15 @@ namespace Service_Reader
         public string machineMakeModel { get; set; } = "";
         public string machineSerial { get; set; } = "";
         public string machineController { get; set; } = "";
-        public DateTime jobStart { get; set; }
+        private DateTime jobStart;
+        public String getJobStart
+        {
+            get { return jobStart.ToString("dd/MM/yy"); }
+        }
+        public DateTime setJobStart
+        {
+            set { jobStart = value; }
+        }
         public string customerOrderNo { get; set; } = "";
         public string mttJobNumber { get; set; } = "";
         public string jobDescription { get; set; } = "";

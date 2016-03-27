@@ -25,7 +25,7 @@
                 <DataGridTextColumn Binding="{Binding submissionNo}" Header="Submission No"/>
                 <DataGridTextColumn Binding="{Binding userFirstName}" Header="Engineer First Name"/>
                 <DataGridTextColumn Binding="{Binding userSurname}" Header="Engineer Surname"/>
-                <DataGridTextColumn Binding="{Binding jobStart}" Header="Job Start Date"/>
+                <DataGridTextColumn Binding="{Binding getJobStart}" Header="Job Start Date"/>
                 <DataGridTextColumn Binding="{Binding customer}" Header="Customer"/>
                 <DataGridTextColumn Binding="{Binding jobDescription}" Header="Job Description"/>
             </DataGrid.Columns>

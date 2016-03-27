@@ -55,6 +55,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Label Content="Submission No." Grid.Column="0" Grid.Row="0"/>
             <Label Content="Engineer" Grid.Column="0" Grid.Row="1"/>
@@ -135,7 +136,7 @@
             <TextBox Name="txtCustomerSignName" Grid.Column="1" Grid.Row="36" Margin ="5"/>
             <DatePicker Name="dtSigned" Grid.Column="1" Grid.Row="37" Margin ="5"/>
             <TextBox Name="txtEngineerSignature" Grid.Column="1" Grid.Row="38" Margin ="5"/>
-                        
+            <Image Name="imgEngineerSignature" Grid.Column="1" Grid.Row="39" Margin="5"/>                       
         </Grid>
     </ScrollViewer>
 </Window>

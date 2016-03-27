@@ -1,19 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Net;
-using System.Xml;
 
 namespace Service_Reader
 {
@@ -22,6 +10,9 @@ namespace Service_Reader
     /// </summary>
     public partial class MainWindow : Window
     {
+        private string canvasUsername = "";
+        private string canvasPassword = "";
+
         private ServiceSubmission[] allSubmissions;
         public MainWindow()
         {
@@ -58,7 +49,6 @@ namespace Service_Reader
             }
 
             //Now we need to download all the data for the selected range
-            string canvasUsername = "";
             InputBox usernameInput = new InputBox("Please enter your canvas username:");
             usernameInput.ShowDialog();
             canvasUsername = usernameInput.getReturnValue;
@@ -67,7 +57,7 @@ namespace Service_Reader
                 MessageBox.Show("You must enter a username");
                 return;
             }
-            string canvasPassword = "";
+
             InputBoxPassword passwordInput = new InputBoxPassword("Please enter your canvas password:");
             passwordInput.ShowDialog();
             canvasPassword = passwordInput.getReturnValue;
@@ -83,7 +73,7 @@ namespace Service_Reader
             endDate = dtSubmissionsEnd.Month + "/" + dtSubmissionsEnd.Day + "/" + dtSubmissionsEnd.Year;
 
             
-            allSubmissions = ParseServiceSheets.downloadXml(canvasUsername, canvasPassword, fromDate, endDate);
+            allSubmissions = CanvasDataReader.downloadXml(canvasUsername, canvasPassword, fromDate, endDate);
 
             //If allsubmissions is null, then an error has occured
             if (allSubmissions != null)
@@ -117,7 +107,7 @@ namespace Service_Reader
         private void btnViewJobDetails_Click(object sender, RoutedEventArgs e)
         {
             ServiceSubmission selectedService = (ServiceSubmission)JobSheetOverview.SelectedItem;
-            ServiceSubmissionDetails viewSubmission = new ServiceSubmissionDetails(selectedService);
+            ServiceSubmissionDetails viewSubmission = new ServiceSubmissionDetails(selectedService, canvasUsername, canvasPassword);
             viewSubmission.Show();
 
         }
