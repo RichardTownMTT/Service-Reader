@@ -6,11 +6,51 @@ namespace Service_Reader
 {
     public class ServiceDay
     {
-        public DateTime dtServiceDay { get; set; }
-        public DateTime travelStartTime { get; set; }
-        public DateTime arrivalOnsiteTime { get; set; }
-        public DateTime departSiteTime { get; set; }
-        public DateTime travelEndTime { get; set; }
+        private DateTime dtServiceDay;
+        public string getDtServiceDay
+        {
+            get { return dtServiceDay.Date.ToString("dd/MM/yy"); }
+        }
+        public DateTime  setDtServiceDay
+        {
+            set { dtServiceDay = value; }
+        }
+        private DateTime travelStartTime;
+        public string getTravelStartTime
+        {
+            get { return travelStartTime.ToString("HH\\:mm"); }
+        }
+        public DateTime setTravelStartTime
+        {
+            set { travelStartTime = value; }
+        }
+        private DateTime arrivalOnsiteTime;
+        public string getArrivalOnsiteTime
+        {
+            get { return arrivalOnsiteTime.ToString("HH\\:mm"); }
+        }
+        public DateTime setArrivalOnsiteTime
+        {
+            set { arrivalOnsiteTime = value; }
+        }
+        private DateTime departSiteTime;
+        public string getDepartSiteTime
+        {
+            get { return departSiteTime.ToString("HH\\:mm"); }
+        }
+        public DateTime setDepartSiteTime
+        {
+            set { departSiteTime = value; }
+        }
+        private DateTime travelEndTime;
+        public string getTravelEndTime
+        {
+            get { return travelEndTime.ToString("HH\\:mm"); }
+        }
+        public DateTime setTravelEndTime
+        {
+            set { travelEndTime = value; }
+        }
         public double mileage { get; set; } = 0;
         public double dailyAllowance { get; set; } = 0;
         public double overnightAllowance { get; set; } = 0;
@@ -62,13 +102,13 @@ namespace Service_Reader
                 XElement responsesXml = screenXml.Element(RESPONSES);
 
                 string travelStartStr = xmlResult(TRAVEL_START, responsesXml);
-                dayOfService.travelStartTime = Convert.ToDateTime(travelStartStr);
+                dayOfService.travelStartTime = Convert.ToDateTime(dtServiceStr + " "+  travelStartStr);
                 string arrivalOnsiteStr = xmlResult(ARRIVE_ONSITE, responsesXml);
-                dayOfService.arrivalOnsiteTime = Convert.ToDateTime(arrivalOnsiteStr);
+                dayOfService.arrivalOnsiteTime = Convert.ToDateTime(dtServiceStr + " " + arrivalOnsiteStr);
                 string departSiteStr = xmlResult(DEPART_SITE, responsesXml);
-                dayOfService.departSiteTime = Convert.ToDateTime(departSiteStr);
+                dayOfService.departSiteTime = Convert.ToDateTime(dtServiceStr + " " + departSiteStr);
                 string travelEndStr = xmlResult(TRAVEL_END, responsesXml);
-                dayOfService.travelEndTime = Convert.ToDateTime(travelEndStr);
+                dayOfService.travelEndTime = Convert.ToDateTime(dtServiceStr + " " + travelEndStr);
                 dayOfService.mileage = Convert.ToDouble(xmlResult(MILEAGE, responsesXml));
                 dayOfService.dailyAllowance = Convert.ToDouble(xmlResult(DAILY_ALLOWANCE, responsesXml));
                 dayOfService.overnightAllowance = Convert.ToDouble(xmlResult(OVERNIGHT_ALLOWANCE, responsesXml));

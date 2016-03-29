@@ -9,7 +9,7 @@
     <Window.Resources>
         <CollectionViewSource x:Key="ItemCollectionTimesheets"  CollectionViewType="ListCollectionView"/>
     </Window.Resources>
-    <ScrollViewer>
+    <ScrollViewer Margin="0,0,0,-23644">
         <StackPanel Orientation="Vertical">
             <GroupBox Header="Submission Details">
                 <Grid>
@@ -107,19 +107,33 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                <DataGrid Name="tblTimesheets" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" 
+                    <DataGrid Name="tblTimesheets" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" 
                 DataContext="{StaticResource ItemCollectionTimesheets}"
-                ItemsSource="{Binding}"
-                AutoGenerateColumns="True"/>
-            <Button Name="btnViewDaySheet" Content="View Times" Grid.Column="1" Grid.Row="1" Margin="5"/>
-            </Grid>
+                ItemsSource="{Binding}" AutoGenerateColumns="False"
+                >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding getDtServiceDay}" Header="Date"/>
+                            <DataGridTextColumn Binding="{Binding getTravelStartTime}" Header="Travel Start"/>
+                            <DataGridTextColumn Binding="{Binding getArrivalOnsiteTime}" Header="Arrival Onsite"/>
+                            <DataGridTextColumn Binding="{Binding getDepartSiteTime}" Header="Depart Site"/>
+                            <DataGridTextColumn Binding="{Binding getTravelEndTime}" Header="Travel End"/>
+                            <DataGridTextColumn Binding="{Binding mileage}" Header="Mileage"/>
+                            <DataGridTextColumn Binding="{Binding dailyAllowance}" Header="Daily Allowance"/>
+                            <DataGridTextColumn Binding="{Binding overnightAllowance}" Header="Overnight Allowance"/>
+                            <DataGridTextColumn Binding="{Binding barrierPayment}" Header="Barrier Payment"/>
+                            <DataGridTextColumn Binding="{Binding totalTravelTime }" Header="Total Travel Time"/>
+                            <DataGridTextColumn Binding="{Binding totalTimeOnsite }" Header="Total Time Onsite"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Name="btnViewDaySheet" Content="View Times" Grid.Column="1" Grid.Row="1" Margin="5,5,5,0" Click="btnViewDaySheet_Click" Height="20" VerticalAlignment="Top"/>
+                </Grid>
             </GroupBox>
             <GroupBox Header="Job Completion Details">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>    
-                    <ColumnDefinition Width="200"/>
-                </Grid.ColumnDefinitions>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="200"/>
+                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="100"/>

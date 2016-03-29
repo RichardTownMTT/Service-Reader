@@ -11,7 +11,6 @@ namespace Service_Reader
     /// </summary>
     public partial class ServiceSubmissionDetails : Window
     {
-        
            
         public ServiceSubmissionDetails(ServiceSubmission serviceSheet, string username, string password)
         {
@@ -81,5 +80,6 @@ namespace Service_Reader
             ItemCollectionTimesheetView = (CollectionViewSource)(FindResource("ItemCollectionTimesheets"));
             ItemCollectionTimesheetView.Source = itemList;
         }
+        
     }
 }
