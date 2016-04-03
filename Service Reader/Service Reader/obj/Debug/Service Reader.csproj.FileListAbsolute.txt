@@ -20,3 +20,6 @@ C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Read
 C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\CanvasSubmissionWindow.baml
 C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\MainMenu.baml
 C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\Service Reader.csprojResolveAssemblyReference.cache
+C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\ViewEditServiceDay.g.cs
+C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\ViewEditServiceDay.baml
+C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\GeneratedInternalTypeHelper.g.cs

@@ -59,11 +59,16 @@
     <Compile Include="MainMenu.xaml.cs">
       <DependentUpon>MainMenu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="mServiceSubmission.cs" />
     <Compile Include="ServiceDay.cs" />
     <Compile Include="ServiceSubmission.cs" />
     <Compile Include="ServiceSubmissionDetails.xaml.cs">
       <DependentUpon>ServiceSubmissionDetails.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewEditServiceDay.xaml.cs">
+      <DependentUpon>ViewEditServiceDay.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="vmServiceSubmission.cs" />
     <Page Include="InputBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -96,6 +101,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ServiceSubmissionDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewEditServiceDay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

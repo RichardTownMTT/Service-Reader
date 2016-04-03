@@ -6,10 +6,7 @@
         xmlns:local="clr-namespace:Service_Reader"
         mc:Ignorable="d"
         Title="Submission Details" WindowStartupLocation="CenterScreen" WindowState="Maximized" Width="933">
-    <Window.Resources>
-        <CollectionViewSource x:Key="ItemCollectionTimesheets"  CollectionViewType="ListCollectionView"/>
-    </Window.Resources>
-    <ScrollViewer Margin="0,0,0,-23644">
+    <ScrollViewer>
         <StackPanel Orientation="Vertical">
             <GroupBox Header="Submission Details">
                 <Grid>
@@ -24,8 +21,15 @@
                     <Label Content="Submission No." Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"/>
                     <Label Content="Engineer" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center"/>
 
-                    <TextBox Name="txtSubmissionNo" Grid.Column="1" Grid.Row="0" Margin="5" Width="200" HorizontalAlignment="Left"/>
-                    <TextBox Name="txtEngineer" Grid.Column="1" Grid.Row="1" Margin="5" Width="200" HorizontalAlignment="Left"/>
+                    <TextBox Name="txtSubmissionNo" Grid.Column="1" Grid.Row="0" Margin="5" Width="200" HorizontalAlignment="Left" IsReadOnly="True" Text="{Binding Path=submissionNo}"/>
+                    <TextBox Name="txtEngineer" Grid.Column="1" Grid.Row="1" Margin="5" Width="200" HorizontalAlignment="Left" IsReadOnly="True">
+                        <TextBox.Text>
+                            <MultiBinding StringFormat="{}{0} {1}">
+                                <Binding Path="userFirstName"/>
+                                <Binding Path="userSurname"/>
+                            </MultiBinding>
+                        </TextBox.Text>
+                    </TextBox>
                 </Grid>
             </GroupBox>
             <GroupBox Header="Customer">
@@ -50,16 +54,16 @@
                     <Label Content="Address 2" Grid.Column="2" Grid.Row="1"/>
                     <Label Content="Town/City " Grid.Column="4" Grid.Row="1"/>
                     <Label Content="Postcode" Grid.Column="6" Grid.Row="1"/>
-                    <TextBox Name="txtCustomer" Grid.Column="1" Grid.Row="0" Margin="5"/>
-                    <TextBox Name="txtAddress1" Grid.Column="1" Grid.Row="1" Margin="5"/>
-                    <TextBox Name="txtAddress2" Grid.Column="3" Grid.Row="1" Margin="5"/>
-                    <TextBox Name="txtTownCity" Grid.Column="5" Grid.Row="1" Margin="5"/>
-                    <TextBox Name="txtPostcode" Grid.Column="7" Grid.Row="1" Margin="5"/>
+                    <TextBox Name="txtCustomer" Grid.Column="1" Grid.Row="0" Margin="5" Text="{Binding Path=customer}"/>
+                    <TextBox Name="txtAddress1" Grid.Column="1" Grid.Row="1" Margin="5" Text="{Binding Path=address1}"/>
+                    <TextBox Name="txtAddress2" Grid.Column="3" Grid.Row="1" Margin="5" Text="{Binding Path=address2}"/>
+                    <TextBox Name="txtTownCity" Grid.Column="5" Grid.Row="1" Margin="5" Text="{Binding Path=townCity}"/>
+                    <TextBox Name="txtPostcode" Grid.Column="7" Grid.Row="1" Margin="5" Text="{Binding Path=postcode}"/>
 
                     <Label Content="Customer Contact" Grid.Column="0" Grid.Row="3"/>
                     <Label Content="Customer Phone" Grid.Column="2" Grid.Row="3"/>
-                    <TextBox Name="txtCustomerContact" Grid.Column="1" Grid.Row="3" Margin="5"/>
-                    <TextBox Name="txtCustomerPhone" Grid.Column="3" Grid.Row="3" Margin="5"/>
+                    <TextBox Name="txtCustomerContact" Grid.Column="1" Grid.Row="3" Margin="5" Text="{Binding Path=customerContact}"/>
+                    <TextBox Name="txtCustomerPhone" Grid.Column="3" Grid.Row="3" Margin="5" Text="{Binding Path=customerPhone}"/>
                 </Grid>
             </GroupBox>
             <GroupBox Header="Job Details">
@@ -82,50 +86,30 @@
                     </Grid.ColumnDefinitions>
 
                     <Label Content="Job Start Date" Grid.Column="0" Grid.Row="0"/>
-                    <DatePicker Name="dtJobStart" Grid.Column="1" Grid.Row="0" Margin="2"/>
+                    <DatePicker Name="dtJobStart" Grid.Column="1" Grid.Row="0" Margin="2" SelectedDate="{Binding Path=dtSigned}"/>
                     <Label Content="Machine Make/Model" Grid.Column="0" Grid.Row="1"/>
                     <Label Content="Machine Serial" Grid.Column="2" Grid.Row="1"/>
                     <Label Content="Machine Controller" Grid.Column="4" Grid.Row="1"/>
-                    <TextBox Name="txtMakeModel" Grid.Column="1" Grid.Row="1" Margin="5"/>
-                    <TextBox Name="txtMachineSerial" Grid.Column="3" Grid.Row="1" Margin="5"/>
-                    <TextBox Name="txtMachineController" Grid.Column="5" Grid.Row="1" Margin="5"/>
+                    <TextBox Name="txtMakeModel" Grid.Column="1" Grid.Row="1" Margin="5" Text="{Binding Path=machineMakeModel}"/>
+                    <TextBox Name="txtMachineSerial" Grid.Column="3" Grid.Row="1" Margin="5" Text="{Binding Path=machineSerial}"/>
+                    <TextBox Name="txtMachineController" Grid.Column="5" Grid.Row="1" Margin="5" Text="{Binding Path=machineController}"/>
                     <Label Content="Customer Order No" Grid.Column="2" Grid.Row="2"/>
                     <Label Content="MTT Job No" Grid.Column="0" Grid.Row="2"/>
-                    <TextBox Name="txtCustomerOrderNo" Grid.Column="3" Grid.Row="2" Margin="5"/>
-                    <TextBox Name="txtMttJobNo" Grid.Column="1" Grid.Row="2" Margin="5"/>
+                    <TextBox Name="txtCustomerOrderNo" Grid.Column="3" Grid.Row="2" Margin="5" Text="{Binding Path=customerOrderNo}"/>
+                    <TextBox Name="txtMttJobNo" Grid.Column="1" Grid.Row="2" Margin="5" Text="{Binding Path=mttJobNo}"/>
                     <Label Content="Job Description" Grid.Column="0" Grid.Row="3"/>
-                    <TextBox Name="txtJobDescription" Grid.Column="1" Grid.Row="3" Margin="5" Grid.ColumnSpan="3" Height="50"/>
+                    <TextBox Name="txtJobDescription" Grid.Column="1" Grid.Row="3" Margin="5" Grid.ColumnSpan="3" Height="50" Text="{Binding Path=jobDescription}"/>
                 </Grid>
             </GroupBox>
             <GroupBox Header="Timesheets">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="150"/>
-                        <RowDefinition Height="30"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <DataGrid Name="tblTimesheets" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" 
-                DataContext="{StaticResource ItemCollectionTimesheets}"
-                ItemsSource="{Binding}" AutoGenerateColumns="False"
-                >
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding getDtServiceDay}" Header="Date"/>
-                            <DataGridTextColumn Binding="{Binding getTravelStartTime}" Header="Travel Start"/>
-                            <DataGridTextColumn Binding="{Binding getArrivalOnsiteTime}" Header="Arrival Onsite"/>
-                            <DataGridTextColumn Binding="{Binding getDepartSiteTime}" Header="Depart Site"/>
-                            <DataGridTextColumn Binding="{Binding getTravelEndTime}" Header="Travel End"/>
-                            <DataGridTextColumn Binding="{Binding mileage}" Header="Mileage"/>
-                            <DataGridTextColumn Binding="{Binding dailyAllowance}" Header="Daily Allowance"/>
-                            <DataGridTextColumn Binding="{Binding overnightAllowance}" Header="Overnight Allowance"/>
-                            <DataGridTextColumn Binding="{Binding barrierPayment}" Header="Barrier Payment"/>
-                            <DataGridTextColumn Binding="{Binding totalTravelTime }" Header="Total Travel Time"/>
-                            <DataGridTextColumn Binding="{Binding totalTimeOnsite }" Header="Total Time Onsite"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                    <Button Name="btnViewDaySheet" Content="View Times" Grid.Column="1" Grid.Row="1" Margin="5,5,5,0" Click="btnViewDaySheet_Click" Height="20" VerticalAlignment="Top"/>
+                <Grid Name="grdTimesheets">
+                    <ItemsControl Name="icTimeSheet" Grid.ColumnSpan="2">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <local:ViewEditServiceDay travelStart="{Binding Path=getTravelStartTime}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </Grid>
             </GroupBox>
             <GroupBox Header="Job Completion Details">
@@ -156,16 +140,16 @@
                     <Label Content="Image 3" Grid.Column="0" Grid.Row="7"/>
                     <Label Content="Image 4" Grid.Column="0" Grid.Row="8"/>
                     <Label Content="Image 5" Grid.Column="0" Grid.Row="9"/>
-                    <TextBox Name="txtJobStatus" Grid.Column="1" Grid.Row="0" Margin ="5"/>
-                    <TextBox Name="txtFinalReport" Grid.Column="1" Grid.Row="1" Margin ="5"/>
-                    <TextBox Name="txtAdditionalFaultsFound" Grid.Column="1" Grid.Row="2" Margin ="5"/>
-                    <CheckBox Name="chkQuoteRequired" Grid.Column="1" Grid.Row="3" Margin ="5"/>
-                    <TextBox Name="txtPartsForFollowup" Grid.Column="1" Grid.Row="4" Margin ="5"/>
-                    <TextBox Name="txtImage1" Grid.Column="1" Grid.Row="5" Margin ="5"/>
-                    <TextBox Name="txtImage2" Grid.Column="1" Grid.Row="6" Margin ="5"/>
-                    <TextBox Name="txtImage3" Grid.Column="1" Grid.Row="7" Margin ="5"/>
-                    <TextBox Name="txtImage4" Grid.Column="1" Grid.Row="8" Margin ="5"/>
-                    <TextBox Name="txtImage5" Grid.Column="1" Grid.Row="9" Margin ="5"/>
+                    <TextBox Name="txtJobStatus" Grid.Column="1" Grid.Row="0" Margin ="5" Text="{Binding Path=jobStatus}"/>
+                    <TextBox Name="txtFinalReport" Grid.Column="1" Grid.Row="1" Margin ="5" Text="{Binding Path=finalReport}"/>
+                    <TextBox Name="txtAdditionalFaultsFound" Grid.Column="1" Grid.Row="2" Margin ="5" Text="{Binding Path=additionalFaultsFound}"/>
+                    <CheckBox Name="chkQuoteRequired" Grid.Column="1" Grid.Row="3" Margin ="5" IsChecked="{Binding Path=quoteRequired}"/>
+                    <TextBox Name="txtPartsForFollowup" Grid.Column="1" Grid.Row="4" Margin ="5" Text="{Binding Path=partsForFollowup}"/>
+                    <TextBox Name="txtImage1" Grid.Column="1" Grid.Row="5" Margin ="5" Text="{Binding Path=image1Url}"/>
+                    <TextBox Name="txtImage2" Grid.Column="1" Grid.Row="6" Margin ="5" Text="{Binding Path=image2Url}"/>
+                    <TextBox Name="txtImage3" Grid.Column="1" Grid.Row="7" Margin ="5" Text="{Binding Path=image3Url}"/>
+                    <TextBox Name="txtImage4" Grid.Column="1" Grid.Row="8" Margin ="5" Text="{Binding Path=image4Url}"/>
+                    <TextBox Name="txtImage5" Grid.Column="1" Grid.Row="9" Margin ="5" Text="{Binding Path=image5Url}"/>
                 </Grid>
             </GroupBox>
             <GroupBox Header="Submission Times">
@@ -188,12 +172,14 @@
                     <Label Content="Total Daily Allowances" Grid.Column="0" Grid.Row="3"/>
                     <Label Content="Total Overnight Allowances" Grid.Column="0" Grid.Row="4"/>
                     <Label Content="Total Barrier Payments" Grid.Column="0" Grid.Row="5"/>
-                    <TextBox Name="txtTotalTimeOnsite" Grid.Column="1" Grid.Row="0" Margin="5"/>
-                    <TextBox Name="txtTotalTravelTime" Grid.Column="1" Grid.Row="1" Margin="5"/>
-                    <TextBox Name="txtTotalMileage" Grid.Column="1" Grid.Row="2" Margin ="5"/>
-                    <TextBox Name="txtTotalDailyAllowances" Grid.Column="1" Grid.Row="3" Margin ="5"/>
-                    <TextBox Name="txtTotalOvernightAllowances" Grid.Column="1" Grid.Row="4" Margin ="5"/>
-                    <TextBox Name="txtTotalBarrierPayments" Grid.Column="1" Grid.Row="5" Margin ="5"/>
+                    <TextBox Name="txtTotalTimeOnsite" Grid.Column="1" Grid.Row="0" Margin="5" IsReadOnly="True" Text="{Binding Path=totalTimeOnsite}"/>
+                    <TextBox Name="txtTotalTravelTime" Grid.Column="1" Grid.Row="1" Margin="5" IsReadOnly="True" Text="{Binding Path=totalTravelTime}"/>
+                    <TextBox Name="txtTotalMileage" Grid.Column="1" Grid.Row="2" Margin ="5" Text="{Binding Path=totalMileage}"/>
+                    <TextBox Name="txtTotalDailyAllowances" Grid.Column="1" Grid.Row="3" Margin ="5" >
+
+                    </TextBox>
+                    <TextBox Name="txtTotalOvernightAllowances" Grid.Column="1" Grid.Row="4" Margin ="5" Text="{Binding Path=totalOvernightAllowances}"/>
+                    <TextBox Name="txtTotalBarrierPayments" Grid.Column="1" Grid.Row="5" Margin ="5" Text="{Binding Path=totalBarrierPayments}"/>
                 </Grid>
             </GroupBox>
             <GroupBox Header="Job Signoff">
@@ -213,10 +199,10 @@
                     <Label Content="Customer Name" Grid.Column="0" Grid.Row="1"/>
                     <Label Content="Date Signed" Grid.Column="0" Grid.Row="2"/>
                     <Label Content="Engineer Signature" Grid.Column="0" Grid.Row="3"/>
-                    <TextBox Name="txtCustomerSignature" Grid.Column="1" Grid.Row="0" Margin ="5"/>
-                    <TextBox Name="txtCustomerSignName" Grid.Column="1" Grid.Row="1" Margin ="5"/>
-                    <DatePicker Name="dtSigned" Grid.Column="1" Grid.Row="2" Margin ="5"/>
-                    <TextBox Name="txtEngineerSignature" Grid.Column="1" Grid.Row="3" Margin ="5"/>
+                    <TextBox Name="txtCustomerSignature" Grid.Column="1" Grid.Row="0" Margin ="5"  Text="{Binding Path=customerSignatureUrl}"/>
+                    <TextBox Name="txtCustomerSignName" Grid.Column="1" Grid.Row="1" Margin ="5" Text="{Binding Path=customerSignName}"/>
+                    <DatePicker Name="dtSigned" Grid.Column="1" Grid.Row="2" Margin ="5" SelectedDate="{Binding Path=dtSigned}"/>
+                    <TextBox Name="txtEngineerSignature" Grid.Column="1" Grid.Row="3" Margin ="5" Text="{Binding Path=mttEngSignatureUrl}"/>
                     <Image Name="imgEngineerSignature" Grid.Column="1" Grid.Row="4" Margin="5"/>
                 </Grid>
             </GroupBox>
