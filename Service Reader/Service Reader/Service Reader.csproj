@@ -56,27 +56,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CanvasRawDataViewModel.cs" />
+    <Compile Include="canvasUserModel.cs" />
+    <Compile Include="CanvasUserViewModel.cs" />
     <Compile Include="MainMenu.xaml.cs">
       <DependentUpon>MainMenu.xaml</DependentUpon>
     </Compile>
-    <Compile Include="mServiceSubmission.cs" />
+    <Compile Include="ServiceSubmissionModel.cs" />
+    <Compile Include="ObservableObject.cs" />
+    <Compile Include="RelayCommand.cs" />
     <Compile Include="ServiceDay.cs" />
     <Compile Include="ServiceSubmission.cs" />
     <Compile Include="ServiceSubmissionDetails.xaml.cs">
       <DependentUpon>ServiceSubmissionDetails.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UcCanvasUser.xaml.cs">
+      <DependentUpon>UcCanvasUser.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewEditServiceDay.xaml.cs">
       <DependentUpon>ViewEditServiceDay.xaml</DependentUpon>
     </Compile>
-    <Compile Include="vmServiceSubmission.cs" />
-    <Page Include="InputBox.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="InputBoxPassword.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Compile Include="ServiceSubmissionViewModel.cs" />
     <Page Include="CanvasSubmissionWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -86,12 +86,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CanvasDataReader.cs" />
-    <Compile Include="InputBox.xaml.cs">
-      <DependentUpon>InputBox.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="InputBoxPassword.xaml.cs">
-      <DependentUpon>InputBoxPassword.xaml</DependentUpon>
-    </Compile>
     <Compile Include="CanvasSubmissionWindow.xaml.cs">
       <DependentUpon>CanvasSubmissionWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -101,6 +95,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ServiceSubmissionDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UcCanvasUser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

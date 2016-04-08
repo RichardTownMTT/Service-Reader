@@ -1,10 +1,11 @@
 ﻿using System.Windows;
 using System.Linq;
 using System.Xml.Linq;
-using System.Drawing;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Windows.Media.Imaging;
+using System;
 
 namespace Service_Reader
 {
@@ -64,7 +65,8 @@ namespace Service_Reader
         public static string TIME_SHEET = "Time Sheet";
         public static string JOB_SIGNOFF = "Job Signoff";
 
-        public static ServiceSubmission[] downloadXml(string canvasUsername, string canvasPassword, string beginDate, string endDate)
+        //public static ServiceSubmissionModel[] downloadXml(string canvasUsername, string canvasPassword, string beginDate, string endDate)
+        public static List<ServiceSubmissionModel> downloadXml(string canvasUsername, string canvasPassword, string beginDate, string endDate)
         {
             string canvasUrl = "https://www.gocanvas.com/apiv2/submissions.xml?username=" + canvasUsername + "&password=" + canvasPassword + "&form_id=1285373&begin_date=" + beginDate + "&end_date=" + endDate;
 
@@ -88,15 +90,16 @@ namespace Service_Reader
             {
                 return null;
             }
-            
+
             XElement totalPagesNode = rootElement.Element("TotalPages");
             string noOfPages = totalPagesNode.Value;
 
             XElement submissions = rootElement.Element("Submissions");
 
-            ServiceSubmission[] allSubmissions;
+            //ServiceSubmissionModel[] allSubmissions;
+            List<ServiceSubmissionModel> allSubmissions;
             allSubmissions = parseSubmissions(submissions);
-            
+
 
             return allSubmissions;
         }
@@ -121,24 +124,102 @@ namespace Service_Reader
             return retval;
         }
 
-        private static ServiceSubmission[] parseSubmissions(XElement submissions)
+        //private static ServiceSubmissionModel[] parseSubmissions(XElement submissions)
+        private static List<ServiceSubmissionModel> parseSubmissions(XElement submissions)
         {
-            int noOfSubmissions = 0;
-            noOfSubmissions = submissions.Descendants("Submission").Count();
+            //int noOfSubmissions = 0;
+            //noOfSubmissions = submissions.Descendants("Submission").Count();
 
-            ServiceSubmission[] allSubmissions = new ServiceSubmission [noOfSubmissions];
-            int submissionCounter = 0;
+            List<ServiceSubmissionModel> allSubmissions = new List<ServiceSubmissionModel>();
+            //int submissionCounter = 0;
 
             foreach (XElement submissionXml in submissions.Elements())
             {
                 //Load the submission
-                ServiceSubmission currentSubmission = ServiceSubmission.createSubmissionForXml(submissionXml);
+                ServiceSubmissionModel currentSubmission = createSubmissionForXml(submissionXml);
 
-                allSubmissions[submissionCounter] = currentSubmission;
+                allSubmissions.Add(currentSubmission);
 
-                submissionCounter++;
+                //submissionCounter++;
             }
             return allSubmissions;
+        }
+
+        public static ServiceSubmissionModel createSubmissionForXml(XElement submissionXml)
+        {
+            ServiceSubmissionModel retval = new ServiceSubmissionModel();
+            retval.SubmissionNo = Int32.Parse(submissionXml.Element(SUBMISSION_NUMBER).Value);
+            //Submission version is in the form element
+            XElement formDetailsXml = submissionXml.Element(FORM);
+            retval.SubmissionVersion = Int32.Parse(formDetailsXml.Element(SUBMISSION_VERSION).Value);
+            retval.Username = submissionXml.Element(USERNAME).Value;
+            retval.UserFirstName = submissionXml.Element(FIRST_NAME).Value;
+            retval.UserSurname = submissionXml.Element(SURNAME).Value;
+
+            XElement sectionsXml = submissionXml.Element(SECTIONS);
+            // Loop through the sections
+            foreach (XElement sectionXml in sectionsXml.Elements())
+            {
+                string sectionName = sectionXml.Element(SECTION_NAME).Value;
+                if (sectionName.Equals(JOB_DETAILS))
+                {
+                    XElement screensXml = sectionXml.Element(SCREENS);
+                    XElement screenXml = screensXml.Element(SCREEN);
+                    XElement responsesXml = screenXml.Element(RESPONSES);
+                    //Parse the job details
+
+                    retval.Customer = xmlResult(CUSTOMER, responsesXml);
+                    retval.Address1 = xmlResult(ADDRESS_1, responsesXml);
+                    retval.Address2 = xmlResult(ADDRESS_2, responsesXml);
+                    retval.TownCity = xmlResult(TOWN_CITY, responsesXml);
+                    retval.Postcode = xmlResult(POSTCODE, responsesXml);
+                    retval.CustomerContact = xmlResult(CUSTOMER_CONTACT, responsesXml);
+                    retval.CustomerPhone = xmlResult(CUSTOMER_PHONE, responsesXml);
+                    retval.MachineMakeModel = xmlResult(MACHINE_MAKE_MODEL, responsesXml);
+                    retval.MachineController = xmlResult(MACHINE_CONTROL, responsesXml);
+                    string jobStartStr = xmlResult(JOB_START_DATE, responsesXml);
+                    retval.JobStart = Convert.ToDateTime(jobStartStr);
+                    retval.CustomerOrderNo = xmlResult(CUSTOMER_ORDER, responsesXml);
+                    retval.MttJobNumber = xmlResult(MTT_JOB_NO, responsesXml);
+                    retval.JobDescription = xmlResult(JOB_DESC, responsesXml);
+
+                }
+                else if (sectionName.Equals(TIME_SHEET))
+                {
+                    XElement screensXml = sectionXml.Element(SCREENS);
+                    XElement screenXml = screensXml.Element(SCREEN);
+                    XElement responseGroupsXml = screenXml.Element(RESPONSE_GROUPS);
+                    //retval.ServiceTimesheets = ServiceDay.createDays(responseGroupsXml);
+                }
+                else if (sectionName.Equals(JOB_SIGNOFF))
+                {
+                    XElement screensXml = sectionXml.Element(SCREENS);
+                    XElement screenXml = screensXml.Element(SCREEN);
+                    XElement responsesXml = screenXml.Element(RESPONSES);
+
+                    retval.TotalTimeOnsite = Convert.ToDouble(xmlResult(TOTAL_TIME_ONSITE, responsesXml));
+                    retval.TotalTravelTime = Convert.ToDouble(xmlResult(TOTAL_TRAVEL_TIME, responsesXml));
+                    retval.TotalMileage = Convert.ToDouble(xmlResult(TOTAL_MILEAGE, responsesXml));
+                    //retval.TotalDailyAllowances = Convert.ToDouble(xmlResult(TOTAL_DAILY_ALLOWANCES, responsesXml));
+                    //retval.TotalOvernightAllowances = Convert.ToDouble(xmlResult(TOTAL_OVERNIGHT_ALLOWANCES, responsesXml));
+                    //retval.TotalBarrierPayments = Convert.ToDouble(xmlResult(TOTAL_BARRIER_PAYMENTS, responsesXml));
+                    retval.JobStatus = xmlResult(JOB_STATUS, responsesXml);
+                    retval.FinalJobReport = xmlResult(FINAL_JOB_REPORT, responsesXml);
+                    retval.AdditionalFaultsFound = xmlResult(ADDITIONAL_FAULTS_FOUND, responsesXml);
+                    retval.QuoteRequired = Convert.ToBoolean(xmlResult(QUOTE_REQUIRED, responsesXml));
+                    retval.PartsForFollowup = xmlResult(FOLLOWUP_PARTS, responsesXml);
+                    retval.Image1Url = xmlResult(IMAGE_1_URL, responsesXml);
+                    retval.Image2Url = xmlResult(IMAGE_2_URL, responsesXml);
+                    retval.Image3Url = xmlResult(IMAGE_3_URL, responsesXml);
+                    retval.Image4Url = xmlResult(IMAGE_4_URL, responsesXml);
+                    retval.Image5Url = xmlResult(IMAGE_5_URL, responsesXml);
+                    retval.CustomerSignatureUrl = xmlResult(CUSTOMER_SIGNATURE, responsesXml);
+                    retval.CustomerSignName = xmlResult(CUSTOMER_NAME, responsesXml);
+                    retval.DtSigned = Convert.ToDateTime(xmlResult(DATE_SIGNED, responsesXml));
+                    retval.MttEngSignatureUrl = xmlResult(MTT_ENG_SIGNATURE, responsesXml);
+                }
+            }
+            return retval;
         }
 
         public static BitmapImage getImage(string imageReference, string username, string password)

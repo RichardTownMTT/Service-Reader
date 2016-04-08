@@ -109,80 +109,80 @@
 //        private static string TIME_SHEET = "Time Sheet";
 //        private static string JOB_SIGNOFF = "Job Signoff";
 
-//        public static ServiceSubmission createSubmissionForXml(XElement submissionXml)
+//public static ServiceSubmission createSubmissionForXml(XElement submissionXml)
+//{
+//    ServiceSubmission retval = new ServiceSubmission();
+//    retval.submissionNo = Int32.Parse(submissionXml.Element(SUBMISSION_NUMBER).Value);
+//    //Submission version is in the form element
+//    XElement formDetailsXml = submissionXml.Element(FORM);
+//    retval.submissionVersion = Int32.Parse(formDetailsXml.Element(SUBMISSION_VERSION).Value);
+//    retval.username = submissionXml.Element(USERNAME).Value;
+//    retval.userFirstName = submissionXml.Element(FIRST_NAME).Value;
+//    retval.userSurname = submissionXml.Element(SURNAME).Value;
+
+//    XElement sectionsXml = submissionXml.Element(SECTIONS);
+//    // Loop through the sections
+//    foreach (XElement sectionXml in sectionsXml.Elements())
+//    {
+//        string sectionName = sectionXml.Element(SECTION_NAME).Value;
+//        if (sectionName.Equals(JOB_DETAILS))
 //        {
-//            ServiceSubmission retval = new ServiceSubmission();
-//            retval.submissionNo = Int32.Parse(submissionXml.Element(SUBMISSION_NUMBER).Value);
-//            //Submission version is in the form element
-//            XElement formDetailsXml = submissionXml.Element(FORM);
-//            retval.submissionVersion = Int32.Parse(formDetailsXml.Element(SUBMISSION_VERSION).Value);
-//            retval.username = submissionXml.Element(USERNAME).Value;
-//            retval.userFirstName = submissionXml.Element(FIRST_NAME).Value;
-//            retval.userSurname = submissionXml.Element(SURNAME).Value;
+//            XElement screensXml = sectionXml.Element(SCREENS);
+//            XElement screenXml = screensXml.Element(SCREEN);
+//            XElement responsesXml = screenXml.Element(RESPONSES);
+//            //Parse the job details
 
-//            XElement sectionsXml = submissionXml.Element(SECTIONS);
-//            // Loop through the sections
-//            foreach (XElement sectionXml in sectionsXml.Elements())
-//            {
-//                string sectionName = sectionXml.Element(SECTION_NAME).Value;
-//                if (sectionName.Equals(JOB_DETAILS) ) 
-//                {
-//                    XElement screensXml = sectionXml.Element(SCREENS);
-//                    XElement screenXml = screensXml.Element(SCREEN);
-//                    XElement responsesXml = screenXml.Element(RESPONSES);
-//                    //Parse the job details
+//            retval.customer = xmlResult(CUSTOMER, responsesXml);
+//            retval.address1 = xmlResult(ADDRESS_1, responsesXml);
+//            retval.address2 = xmlResult(ADDRESS_2, responsesXml);
+//            retval.townCity = xmlResult(TOWN_CITY, responsesXml);
+//            retval.postcode = xmlResult(POSTCODE, responsesXml);
+//            retval.customerContact = xmlResult(CUSTOMER_CONTACT, responsesXml);
+//            retval.customerPhone = xmlResult(CUSTOMER_PHONE, responsesXml);
+//            retval.machineMakeModel = xmlResult(MACHINE_MAKE_MODEL, responsesXml);
+//            retval.machineController = xmlResult(MACHINE_CONTROL, responsesXml);
+//            string jobStartStr = xmlResult(JOB_START_DATE, responsesXml);
+//            retval.jobStart = Convert.ToDateTime(jobStartStr);
+//            retval.customerOrderNo = xmlResult(CUSTOMER_ORDER, responsesXml);
+//            retval.mttJobNumber = xmlResult(MTT_JOB_NO, responsesXml);
+//            retval.jobDescription = xmlResult(JOB_DESC, responsesXml);
 
-//                    retval.customer = xmlResult(CUSTOMER, responsesXml);
-//                    retval.address1 = xmlResult(ADDRESS_1, responsesXml);
-//                    retval.address2 = xmlResult(ADDRESS_2, responsesXml);
-//                    retval.townCity = xmlResult(TOWN_CITY, responsesXml);
-//                    retval.postcode = xmlResult(POSTCODE, responsesXml);
-//                    retval.customerContact = xmlResult(CUSTOMER_CONTACT, responsesXml);
-//                    retval.customerPhone = xmlResult(CUSTOMER_PHONE, responsesXml);
-//                    retval.machineMakeModel = xmlResult(MACHINE_MAKE_MODEL, responsesXml);
-//                    retval.machineController = xmlResult(MACHINE_CONTROL, responsesXml);
-//                    string jobStartStr = xmlResult(JOB_START_DATE, responsesXml);
-//                    retval.jobStart = Convert.ToDateTime(jobStartStr);
-//                    retval.customerOrderNo = xmlResult(CUSTOMER_ORDER, responsesXml);
-//                    retval.mttJobNumber = xmlResult(MTT_JOB_NO, responsesXml);
-//                    retval.jobDescription = xmlResult(JOB_DESC, responsesXml);
+//        }
+//        else if (sectionName.Equals(TIME_SHEET))
+//        {
+//            XElement screensXml = sectionXml.Element(SCREENS);
+//            XElement screenXml = screensXml.Element(SCREEN);
+//            XElement responseGroupsXml = screenXml.Element(RESPONSE_GROUPS);
+//            retval.serviceTimesheets = ServiceDay.createDays(responseGroupsXml);
+//        }
+//        else if (sectionName.Equals(JOB_SIGNOFF))
+//        {
+//            XElement screensXml = sectionXml.Element(SCREENS);
+//            XElement screenXml = screensXml.Element(SCREEN);
+//            XElement responsesXml = screenXml.Element(RESPONSES);
 
-//                }
-//                else if (sectionName.Equals(TIME_SHEET))
-//                {
-//                    XElement screensXml = sectionXml.Element(SCREENS);
-//                    XElement screenXml = screensXml.Element(SCREEN);
-//                    XElement responseGroupsXml = screenXml.Element(RESPONSE_GROUPS);
-//                    retval.serviceTimesheets = ServiceDay.createDays(responseGroupsXml);
-//                }
-//                else if (sectionName .Equals(JOB_SIGNOFF))
-//                {
-//                    XElement screensXml = sectionXml.Element(SCREENS);
-//                    XElement screenXml = screensXml.Element(SCREEN);
-//                    XElement responsesXml = screenXml.Element(RESPONSES);
-
-//                    retval.totalTimeOnsite = Convert.ToDouble(xmlResult(TOTAL_TIME_ONSITE, responsesXml));
-//                    retval.totalTravelTime = Convert.ToDouble(xmlResult(TOTAL_TRAVEL_TIME, responsesXml));
-//                    retval.totalMileage = Convert.ToDouble(xmlResult(TOTAL_MILEAGE, responsesXml));
-//                    retval.totalDailyAllowances = Convert.ToDouble(xmlResult(TOTAL_DAILY_ALLOWANCES, responsesXml));
-//                    retval.totalOvernightAllowances = Convert.ToDouble(xmlResult(TOTAL_OVERNIGHT_ALLOWANCES, responsesXml));
-//                    retval.totalBarrierPayments = Convert.ToDouble(xmlResult(TOTAL_BARRIER_PAYMENTS, responsesXml));
-//                    retval.jobStatus = xmlResult(JOB_STATUS, responsesXml);
-//                    retval.finalJobReport = xmlResult(FINAL_JOB_REPORT, responsesXml);
-//                    retval.additionalFaultsFound = xmlResult(ADDITIONAL_FAULTS_FOUND, responsesXml);
-//                    retval.quoteRequired = Convert.ToBoolean(xmlResult(QUOTE_REQUIRED, responsesXml));
-//                    retval.partsForFollowup = xmlResult(FOLLOWUP_PARTS, responsesXml);
-//                    retval.image1Url = xmlResult(IMAGE_1_URL, responsesXml);
-//                    retval.image2Url = xmlResult(IMAGE_2_URL, responsesXml);
-//                    retval.image3Url = xmlResult(IMAGE_3_URL, responsesXml);
-//                    retval.image4Url = xmlResult(IMAGE_4_URL, responsesXml);
-//                    retval.image5Url = xmlResult(IMAGE_5_URL, responsesXml);
-//                    retval.customerSignatureUrl = xmlResult(CUSTOMER_SIGNATURE, responsesXml);
-//                    retval.customerSignName = xmlResult(CUSTOMER_NAME, responsesXml);
-//                    retval.dtSigned = Convert.ToDateTime(xmlResult(DATE_SIGNED, responsesXml));
-//                    retval.mttEngSignatureUrl = xmlResult(MTT_ENG_SIGNATURE, responsesXml);
-//                }
-//            }
+//            retval.totalTimeOnsite = Convert.ToDouble(xmlResult(TOTAL_TIME_ONSITE, responsesXml));
+//            retval.totalTravelTime = Convert.ToDouble(xmlResult(TOTAL_TRAVEL_TIME, responsesXml));
+//            retval.totalMileage = Convert.ToDouble(xmlResult(TOTAL_MILEAGE, responsesXml));
+//            retval.totalDailyAllowances = Convert.ToDouble(xmlResult(TOTAL_DAILY_ALLOWANCES, responsesXml));
+//            retval.totalOvernightAllowances = Convert.ToDouble(xmlResult(TOTAL_OVERNIGHT_ALLOWANCES, responsesXml));
+//            retval.totalBarrierPayments = Convert.ToDouble(xmlResult(TOTAL_BARRIER_PAYMENTS, responsesXml));
+//            retval.jobStatus = xmlResult(JOB_STATUS, responsesXml);
+//            retval.finalJobReport = xmlResult(FINAL_JOB_REPORT, responsesXml);
+//            retval.additionalFaultsFound = xmlResult(ADDITIONAL_FAULTS_FOUND, responsesXml);
+//            retval.quoteRequired = Convert.ToBoolean(xmlResult(QUOTE_REQUIRED, responsesXml));
+//            retval.partsForFollowup = xmlResult(FOLLOWUP_PARTS, responsesXml);
+//            retval.image1Url = xmlResult(IMAGE_1_URL, responsesXml);
+//            retval.image2Url = xmlResult(IMAGE_2_URL, responsesXml);
+//            retval.image3Url = xmlResult(IMAGE_3_URL, responsesXml);
+//            retval.image4Url = xmlResult(IMAGE_4_URL, responsesXml);
+//            retval.image5Url = xmlResult(IMAGE_5_URL, responsesXml);
+//            retval.customerSignatureUrl = xmlResult(CUSTOMER_SIGNATURE, responsesXml);
+//            retval.customerSignName = xmlResult(CUSTOMER_NAME, responsesXml);
+//            retval.dtSigned = Convert.ToDateTime(xmlResult(DATE_SIGNED, responsesXml));
+//            retval.mttEngSignatureUrl = xmlResult(MTT_ENG_SIGNATURE, responsesXml);
+//        }
+//    }
 
 
 

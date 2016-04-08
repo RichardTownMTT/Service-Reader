@@ -6,35 +6,30 @@
         xmlns:local="clr-namespace:Service_Reader"
         mc:Ignorable="d"
         Title="Canvas Submission Overview" Width="772" WindowState="Maximized" Height="554.5" >
-    <Window.Resources>
-        <CollectionViewSource x:Key="ItemCollectionViewSource"  CollectionViewType="ListCollectionView"/>
-    </Window.Resources>
     <Grid>
+        <Grid.DataContext>
+            <local:CanvasRawDataViewModel/>
+        </Grid.DataContext>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="157*"/>
-            <ColumnDefinition Width="608*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <DatePicker x:Name="dtSubmissionsFrom" HorizontalAlignment="Left" Margin="21.5,97,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+        <local:UcCanvasUser x:Name="ucUserDetails" userName="{Binding CurrentUser.Username, Mode=TwoWay}" password="{Binding CurrentUser.Password, Mode=TwoWay}" Grid.Column="0" Grid.Row="0"/>
+        <DatePicker x:Name="dtSubmissionsFrom" HorizontalAlignment="Left" Margin="21.5,97,0,0" DisplayDate="{Binding FromDate}" VerticalAlignment="Top" Grid.Column="1"/>
         <Label x:Name="label" Content="From" HorizontalAlignment="Left" Margin="124,97,0,0" VerticalAlignment="Top" Height="24" Grid.ColumnSpan="2"/>
-        <DatePicker x:Name="dtSubmissionsTo" HorizontalAlignment="Left" Margin="202.5,96,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+        <DatePicker x:Name="dtSubmissionsTo" HorizontalAlignment="Left" Margin="202.5,96,0,0" VerticalAlignment="Top" DisplayDate="{Binding ToDate}" Grid.Column="1"/>
         <Label x:Name="label_Copy" Content="To" HorizontalAlignment="Left" Margin="148.5,96,0,0" VerticalAlignment="Top" Height="24" Grid.Column="1"/>
-        <Button x:Name="DownloadCanvasData" Content="Download Sheets" HorizontalAlignment="Left" Margin="327.5,96,0,0" VerticalAlignment="Top" Width="124" Click="DownloadCanvasData_Click" Grid.Column="1"/>
-        <DataGrid x:Name="JobSheetOverview"
-            DataContext="{StaticResource ItemCollectionViewSource}"
-            ItemsSource="{Binding}"
-            AutoGenerateColumns="False"
-            IsReadOnly="True"
-            CanUserAddRows="False" HorizontalAlignment="Left" Height="290" Margin="10,184,0,0" VerticalAlignment="Top" Width="727" Grid.ColumnSpan="2">
+        <Button x:Name="DownloadCanvasData" Content="Download Sheets" HorizontalAlignment="Left" Margin="327.5,96,0,0" Command="{Binding GetXmlDataCommand}" VerticalAlignment="Top" Width="124" Grid.Column="1"/>
+        
+        <Button x:Name="btnViewJobDetails" Content="View" HorizontalAlignment="Left" Height="34" Margin="371.5,479,0,0" VerticalAlignment="Top" Width="104" Grid.Column="1"/>
+        <DataGrid x:Name="dataGrid" Grid.ColumnSpan="2" ItemsSource="{Binding getAllSubmissions}" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="300" Margin="10,185,0,0" VerticalAlignment="Top" Width="712">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding submissionNo}" Header="Submission No"/>
-                <DataGridTextColumn Binding="{Binding userFirstName}" Header="Engineer First Name"/>
-                <DataGridTextColumn Binding="{Binding userSurname}" Header="Engineer Surname"/>
-                <DataGridTextColumn Binding="{Binding getJobStart}" Header="Job Start Date"/>
-                <DataGridTextColumn Binding="{Binding customer}" Header="Customer"/>
-                <DataGridTextColumn Binding="{Binding jobDescription}" Header="Job Description"/>
+                <DataGridTextColumn Header="Submission No" Binding="{Binding SubmissionNo}"/>
+                <DataGridTextColumn Header="Engineer" Binding="{Binding EngineerFullName}"/>
+                <DataGridTextColumn Header="Customer" Binding="{Binding Customer}"/>
+                <DataGridTextColumn Header="Job Start" Binding="{Binding JobStart}" CellStyle="dd/MM/yy"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="btnViewJobDetails" Content="View" HorizontalAlignment="Left" Height="34" Margin="371.5,479,0,0" VerticalAlignment="Top" Width="104" Click="btnViewJobDetails_Click" Grid.Column="1"/>
 
     </Grid>
 </Window>
