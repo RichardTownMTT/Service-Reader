@@ -15,19 +15,13 @@ using System.Windows.Shapes;
 namespace Service_Reader
 {
     /// <summary>
-    /// Interaction logic for MainMenu.xaml
+    /// Interaction logic for ApplcationWindow.xaml
     /// </summary>
-    public partial class MainMenu : Window
+    public partial class ApplicationWindow : Window
     {
-        public MainMenu()
+        public ApplicationWindow()
         {
             InitializeComponent();
         }
-
-        //private void btnCanvasSubmissions_Click(object sender, RoutedEventArgs e)
-        //{
-        //    CanvasSubmissionWindow viewSubmissionsWindow = new CanvasSubmissionWindow();
-        //    viewSubmissionsWindow.Show();
-        //}
     }
 }

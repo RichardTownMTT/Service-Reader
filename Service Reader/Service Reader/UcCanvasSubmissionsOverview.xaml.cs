@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 
 namespace Service_Reader
@@ -8,13 +9,13 @@ namespace Service_Reader
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class CanvasSubmissionWindow : Window
+    public partial class UcCanvasSubmissionsOverview : UserControl
     {
        // private string canvasUsername = "";
        // private string canvasPassword = "";
 
         //private ServiceSubmission[] allSubmissions;
-        public CanvasSubmissionWindow()
+        public UcCanvasSubmissionsOverview()
         {
             InitializeComponent();
         }

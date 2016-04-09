@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Main Menu" Height="349.485" Width="601.546" WindowState="Maximized">
     <Grid>
-        <Button x:Name="btnCanvasSubmissions" Content="Process Canvas Data" HorizontalAlignment="Left" Padding="5"  Margin="25,29,0,0" VerticalAlignment="Top" Click="btnCanvasSubmissions_Click"/>
+        <Button x:Name="btnCanvasSubmissions" Content="Process Canvas Data" HorizontalAlignment="Left" Padding="5"  Margin="25,29,0,0" VerticalAlignment="Top" />
         <Button x:Name="btnViewSubmissions" Content="View Service Submissions" HorizontalAlignment="Left" Padding="5" Margin="25,75,0,0" VerticalAlignment="Top"/>
         <Button x:Name="btnViewCalendar" Content="View Engineer Calendar" HorizontalAlignment="Left" Padding="5" Margin="25,121,0,0" VerticalAlignment="Top"/>
 

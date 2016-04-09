@@ -56,9 +56,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ApplicationWindow.xaml.cs">
+      <DependentUpon>ApplicationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationViewModel.cs" />
     <Compile Include="CanvasRawDataViewModel.cs" />
     <Compile Include="canvasUserModel.cs" />
-    <Compile Include="CanvasUserViewModel.cs" />
+    <Compile Include="IPageViewModel.cs" />
     <Compile Include="MainMenu.xaml.cs">
       <DependentUpon>MainMenu.xaml</DependentUpon>
     </Compile>
@@ -77,7 +81,11 @@
       <DependentUpon>ViewEditServiceDay.xaml</DependentUpon>
     </Compile>
     <Compile Include="ServiceSubmissionViewModel.cs" />
-    <Page Include="CanvasSubmissionWindow.xaml">
+    <Page Include="ApplicationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UcCanvasSubmissionsOverview.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -86,8 +94,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CanvasDataReader.cs" />
-    <Compile Include="CanvasSubmissionWindow.xaml.cs">
-      <DependentUpon>CanvasSubmissionWindow.xaml</DependentUpon>
+    <Compile Include="UcCanvasSubmissionsOverview.xaml.cs">
+      <DependentUpon>UcCanvasSubmissionsOverview.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="MainMenu.xaml">
