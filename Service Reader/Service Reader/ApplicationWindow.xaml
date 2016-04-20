@@ -7,12 +7,21 @@
         mc:Ignorable="d"
         Title="Service Reader" WindowState="Maximized" Height="300" Width="300">
     <Window.Resources>
-            <DataTemplate DataType="{x:Type local:CanvasRawDataViewModel}">
-                <local:UcCanvasSubmissionsOverview/>
-            </DataTemplate>
-        </Window.Resources>
+        <DataTemplate DataType="{x:Type local:CanvasRawDataViewModel}">
+            <local:UcCanvasSubmissionsOverview/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type local:IssueServiceReportViewModel}">
+            <local:IssueServiceReports/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type local:HistoryTrackerViewModel}">
+            <local:HistoryTracker/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type local:JobCostSheetViewModel}">
+            <local:JobCostSheet/>
+        </DataTemplate>
+    </Window.Resources>
 
-        <DockPanel>
+    <DockPanel>
         <Border DockPanel.Dock="Left" BorderBrush="Black" BorderThickness="0,0,1,0" Width="Auto">
             <ItemsControl ItemsSource="{Binding AllPageViewModels}">
                 <ItemsControl.ItemTemplate>

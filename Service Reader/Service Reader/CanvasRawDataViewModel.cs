@@ -18,7 +18,7 @@ namespace Service_Reader
 
         public string Name
         {
-            get { return "Import Data"; }
+            get { return "Process Canvas Data"; }
         }
 
         public CanvasRawDataViewModel()

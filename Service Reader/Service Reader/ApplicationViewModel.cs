@@ -15,6 +15,9 @@ namespace Service_Reader
         public ApplicationViewModel()
         {
             AllPageViewModels.Add(new CanvasRawDataViewModel());
+            allPageViewModels.Add(new IssueServiceReportViewModel());
+            allPageViewModels.Add(new HistoryTrackerViewModel());
+            allPageViewModels.Add(new JobCostSheetViewModel());
             currentPageViewModel = AllPageViewModels[0];
         }
 

@@ -10,24 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Service_Reader
 {
     /// <summary>
-    /// Interaction logic for MainMenu.xaml
+    /// Interaction logic for HistoryTracker.xaml
     /// </summary>
-    public partial class MainMenu : Window
+    public partial class HistoryTracker : UserControl
     {
-        public MainMenu()
+        public HistoryTracker()
         {
             InitializeComponent();
         }
-
-        //private void btnCanvasSubmissions_Click(object sender, RoutedEventArgs e)
-        //{
-        //    CanvasSubmissionWindow viewSubmissionsWindow = new CanvasSubmissionWindow();
-        //    viewSubmissionsWindow.Show();
-        //}
     }
 }

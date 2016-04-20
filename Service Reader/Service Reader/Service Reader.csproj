@@ -62,26 +62,46 @@
     <Compile Include="ApplicationViewModel.cs" />
     <Compile Include="CanvasRawDataViewModel.cs" />
     <Compile Include="canvasUserModel.cs" />
-    <Compile Include="IPageViewModel.cs" />
-    <Compile Include="MainMenu.xaml.cs">
-      <DependentUpon>MainMenu.xaml</DependentUpon>
+    <Compile Include="HistoryTracker.xaml.cs">
+      <DependentUpon>HistoryTracker.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ServiceSubmissionModel.cs" />
+    <Compile Include="HistoryTrackerViewModel.cs" />
+    <Compile Include="IPageViewModel.cs" />
+    <Compile Include="IssueServiceReports.xaml.cs">
+      <DependentUpon>IssueServiceReports.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="IssueServiceReportViewModel.cs" />
+    <Compile Include="JobCostSheet.xaml.cs">
+      <DependentUpon>JobCostSheet.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="JobCostSheetViewModel.cs" />
     <Compile Include="ObservableObject.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="ServiceDay.cs" />
-    <Compile Include="ServiceSubmission.cs" />
+    <Compile Include="ServiceDayModel.cs" />
     <Compile Include="ServiceSubmissionDetails.xaml.cs">
       <DependentUpon>ServiceSubmissionDetails.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ServiceSubmissionModel.cs" />
     <Compile Include="UcCanvasUser.xaml.cs">
       <DependentUpon>UcCanvasUser.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewEditServiceDay.xaml.cs">
-      <DependentUpon>ViewEditServiceDay.xaml</DependentUpon>
+    <Compile Include="ServiceDayView.xaml.cs">
+      <DependentUpon>ServiceDayView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ServiceSubmissionViewModel.cs" />
     <Page Include="ApplicationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HistoryTracker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="IssueServiceReports.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="JobCostSheet.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -98,10 +118,6 @@
       <DependentUpon>UcCanvasSubmissionsOverview.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="MainMenu.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="ServiceSubmissionDetails.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -110,7 +126,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ViewEditServiceDay.xaml">
+    <Page Include="ServiceDayView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
