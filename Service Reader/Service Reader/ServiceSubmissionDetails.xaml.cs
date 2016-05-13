@@ -10,12 +10,28 @@ namespace Service_Reader
     /// <summary>
     /// Interaction logic for ServiceSubmissionDetails.xaml
     /// </summary>
-    public partial class ServiceSubmissionDetails : Window
+    public partial class ServiceSubmissionDetails : UserControl
     {
-           
+        public ServiceSubmissionModel currentSubmission
+        {
+            get
+            {
+                return (ServiceSubmissionModel)GetValue(currentSubmissionDP);
+            }
+            set
+            {
+                SetValue(currentSubmissionDP, value);
+            }
+        }
+        public static readonly DependencyProperty currentSubmissionDP =
+            DependencyProperty.Register("currentSubmission", typeof(ServiceSubmissionModel), typeof(ServiceSubmissionDetails), new PropertyMetadata(null));
+
         //public ServiceSubmissionDetails(ServiceSubmission serviceSheet, string username, string password)
-        //{
-        //    InitializeComponent();
+        public ServiceSubmissionDetails()
+        {
+            InitializeComponent();
+            LayoutRoot.DataContext = this;
+
 
         //    this.DataContext = serviceSheet;
 
@@ -63,28 +79,28 @@ namespace Service_Reader
         //    //txtEngineerSignature.Text = serviceSheet.mttEngSignatureUrl;
 
         //    //retrieveImages(serviceSheet);
-            
+
 
         //    imgEngineerSignature.Source = CanvasDataReader.getImage(serviceSheet.mttEngSignatureUrl, username, password);
 
+    }
+
+
+        //private void displayTimesheets(ServiceDayModel[] allTimesheets)
+        //{
+        //    var itemList = new List<ServiceDayModel>();
+
+        //    foreach (ServiceDayModel currentDay in allTimesheets)
+        //    {
+        //        itemList.Add(currentDay);
+        //    }
+
+        //    //link business data to CollectionViewSource
+        //    //CollectionViewSource ItemCollectionTimesheetView;
+        //    //ItemCollectionTimesheetView = (CollectionViewSource)(FindResource("ItemCollectionTimesheets"));
+        //    //ItemCollectionTimesheetView.Source = itemList;
+        //    icTimeSheet.ItemsSource = itemList;
         //}
-
-
-        private void displayTimesheets(ServiceDay[] allTimesheets)
-        {
-            var itemList = new List<ServiceDay>();
-
-            foreach (ServiceDay currentDay in allTimesheets)
-            {
-                itemList.Add(currentDay);
-            }
-
-            //link business data to CollectionViewSource
-            //CollectionViewSource ItemCollectionTimesheetView;
-            //ItemCollectionTimesheetView = (CollectionViewSource)(FindResource("ItemCollectionTimesheets"));
-            //ItemCollectionTimesheetView.Source = itemList;
-            icTimeSheet.ItemsSource = itemList;
-        }
 
     }
 }

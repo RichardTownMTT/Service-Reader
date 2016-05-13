@@ -14,7 +14,7 @@ namespace Service_Reader
 
         public ApplicationViewModel()
         {
-            AllPageViewModels.Add(new CanvasRawDataViewModel());
+            AllPageViewModels.Add(new SubmissionViewModel());
             allPageViewModels.Add(new IssueServiceReportViewModel());
             allPageViewModels.Add(new HistoryTrackerViewModel());
             allPageViewModels.Add(new JobCostSheetViewModel());

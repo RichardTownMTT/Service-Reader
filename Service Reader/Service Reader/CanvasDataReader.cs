@@ -51,6 +51,22 @@ namespace Service_Reader
         public static string DATE_SIGNED = "Date Signed";
         public static string MTT_ENG_SIGNATURE = "MTT engineer signature";
 
+        //Service day tags
+        private static string DATE = "Date";
+        private static string TRAVEL_START = "Travel time start";
+        private static string ARRIVE_ONSITE = "Arrival time on site";
+        private static string DEPART_SITE = "Departure time from site";
+        private static string TRAVEL_END = "Travel end time";
+        private static string MILEAGE = "Mileage";
+        private static string DAILY_ALLOWANCE = "Daily allowance";
+        private static string OVERNIGHT_ALLOWANCE = "Overnight allowance";
+        private static string BARRIER_PAYMENT = "Barrier payment";
+        private static string TRAVEL_TO_SITE = "Travel time to site";
+        private static string TRAVEL_FROM_SITE = "Travel time from site";
+        private static string TOTAL_TRAVEL = "Total travel time";
+        private static string DAILY_REPORT = "Daily report";
+        private static string PARTS_SUPPLIED = "Parts supplied today";
+
         //XML tags for sections
         public static string SECTIONS = "Sections";
         public static string SECTION = "Section";
@@ -59,6 +75,7 @@ namespace Service_Reader
         public static string SCREENS = "Screens";
         public static string SCREEN = "Screen";
         public static string RESPONSES = "Responses";
+        private static string RESPONSE_GROUP = "ResponseGroup";
 
         public static string RESPONSE_GROUPS = "ResponseGroups";
         public static string JOB_DETAILS = "Job details";
@@ -219,6 +236,49 @@ namespace Service_Reader
                     retval.MttEngSignatureUrl = xmlResult(MTT_ENG_SIGNATURE, responsesXml);
                 }
             }
+            return retval;
+        }
+
+        public static ServiceDayModel[] createDays(XElement allDays)
+        {
+            int dayCounter = 0;
+            int totalDays;
+            totalDays = allDays.Descendants(RESPONSE_GROUP).Count();
+            ServiceDayModel[] retval = new ServiceDayModel[totalDays];
+
+            foreach (XElement responseGroupXml in allDays.Elements())
+            {
+                ServiceDayModel dayOfService = new ServiceDayModel();
+                string dtServiceStr = xmlResult(DATE, responseGroupXml);
+                dayOfService.DtServiceDay = Convert.ToDateTime(dtServiceStr);
+                XElement sectionXml = responseGroupXml.Element(SECTION);
+                XElement screensXml = sectionXml.Element(SCREENS);
+                XElement screenXml = screensXml.Element(SCREEN);
+                XElement responsesXml = screenXml.Element(RESPONSES);
+
+                string travelStartStr = xmlResult(TRAVEL_START, responsesXml);
+                dayOfService.TravelStartTime = Convert.ToDateTime(dtServiceStr + " " + travelStartStr);
+                string arrivalOnsiteStr = xmlResult(ARRIVE_ONSITE, responsesXml);
+                dayOfService.ArrivalOnsiteTime = Convert.ToDateTime(dtServiceStr + " " + arrivalOnsiteStr);
+                string departSiteStr = xmlResult(DEPART_SITE, responsesXml);
+                dayOfService.DepartSiteTime = Convert.ToDateTime(dtServiceStr + " " + departSiteStr);
+                string travelEndStr = xmlResult(TRAVEL_END, responsesXml);
+                dayOfService.TravelEndTime = Convert.ToDateTime(dtServiceStr + " " + travelEndStr);
+                dayOfService.Mileage = Convert.ToDouble(xmlResult(MILEAGE, responsesXml));
+                dayOfService.DailyAllowance = Convert.ToDouble(xmlResult(DAILY_ALLOWANCE, responsesXml));
+                dayOfService.OvernightAllowance = Convert.ToDouble(xmlResult(OVERNIGHT_ALLOWANCE, responsesXml));
+                dayOfService.BarrierPayment = Convert.ToDouble(xmlResult(BARRIER_PAYMENT, responsesXml));
+                dayOfService.TravelTimeToSite = Convert.ToDouble(xmlResult(TRAVEL_TO_SITE, responsesXml));
+                dayOfService.TravelTimeFromSite = Convert.ToDouble(xmlResult(TRAVEL_FROM_SITE, responsesXml));
+                dayOfService.TotalTravelTime = Convert.ToDouble(xmlResult(TOTAL_TRAVEL, responsesXml));
+                dayOfService.TotalTimeOnsite = Convert.ToDouble(xmlResult(TOTAL_TIME_ONSITE, responsesXml));
+                dayOfService.DailyReport = xmlResult(DAILY_REPORT, responsesXml);
+                dayOfService.PartsSupplied = xmlResult(PARTS_SUPPLIED, responsesXml);
+
+                retval[dayCounter] = dayOfService;
+                dayCounter++;
+            }
+
             return retval;
         }
 

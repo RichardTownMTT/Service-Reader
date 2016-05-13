@@ -46,7 +46,7 @@ namespace Service_Reader
         private string m_customerSignName = "";
         private DateTime m_dtSigned;
         private string m_mttEngSignatureUrl = "";
-        private ServiceDay[] m_serviceTimesheets;
+        private ServiceDayModel[] m_serviceTimesheets;
         
         public int SubmissionVersion
         {
@@ -720,7 +720,7 @@ namespace Service_Reader
             }
         }
 
-        public ServiceDay[] ServiceTimesheets
+        public ServiceDayModel[] ServiceTimesheets
         {
             get
             {

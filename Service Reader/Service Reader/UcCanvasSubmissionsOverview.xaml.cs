@@ -18,7 +18,15 @@ namespace Service_Reader
         public UcCanvasSubmissionsOverview()
         {
             InitializeComponent();
+            
         }
+
+        private void dgvSubmissions_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ServiceSubmissionModel currentItem = (ServiceSubmissionModel)dataGrid.CurrentItem;
+            ucSubmissions.currentSubmission = currentItem;
+        }
+
 
         //private void DownloadCanvasData_Click(object sender, RoutedEventArgs e)
         //{
@@ -73,7 +81,7 @@ namespace Service_Reader
         //    string endDate = "";
         //    endDate = dtSubmissionsEnd.Month + "/" + dtSubmissionsEnd.Day + "/" + dtSubmissionsEnd.Year;
 
-            
+
         //    allSubmissions = CanvasDataReader.downloadXml(canvasUsername, canvasPassword, fromDate, endDate);
 
         //    //If allsubmissions is null, then an error has occured
@@ -98,8 +106,8 @@ namespace Service_Reader
         //    {
         //        itemList.Add(currentSubmission);
         //    }
-            
-        
+
+
         //    CollectionViewSource itemCollectionViewSource;
         //    itemCollectionViewSource = (CollectionViewSource)(FindResource("ItemCollectionViewSource"));
         //    itemCollectionViewSource.Source = itemList;

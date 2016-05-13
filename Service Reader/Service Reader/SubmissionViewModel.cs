@@ -7,7 +7,7 @@ using System;
 
 namespace Service_Reader
 {
-    public class CanvasRawDataViewModel : ObservableObject, IPageViewModel
+    public class SubmissionViewModel : ObservableObject, IPageViewModel
     {
         private List<ServiceSubmissionModel> allServiceSubmissions;
         //private ServiceSubmissionModel[] allServiceSubmissions;
@@ -15,13 +15,14 @@ namespace Service_Reader
         private ICommand getCanvasDataCommand;
         private DateTime fromDate;
         private DateTime toDate;
+        private ServiceSubmissionModel selectedSubmission;
 
         public string Name
         {
             get { return "Process Canvas Data"; }
         }
 
-        public CanvasRawDataViewModel()
+        public SubmissionViewModel()
         {
             currentUser = new canvasUserModel();
             fromDate = DateTime.Now.AddDays(-7);
@@ -61,6 +62,19 @@ namespace Service_Reader
             }
         }
 
+        public ServiceSubmissionModel SelectedSubmission
+        {
+            get { return selectedSubmission; }
+            set
+            {
+                if (value != selectedSubmission)
+                {
+                    selectedSubmission = value;
+                    onPropertyChanged("SelectedSubmission");
+                }
+            }
+        }
+
         public DateTime FromDate
         {
             get
@@ -70,8 +84,11 @@ namespace Service_Reader
 
             set
             {
-                fromDate = value;
-                onPropertyChanged("FromDate");
+                if (fromDate != value)
+                {
+                    fromDate = value;
+                    onPropertyChanged("FromDate");
+                }
             }
         }
 
@@ -84,8 +101,11 @@ namespace Service_Reader
 
             set
             {
-                toDate = value;
-                onPropertyChanged("ToDate");
+                if (toDate != value)
+                {
+                    toDate = value;
+                    onPropertyChanged("ToDate");
+                }
             }
         }
 
