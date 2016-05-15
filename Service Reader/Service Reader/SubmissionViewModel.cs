@@ -15,7 +15,7 @@ namespace Service_Reader
         private ICommand getCanvasDataCommand;
         private DateTime fromDate;
         private DateTime toDate;
-        private ServiceSubmissionModel selectedSubmission;
+        //private ServiceSubmissionModel selectedSubmission;
 
         public string Name
         {
@@ -62,18 +62,18 @@ namespace Service_Reader
             }
         }
 
-        public ServiceSubmissionModel SelectedSubmission
-        {
-            get { return selectedSubmission; }
-            set
-            {
-                if (value != selectedSubmission)
-                {
-                    selectedSubmission = value;
-                    onPropertyChanged("SelectedSubmission");
-                }
-            }
-        }
+        //public ServiceSubmissionModel SelectedSubmission
+        //{
+        //    get { return selectedSubmission; }
+        //    set
+        //    {
+        //        if (value != selectedSubmission)
+        //        {
+        //            selectedSubmission = value;
+        //            onPropertyChanged("SelectedSubmission");
+        //        }
+        //    }
+        //}
 
         public DateTime FromDate
         {

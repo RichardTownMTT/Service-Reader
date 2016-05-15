@@ -94,15 +94,12 @@
                 </Grid>
             </GroupBox>
             <GroupBox Header="Timesheets">
-                <!--<Grid Name="grdTimesheets">
-                    <ItemsControl Name="icTimeSheet" Grid.ColumnSpan="2">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <local:ViewEditServiceDay travelStart="{Binding Path=getTravelStartTime}"/>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </Grid>-->
+                <GroupBox.Resources>
+                    <DataTemplate x:Key="timesheetDataTemplate">
+                        <local:ServiceDayView/>
+                    </DataTemplate>
+                </GroupBox.Resources>
+                <ListBox ItemsSource="{Binding currentSubmission.ServiceTimesheets}" ItemTemplate="{StaticResource timesheetDataTemplate}"/>
             </GroupBox>
             <GroupBox Header="Job Completion Details">
                 <Grid>

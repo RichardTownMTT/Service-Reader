@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 namespace Service_Reader
@@ -46,7 +47,7 @@ namespace Service_Reader
         private string m_customerSignName = "";
         private DateTime m_dtSigned;
         private string m_mttEngSignatureUrl = "";
-        private ServiceDayModel[] m_serviceTimesheets;
+        private ObservableCollection<ServiceDayModel> m_serviceTimesheets;
         
         public int SubmissionVersion
         {
@@ -720,7 +721,7 @@ namespace Service_Reader
             }
         }
 
-        public ServiceDayModel[] ServiceTimesheets
+        public ObservableCollection<ServiceDayModel> ServiceTimesheets
         {
             get
             {

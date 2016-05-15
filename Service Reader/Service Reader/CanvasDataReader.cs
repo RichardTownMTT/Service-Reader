@@ -6,6 +6,7 @@ using System.IO;
 using System.Net;
 using System.Windows.Media.Imaging;
 using System;
+using System.Collections.ObjectModel;
 
 namespace Service_Reader
 {
@@ -30,7 +31,7 @@ namespace Service_Reader
         public static string CUSTOMER_ORDER = "Customer order no.";
         public static string MTT_JOB_NO = "MTT job no.";
         public static string JOB_DESC = "Job description";
-        public static string TOTAL_TIME_ONSITE = "JobTotalTimeOnsite";
+        public static string JOB_TOTAL_TIME_ONSITE = "JobTotalTimeOnsite";
         public static string TOTAL_TRAVEL_TIME = "JobTotalTravelTime";
         public static string TOTAL_MILEAGE = "Total mileage";
         public static string TOTAL_DAILY_ALLOWANCES = "Total number of daily allowances";
@@ -64,6 +65,7 @@ namespace Service_Reader
         private static string TRAVEL_TO_SITE = "Travel time to site";
         private static string TRAVEL_FROM_SITE = "Travel time from site";
         private static string TOTAL_TRAVEL = "Total travel time";
+        private static string TOTAL_TIME_ONSITE = "Total time onsite";
         private static string DAILY_REPORT = "Daily report";
         private static string PARTS_SUPPLIED = "Parts supplied today";
 
@@ -207,6 +209,7 @@ namespace Service_Reader
                     XElement screenXml = screensXml.Element(SCREEN);
                     XElement responseGroupsXml = screenXml.Element(RESPONSE_GROUPS);
                     //retval.ServiceTimesheets = ServiceDay.createDays(responseGroupsXml);
+                    retval.ServiceTimesheets = createDays(responseGroupsXml);
                 }
                 else if (sectionName.Equals(JOB_SIGNOFF))
                 {
@@ -214,7 +217,7 @@ namespace Service_Reader
                     XElement screenXml = screensXml.Element(SCREEN);
                     XElement responsesXml = screenXml.Element(RESPONSES);
 
-                    retval.TotalTimeOnsite = Convert.ToDouble(xmlResult(TOTAL_TIME_ONSITE, responsesXml));
+                    retval.TotalTimeOnsite = Convert.ToDouble(xmlResult(JOB_TOTAL_TIME_ONSITE, responsesXml));
                     retval.TotalTravelTime = Convert.ToDouble(xmlResult(TOTAL_TRAVEL_TIME, responsesXml));
                     retval.TotalMileage = Convert.ToDouble(xmlResult(TOTAL_MILEAGE, responsesXml));
                     //retval.TotalDailyAllowances = Convert.ToDouble(xmlResult(TOTAL_DAILY_ALLOWANCES, responsesXml));
@@ -235,16 +238,20 @@ namespace Service_Reader
                     retval.DtSigned = Convert.ToDateTime(xmlResult(DATE_SIGNED, responsesXml));
                     retval.MttEngSignatureUrl = xmlResult(MTT_ENG_SIGNATURE, responsesXml);
                 }
+                else
+                {
+                    new Exception("Unknown Canvas Data Section");
+                }
+                
             }
             return retval;
         }
 
-        public static ServiceDayModel[] createDays(XElement allDays)
+        public static ObservableCollection<ServiceDayModel> createDays(XElement allDays)
         {
-            int dayCounter = 0;
             int totalDays;
             totalDays = allDays.Descendants(RESPONSE_GROUP).Count();
-            ServiceDayModel[] retval = new ServiceDayModel[totalDays];
+            ObservableCollection<ServiceDayModel> retval = new ObservableCollection<ServiceDayModel>();
 
             foreach (XElement responseGroupXml in allDays.Elements())
             {
@@ -275,8 +282,7 @@ namespace Service_Reader
                 dayOfService.DailyReport = xmlResult(DAILY_REPORT, responsesXml);
                 dayOfService.PartsSupplied = xmlResult(PARTS_SUPPLIED, responsesXml);
 
-                retval[dayCounter] = dayOfService;
-                dayCounter++;
+                retval.Add(dayOfService);
             }
 
             return retval;
