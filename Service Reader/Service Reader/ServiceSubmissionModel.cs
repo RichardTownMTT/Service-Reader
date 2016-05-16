@@ -30,9 +30,9 @@ namespace Service_Reader
         private double m_totalTimeOnsite = 0;
         private double m_totalTravelTime = 0;
         private double m_totalMileage = 0;
-        private int m_totalDailyAllowances = 0;
-        private int m_totalOvernightAllowances = 0;
-        private int m_totalBarrierPayments = 0;
+        private double m_totalDailyAllowances = 0;
+        private double m_totalOvernightAllowances = 0;
+        private double m_totalBarrierPayments = 0;
         private string m_jobStatus = "";
         private string m_finalJobReport = "";
         private string m_additionalFaultsFound = "";
@@ -432,7 +432,7 @@ namespace Service_Reader
             }
         }
 
-        public int TotalDailyAllowances
+        public double TotalDailyAllowances
         {
             get
             {
@@ -449,7 +449,7 @@ namespace Service_Reader
             }
         }
 
-        public int TotalOvernightAllowances
+        public double TotalOvernightAllowances
         {
             get
             {
@@ -466,7 +466,7 @@ namespace Service_Reader
             }
         }
 
-        public int TotalBarrierPayments
+        public double TotalBarrierPayments
         {
             get
             {
@@ -477,7 +477,7 @@ namespace Service_Reader
             {
                 if (value != this.m_totalBarrierPayments)
                 {
-                    this.TotalBarrierPayments = value;
+                    this.m_totalBarrierPayments = value;
                     onPropertyChanged("TotalBarrierPayments");
                 }
             }

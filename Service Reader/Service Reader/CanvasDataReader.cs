@@ -220,9 +220,9 @@ namespace Service_Reader
                     retval.TotalTimeOnsite = Convert.ToDouble(xmlResult(JOB_TOTAL_TIME_ONSITE, responsesXml));
                     retval.TotalTravelTime = Convert.ToDouble(xmlResult(TOTAL_TRAVEL_TIME, responsesXml));
                     retval.TotalMileage = Convert.ToDouble(xmlResult(TOTAL_MILEAGE, responsesXml));
-                    //retval.TotalDailyAllowances = Convert.ToDouble(xmlResult(TOTAL_DAILY_ALLOWANCES, responsesXml));
-                    //retval.TotalOvernightAllowances = Convert.ToDouble(xmlResult(TOTAL_OVERNIGHT_ALLOWANCES, responsesXml));
-                    //retval.TotalBarrierPayments = Convert.ToDouble(xmlResult(TOTAL_BARRIER_PAYMENTS, responsesXml));
+                    retval.TotalDailyAllowances = Convert.ToDouble(xmlResult(TOTAL_DAILY_ALLOWANCES, responsesXml));
+                    retval.TotalOvernightAllowances = Convert.ToDouble(xmlResult(TOTAL_OVERNIGHT_ALLOWANCES, responsesXml));
+                    retval.TotalBarrierPayments = Convert.ToDouble(xmlResult(TOTAL_BARRIER_PAYMENTS, responsesXml));
                     retval.JobStatus = xmlResult(JOB_STATUS, responsesXml);
                     retval.FinalJobReport = xmlResult(FINAL_JOB_REPORT, responsesXml);
                     retval.AdditionalFaultsFound = xmlResult(ADDITIONAL_FAULTS_FOUND, responsesXml);

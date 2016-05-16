@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Service_Reader"
              mc:Ignorable="d" 
              x:Name="LayoutRoot"
-             d:DesignHeight="315.464" d:DesignWidth="638.66" BorderBrush="Black" BorderThickness="0.5">
+             d:DesignHeight="315.464" d:DesignWidth="638.66" Margin="5" BorderBrush="Black" BorderThickness="0.5">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -28,34 +28,34 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Label Content="Date" Grid.Column="0" Grid.Row="0"/>
-        <DatePicker Name="dtServiceDayEntered" Grid.Column="1" Grid.Row="0"/>
+        <DatePicker Name="dtServiceDayEntered" Grid.Column="1" Grid.Row="0" SelectedDate="{Binding DtServiceDay}"/>
         <Label Content="Travel Start" Grid.Column="0" Grid.Row="1"/>
         <Label Content="Arrival Onsite" Grid.Column="1" Grid.Row="1"/>
         <Label Content="Depart Site" Grid.Column="2" Grid.Row="1"/>
         <Label Content="Travel End" Grid.Column="3" Grid.Row="1"/>
-        <TextBox Name="txtTravelStart" Grid.Column="0" Grid.Row="2" Margin="5" />
-        <TextBox Name="txtArrivalOnsite" Grid.Column="1" Grid.Row="2" Margin="5"/>
-        <TextBox Name="txtDepartSite" Grid.Column="2" Grid.Row="2" Margin="5"/>
-        <TextBox Name="txtTravelEnd" Grid.Column="3" Grid.Row="2" Margin="5"/>
+        <DatePickerTextBox Grid.Column="0" Grid.Row="2" Margin="5" Text="{Binding TravelStartTime}"/>
+        <DatePickerTextBox Name="txtArrivalOnsite" Grid.Column="1" Grid.Row="2" Margin="5" Text="{Binding ArrivalOnsiteTime}"/>
+        <DatePickerTextBox Name="txtDepartSite" Grid.Column="2" Grid.Row="2" Margin="5" Text="{Binding DepartSiteTime}"/>
+        <DatePickerTextBox Name="txtTravelEnd" Grid.Column="3" Grid.Row="2" Margin="5" Text="{Binding TravelEndTime}"/>
         <Label Content="Mileage" Grid.Column="0" Grid.Row="3"/>
         <Label Content="Daily Allowance" Grid.Column="1" Grid.Row="3" />
         <Label Content="Overnight Allowance" Grid.Column="2" Grid.Row="3" />
         <Label Content="Barrier Payment" Grid.Column="3" Grid.Row="3" />
         <TextBox Name="txtMileage" Grid.Column="0" Grid.Row="4" Margin="5" Text="{Binding Path=Mileage}"/>
-        <TextBox Name="txtDailyAllowance" Grid.Column="1" Grid.Row="4" Margin="5"/>
-        <TextBox Name="txtOvernightAllowance" Grid.Column="2" Grid.Row="4" Margin="5"/>
-        <TextBox Name="txtBarrierPayment" Grid.Column="3" Grid.Row="4" Margin="5"/>
+        <TextBox Name="txtDailyAllowance" Grid.Column="1" Grid.Row="4" Margin="5" Text="{Binding DailyAllowance}"/>
+        <TextBox Name="txtOvernightAllowance" Grid.Column="2" Grid.Row="4" Margin="5" Text="{Binding OvernightAllowance}"/>
+        <TextBox Name="txtBarrierPayment" Grid.Column="3" Grid.Row="4" Margin="5" Text="{Binding BarrierPayment}"/>
         <Label Content="Travel time to site" Grid.Column="0" Grid.Row="5"/>
         <Label Content="Travel time from site" Grid.Column="1" Grid.Row="5"/>
         <Label Content="Total travel" Grid.Column="2" Grid.Row="5"/>
         <Label Content="Total time onsite" Grid.Column="3" Grid.Row="5"/>
-        <TextBox Name="txtTotalTravelToSite" Grid.Column="0" Grid.Row="6" Margin="5"/>
-        <TextBox Name="txtTotalTravelFromSite" Grid.Column="1" Grid.Row="6" Margin="5"/>
-        <TextBox Name="txtTotalTravelTime" Grid.Column="2" Grid.Row="6" Margin="5"/>
-        <TextBox Name="txtTotalTimeOnsite" Grid.Column="3" Grid.Row="6" Margin="5"/>
+        <TextBox Name="txtTotalTravelToSite" Grid.Column="0" Grid.Row="6" Margin="5" Text="{Binding TravelTimeToSite}"/>
+        <TextBox Name="txtTotalTravelFromSite" Grid.Column="1" Grid.Row="6" Margin="5" Text="{Binding TravelTimeFromSite}"/>
+        <TextBox Name="txtTotalTravelTime" Grid.Column="2" Grid.Row="6" Margin="5" Text="{Binding TotalTravelTime}"/>
+        <TextBox Name="txtTotalTimeOnsite" Grid.Column="3" Grid.Row="6" Margin="5" Text="{Binding TotalTimeOnsite}"/>
         <Label Content="Daily Report" Grid.Column="0" Grid.Row="7"/>
-        <TextBox Name="txtDailyReport" Grid.Column="0" Grid.Row="8" Margin="5" Grid.ColumnSpan="4"/>
+        <TextBox Name="txtDailyReport" Grid.Column="0" Grid.Row="8" Margin="5" Grid.ColumnSpan="4" Text="{Binding DailyReport}"/>
         <Label Content="Parts Supplied" Grid.Column="0" Grid.Row="9"/>
-        <TextBox Name="txtPartsSupplied" Grid.Column="0" Grid.Row="10" Margin="5" Grid.ColumnSpan="4"/>
+        <TextBox Name="txtPartsSupplied" Grid.Column="0" Grid.Row="10" Margin="5" Grid.ColumnSpan="4" Text="{Binding PartsSupplied}"/>
     </Grid>
 </UserControl>

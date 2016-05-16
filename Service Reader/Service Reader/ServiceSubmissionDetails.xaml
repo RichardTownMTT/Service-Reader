@@ -130,7 +130,7 @@
                     <Label Content="Image 4" Grid.Column="0" Grid.Row="8"/>
                     <Label Content="Image 5" Grid.Column="0" Grid.Row="9"/>
                     <TextBox Name="txtJobStatus" Grid.Column="1" Grid.Row="0" Margin ="5" Text="{Binding Path=currentSubmission.JobStatus}"/>
-                    <TextBox Name="txtFinalReport" Grid.Column="1" Grid.Row="1" Margin ="5" Text="{Binding Path=currentSubmission.FinalReport}"/>
+                    <TextBox Name="txtFinalReport" Grid.Column="1" Grid.Row="1" Margin ="5" Text="{Binding Path=currentSubmission.FinalJobReport}"/>
                     <TextBox Name="txtAdditionalFaultsFound" Grid.Column="1" Grid.Row="2" Margin ="5" Text="{Binding Path=currentSubmission.AdditionalFaultsFound}"/>
                     <CheckBox Name="chkQuoteRequired" Grid.Column="1" Grid.Row="3" Margin ="5" IsChecked="{Binding Path=currentSubmission.QuoteRequired}"/>
                     <TextBox Name="txtPartsForFollowup" Grid.Column="1" Grid.Row="4" Margin ="5" Text="{Binding Path=currentSubmission.PartsForFollowup}"/>
@@ -164,9 +164,9 @@
                     <TextBox Name="txtTotalTimeOnsite" Grid.Column="1" Grid.Row="0" Margin="5" IsReadOnly="True" Text="{Binding Path=currentSubmission.TotalTimeOnsite}"/>
                     <TextBox Name="txtTotalTravelTime" Grid.Column="1" Grid.Row="1" Margin="5" IsReadOnly="True" Text="{Binding Path=currentSubmission.TotalTravelTime}"/>
                     <TextBox Name="txtTotalMileage" Grid.Column="1" Grid.Row="2" Margin ="5" Text="{Binding Path=currentSubmission.TotalMileage}"/>
-                    <TextBox Name="txtTotalDailyAllowances" Grid.Column="1" Grid.Row="3" Margin ="5" />
-                        <TextBox Name="txtTotalOvernightAllowances" Grid.Column="1" Grid.Row="4" Margin ="5" Text="{Binding Path=totalOvernightAllowances}"/>
-                    <TextBox Name="txtTotalBarrierPayments" Grid.Column="1" Grid.Row="5" Margin ="5" Text="{Binding Path=totalBarrierPayments}"/>
+                    <TextBox Name="txtTotalDailyAllowances" Grid.Column="1" Grid.Row="3" Margin ="5" Text="{Binding currentSubmission.TotalDailyAllowances}"/>
+                    <TextBox Name="txtTotalOvernightAllowances" Grid.Column="1" Grid.Row="4" Margin ="5" Text="{Binding Path=currentSubmission.TotalOvernightAllowances}"/>
+                    <TextBox Name="txtTotalBarrierPayments" Grid.Column="1" Grid.Row="5" Margin ="5" Text="{Binding Path=currentSubmission.TotalBarrierPayments}"/>
                 </Grid>
             </GroupBox>
             <GroupBox Header="Job Signoff">
@@ -186,10 +186,10 @@
                     <Label Content="Customer Name" Grid.Column="0" Grid.Row="1"/>
                     <Label Content="Date Signed" Grid.Column="0" Grid.Row="2"/>
                     <Label Content="Engineer Signature" Grid.Column="0" Grid.Row="3"/>
-                    <TextBox Name="txtCustomerSignature" Grid.Column="1" Grid.Row="0" Margin ="5"  Text="{Binding Path=customerSignatureUrl}"/>
-                    <TextBox Name="txtCustomerSignName" Grid.Column="1" Grid.Row="1" Margin ="5" Text="{Binding Path=customerSignName}"/>
-                    <DatePicker Name="dtSigned" Grid.Column="1" Grid.Row="2" Margin ="5" SelectedDate="{Binding Path=dtSigned}"/>
-                    <TextBox Name="txtEngineerSignature" Grid.Column="1" Grid.Row="3" Margin ="5" Text="{Binding Path=mttEngSignatureUrl}"/>
+                    <TextBox Name="txtCustomerSignature" Grid.Column="1" Grid.Row="0" Margin ="5"  Text="{Binding Path=currentSubmission.CustomerSignatureUrl}"/>
+                    <TextBox Name="txtCustomerSignName" Grid.Column="1" Grid.Row="1" Margin ="5" Text="{Binding Path=currentSubmission.CustomerSignName}"/>
+                    <DatePicker Name="dtSigned" Grid.Column="1" Grid.Row="2" Margin ="5" SelectedDate="{Binding Path=currentSubmission.DtSigned}"/>
+                    <TextBox Name="txtEngineerSignature" Grid.Column="1" Grid.Row="3" Margin ="5" Text="{Binding Path=currentSubmission.MttEngSignatureUrl}"/>
                     <Image Name="imgEngineerSignature" Grid.Column="1" Grid.Row="4" Margin="5"/>
                 </Grid>
             </GroupBox>
