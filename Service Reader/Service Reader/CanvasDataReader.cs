@@ -285,7 +285,11 @@ namespace Service_Reader
                 retval.Add(dayOfService);
             }
 
-            return retval;
+            //Need to sort the observable collection
+
+            ObservableCollection<ServiceDayModel> retvalSorted = new ObservableCollection<ServiceDayModel>(retval.OrderBy(a => a.DtServiceDay));
+
+            return retvalSorted;
         }
 
         public static BitmapImage getImage(string imageReference, string username, string password)

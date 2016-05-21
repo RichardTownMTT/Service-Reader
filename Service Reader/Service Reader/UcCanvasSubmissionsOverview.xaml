@@ -20,13 +20,12 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="250"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
         <local:UcCanvasUser x:Name="ucUserDetails" userName="{Binding CurrentUser.Username, Mode=TwoWay}" password="{Binding CurrentUser.Password, Mode=TwoWay}" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4"/>
         <DatePicker x:Name="dtSubmissionsFrom" SelectedDate="{Binding FromDate}" Grid.Column="1" Grid.Row="1"/>
@@ -44,6 +43,6 @@
                 <DataGridTextColumn Header="Job Start" Binding="{Binding JobStart, StringFormat=\{0:dd/MM/yy\}}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <local:ServiceSubmissionDetails x:Name="ucSubmissions" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="6" Margin="5" />
+        <local:ServiceSubmissionDetails x:Name="ucSubmissions" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5" Margin="5" />
     </Grid>
 </UserControl>

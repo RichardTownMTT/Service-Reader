@@ -54,8 +54,15 @@ namespace Service_Reader
                 {
                     m_travelStartTime = value;
                     onPropertyChanged("TravelStartTime");
+                    calculateTimes();
                 }
             }
+        }
+
+        private void calculateTimes()
+        {
+            TimeSpan travelTo = ArrivalOnsiteTime - TravelStartTime;
+            this.TravelTimeToSite = travelTo.TotalHours;
         }
 
         public DateTime ArrivalOnsiteTime
