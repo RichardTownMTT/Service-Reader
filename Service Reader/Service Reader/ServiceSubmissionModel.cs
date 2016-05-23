@@ -48,6 +48,8 @@ namespace Service_Reader
         private DateTime m_dtSigned;
         private string m_mttEngSignatureUrl = "";
         private ObservableCollection<ServiceDayModel> m_serviceTimesheets;
+
+        private Boolean m_approved = false;
         
         public int SubmissionVersion
         {
@@ -63,6 +65,26 @@ namespace Service_Reader
                     this.m_submissionVersion = value;
                     onPropertyChanged("SubmissionVersion");
                 }
+            }
+        }
+
+        public void updateTimes()
+        {
+            if (ServiceTimesheets != null)
+            {
+                double totalTimeToSiteUpdate = 0;
+                double totalTimeFromSiteUpdate = 0;
+                double totalTimeOnsiteUpdate = 0;
+                foreach (ServiceDayModel currentDay in ServiceTimesheets)
+                {
+                    totalTimeToSiteUpdate += currentDay.TravelTimeToSite;
+                    totalTimeFromSiteUpdate += currentDay.TravelTimeFromSite;
+                    totalTimeOnsiteUpdate += currentDay.TotalTimeOnsite;
+                }
+
+                double totalTravelUpdate = totalTimeToSiteUpdate + totalTimeFromSiteUpdate;
+                TotalTravelTime = totalTravelUpdate;
+                TotalTimeOnsite = totalTimeOnsiteUpdate;
             }
         }
 
@@ -737,6 +759,22 @@ namespace Service_Reader
                 }
             }
         }
-        
+
+        public bool Approved
+        {
+            get
+            {
+                return m_approved;
+            }
+
+            set
+            {
+                if (m_approved != value)
+                {
+                    m_approved = value;
+                    onPropertyChanged("Approved");
+                }
+            }
+        }
     }
 }

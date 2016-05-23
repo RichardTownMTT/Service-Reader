@@ -192,5 +192,20 @@
                 <Image Name="imgEngineerSignature" Grid.Column="1" Grid.Row="4" Margin="5"/>
             </Grid>
         </GroupBox>
+        <GroupBox Header="Office Approval">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Label Content="Approved" Grid.Column="0"/>
+                <CheckBox IsChecked="{Binding currentSubmission.Approved}" Grid.Column="1"/>
+                <Button Content="Cancel" Grid.Column="0" Grid.Row="1" Margin="5"/>
+            </Grid>
+        </GroupBox>
     </StackPanel>
 </UserControl>

@@ -209,7 +209,7 @@ namespace Service_Reader
                     XElement screenXml = screensXml.Element(SCREEN);
                     XElement responseGroupsXml = screenXml.Element(RESPONSE_GROUPS);
                     //retval.ServiceTimesheets = ServiceDay.createDays(responseGroupsXml);
-                    retval.ServiceTimesheets = createDays(responseGroupsXml);
+                    retval.ServiceTimesheets = createDays(responseGroupsXml, retval);
                 }
                 else if (sectionName.Equals(JOB_SIGNOFF))
                 {
@@ -247,7 +247,7 @@ namespace Service_Reader
             return retval;
         }
 
-        public static ObservableCollection<ServiceDayModel> createDays(XElement allDays)
+        public static ObservableCollection<ServiceDayModel> createDays(XElement allDays, ServiceSubmissionModel currentSubmission)
         {
             int totalDays;
             totalDays = allDays.Descendants(RESPONSE_GROUP).Count();
@@ -255,7 +255,7 @@ namespace Service_Reader
 
             foreach (XElement responseGroupXml in allDays.Elements())
             {
-                ServiceDayModel dayOfService = new ServiceDayModel();
+                ServiceDayModel dayOfService = new ServiceDayModel(currentSubmission);
                 string dtServiceStr = xmlResult(DATE, responseGroupXml);
                 dayOfService.DtServiceDay = Convert.ToDateTime(dtServiceStr);
                 XElement sectionXml = responseGroupXml.Element(SECTION);
@@ -282,6 +282,8 @@ namespace Service_Reader
                 dayOfService.DailyReport = xmlResult(DAILY_REPORT, responsesXml);
                 dayOfService.PartsSupplied = xmlResult(PARTS_SUPPLIED, responsesXml);
 
+                //Adding a reference to the current submission
+                dayOfService.CurrentServiceSubmission = currentSubmission;
                 retval.Add(dayOfService);
             }
 

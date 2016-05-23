@@ -23,8 +23,8 @@ namespace Service_Reader
 
         private void dgvSubmissions_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ServiceSubmissionModel currentItem = (ServiceSubmissionModel)dataGrid.CurrentItem;
-            ucSubmissions.currentSubmission = currentItem;
+            //ServiceSubmissionModel currentItem = (ServiceSubmissionModel)dataGrid.CurrentItem;
+            //ucSubmissions.currentSubmission = currentItem;
         }
 
 

@@ -35,14 +35,26 @@
         <Button x:Name="DownloadCanvasData" Content="Download Sheets" Command="{Binding GetXmlDataCommand}" Grid.Column="4" Grid.Row="1" Margin="5"/>
 
 
-        <DataGrid x:Name="dataGrid" ItemsSource="{Binding getAllSubmissions}" AutoGenerateColumns="False" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="6" Margin="5" SelectionChanged="dgvSubmissions_SelectionChanged" SelectedItem="{Binding ElementName=ucSubmissionOverview,Path=SelectedSubmission}" >
+        <DataGrid x:Name="dataGrid" ItemsSource="{Binding getAllSubmissions}" AutoGenerateColumns="False" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="6" Margin="5" SelectionChanged="dgvSubmissions_SelectionChanged" SelectedItem="{Binding Path=SelectedSubmission}" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Submission No" Binding="{Binding SubmissionNo}"/>
                 <DataGridTextColumn Header="Engineer" Binding="{Binding EngineerFullName}"/>
                 <DataGridTextColumn Header="Customer" Binding="{Binding Customer}"/>
                 <DataGridTextColumn Header="Job Start" Binding="{Binding JobStart, StringFormat=\{0:dd/MM/yy\}}"/>
             </DataGrid.Columns>
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Approved}" Value="True">
+                            <Setter Property="Background" Value="LightGreen"></Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Approved}" Value="False">
+                            <Setter Property="Background" Value="LightCyan"></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
         </DataGrid>
-        <local:ServiceSubmissionDetails x:Name="ucSubmissions" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5" Margin="5" />
+        <local:ServiceSubmissionDetails x:Name="ucSubmissions" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5" Margin="5" currentSubmission="{Binding ElementName=dataGrid, Path=SelectedItem}"/>
     </Grid>
 </UserControl>

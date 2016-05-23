@@ -23,6 +23,13 @@ namespace Service_Reader
         private double m_totalTimeOnsite;
         private string m_dailyReport;
         private string m_partsSupplied;
+        //Adding a reference to the Service Submission, to update the sum totals
+        private ServiceSubmissionModel m_currentServiceSubmission;
+
+        public ServiceDayModel(ServiceSubmissionModel currentSubmission)
+        {
+            CurrentServiceSubmission = currentSubmission;
+        }
 
         public DateTime DtServiceDay
         {
@@ -62,7 +69,14 @@ namespace Service_Reader
         private void calculateTimes()
         {
             TimeSpan travelTo = ArrivalOnsiteTime - TravelStartTime;
-            this.TravelTimeToSite = travelTo.TotalHours;
+            TravelTimeToSite = travelTo.TotalHours;
+            TimeSpan timeOnsite = DepartSiteTime - ArrivalOnsiteTime;
+            TotalTimeOnsite = timeOnsite.TotalHours;
+            TimeSpan travelFrom = TravelEndTime - DepartSiteTime;
+            TravelTimeFromSite = travelFrom.TotalHours;
+            TotalTravelTime = TravelTimeToSite + TravelTimeFromSite;
+            //Update the total times on the service submission
+            CurrentServiceSubmission.updateTimes();
         }
 
         public DateTime ArrivalOnsiteTime
@@ -78,6 +92,7 @@ namespace Service_Reader
                 {
                     m_arrivalOnsiteTime = value;
                     onPropertyChanged("ArrivalOnsiteTime");
+                    calculateTimes();
                 }
             }
         }
@@ -95,6 +110,7 @@ namespace Service_Reader
                 {
                     m_departSiteTime = value;
                     onPropertyChanged("DepartSiteTime");
+                    calculateTimes();
                 }
             }
         }
@@ -112,6 +128,7 @@ namespace Service_Reader
                 {
                     m_travelEndTime = value;
                     onPropertyChanged("TravelEndTime");
+                    calculateTimes();
                 }
             }
         }
@@ -283,6 +300,19 @@ namespace Service_Reader
                     m_partsSupplied = value;
                     onPropertyChanged("PartsSupplied");
                 }
+            }
+        }
+
+        public ServiceSubmissionModel CurrentServiceSubmission
+        {
+            get
+            {
+                return m_currentServiceSubmission;
+            }
+
+            set
+            {
+                m_currentServiceSubmission = value;
             }
         }
     }
