@@ -41,21 +41,21 @@
         <Label Content="Daily Allowance" Grid.Column="1" Grid.Row="3" />
         <Label Content="Overnight Allowance" Grid.Column="2" Grid.Row="3" />
         <Label Content="Barrier Payment" Grid.Column="3" Grid.Row="3" />
-        <TextBox Name="txtMileage" Grid.Column="0" Grid.Row="4" Margin="5" Text="{Binding Path=Mileage}"/>
-        <TextBox Name="txtDailyAllowance" Grid.Column="1" Grid.Row="4" Margin="5" Text="{Binding DailyAllowance}"/>
-        <TextBox Name="txtOvernightAllowance" Grid.Column="2" Grid.Row="4" Margin="5" Text="{Binding OvernightAllowance}"/>
-        <TextBox Name="txtBarrierPayment" Grid.Column="3" Grid.Row="4" Margin="5" Text="{Binding BarrierPayment}"/>
+        <TextBox Name="txtMileage" Grid.Column="0" Grid.Row="4" Margin="5" Text="{Binding Path=Mileage}" IsReadOnly="True"/>
+        <CheckBox Grid.Column="1" Grid.Row="4" Margin="5" IsChecked="{Binding DailyAllowance}" IsEnabled="False"/>
+        <CheckBox Grid.Column="2" Grid.Row="4" Margin="5" IsChecked="{Binding OvernightAllowance}" IsEnabled="False"/>
+        <CheckBox Grid.Column="3" Grid.Row="4" Margin="5" IsChecked="{Binding BarrierPayment}" IsEnabled="False"/>
         <Label Content="Travel time to site" Grid.Column="0" Grid.Row="5"/>
         <Label Content="Travel time from site" Grid.Column="1" Grid.Row="5"/>
         <Label Content="Total travel" Grid.Column="2" Grid.Row="5"/>
         <Label Content="Total time onsite" Grid.Column="3" Grid.Row="5"/>
-        <TextBox Name="txtTotalTravelToSite" Grid.Column="0" Grid.Row="6" Margin="5" Text="{Binding TravelTimeToSite}"/>
-        <TextBox Name="txtTotalTravelFromSite" Grid.Column="1" Grid.Row="6" Margin="5" Text="{Binding TravelTimeFromSite}"/>
-        <TextBox Name="txtTotalTravelTime" Grid.Column="2" Grid.Row="6" Margin="5" Text="{Binding TotalTravelTime}"/>
-        <TextBox Name="txtTotalTimeOnsite" Grid.Column="3" Grid.Row="6" Margin="5" Text="{Binding TotalTimeOnsite}"/>
+        <TextBox Name="txtTotalTravelToSite" Grid.Column="0" Grid.Row="6" Margin="5" Text="{Binding TravelTimeToSite}" IsReadOnly="True"/>
+        <TextBox Name="txtTotalTravelFromSite" Grid.Column="1" Grid.Row="6" Margin="5" Text="{Binding TravelTimeFromSite}" IsReadOnly="True"/>
+        <TextBox Name="txtTotalTravelTime" Grid.Column="2" Grid.Row="6" Margin="5" Text="{Binding TotalTravelTime}" IsReadOnly="True"/>
+        <TextBox Name="txtTotalTimeOnsite" Grid.Column="3" Grid.Row="6" Margin="5" Text="{Binding TotalTimeOnsite}" IsReadOnly="True"/>
         <Label Content="Daily Report" Grid.Column="0" Grid.Row="7"/>
         <TextBox Name="txtDailyReport" Grid.Column="0" Grid.Row="8" Margin="5" Width="500" SpellCheck.IsEnabled="True" HorizontalAlignment="Left" AcceptsReturn="True" Grid.ColumnSpan="4" TextWrapping="Wrap" Text="{Binding DailyReport}"/>
         <Label Content="Parts Supplied" Grid.Column="0" Grid.Row="9"/>
-        <TextBox Name="txtPartsSupplied" Grid.Column="0" Grid.Row="10" Margin="5" Width="500" HorizontalAlignment="Left" AcceptsReturn="True" Grid.ColumnSpan="4" TextWrapping="Wrap" Text="{Binding PartsSupplied}"/>
+        <TextBox Name="txtPartsSupplied" Grid.Column="0" Grid.Row="10" Margin="5" Width="500" HorizontalAlignment="Left" AcceptsReturn="True" Grid.ColumnSpan="4" TextWrapping="Wrap" Text="{Binding PartsSupplied}" SpellCheck.IsEnabled="True"/>
     </Grid>
 </UserControl>

@@ -14,9 +14,9 @@ namespace Service_Reader
         private DateTime m_departSiteTime;
         private DateTime m_travelEndTime;
         private double m_mileage;
-        private double m_dailyAllowance;
-        private double m_overnightAllowance;
-        private double m_barrierPayment;
+        private Boolean m_dailyAllowance;
+        private Boolean m_overnightAllowance;
+        private Boolean m_barrierPayment;
         private double m_travelTimeToSite;
         private double m_travelTimeFromSite;
         private double m_totalTravelTime;
@@ -150,7 +150,7 @@ namespace Service_Reader
             }
         }
 
-        public double DailyAllowance
+        public Boolean DailyAllowance
         {
             get
             {
@@ -167,7 +167,7 @@ namespace Service_Reader
             }
         }
 
-        public double OvernightAllowance
+        public Boolean OvernightAllowance
         {
             get
             {
@@ -184,7 +184,7 @@ namespace Service_Reader
             }
         }
 
-        public double BarrierPayment
+        public Boolean BarrierPayment
         {
             get
             {

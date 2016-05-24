@@ -272,9 +272,12 @@ namespace Service_Reader
                 string travelEndStr = xmlResult(TRAVEL_END, responsesXml);
                 dayOfService.TravelEndTime = Convert.ToDateTime(dtServiceStr + " " + travelEndStr);
                 dayOfService.Mileage = Convert.ToDouble(xmlResult(MILEAGE, responsesXml));
-                dayOfService.DailyAllowance = Convert.ToDouble(xmlResult(DAILY_ALLOWANCE, responsesXml));
-                dayOfService.OvernightAllowance = Convert.ToDouble(xmlResult(OVERNIGHT_ALLOWANCE, responsesXml));
-                dayOfService.BarrierPayment = Convert.ToDouble(xmlResult(BARRIER_PAYMENT, responsesXml));
+                string currentXmlResult = xmlResult(DAILY_ALLOWANCE, responsesXml);
+                dayOfService.DailyAllowance = convertIntToBoolean(currentXmlResult);
+                currentXmlResult = xmlResult(OVERNIGHT_ALLOWANCE, responsesXml);
+                dayOfService.OvernightAllowance = convertIntToBoolean(currentXmlResult);
+                currentXmlResult = xmlResult(BARRIER_PAYMENT, responsesXml);
+                dayOfService.BarrierPayment = convertIntToBoolean(currentXmlResult);
                 dayOfService.TravelTimeToSite = Convert.ToDouble(xmlResult(TRAVEL_TO_SITE, responsesXml));
                 dayOfService.TravelTimeFromSite = Convert.ToDouble(xmlResult(TRAVEL_FROM_SITE, responsesXml));
                 dayOfService.TotalTravelTime = Convert.ToDouble(xmlResult(TOTAL_TRAVEL, responsesXml));
@@ -292,6 +295,23 @@ namespace Service_Reader
             ObservableCollection<ServiceDayModel> retvalSorted = new ObservableCollection<ServiceDayModel>(retval.OrderBy(a => a.DtServiceDay));
 
             return retvalSorted;
+        }
+
+        private static bool convertIntToBoolean(string currentXmlResult)
+        {
+            if (currentXmlResult.Equals("0"))
+            {
+                return false;
+            }
+            else if(currentXmlResult.Equals("1"))
+            {
+                return true;
+            }
+            else
+            {
+                new Exception("Unhandled data type");
+                return false;
+            }
         }
 
         public static BitmapImage getImage(string imageReference, string username, string password)
