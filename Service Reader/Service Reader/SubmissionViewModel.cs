@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System;
+using System.Windows;
 
 namespace Service_Reader
 {
@@ -16,6 +17,7 @@ namespace Service_Reader
         private DateTime fromDate;
         private DateTime toDate;
         private ServiceSubmissionModel selectedSubmission;
+        private ICommand createPdfServiceSheetCommand;
 
         public string Name
         {
@@ -39,6 +41,32 @@ namespace Service_Reader
                     getCanvasDataCommand = new RelayCommand(param => this.getCanvasSubmissions());
                 }
                 return getCanvasDataCommand;
+            }
+        }
+
+        public ICommand CreatePdfServiceSheet
+        {
+            get
+            {
+                if (createPdfServiceSheetCommand == null)
+                {
+                    createPdfServiceSheetCommand = new RelayCommand(param => this.createPdfServiceSheetForSubmission());
+                }
+                return createPdfServiceSheetCommand;
+            }
+        }
+
+        private void createPdfServiceSheetForSubmission()
+        {
+            PdfServiceSheet serviceSheetCreator = new PdfServiceSheet();
+            Boolean sheetCreated = serviceSheetCreator.createPdfSheetForSubmission(selectedSubmission);
+            if (sheetCreated)
+            {
+                MessageBox.Show("Sheet created");
+            }
+            else
+            {
+                MessageBox.Show("Error creating service sheet");
             }
         }
 
