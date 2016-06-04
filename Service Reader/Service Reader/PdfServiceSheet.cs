@@ -4,6 +4,9 @@ using MigraDoc.DocumentObjectModel;
 using MigraDoc.DocumentObjectModel.Tables;
 using MigraDoc.Rendering;
 using System.Diagnostics;
+using System.Reflection;
+using System.IO;
+using System.Drawing;
 
 namespace Service_Reader
 {
@@ -13,10 +16,10 @@ namespace Service_Reader
         private ServiceSubmissionModel currentSheet;
         private string COLUMN_ONE_WIDTH = "6.43cm";
         private string COLUMN_TWO_WIDTH = "9.87cm";
-        private Color headerGrey = new Color(191, 191, 191);
-        private Color entryHeaderGrey = new Color(242, 242, 242);
-        private Color timesheetDayGrey = new Color(217, 217, 217);
-        private Color tableBorderColour = new Color(191, 191, 191);
+        private MigraDoc.DocumentObjectModel.Color headerGrey = new MigraDoc.DocumentObjectModel.Color(191, 191, 191);
+        private MigraDoc.DocumentObjectModel.Color entryHeaderGrey = new MigraDoc.DocumentObjectModel.Color(242, 242, 242);
+        private MigraDoc.DocumentObjectModel.Color timesheetDayGrey = new MigraDoc.DocumentObjectModel.Color(217, 217, 217);
+        private MigraDoc.DocumentObjectModel.Color tableBorderColour = new MigraDoc.DocumentObjectModel.Color(191, 191, 191);
         private double borderWidth = 0.25;
 
         private Table jobDetailsTable;
@@ -40,13 +43,14 @@ namespace Service_Reader
             serviceSheetDoc = new Document();
 
             defineDocumentStyles();
-            createHeader();
+            createSheetTitle();
             createJobDetailsSection();
             createTimesheetSection();
             createServiceReportSection();
             createFollowupSection();
             createSignoffSection();
             createFooter();
+            createHeader();
 
             PdfDocumentRenderer docRenderer = new PdfDocumentRenderer();
             docRenderer.Document = serviceSheetDoc;
@@ -58,17 +62,25 @@ namespace Service_Reader
             return successful;
         }
 
+        private void createHeader()
+        {
+            Section currentSection = (Section)serviceSheetDoc.Sections.LastObject;
+            HeaderFooter header = currentSection.Headers.Primary;
+            Paragraph headerPara = header.AddParagraph("Report No. " + currentSheet.SubmissionNo);
+            headerPara.Format.Alignment = ParagraphAlignment.Right;
+            header.Style = "Normal";
+        }
+
         private void createFooter()
         {
             Section currentSection = (Section)serviceSheetDoc.Sections.LastObject;
             Table footerTable = currentSection.Footers.Primary.AddTable();
-            footerTable.AddColumn("5cm");
-            footerTable.AddColumn("15cm");
-            footerTable.AddColumn("5cm");
+            footerTable.AddColumn("4cm");
+            footerTable.AddColumn("10cm");
+            footerTable.AddColumn("4cm");
 
             Row footerRow1 = footerTable.AddRow();
             footerTable.Style = "footerStyle";
-            footerRow1.Cells[0].AddParagraph("Logo");
             Paragraph addressParagraph = footerRow1.Cells[1].AddParagraph();
             addressParagraph.AddText("Machine Tool Technologies Ltd , 1H Ribble Court, 1 Meadway");
 
@@ -82,6 +94,56 @@ namespace Service_Reader
 
             //Merge the first cell, to contain the logo
             footerRow1.Cells[0].MergeDown = 2;
+            footerRow1.Cells[2].MergeDown = 2;
+
+            Paragraph pageNumberParagraph = footerRow1.Cells[2].AddParagraph();
+            pageNumberParagraph.AddPageField();
+            pageNumberParagraph.AddText(" (");
+            pageNumberParagraph.AddNumPagesField();
+            pageNumberParagraph.AddText(")");
+
+            footerRow1.Cells[2].Style = "Normal";
+
+            Image img = Service_Reader.Properties.Resources.MTTFooterLogo;
+
+            byte[] byteArray = new byte[0];
+            using (MemoryStream stream = new MemoryStream())
+            {
+                img.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+                stream.Close();
+
+                byteArray = stream.ToArray();
+            }
+
+            string imageFileName = migradocFilenameFromByteArray(byteArray);
+            footerRow1.Cells[0].AddImage(imageFileName);
+
+            currentSection.Footers.FirstPage = currentSection.Footers.Primary.Clone();
+
+        }
+
+        private static string migradocFilenameFromByteArray(byte[] selectedImage)
+        {
+            //Change the selected image to a string
+            return "base64:" + Convert.ToBase64String(selectedImage);
+        }
+
+        private static byte[] loadImage(string imageName)
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            using (Stream stream = assembly.GetManifestResourceStream(imageName))
+            {
+                if (stream == null)
+                {
+                    throw new ArgumentException("No resource with name " + imageName);
+                }
+
+                int count = (int)stream.Length;
+                
+                byte[] data = new byte[count];
+                stream.Read(data, 0, count);
+                return data;
+            }
         }
 
         private void createSignoffSection()
@@ -310,7 +372,7 @@ namespace Service_Reader
             addLineToTimesheet("Parts supplied today", currentDay.PartsSupplied);
         }
 
-        private void createHeader()
+        private void createSheetTitle()
         {
             //Create the report header inc service sheet number
             Section newSection = serviceSheetDoc.AddSection();
@@ -355,6 +417,9 @@ namespace Service_Reader
             footerStyle.Font.Size = 6;
             footerStyle.Font.Name = "Arial";
             footerStyle.Font.Color = headerGrey;
+
+            //Document header is different for page 1
+            serviceSheetDoc.DefaultPageSetup.DifferentFirstPageHeaderFooter = true;
         }
 
         private void createJobDetailsSection()
