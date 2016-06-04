@@ -64,11 +64,21 @@ namespace Service_Reader
 
         private void createHeader()
         {
+
             Section currentSection = (Section)serviceSheetDoc.Sections.LastObject;
             HeaderFooter header = currentSection.Headers.Primary;
             Paragraph headerPara = header.AddParagraph("Report No. " + currentSheet.SubmissionNo);
             headerPara.Format.Alignment = ParagraphAlignment.Right;
             header.Style = "Normal";
+
+            //Separate header for first page
+            HeaderFooter firstPageHeader = currentSection.Headers.FirstPage;
+            Paragraph headerParaFirstPage = firstPageHeader.AddParagraph();
+            headerParaFirstPage.Format.Alignment = ParagraphAlignment.Right;
+            Image imgHeaderLogo = Service_Reader.Properties.Resources.MTTHeaderLogo;
+            string headerLogoStr = imageToMigradocString(imgHeaderLogo);
+            headerParaFirstPage.AddImage(headerLogoStr);
+            
         }
 
         private void createFooter()
@@ -104,46 +114,27 @@ namespace Service_Reader
 
             footerRow1.Cells[2].Style = "Normal";
 
-            Image img = Service_Reader.Properties.Resources.MTTFooterLogo;
+            Image imgFooterLogo = Service_Reader.Properties.Resources.MTTFooterLogo;
 
-            byte[] byteArray = new byte[0];
-            using (MemoryStream stream = new MemoryStream())
-            {
-                img.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
-                stream.Close();
-
-                byteArray = stream.ToArray();
-            }
-
-            string imageFileName = migradocFilenameFromByteArray(byteArray);
+            string imageFileName = imageToMigradocString(imgFooterLogo);
             footerRow1.Cells[0].AddImage(imageFileName);
 
             currentSection.Footers.FirstPage = currentSection.Footers.Primary.Clone();
 
         }
 
-        private static string migradocFilenameFromByteArray(byte[] selectedImage)
+        private static string imageToMigradocString(Image selectedImage)
         {
-            //Change the selected image to a string
-            return "base64:" + Convert.ToBase64String(selectedImage);
-        }
-
-        private static byte[] loadImage(string imageName)
-        {
-            var assembly = Assembly.GetExecutingAssembly();
-            using (Stream stream = assembly.GetManifestResourceStream(imageName))
+            byte[] byteArray = new byte[0];
+            using (MemoryStream stream = new MemoryStream())
             {
-                if (stream == null)
-                {
-                    throw new ArgumentException("No resource with name " + imageName);
-                }
+                selectedImage.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+                stream.Close();
 
-                int count = (int)stream.Length;
-                
-                byte[] data = new byte[count];
-                stream.Read(data, 0, count);
-                return data;
+                byteArray = stream.ToArray();
             }
+            //Change the selected image to a string
+            return "base64:" + Convert.ToBase64String(byteArray);
         }
 
         private void createSignoffSection()
