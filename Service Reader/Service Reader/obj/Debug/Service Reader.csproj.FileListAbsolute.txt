@@ -42,3 +42,5 @@ C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Read
 C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\bin\Debug\MigraDoc.RtfRendering-wpf.xml
 C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\bin\Debug\PdfSharp-wpf.xml
 C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\bin\Debug\PdfSharp.Charting-wpf.xml
+C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\winImageDownloadProgessBar.g.cs
+C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\winImageDownloadProgessBar.baml

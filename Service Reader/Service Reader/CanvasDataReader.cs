@@ -7,6 +7,8 @@ using System.Net;
 using System.Windows.Media.Imaging;
 using System;
 using System.Collections.ObjectModel;
+using System.Windows.Controls;
+using System.Drawing;
 
 namespace Service_Reader
 {
@@ -41,6 +43,37 @@ namespace Service_Reader
         public static string FINAL_JOB_REPORT = "Final job report";
         public static string ADDITIONAL_FAULTS_FOUND = "Additional faults found";
         public static string QUOTE_REQUIRED = "Customer requires quote for follow-up work";
+
+        public static System.Drawing.Image downloadImage(string downloadUrl, canvasUserModel currentUser)
+        {
+            string canvasUrl = "https://www.gocanvas.com/apiv2/images.xml?image_id=" +downloadUrl + "&username=" + currentUser.Username +"&password=" + currentUser.Password;
+
+            System.Drawing.Image returnedImage;
+
+            try
+            {
+                WebClient wc = new WebClient();
+                byte[] downloadedData = wc.DownloadData(canvasUrl);
+
+                MemoryStream ms = new MemoryStream(downloadedData);
+                returnedImage = System.Drawing.Image.FromStream(ms);
+            }
+            catch
+            {
+                MessageBox.Show("Unable to download data.");
+                return null;
+            }
+
+            //Need to check for errors
+            //string errorCode = validateCanvasXml(rootElement);
+
+            //if (!errorCode.Equals(""))
+            //{
+            //    return null;
+            //}
+            return returnedImage;
+        }
+
         public static string FOLLOWUP_PARTS = "Parts required for follow-up work";
         public static string IMAGE_1_URL = "Image 1";
         public static string IMAGE_2_URL = "Image 2";

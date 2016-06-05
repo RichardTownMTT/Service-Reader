@@ -75,6 +75,12 @@ namespace Service_Reader
             string fromDateStr = fromDate.ToString("MM/dd/yy");
             string toDateStr = toDate.ToString("MM/dd/yy");
             getAllSubmissions = CanvasDataReader.downloadXml(currentUser.Username, currentUser.Password, fromDateStr, toDateStr);
+
+            //RT 5/6/16 - adding in download of images
+            winImageDownloadProgessBar downloadImagesScreen = new winImageDownloadProgessBar(getAllSubmissions, currentUser);
+            getAllSubmissions = downloadImagesScreen.Submissions;
+            downloadImagesScreen.Close();
+            MessageBox.Show("Add error catch.  Can't use messages in worker thread!");
         }
 
         public List<ServiceSubmissionModel> getAllSubmissions
