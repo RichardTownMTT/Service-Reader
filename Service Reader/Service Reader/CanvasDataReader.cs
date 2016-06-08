@@ -9,6 +9,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using System.Drawing;
+using System.Windows.Media;
 
 namespace Service_Reader
 {
@@ -44,11 +45,11 @@ namespace Service_Reader
         public static string ADDITIONAL_FAULTS_FOUND = "Additional faults found";
         public static string QUOTE_REQUIRED = "Customer requires quote for follow-up work";
 
-        public static System.Drawing.Image downloadImage(string downloadUrl, canvasUserModel currentUser)
+        public static ImageSource downloadImage(string downloadUrl, canvasUserModel currentUser)
         {
-            string canvasUrl = "https://www.gocanvas.com/apiv2/images.xml?image_id=" +downloadUrl + "&username=" + currentUser.Username +"&password=" + currentUser.Password;
+            string canvasUrl = "https://www.gocanvas.com/apiv2/images.xml?image_id=" + downloadUrl + "&username=" + currentUser.Username +"&password=" + currentUser.Password;
 
-            System.Drawing.Image returnedImage;
+            ImageSource returnedImage;
 
             try
             {
@@ -56,7 +57,13 @@ namespace Service_Reader
                 byte[] downloadedData = wc.DownloadData(canvasUrl);
 
                 MemoryStream ms = new MemoryStream(downloadedData);
-                returnedImage = System.Drawing.Image.FromStream(ms);
+
+                BitmapImage bmImage = new BitmapImage();
+                bmImage.BeginInit();
+                bmImage.StreamSource = ms;
+                bmImage.EndInit();
+
+                returnedImage = bmImage;
             }
             catch
             {

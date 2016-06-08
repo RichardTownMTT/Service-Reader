@@ -65,8 +65,7 @@ namespace Service_Reader
             if (!AllPageViewModels.Contains(viewModel))
                 AllPageViewModels.Add(viewModel);
 
-            CurrentPageViewModel = AllPageViewModels
-                .FirstOrDefault(vm => vm == viewModel);
+            CurrentPageViewModel = AllPageViewModels.FirstOrDefault(vm => vm == viewModel);
         }
     }
 }

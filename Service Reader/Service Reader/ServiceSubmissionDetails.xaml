@@ -112,11 +112,11 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="100"/>
                 </Grid.RowDefinitions>
                 <Label Content="Job Status" Grid.Column="0" Grid.Row="0"/>
                 <Label Content="Final Job Report" Grid.Column="0" Grid.Row="1"/>
@@ -133,11 +133,11 @@
                 <TextBox Name="txtAdditionalFaultsFound" Grid.Column="1" Grid.Row="2" Margin ="5" Text="{Binding Path=currentSubmission.AdditionalFaultsFound}"/>
                 <CheckBox Name="chkQuoteRequired" Grid.Column="1" Grid.Row="3" Margin ="5" IsChecked="{Binding Path=currentSubmission.QuoteRequired}"/>
                 <TextBox Name="txtPartsForFollowup" Grid.Column="1" Grid.Row="4" Margin ="5" Text="{Binding Path=currentSubmission.PartsForFollowup}"/>
-                <TextBox Name="txtImage1" Grid.Column="1" Grid.Row="5" Margin ="5" Text="{Binding Path=currentSubmission.Image1Url}"/>
-                <TextBox Name="txtImage2" Grid.Column="1" Grid.Row="6" Margin ="5" Text="{Binding Path=currentSubmission.Image2Url}"/>
-                <TextBox Name="txtImage3" Grid.Column="1" Grid.Row="7" Margin ="5" Text="{Binding Path=currentSubmission.Image3Url}"/>
-                <TextBox Name="txtImage4" Grid.Column="1" Grid.Row="8" Margin ="5" Text="{Binding Path=currentSubmission.Image4Url}"/>
-                <TextBox Name="txtImage5" Grid.Column="1" Grid.Row="9" Margin ="5" Text="{Binding Path=currentSubmission.Image5Url}"/>
+                <Image Grid.Column="1" Grid.Row="5" Margin ="5" Source="{Binding Path=currentSubmission.Image1}" HorizontalAlignment="Left" Stretch="Fill" Width="300" Grid.ColumnSpan="2"/>
+                <Image Grid.Column="1" Grid.Row="6" Margin ="5" Source="{Binding Path=currentSubmission.Image2}" HorizontalAlignment="Left" Stretch="Fill" Width="300" Grid.ColumnSpan="2"/>
+                <Image Grid.Column="1" Grid.Row="7" Margin ="5" Source="{Binding Path=currentSubmission.Image3}" HorizontalAlignment="Left" Stretch="Fill" Width="300" Grid.ColumnSpan="2"/>
+                <Image Grid.Column="1" Grid.Row="8" Margin ="5" Source="{Binding Path=currentSubmission.Image4}" HorizontalAlignment="Left" Stretch="Fill" Width="300" Grid.ColumnSpan="2"/>
+                <Image Grid.Column="1" Grid.Row="9" Margin ="5" Source="{Binding Path=currentSubmission.Image5}" HorizontalAlignment="Left" Stretch="Fill" Width="300" Grid.ColumnSpan="2"/>
             </Grid>
         </GroupBox>
         <GroupBox Header="Submission Times">
@@ -171,25 +171,24 @@
         <GroupBox Header="Job Signoff">
             <Grid>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="100"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Label Content="Customer Signature" Grid.Column="0" Grid.Row="0"/>
                 <Label Content="Customer Name" Grid.Column="0" Grid.Row="1"/>
                 <Label Content="Date Signed" Grid.Column="0" Grid.Row="2"/>
                 <Label Content="Engineer Signature" Grid.Column="0" Grid.Row="3"/>
-                <TextBox Name="txtCustomerSignature" Grid.Column="1" Grid.Row="0" Margin ="5"  Text="{Binding Path=currentSubmission.CustomerSignatureUrl}"/>
+                <Image Grid.Column="1" Grid.Row="0" Margin ="5"  Source="{Binding Path=currentSubmission.CustomerSignature}" HorizontalAlignment="Left" Stretch="Fill" Width="300" Grid.ColumnSpan="2"/>
                 <TextBox Name="txtCustomerSignName" Grid.Column="1" Grid.Row="1" Margin ="5" Text="{Binding Path=currentSubmission.CustomerSignName}"/>
                 <DatePicker Name="dtSigned" Grid.Column="1" Grid.Row="2" Margin ="5" SelectedDate="{Binding Path=currentSubmission.DtSigned}"/>
-                <TextBox Name="txtEngineerSignature" Grid.Column="1" Grid.Row="3" Margin ="5" Text="{Binding Path=currentSubmission.MttEngSignatureUrl}"/>
-                <Image Name="imgEngineerSignature" Grid.Column="1" Grid.Row="4" Margin="5"/>
+                <Image Name="imgEngineerSignature" Source="{Binding currentSubmission.MttEngineerSignature}" HorizontalAlignment="Left" Stretch="Fill" Grid.Column="1" Grid.Row="3" Margin="5" Width="300" Grid.ColumnSpan="2"/>
             </Grid>
         </GroupBox>
         <GroupBox Header="Office Approval">
@@ -202,10 +201,9 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <Label Content="Approved" Grid.Column="0"/>
-                <CheckBox IsChecked="{Binding currentSubmission.Approved}" Grid.Column="1"/>
+                <CheckBox Content="Approved" IsChecked="{Binding currentSubmission.Approved}" Grid.Column="1"/>
                 <Button Content="Cancel" Grid.Column="0" Grid.Row="1" Margin="5"/>
-            </Grid>
+                </Grid>
         </GroupBox>
     </StackPanel>
 </UserControl>

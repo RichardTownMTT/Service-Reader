@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Drawing;
+using System.Windows.Media;
 
 namespace Service_Reader
 {
@@ -48,6 +50,14 @@ namespace Service_Reader
         private DateTime m_dtSigned;
         private string m_mttEngSignatureUrl = "";
         private ObservableCollection<ServiceDayModel> m_serviceTimesheets;
+        //Images for the class
+        private ImageSource m_mttEngineerSignature;
+        private ImageSource m_customerSignature;
+        private ImageSource m_image1;
+        private ImageSource m_image2;
+        private ImageSource m_image3;
+        private ImageSource m_image4;
+        private ImageSource m_image5;
 
         private Boolean m_approved = false;
         
@@ -773,6 +783,132 @@ namespace Service_Reader
                 {
                     m_approved = value;
                     onPropertyChanged("Approved");
+                }
+            }
+        }
+
+        public ImageSource MttEngineerSignature
+        {
+            get
+            {
+                return m_mttEngineerSignature;
+            }
+
+            set
+            {
+                if (m_mttEngineerSignature != value)
+                {
+                    m_mttEngineerSignature = value;
+                    m_mttEngineerSignature.Freeze();
+                    onPropertyChanged("MttEngineerSignature");
+                }
+            }
+        }
+
+        public ImageSource CustomerSignature
+        {
+            get
+            {
+                return m_customerSignature;
+            }
+
+            set
+            {
+                if (m_customerSignature != value)
+                {
+                    m_customerSignature = value;
+                    m_customerSignature.Freeze();
+                    onPropertyChanged("CustomerSignature");
+                }
+            }
+        }
+
+        public ImageSource Image1
+        {
+            get
+            {
+                return m_image1;
+            }
+
+            set
+            {
+                if (m_image1 != value)
+                {
+                    m_image1 = value;
+                    m_image1.Freeze();
+                    onPropertyChanged("Image1");
+                }
+            }
+        }
+
+        public ImageSource Image2
+        {
+            get
+            {
+                return m_image2;
+            }
+
+            set
+            {
+                if (m_image2 != value)
+                {
+                    m_image2 = value;
+                    m_image2.Freeze();
+                    onPropertyChanged("Image2");
+                }
+            }
+        }
+
+        public ImageSource Image3
+        {
+            get
+            {
+                return m_image3;
+            }
+
+            set
+            {
+                if (m_image3 != value)
+                {
+                    m_image3 = value;
+                    m_image3.Freeze();
+                    onPropertyChanged("Image3");
+                }
+            }
+        }
+
+        public ImageSource Image4
+        {
+            get
+            {
+                return m_image4;
+            }
+
+            set
+            {
+                if (m_image4 != value)
+                {
+                    m_image4 = value;
+                    m_image4.Freeze();
+                    onPropertyChanged("Image4");
+                }
+            }
+        }
+
+        public ImageSource Image5
+        {
+            get
+            {
+                return m_image5;
+            }
+
+            set
+            {
+                if (m_image5 != value)
+                {
+                    m_image5 = value;
+                    m_image5.Freeze();
+                    onPropertyChanged("Image5");
                 }
             }
         }

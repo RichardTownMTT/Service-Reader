@@ -76,10 +76,16 @@ namespace Service_Reader
             string toDateStr = toDate.ToString("MM/dd/yy");
             getAllSubmissions = CanvasDataReader.downloadXml(currentUser.Username, currentUser.Password, fromDateStr, toDateStr);
 
+            //If no submissions have been returned, then exit.  None available, or error has occured.
+            if (getAllSubmissions == null)
+            {
+                return;
+            }
+
             //RT 5/6/16 - adding in download of images
             winImageDownloadProgessBar downloadImagesScreen = new winImageDownloadProgessBar(getAllSubmissions, currentUser);
+            bool? result = downloadImagesScreen.ShowDialog();
             getAllSubmissions = downloadImagesScreen.Submissions;
-            downloadImagesScreen.Close();
             MessageBox.Show("Add error catch.  Can't use messages in worker thread!");
         }
 
