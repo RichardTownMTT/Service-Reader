@@ -51,6 +51,7 @@ namespace Service_Reader
             createSignoffSection();
             createFooter();
             createHeader();
+            createWatermark();
 
             PdfDocumentRenderer docRenderer = new PdfDocumentRenderer();
             docRenderer.Document = serviceSheetDoc;
@@ -60,6 +61,18 @@ namespace Service_Reader
 
             successful = true;
             return successful;
+        }
+
+        private void createWatermark()
+        {
+            //Adds the watermark with the services down the side of the page
+            Image imgWatermark = Service_Reader.Properties.Resources.Sidebar;
+            Section currentSection = (Section)serviceSheetDoc.Sections.LastObject;
+            string watermarkStr = imageToMigradocString(imgWatermark);
+            var watermark = currentSection.Headers.FirstPage.AddImage(watermarkStr);
+            watermark.Top = MigraDoc.DocumentObjectModel.Shapes.ShapePosition.Top;
+            watermark.Left = MigraDoc.DocumentObjectModel.Shapes.ShapePosition.Left;
+            currentSection.PageSetup.LeftMargin = 1;
         }
 
         private void createHeader()
