@@ -350,7 +350,17 @@ namespace Service_Reader
             addLineToServiceReportTable("Total mileage", currentSheet.TotalMileage.ToString());
             addLineToServiceReportTable("Total daily allowances", currentSheet.TotalDailyAllowances.ToString());
             addLineToServiceReportTable("Total overnight allowances", currentSheet.TotalOvernightAllowances.ToString());
-            addLineToServiceReportTable("Total barrier payments", currentSheet.TotalBarrierPayments.ToString());
+            //RT - If there are no barier payments, then don't include the total
+            double totalBarrierPayments = currentSheet.TotalBarrierPayments;
+            if (totalBarrierPayments > 0)
+            {
+                addLineToServiceReportTable("Total barrier payments", currentSheet.TotalBarrierPayments.ToString());
+            }
+            else
+            {
+                //Decrease the keepwith by 1 as we are removing a row
+                row1Title.KeepWith = 7;
+            }
             addLineToServiceReportTable("Job status", currentSheet.JobStatus);
             addLineToServiceReportTable("Job report", currentSheet.FinalJobReport);
 
@@ -436,8 +446,18 @@ namespace Service_Reader
             addLineToTimesheet("Mileage", currentDay.Mileage.ToString());
             addLineToTimesheet("Daily allowance", currentDay.DailyAllowance.ToString());
             addLineToTimesheet("Overnight allowance", currentDay.OvernightAllowance.ToString());
-            addLineToTimesheet("Barrier payment", currentDay.BarrierPayment.ToString());
-            MessageBox.Show("Remove barrier payment!");
+            //RT - If there are no barrier payments, then don't include them on the sheet
+            double totalBarrierPayments = currentSheet.TotalBarrierPayments;
+            if (totalBarrierPayments > 0)
+            {
+                addLineToTimesheet("Barrier payment", currentDay.BarrierPayment.ToString());
+                //MessageBox.Show("Remove barrier payment!");
+            }
+            else
+            {
+                //Decrease the keepwith by 1 as we are removing a row
+                row1Title.KeepWith = 13;
+            }
             addLineToTimesheet("Total travel time", currentDay.TotalTravelTime.ToString());
             addLineToTimesheet("Total time onsite", currentDay.TotalTimeOnsite.ToString());
             addLineToTimesheet("Daily report", currentDay.DailyReport);
