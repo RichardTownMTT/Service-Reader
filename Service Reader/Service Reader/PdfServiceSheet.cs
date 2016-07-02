@@ -20,6 +20,8 @@ namespace Service_Reader
         private MigraDoc.DocumentObjectModel.Color entryHeaderGrey = new MigraDoc.DocumentObjectModel.Color(242, 242, 242);
         private MigraDoc.DocumentObjectModel.Color timesheetDayGrey = new MigraDoc.DocumentObjectModel.Color(217, 217, 217);
         private MigraDoc.DocumentObjectModel.Color tableBorderColour = new MigraDoc.DocumentObjectModel.Color(191, 191, 191);
+        private MigraDoc.DocumentObjectModel.Color mttPurple = new MigraDoc.DocumentObjectModel.Color(80, 77, 133);
+        private MigraDoc.DocumentObjectModel.Color separatorGrey = new MigraDoc.DocumentObjectModel.Color(183, 202, 216);
         private double borderWidth = 0.25;
 
         private Table jobDetailsTable;
@@ -66,13 +68,77 @@ namespace Service_Reader
         private void createWatermark()
         {
             //Adds the watermark with the services down the side of the page
-            Image imgWatermark = Service_Reader.Properties.Resources.Sidebar;
+            //Image imgWatermark = Service_Reader.Properties.Resources.Sidebar;
+            //string watermarkStr = imageToMigradocString(imgWatermark);
+            //var watermarkPrimary = currentSection.Headers.Primary.AddImage(watermarkStr);
+            //watermarkPrimary.Top = MigraDoc.DocumentObjectModel.Shapes.ShapePosition.Top;
+            //watermarkPrimary.Left = MigraDoc.DocumentObjectModel.Shapes.ShapePosition.Left;
+            //watermarkPrimary.RelativeHorizontal = MigraDoc.DocumentObjectModel.Shapes.RelativeHorizontal.Page;
+
+            //var watermark = currentSection.Headers.FirstPage.AddImage(watermarkStr);
+            //watermark.Top = MigraDoc.DocumentObjectModel.Shapes.ShapePosition.Top;
+            //watermark.Left = MigraDoc.DocumentObjectModel.Shapes.ShapePosition.Left;
+            //watermark.RelativeHorizontal = MigraDoc.DocumentObjectModel.Shapes.RelativeHorizontal.Page;
+
+
+            //Each watermark is currently the same for all pages
+
             Section currentSection = (Section)serviceSheetDoc.Sections.LastObject;
-            string watermarkStr = imageToMigradocString(imgWatermark);
-            var watermark = currentSection.Headers.FirstPage.AddImage(watermarkStr);
-            watermark.Top = MigraDoc.DocumentObjectModel.Shapes.ShapePosition.Top;
-            watermark.Left = MigraDoc.DocumentObjectModel.Shapes.ShapePosition.Left;
-            currentSection.PageSetup.LeftMargin = 1;
+            MigraDoc.DocumentObjectModel.Shapes.TextFrame tfWatermarkPrimary = currentSection.Headers.Primary.AddTextFrame();
+            createWatermarkForSection(tfWatermarkPrimary);
+
+            MigraDoc.DocumentObjectModel.Shapes.TextFrame tfWatermarkSecondary = currentSection.Headers.FirstPage.AddTextFrame();
+            createWatermarkForSection(tfWatermarkSecondary);
+        }
+
+        private void createWatermarkForSection(MigraDoc.DocumentObjectModel.Shapes.TextFrame tfWatermark)
+        {
+            //Creates the text for the side watermark
+            tfWatermark.Orientation = MigraDoc.DocumentObjectModel.Shapes.TextOrientation.Upward;
+            Paragraph lineOne = tfWatermark.AddParagraph();
+
+            addServiceToWaterMark(lineOne, "BREAKDOWN RESPONSE", true);
+            addServiceToWaterMark(lineOne, "SCHEDULED SERVICING", true);
+            addServiceToWaterMark(lineOne, "MPEOM PROCESS", true);
+            addServiceToWaterMark(lineOne, "RETROFIT & REBUILD", true);
+            addServiceToWaterMark(lineOne, "RELOCATION & INSTALLATION", true);
+            addServiceToWaterMark(lineOne, "MACHINE TOOL CALIBRATION", false);
+            
+            Paragraph lineTwo = tfWatermark.AddParagraph();
+
+            addServiceToWaterMark(lineTwo, "VIBRATION ANALYSIS", true);
+            addServiceToWaterMark(lineTwo, "THERMAL ANALYSIS", true);
+            addServiceToWaterMark(lineTwo, "SPINDLE ANALYSIS", true);
+            addServiceToWaterMark(lineTwo, "RESEARCH & DEVELOPMENT", true);
+            addServiceToWaterMark(lineTwo, "CUSTOMER TRAINING", true);
+            addServiceToWaterMark(lineTwo, "CONSULTATION", true);
+
+            //tfWatermark.AddParagraph("BREAKDOWN RESPONSE | SCHEDULED SERVICING | MPEOM PROCESS | RETROFIT & REBUILD | RELOCATION & INSTALLATION | MACHINE TOOL CALIBRATION | VIBRATION ANALYSIS");
+            //tfWatermark.AddParagraph("THERMAL ANALYSIS | SPINDLE ANALYSIS | RESEARCH & DEVELOPMENT | CUSTOMER TRAINING | CONSULTATION");
+
+
+            tfWatermark.Left = MigraDoc.DocumentObjectModel.Shapes.ShapePosition.Left;
+            tfWatermark.Top = MigraDoc.DocumentObjectModel.Shapes.ShapePosition.Center;
+            tfWatermark.RelativeHorizontal = MigraDoc.DocumentObjectModel.Shapes.RelativeHorizontal.Page;
+            tfWatermark.MarginLeft = 15;
+            tfWatermark.Height = new Unit(23.5, UnitType.Centimeter);
+            tfWatermark.Width = new Unit(2.5, UnitType.Centimeter);
+        }
+
+        private void addServiceToWaterMark(Paragraph lineOne, string serviceText, Boolean includeSeparator)
+        {
+            FormattedText serviceFormatted = lineOne.AddFormattedText(serviceText);
+            serviceFormatted.Font.Size = 11;
+            serviceFormatted.Font.Name = "Impact";
+            serviceFormatted.Font.Bold = true;
+            serviceFormatted.Color = mttPurple;
+
+            if (includeSeparator)
+            {
+                FormattedText lineSeparator = lineOne.AddFormattedText(" | ");
+                lineSeparator.Font.Size = 10;
+                lineSeparator.Color = separatorGrey;
+            }
         }
 
         private void createHeader()
@@ -90,8 +156,10 @@ namespace Service_Reader
             headerParaFirstPage.Format.Alignment = ParagraphAlignment.Right;
             Image imgHeaderLogo = Service_Reader.Properties.Resources.MTTHeaderLogo;
             string headerLogoStr = imageToMigradocString(imgHeaderLogo);
-            headerParaFirstPage.AddImage(headerLogoStr);
-            
+            var headerFirstPage = headerParaFirstPage.AddImage(headerLogoStr);
+            headerFirstPage.Top = MigraDoc.DocumentObjectModel.Shapes.ShapePosition.Top;
+            headerFirstPage.Left = MigraDoc.DocumentObjectModel.Shapes.ShapePosition.Right;
+
         }
 
         private void createFooter()
