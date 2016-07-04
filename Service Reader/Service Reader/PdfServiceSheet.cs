@@ -7,6 +7,8 @@ using System.Diagnostics;
 using System.Reflection;
 using System.IO;
 using System.Drawing;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace Service_Reader
 {
@@ -127,7 +129,7 @@ namespace Service_Reader
 
         private void addServiceToWaterMark(Paragraph lineOne, string serviceText, Boolean includeSeparator)
         {
-            FormattedText serviceFormatted = lineOne.AddFormattedText(serviceText);
+            MigraDoc.DocumentObjectModel.FormattedText serviceFormatted = lineOne.AddFormattedText(serviceText);
             serviceFormatted.Font.Size = 11;
             serviceFormatted.Font.Name = "Impact";
             serviceFormatted.Font.Bold = true;
@@ -135,7 +137,7 @@ namespace Service_Reader
 
             if (includeSeparator)
             {
-                FormattedText lineSeparator = lineOne.AddFormattedText(" | ");
+                MigraDoc.DocumentObjectModel.FormattedText lineSeparator = lineOne.AddFormattedText(" | ");
                 lineSeparator.Font.Size = 10;
                 lineSeparator.Color = separatorGrey;
             }
@@ -245,11 +247,47 @@ namespace Service_Reader
             signoffParaCertify.AddText("I hereby certify that the service work has been carried out to my satisfaction");
             row2Title.Cells[0].Shading.Color = entryHeaderGrey;
 
-            addLineToSignoffTable("Customer signature", currentSheet.CustomerSignatureUrl);
+            addImageToSignoffTable("Customer signature", currentSheet.CustomerSignature, 2);
             addLineToSignoffTable("Customer name", currentSheet.CustomerSignName);
             addLineToSignoffTable("Date", currentSheet.DtSigned.ToShortDateString());
-            addLineToSignoffTable("MTT engineer signature", currentSheet.MttEngSignatureUrl);
+            addImageToSignoffTable("MTT engineer signature", currentSheet.MttEngineerSignature, 2);
             addLineToSignoffTable("MTT engineer", currentSheet.EngineerFullName);
+        }
+
+        private void addImageToSignoffTable(string rowTitle, ImageSource imageData, double imageHeight)
+        {
+            Paragraph currentParagraph;
+            Row currentRow = signoffTable.AddRow();
+            currentParagraph = currentRow.Cells[0].AddParagraph();
+            currentParagraph.AddText(rowTitle);
+            currentParagraph.Style = "sectionHeader";
+
+            currentParagraph = currentRow.Cells[1].AddParagraph();
+
+            if (imageData != null)
+            {
+                PngBitmapEncoder encoder = new PngBitmapEncoder();
+                var bitmapSource = imageData as BitmapSource;
+                encoder.Frames.Add(BitmapFrame.Create(bitmapSource));
+
+                byte[] bytes = null;
+
+                using (var stream = new MemoryStream())
+                {
+                    encoder.Save(stream);
+                    bytes = stream.ToArray();
+                }
+
+                //Change the selected image to a string
+                string imageStr = "base64:" + Convert.ToBase64String(bytes);
+
+                MigraDoc.DocumentObjectModel.Shapes.Image imageAdded = currentParagraph.AddImage(imageStr);
+                imageAdded.LockAspectRatio = true;
+                imageAdded.Height = new Unit(imageHeight, UnitType.Centimeter);
+                imageAdded.Left = MigraDoc.DocumentObjectModel.Shapes.ShapePosition.Left;
+            }
+            currentParagraph.Style = "Normal";
+            currentRow.Cells[0].Shading.Color = entryHeaderGrey;
         }
 
         private void addLineToSignoffTable(string rowTitle, string rowData)
@@ -299,14 +337,50 @@ namespace Service_Reader
             followupImagesPara.AddFormattedText("OLLOW-UP WORK IMAGES", "allCapsNextLetter");
             rowImages.Cells[0].Shading.Color = headerGrey;
 
-            addLineToFollowupTable("Image 1", currentSheet.Image1Url);
-            addLineToFollowupTable("Image 2", currentSheet.Image2Url);
-            addLineToFollowupTable("Image 3", currentSheet.Image3Url);
-            addLineToFollowupTable("Image 4", currentSheet.Image4Url);
-            addLineToFollowupTable("Image 5", currentSheet.Image5Url);
+            addImageToFollowupTable("Image 1", currentSheet.Image1, 4);
+            addImageToFollowupTable("Image 2", currentSheet.Image2, 4);
+            addImageToFollowupTable("Image 3", currentSheet.Image3, 4);
+            addImageToFollowupTable("Image 4", currentSheet.Image4, 4);
+            addImageToFollowupTable("Image 5", currentSheet.Image5, 4);
 
             //Add a space before the next table
             currentSection.AddParagraph();
+        }
+
+        private void addImageToFollowupTable(string rowTitle, ImageSource imageData, double imageHeight)
+        {
+            Paragraph currentParagraph;
+            Row currentRow = followupTable.AddRow();
+            currentParagraph = currentRow.Cells[0].AddParagraph();
+            currentParagraph.AddText(rowTitle);
+            currentParagraph.Style = "sectionHeader";
+
+            currentParagraph = currentRow.Cells[1].AddParagraph();
+
+            if (imageData != null)
+            {
+                PngBitmapEncoder encoder = new PngBitmapEncoder();
+                var bitmapSource = imageData as BitmapSource;
+                encoder.Frames.Add(BitmapFrame.Create(bitmapSource));
+
+                byte[] bytes = null;
+
+                using (var stream = new MemoryStream())
+                {
+                    encoder.Save(stream);
+                    bytes = stream.ToArray();
+                }
+
+                //Change the selected image to a string
+                string imageStr = "base64:" + Convert.ToBase64String(bytes);
+
+                MigraDoc.DocumentObjectModel.Shapes.Image imageAdded = currentParagraph.AddImage(imageStr);
+                imageAdded.LockAspectRatio = true;
+                imageAdded.Height = new Unit(imageHeight, UnitType.Centimeter);
+                imageAdded.Left = MigraDoc.DocumentObjectModel.Shapes.ShapePosition.Left;
+            }
+            currentParagraph.Style = "Normal";
+            currentRow.Cells[0].Shading.Color = entryHeaderGrey;
         }
 
         private void addLineToFollowupTable(string rowTitle, string rowData)
