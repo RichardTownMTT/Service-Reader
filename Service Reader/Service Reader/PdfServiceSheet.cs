@@ -518,13 +518,51 @@ namespace Service_Reader
             addLineToTimesheet("Departure time from site", currentDay.DepartSiteTime.ToShortTimeString());
             addLineToTimesheet("Travel end time", currentDay.TravelEndTime.ToShortTimeString());
             addLineToTimesheet("Mileage", currentDay.Mileage.ToString());
-            addLineToTimesheet("Daily allowance", currentDay.DailyAllowance.ToString());
-            addLineToTimesheet("Overnight allowance", currentDay.OvernightAllowance.ToString());
+            //RT 5/7/16 - Changing the true/false for the allowances to 1 or 0
+            if (currentDay.DailyAllowance == true)
+            {
+                addLineToTimesheet("Daily allowance", "1");
+            }
+            else if (currentDay.DailyAllowance == false)
+            {
+                addLineToTimesheet("Daily allowance", "0");
+            }
+            else
+            {
+                new Exception("Daily allowance incorrect");
+            }
+            //addLineToTimesheet("Daily allowance", currentDay.DailyAllowance.ToString());
+
+            if (currentDay.OvernightAllowance == true)
+            {
+                addLineToTimesheet("Overnight allowance", "1");
+            }
+            else if (currentDay.OvernightAllowance == false)
+            {
+                addLineToTimesheet("Overnight allowance", "0");
+            }
+            else
+            {
+                new Exception("Overnight allowance incorrect");
+            }
+            //addLineToTimesheet("Overnight allowance", currentDay.OvernightAllowance.ToString());
             //RT - If there are no barrier payments, then don't include them on the sheet
             double totalBarrierPayments = currentSheet.TotalBarrierPayments;
             if (totalBarrierPayments > 0)
             {
-                addLineToTimesheet("Barrier payment", currentDay.BarrierPayment.ToString());
+                //addLineToTimesheet("Barrier payment", currentDay.BarrierPayment.ToString());
+                if (currentDay.BarrierPayment == true)
+                {
+                    addLineToTimesheet("Barrier payment", "1");
+                }
+                else if (currentDay.BarrierPayment == false)
+                {
+                    addLineToTimesheet("Barrier payment", "0");
+                }
+                else
+                {
+                    new Exception("Barrier payment incorrect");
+                }
                 //MessageBox.Show("Remove barrier payment!");
             }
             else
