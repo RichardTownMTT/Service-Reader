@@ -9,6 +9,7 @@ using System.IO;
 using System.Drawing;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Microsoft.Win32;
 
 namespace Service_Reader
 {
@@ -60,10 +61,25 @@ namespace Service_Reader
             PdfDocumentRenderer docRenderer = new PdfDocumentRenderer();
             docRenderer.Document = serviceSheetDoc;
             docRenderer.RenderDocument();
-            docRenderer.Save("C:\\Users\\Admin\\Desktop\\Test.pdf");
-            Process.Start("C:\\Users\\Admin\\Desktop\\Test.pdf");
 
-            successful = true;
+            //RT 5/7/16 - Adding save dialog
+            SaveFileDialog saveDialog = new SaveFileDialog();
+            saveDialog.Filter = "pdf files (*.pdf)|*.pdf";
+            Nullable<bool> result = saveDialog.ShowDialog();
+
+            if (result == true)
+            {
+                string filename = saveDialog.FileName;
+                docRenderer.Save(filename);
+                Process.Start(filename);
+
+                successful = true;
+            }
+            else
+            {
+                successful = false;
+            }
+
             return successful;
         }
 
