@@ -26,10 +26,58 @@ namespace Service_Reader
         //Adding a reference to the Service Submission, to update the sum totals
         private ServiceSubmissionModel m_currentServiceSubmission;
 
+        //Flag to pause updating the times.  Used when restoring from a backup.
+        private Boolean pauseUpdates = false;
+
         public ServiceDayModel(ServiceSubmissionModel currentSubmission)
         {
             CurrentServiceSubmission = currentSubmission;
         }
+
+        public ServiceDayModel(ServiceDayModel backupDay, ServiceSubmissionModel serviceBackup)
+        {
+            pauseUpdates = true;
+            DtServiceDay = backupDay.DtServiceDay;
+            TravelStartTime = backupDay.TravelStartTime;
+            ArrivalOnsiteTime = backupDay.ArrivalOnsiteTime;
+            DepartSiteTime = backupDay.DepartSiteTime;
+            TravelEndTime = backupDay.TravelEndTime;
+            Mileage = backupDay.Mileage;
+            DailyAllowance = backupDay.DailyAllowance;
+            OvernightAllowance = backupDay.OvernightAllowance;
+            BarrierPayment = backupDay.BarrierPayment;
+            TravelTimeToSite = backupDay.TravelTimeToSite;
+            TravelTimeFromSite = backupDay.TravelTimeFromSite;
+            TotalTravelTime = backupDay.TotalTravelTime;
+            TotalTimeOnsite = backupDay.TotalTimeOnsite;
+            DailyReport = backupDay.DailyReport;
+            PartsSupplied = backupDay.PartsSupplied;
+            CurrentServiceSubmission = serviceBackup;
+            pauseUpdates = false;
+        }
+
+        public static ServiceDayModel backupServiceDay(ServiceDayModel masterServiceDay, ServiceSubmissionModel backupServiceDay)
+        {
+            ServiceDayModel backupData = new ServiceDayModel(backupServiceDay);
+            backupData.DtServiceDay = masterServiceDay.DtServiceDay;
+            backupData.TravelStartTime = masterServiceDay.TravelStartTime;
+            backupData.ArrivalOnsiteTime = masterServiceDay.ArrivalOnsiteTime;
+            backupData.DepartSiteTime = masterServiceDay.DepartSiteTime;
+            backupData.TravelEndTime = masterServiceDay.TravelEndTime;
+            backupData.Mileage = masterServiceDay.Mileage;
+            backupData.DailyAllowance = masterServiceDay.DailyAllowance;
+            backupData.OvernightAllowance = masterServiceDay.OvernightAllowance;
+            backupData.BarrierPayment = masterServiceDay.BarrierPayment;
+            backupData.TravelTimeToSite = masterServiceDay.TravelTimeToSite;
+            backupData.TravelTimeFromSite = masterServiceDay.TravelTimeFromSite;
+            backupData.TotalTravelTime = masterServiceDay.TotalTravelTime;
+            backupData.TotalTimeOnsite = masterServiceDay.TotalTimeOnsite;
+            backupData.DailyReport = masterServiceDay.DailyReport;
+            backupData.PartsSupplied = masterServiceDay.PartsSupplied;
+            backupData.CurrentServiceSubmission = backupServiceDay;
+
+            return backupData;
+    }
 
         public DateTime DtServiceDay
         {
@@ -68,15 +116,18 @@ namespace Service_Reader
 
         private void calculateTimes()
         {
-            TimeSpan travelTo = ArrivalOnsiteTime - TravelStartTime;
-            TravelTimeToSite = travelTo.TotalHours;
-            TimeSpan timeOnsite = DepartSiteTime - ArrivalOnsiteTime;
-            TotalTimeOnsite = timeOnsite.TotalHours;
-            TimeSpan travelFrom = TravelEndTime - DepartSiteTime;
-            TravelTimeFromSite = travelFrom.TotalHours;
-            TotalTravelTime = TravelTimeToSite + TravelTimeFromSite;
-            //Update the total times on the service submission
-            CurrentServiceSubmission.updateTimes();
+            if (!pauseUpdates)
+            {
+                TimeSpan travelTo = ArrivalOnsiteTime - TravelStartTime;
+                TravelTimeToSite = travelTo.TotalHours;
+                TimeSpan timeOnsite = DepartSiteTime - ArrivalOnsiteTime;
+                TotalTimeOnsite = timeOnsite.TotalHours;
+                TimeSpan travelFrom = TravelEndTime - DepartSiteTime;
+                TravelTimeFromSite = travelFrom.TotalHours;
+                TotalTravelTime = TravelTimeToSite + TravelTimeFromSite;
+                //Update the total times on the service submission
+                CurrentServiceSubmission.updateTimes();
+            }
         }
 
         public DateTime ArrivalOnsiteTime
@@ -268,6 +319,7 @@ namespace Service_Reader
                 }
             }
         }
+
 
         public string DailyReport
         {

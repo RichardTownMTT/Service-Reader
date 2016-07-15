@@ -2,12 +2,13 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Drawing;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace Service_Reader
 {
     //Model for the service submission
-    public class ServiceSubmissionModel : ObservableObject
+    public class ServiceSubmissionModel : ObservableObject, IEditableObject
     {
         //Class variables
         private int m_submissionVersion = 0;
@@ -60,7 +61,101 @@ namespace Service_Reader
         private ImageSource m_image5;
 
         private Boolean m_approved = false;
-        
+
+        //RT 9/7/16 - Adding ability to cancel
+        private ServiceSubmissionModel m_backupData;
+        private ICommand BeginEditCommand;
+        private ICommand CancelEditCommand;
+
+        public static ServiceSubmissionModel backupSubmission(ServiceSubmissionModel masterSubmission)
+        {
+            ServiceSubmissionModel backupSubmission = new ServiceSubmissionModel();
+            backupSubmission.SubmissionNo = masterSubmission.SubmissionNo;
+            backupSubmission.SubmissionVersion = masterSubmission.SubmissionVersion;
+            backupSubmission.Username = masterSubmission.Username;
+            backupSubmission.UserFirstName = masterSubmission.UserFirstName;
+            backupSubmission.UserSurname = masterSubmission.UserSurname;
+            backupSubmission.Customer = masterSubmission.Customer;
+            backupSubmission.Address1 = masterSubmission.Address1;
+            backupSubmission.Address2 = masterSubmission.Address2;
+            backupSubmission.TownCity = masterSubmission.TownCity;
+            backupSubmission.Postcode = masterSubmission.Postcode;
+            backupSubmission.CustomerContact = masterSubmission.CustomerContact;
+            backupSubmission.CustomerPhone = masterSubmission.CustomerPhone;
+            backupSubmission.MachineMakeModel = masterSubmission.MachineMakeModel;
+            backupSubmission.MachineSerial = masterSubmission.MachineSerial;
+            backupSubmission.MachineController = masterSubmission.MachineController;
+            backupSubmission.JobStart = masterSubmission.JobStart;
+            backupSubmission.CustomerOrderNo = masterSubmission.CustomerOrderNo;
+            backupSubmission.MttJobNumber = masterSubmission.MttJobNumber;
+            backupSubmission.JobDescription = masterSubmission.JobDescription;
+            backupSubmission.TotalTimeOnsite = masterSubmission.TotalTimeOnsite;
+            backupSubmission.TotalTravelTime = masterSubmission.TotalTravelTime;
+            backupSubmission.TotalMileage = masterSubmission.TotalMileage;
+            backupSubmission.TotalDailyAllowances = masterSubmission.TotalDailyAllowances;
+            backupSubmission.TotalOvernightAllowances = masterSubmission.TotalOvernightAllowances;
+            backupSubmission.TotalBarrierPayments = masterSubmission.TotalBarrierPayments;
+            backupSubmission.JobStatus = masterSubmission.JobStatus;
+            backupSubmission.FinalJobReport = masterSubmission.FinalJobReport;
+            backupSubmission.AdditionalFaultsFound = masterSubmission.AdditionalFaultsFound;
+            backupSubmission.QuoteRequired = masterSubmission.QuoteRequired;
+            backupSubmission.PartsForFollowup = masterSubmission.PartsForFollowup;
+            backupSubmission.Image1Url = masterSubmission.Image1Url;
+            backupSubmission.Image2Url = masterSubmission.Image2Url;
+            backupSubmission.Image3Url = masterSubmission.Image3Url;
+            backupSubmission.Image4Url = masterSubmission.Image4Url;
+            backupSubmission.Image5Url = masterSubmission.Image5Url;
+            backupSubmission.CustomerSignatureUrl = masterSubmission.CustomerSignatureUrl;
+            backupSubmission.CustomerSignName = masterSubmission.CustomerSignName;
+            backupSubmission.DtSigned = masterSubmission.DtSigned;
+            backupSubmission.MttEngSignatureUrl = masterSubmission.MttEngSignatureUrl;
+            
+            backupSubmission.MttEngineerSignature = masterSubmission.MttEngineerSignature;
+            backupSubmission.CustomerSignature = masterSubmission.CustomerSignature;
+            backupSubmission.Image1 = masterSubmission.Image1;
+            backupSubmission.Image2 = masterSubmission.Image2;
+            backupSubmission.Image3 = masterSubmission.Image3;
+            backupSubmission.Image4 = masterSubmission.Image4;
+            backupSubmission.Image5 = masterSubmission.Image5;
+            backupSubmission.Approved = masterSubmission.Approved;
+
+            ObservableCollection<ServiceDayModel> backupServiceDays = new ObservableCollection<ServiceDayModel>();
+            
+            foreach (ServiceDayModel masterServiceDay in masterSubmission.ServiceTimesheets)
+            {
+                ServiceDayModel backupServiceDay = ServiceDayModel.backupServiceDay(masterServiceDay, backupSubmission);
+                backupServiceDays.Add(backupServiceDay);
+            }
+
+            backupSubmission.ServiceTimesheets = backupServiceDays;
+
+            return backupSubmission;
+        }
+
+        public ICommand startEdit
+        {
+            get
+            {
+                if (BeginEditCommand == null)
+                {
+                    BeginEditCommand = new RelayCommand(param => this.BeginEdit());
+                }
+                return BeginEditCommand;
+            }
+        }
+
+        public ICommand abortEdit
+        {
+            get
+            {
+                if (CancelEditCommand == null)
+                {
+                    CancelEditCommand = new RelayCommand(param => this.CancelEdit());
+                }
+                return CancelEditCommand;
+            }
+        }
+
         public int SubmissionVersion
         {
             get
@@ -95,6 +190,79 @@ namespace Service_Reader
                 double totalTravelUpdate = totalTimeToSiteUpdate + totalTimeFromSiteUpdate;
                 TotalTravelTime = totalTravelUpdate;
                 TotalTimeOnsite = totalTimeOnsiteUpdate;
+            }
+        }
+
+        //RT allowing the user to cancel the changes
+        public void BeginEdit()
+        {
+            m_backupData = ServiceSubmissionModel.backupSubmission(this);
+
+        }
+
+        public void EndEdit()
+        {
+            m_backupData = new ServiceSubmissionModel();
+        }
+
+        public void CancelEdit()
+        {
+            this.Customer = m_backupData.Customer;
+            this.SubmissionNo = m_backupData.SubmissionNo;
+            this.SubmissionVersion = m_backupData.SubmissionVersion;
+            this.Username = m_backupData.Username;
+            this.UserFirstName = m_backupData.UserFirstName;
+            this.UserSurname = m_backupData.UserSurname;
+            this.Customer = m_backupData.Customer;
+            this.Address1 = m_backupData.Address1;
+            this.Address2 = m_backupData.Address2;
+            this.TownCity = m_backupData.TownCity;
+            this.Postcode = m_backupData.Postcode;
+            this.CustomerContact = m_backupData.CustomerContact;
+            this.CustomerPhone = m_backupData.CustomerPhone;
+            this.MachineMakeModel = m_backupData.MachineMakeModel;
+            this.MachineSerial = m_backupData.MachineSerial;
+            this.MachineController = m_backupData.MachineController;
+            this.JobStart = m_backupData.JobStart;
+            this.CustomerOrderNo = m_backupData.CustomerOrderNo;
+            this.MttJobNumber = m_backupData.MttJobNumber;
+            this.JobDescription = m_backupData.JobDescription;
+            this.TotalTimeOnsite = m_backupData.TotalTimeOnsite;
+            this.TotalTravelTime = m_backupData.TotalTravelTime;
+            this.TotalMileage = m_backupData.TotalMileage;
+            this.TotalDailyAllowances = m_backupData.TotalDailyAllowances;
+            this.TotalOvernightAllowances = m_backupData.TotalOvernightAllowances;
+            this.TotalBarrierPayments = m_backupData.TotalBarrierPayments;
+            this.JobStatus = m_backupData.JobStatus;
+            this.FinalJobReport = m_backupData.FinalJobReport;
+            this.AdditionalFaultsFound = m_backupData.AdditionalFaultsFound;
+            this.QuoteRequired = m_backupData.QuoteRequired;
+            this.PartsForFollowup = m_backupData.PartsForFollowup;
+            this.Image1Url = m_backupData.Image1Url;
+            this.Image2Url = m_backupData.Image2Url;
+            this.Image3Url = m_backupData.Image3Url;
+            this.Image4Url = m_backupData.Image4Url;
+            this.Image5Url = m_backupData.Image5Url;
+            this.CustomerSignatureUrl = m_backupData.CustomerSignatureUrl;
+            this.CustomerSignName = m_backupData.CustomerSignName;
+            this.DtSigned = m_backupData.DtSigned;
+            this.MttEngSignatureUrl = m_backupData.MttEngSignatureUrl;
+
+            this.MttEngineerSignature = m_backupData.MttEngineerSignature;
+            this.CustomerSignature = m_backupData.CustomerSignature;
+            this.Image1 = m_backupData.Image1;
+            this.Image2 = m_backupData.Image2;
+            this.Image3 = m_backupData.Image3;
+            this.Image4 = m_backupData.Image4;
+            this.Image5 = m_backupData.Image5;
+            this.Approved = m_backupData.Approved;
+
+            this.ServiceTimesheets = new ObservableCollection<ServiceDayModel>();
+
+            foreach (ServiceDayModel backupDay in m_backupData.ServiceTimesheets)
+            {
+                ServiceDayModel restoredDay = new ServiceDayModel(backupDay, this);
+                this.ServiceTimesheets.Add(restoredDay);
             }
         }
 
@@ -912,5 +1080,6 @@ namespace Service_Reader
                 }
             }
         }
+
     }
 }
