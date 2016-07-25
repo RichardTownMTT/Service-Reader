@@ -111,6 +111,11 @@ namespace Service_Reader
             {
                 if (value != selectedSubmission)
                 {
+                    //RT 25/7/16 - Get rid of any unsaved changes
+                    if (selectedSubmission != null)
+                    {
+                        selectedSubmission.CancelEdit();
+                    }
                     selectedSubmission = value;
                     onPropertyChanged("SelectedSubmission");
                     Console.WriteLine("Selected Submission Changed");
