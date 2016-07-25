@@ -67,6 +67,9 @@ namespace Service_Reader
         private ICommand BeginEditCommand;
         private ICommand CancelEditCommand;
 
+        //RT 25/7/16 - Adding edit mode flag
+        private Boolean editMode = false;
+
         public static ServiceSubmissionModel backupSubmission(ServiceSubmissionModel masterSubmission)
         {
             ServiceSubmissionModel backupSubmission = new ServiceSubmissionModel();
@@ -196,17 +199,33 @@ namespace Service_Reader
         //RT allowing the user to cancel the changes
         public void BeginEdit()
         {
+            if (editMode)
+            {
+                Console.WriteLine("Warning - Already in edit mode");
+            }
             m_backupData = ServiceSubmissionModel.backupSubmission(this);
-
+            //RT 25/7/16 - When we start the edit, set the edit flag
+            editMode = true;
         }
 
         public void EndEdit()
         {
+            if (!editMode)
+            {
+                return;
+            }
             m_backupData = new ServiceSubmissionModel();
+            //RT 25/7/16 - set the edit mode to fault
+            editMode = false;
         }
 
         public void CancelEdit()
         {
+            //RT 25/7/16 - If not in edit, then exit
+            if (!editMode)
+            {
+                return;
+            }
             this.Customer = m_backupData.Customer;
             this.SubmissionNo = m_backupData.SubmissionNo;
             this.SubmissionVersion = m_backupData.SubmissionVersion;
@@ -264,6 +283,8 @@ namespace Service_Reader
                 ServiceDayModel restoredDay = new ServiceDayModel(backupDay, this);
                 this.ServiceTimesheets.Add(restoredDay);
             }
+
+            editMode = false;
         }
 
         public string Username
