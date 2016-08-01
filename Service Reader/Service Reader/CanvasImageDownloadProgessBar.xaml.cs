@@ -23,7 +23,7 @@ namespace Service_Reader
     {
         //Class to show progress of downloads 
         //Updates when each submission has been processed. Some may have more images than other, so progress may not be linear
-        private canvasUserModel currentUser;
+        private CanvasUserModel currentUser;
         private List<ServiceSubmissionModel> submissionList;
 
         public List<ServiceSubmissionModel> Submissions
@@ -31,7 +31,7 @@ namespace Service_Reader
             get { return submissionList; }
         }
 
-        public winImageDownloadProgessBar(List<ServiceSubmissionModel> submissions, canvasUserModel currentUser) 
+        public winImageDownloadProgessBar(List<ServiceSubmissionModel> submissions, CanvasUserModel currentUser) 
         {
             this.submissionList = submissions;
             this.currentUser = currentUser;

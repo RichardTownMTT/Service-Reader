@@ -45,7 +45,7 @@ namespace Service_Reader
         public static string ADDITIONAL_FAULTS_FOUND = "Additional faults found";
         public static string QUOTE_REQUIRED = "Customer requires quote for follow-up work";
 
-        public static ImageSource downloadImage(string downloadUrl, canvasUserModel currentUser)
+        public static ImageSource downloadImage(string downloadUrl, CanvasUserModel currentUser)
         {
             string canvasUrl = "https://www.gocanvas.com/apiv2/images.xml?image_id=" + downloadUrl + "&username=" + currentUser.Username +"&password=" + currentUser.Password;
 
