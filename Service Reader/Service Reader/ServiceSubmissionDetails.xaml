@@ -202,8 +202,6 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <CheckBox Content="Approved" IsChecked="{Binding currentSubmission.Approved}" Grid.Column="1"/>
-                <Button Content="Cancel" Grid.Column="0" Grid.Row="1" Margin="5" Command="{Binding currentSubmission.abortEdit}"/>
-                <Button Content="Edit" Grid.Column="1" Grid.Row="1" Margin="0,0,161,10" Command="{Binding currentSubmission.startEdit}"/>
             </Grid>
         </GroupBox>
     </StackPanel>
