@@ -66,6 +66,7 @@ namespace Service_Reader
         private ServiceSubmissionModel m_backupData;
         private ICommand BeginEditCommand;
         private ICommand CancelEditCommand;
+        private ICommand SaveEditCommand;
 
         //RT 25/7/16 - Adding edit mode flag
         private Boolean editMode = false;
@@ -156,6 +157,18 @@ namespace Service_Reader
                     CancelEditCommand = new RelayCommand(param => this.CancelEdit());
                 }
                 return CancelEditCommand;
+            }
+        }
+
+        public ICommand saveEdit
+        {
+            get
+            {
+                if (SaveEditCommand == null)
+                {
+                    SaveEditCommand = new RelayCommand(param => this.EndEdit());
+                }
+                return SaveEditCommand;
             }
         }
 
