@@ -218,7 +218,7 @@ namespace Service_Reader
             }
             m_backupData = ServiceSubmissionModel.backupSubmission(this);
             //RT 25/7/16 - When we start the edit, set the edit flag
-            editMode = true;
+            EditMode = true;
         }
 
         public void EndEdit()
@@ -229,7 +229,7 @@ namespace Service_Reader
             }
             m_backupData = new ServiceSubmissionModel();
             //RT 25/7/16 - set the edit mode to fault
-            editMode = false;
+            EditMode = false;
         }
 
         public void CancelEdit()
@@ -297,7 +297,7 @@ namespace Service_Reader
                 this.ServiceTimesheets.Add(restoredDay);
             }
 
-            editMode = false;
+            EditMode = false;
         }
 
         public string Username
@@ -1111,6 +1111,22 @@ namespace Service_Reader
                     m_image5 = value;
                     m_image5.Freeze();
                     onPropertyChanged("Image5");
+                }
+            }
+        }
+
+        public Boolean EditMode
+        {
+            get
+            {
+                return editMode;
+            }
+            set
+            {
+                if (editMode != value)
+                {
+                    editMode = value;
+                    onPropertyChanged("EditMode");
                 }
             }
         }

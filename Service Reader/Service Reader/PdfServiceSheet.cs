@@ -38,13 +38,6 @@ namespace Service_Reader
             Boolean successful = false;
             currentSheet = serviceSubmissionSheet;
 
-            //Check if there is a current sheet
-            if (currentSheet == null)
-            {
-                MessageBox.Show("Error - no sheet selected");
-                return false;
-            }
-
             serviceSheetDoc = new Document();
 
             defineDocumentStyles();
