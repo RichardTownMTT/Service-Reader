@@ -21,6 +21,7 @@ namespace Service_Reader
         private ICommand editSubmissionCommand;
         private ICommand saveEditSubmissionCommand;
         private ICommand cancelEditSubmissionCommand;
+        private ICommand exportToCsvCommand;
 
         public string Name
         {
@@ -124,6 +125,24 @@ namespace Service_Reader
                 return;
             }
             selectedSubmission.CancelEdit();
+        }
+
+        public ICommand exportToCsv
+        {
+            get
+            {
+                if (exportToCsvCommand == null)
+                {
+                    exportToCsvCommand = new RelayCommand(param => this.csvExport());
+                }
+                return exportToCsvCommand;
+            }
+        }
+
+        private void csvExport()
+        {
+            CsvServiceExport exporter = new CsvServiceExport();
+            Boolean successful = exporter.exportDataToCsv(allServiceSubmissions);
         }
 
         private void createPdfServiceSheetForSubmission()

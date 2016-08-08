@@ -47,3 +47,49 @@ C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Read
 C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\bin\Debug\Service Reader.exe.config
 C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\Service Reader.exe
 C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\Service Reader.pdb
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\bin\Debug\Service Reader.exe
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\bin\Debug\Service Reader.pdb
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\bin\Debug\CsvHelper.dll
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\bin\Debug\MigraDoc.DocumentObjectModel-wpf.dll
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\bin\Debug\MigraDoc.Rendering-wpf.dll
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\bin\Debug\MigraDoc.RtfRendering-wpf.dll
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\bin\Debug\PdfSharp-wpf.dll
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\bin\Debug\PdfSharp.Charting-wpf.dll
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\bin\Debug\CsvHelper.pdb
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\bin\Debug\CsvHelper.xml
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\bin\Debug\MigraDoc.DocumentObjectModel-wpf.xml
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\bin\Debug\MigraDoc.Rendering-wpf.xml
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\bin\Debug\MigraDoc.RtfRendering-wpf.xml
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\bin\Debug\PdfSharp-wpf.xml
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\bin\Debug\PdfSharp.Charting-wpf.xml
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\bin\Debug\de\MigraDoc.DocumentObjectModel-wpf.resources.dll
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\bin\Debug\de\MigraDoc.Rendering-wpf.resources.dll
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\bin\Debug\de\MigraDoc.RtfRendering-wpf.resources.dll
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\bin\Debug\de\PdfSharp-wpf.resources.dll
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\bin\Debug\de\PdfSharp.Charting-wpf.resources.dll
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\Service Reader.csprojResolveAssemblyReference.cache
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\ApplicationWindow.g.cs
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\HistoryTracker.g.cs
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\IssueServiceReports.g.cs
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\JobCostSheet.g.cs
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\CanvasSubmissionsOverviewControl.g.cs
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\ServiceSubmissionDetails.g.cs
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\CanvasUserControl.g.cs
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\ServiceDayView.g.cs
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\CanvasImageDownloadProgessBar.g.cs
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\App.g.cs
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\Service Reader_MarkupCompile.cache
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\Service Reader_MarkupCompile.lref
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\ApplicationWindow.baml
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\HistoryTracker.baml
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\IssueServiceReports.baml
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\JobCostSheet.baml
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\CanvasSubmissionsOverviewControl.baml
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\ServiceSubmissionDetails.baml
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\CanvasUserControl.baml
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\ServiceDayView.baml
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\CanvasImageDownloadProgessBar.baml
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\Service Reader.g.resources
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\Service_Reader.Properties.Resources.resources
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\Service Reader.csproj.GenerateResource.Cache
