@@ -45,6 +45,9 @@ namespace Service_Reader
         public static string ADDITIONAL_FAULTS_FOUND = "Additional faults found";
         public static string QUOTE_REQUIRED = "Customer requires quote for follow-up work";
 
+        //RT 11/8/16 - Adding in the machine serial number
+        public static string SERIAL_NUMBER = "Machine serial no.";
+
         public static ImageSource downloadImage(string downloadUrl, CanvasUserModel currentUser)
         {
             string canvasUrl = "https://www.gocanvas.com/apiv2/images.xml?image_id=" + downloadUrl + "&username=" + currentUser.Username +"&password=" + currentUser.Password;
@@ -235,6 +238,9 @@ namespace Service_Reader
                     retval.CustomerContact = xmlResult(CUSTOMER_CONTACT, responsesXml);
                     retval.CustomerPhone = xmlResult(CUSTOMER_PHONE, responsesXml);
                     retval.MachineMakeModel = xmlResult(MACHINE_MAKE_MODEL, responsesXml);
+                    //RT 11/8/16 - Adding serial number
+                    retval.MachineSerial = xmlResult(SERIAL_NUMBER, responsesXml);
+                    
                     retval.MachineController = xmlResult(MACHINE_CONTROL, responsesXml);
                     string jobStartStr = xmlResult(JOB_START_DATE, responsesXml);
                     retval.JobStart = Convert.ToDateTime(jobStartStr);

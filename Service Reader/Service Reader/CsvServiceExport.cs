@@ -50,7 +50,7 @@ namespace Service_Reader
             for (int counter = 0; counter < noOfDays ; counter++)
             {
                 //extract the sections from the service sheet that go into the CSV export
-                //Start date and end date are not taken
+                //Start date and end date are not taken - They only appear in the csv export
                 csvWriterOutput.WriteField("");
                 csvWriterOutput.WriteField("");
                 int submissionNo = submission.SubmissionNo;
