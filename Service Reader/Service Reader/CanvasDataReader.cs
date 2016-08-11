@@ -47,6 +47,10 @@ namespace Service_Reader
 
         //RT 11/8/16 - Adding in the machine serial number
         public static string SERIAL_NUMBER = "Machine serial no.";
+        //Adding response id, response date time and device date time
+        public static string RESPONSE_ID = "ResponseID";
+        public static string RESPONSE_DATE_TIME = "Date";
+        public static string DEVICE_DATE_TIME = "DeviceDate";
 
         public static ImageSource downloadImage(string downloadUrl, CanvasUserModel currentUser)
         {
@@ -211,6 +215,14 @@ namespace Service_Reader
         {
             ServiceSubmissionModel retval = new ServiceSubmissionModel();
             retval.SubmissionNo = Int32.Parse(submissionXml.Element(SUBMISSION_NUMBER).Value);
+            //RT 11/8/16 - Adding in the response id
+            retval.ResponseId = submissionXml.Element(RESPONSE_ID).Value;
+            //Adding response date time
+            string responseDateStr = submissionXml.Element(RESPONSE_DATE_TIME).Value;
+            retval.DtResponse = Convert.ToDateTime(responseDateStr);
+            //Adding device date
+            string deviceDateStr = submissionXml.Element(DEVICE_DATE_TIME).Value;
+            retval.DtDevice = Convert.ToDateTime(deviceDateStr);
             //Submission version is in the form element
             XElement formDetailsXml = submissionXml.Element(FORM);
             retval.SubmissionVersion = Int32.Parse(formDetailsXml.Element(SUBMISSION_VERSION).Value);

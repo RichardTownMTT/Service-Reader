@@ -59,6 +59,10 @@ namespace Service_Reader
         private ImageSource m_image3;
         private ImageSource m_image4;
         private ImageSource m_image5;
+        //RT 11/8/16 - Adding the response id
+        private string m_responseId = "";
+        private DateTime m_dtResponse;
+        private DateTime m_dtDevice;
 
         private Boolean m_approved = false;
 
@@ -122,6 +126,9 @@ namespace Service_Reader
             backupSubmission.Image4 = masterSubmission.Image4;
             backupSubmission.Image5 = masterSubmission.Image5;
             backupSubmission.Approved = masterSubmission.Approved;
+            backupSubmission.ResponseId = masterSubmission.ResponseId;
+            backupSubmission.DtResponse = masterSubmission.DtResponse;
+            backupSubmission.DtDevice = masterSubmission.DtDevice;
 
             ObservableCollection<ServiceDayModel> backupServiceDays = new ObservableCollection<ServiceDayModel>();
             
@@ -279,6 +286,9 @@ namespace Service_Reader
             this.CustomerSignName = m_backupData.CustomerSignName;
             this.DtSigned = m_backupData.DtSigned;
             this.MttEngSignatureUrl = m_backupData.MttEngSignatureUrl;
+            this.ResponseId = m_backupData.ResponseId;
+            this.DtResponse = m_backupData.DtResponse;
+            this.DtDevice = m_backupData.DtDevice;
 
             this.MttEngineerSignature = m_backupData.MttEngineerSignature;
             this.CustomerSignature = m_backupData.CustomerSignature;
@@ -1131,5 +1141,52 @@ namespace Service_Reader
             }
         }
 
+        public string ResponseId
+        {
+            get
+            {
+                return m_responseId;
+            }
+            set
+            {
+                if (m_responseId != value)
+                {
+                    m_responseId = value;
+                    onPropertyChanged("ResponseId");
+                }
+            }
+        }
+
+        public DateTime DtResponse
+        {
+            get
+            {
+                return m_dtResponse;
+            }
+            set
+            {
+                if (m_dtResponse != value)
+                {
+                    m_dtResponse = value;
+                    onPropertyChanged("DtResponse");
+                }
+            }
+        }
+
+        public DateTime DtDevice
+        {
+            get
+            {
+                return m_dtDevice;
+            }
+            set
+            {
+                if (m_dtDevice != value)
+                {
+                    m_dtDevice = value;
+                    onPropertyChanged("DtDevice");
+                }
+            }
+        }
     }
 }

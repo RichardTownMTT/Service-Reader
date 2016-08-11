@@ -64,11 +64,12 @@ namespace Service_Reader
                 string userFirstName = submission.UserFirstName;
                 csvWriterOutput.WriteField(userFirstName);
                 //Response id not set
-                csvWriterOutput.WriteField("");
-                //Response date/time is not set
-                csvWriterOutput.WriteField("");
-                //Device Date/Time - not set
-                csvWriterOutput.WriteField("");
+                string responseId = submission.ResponseId;
+                csvWriterOutput.WriteField(responseId);
+                DateTime responseDate = submission.DtResponse;
+                csvWriterOutput.WriteField(responseDate);
+                DateTime dtDevice = submission.DtDevice;
+                csvWriterOutput.WriteField(dtDevice);
                 //Submission form name set manually
                 csvWriterOutput.WriteField("Service Sheet");
                 int formVersion = submission.SubmissionVersion;
