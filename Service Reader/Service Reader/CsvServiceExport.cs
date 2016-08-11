@@ -131,25 +131,27 @@ namespace Service_Reader
                 csvWriterOutput.WriteField(partsForFollowup);
                 //Images for follow-up work - Doesn't need to be set
                 csvWriterOutput.WriteField("");
-                string image1 = submission.Image1Url;
+                //RT 11/8/2016 - Adding in the start of the image url. 
+                string imageUrlStart = "http://www.gocanvas.com/values/";
+                string image1 = imageUrlStart + submission.Image1Url;
                 csvWriterOutput.WriteField(image1);
-                string image2 = submission.Image2Url;
+                string image2 = imageUrlStart + submission.Image2Url;
                 csvWriterOutput.WriteField(image2);
-                string image3 = submission.Image3Url;
+                string image3 = imageUrlStart + submission.Image3Url;
                 csvWriterOutput.WriteField(image3);
-                string image4 = submission.Image4Url;
+                string image4 = imageUrlStart + submission.Image4Url;
                 csvWriterOutput.WriteField(image4);
-                string image5 = submission.Image5Url;
+                string image5 = imageUrlStart + submission.Image5Url;
                 csvWriterOutput.WriteField(image5);
                 //Certify is next - don't set
                 csvWriterOutput.WriteField("");
-                string customerSignature = submission.CustomerSignatureUrl;
+                string customerSignature = imageUrlStart + submission.CustomerSignatureUrl;
                 csvWriterOutput.WriteField(customerSignature);
                 string customerName = submission.CustomerSignName;
                 csvWriterOutput.WriteField(customerName);
                 DateTime dtSigned = submission.DtSigned;
                 csvWriterOutput.WriteField(dtSigned);
-                string mttSignature = submission.MttEngSignatureUrl;
+                string mttSignature = imageUrlStart + submission.MttEngSignatureUrl;
                 csvWriterOutput.WriteField(mttSignature);
                 csvWriterOutput.NextRecord();
             }
