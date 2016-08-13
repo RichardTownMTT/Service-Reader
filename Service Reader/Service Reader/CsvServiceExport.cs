@@ -63,7 +63,6 @@ namespace Service_Reader
                 csvWriterOutput.WriteField(userLastName);
                 string userFirstName = submission.UserFirstName;
                 csvWriterOutput.WriteField(userFirstName);
-                //Response id not set
                 string responseId = submission.ResponseId;
                 csvWriterOutput.WriteField(responseId);
                 DateTime responseDate = submission.DtResponse;

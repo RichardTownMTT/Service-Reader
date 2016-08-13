@@ -85,6 +85,7 @@
     </Compile>
     <Compile Include="ApplicationViewModel.cs" />
     <Compile Include="CsvServiceExport.cs" />
+    <Compile Include="CsvServiceImport.cs" />
     <Compile Include="PdfServiceSheet.cs" />
     <Compile Include="ServiceDayViewModel.cs" />
     <Compile Include="SubmissionViewModel.cs" />

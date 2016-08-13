@@ -24,5 +24,12 @@ namespace Service_Reader
         {
             InitializeComponent();
         }
+
+        private void loadData(object sender, RoutedEventArgs e)
+        {
+            CsvServiceImport importData = new CsvServiceImport();
+            Boolean imported = importData.importCsvData();
+
+        }
     }
 }
