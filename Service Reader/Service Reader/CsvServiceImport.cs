@@ -291,6 +291,9 @@ namespace Service_Reader
             currentDay.TotalTimeOnsite = Convert.ToDouble(row[37]);
             currentDay.DailyReport = row[38];
             currentDay.PartsSupplied = row[39];
+
+            //RT 16/8/16 - Saving the timesheet
+            currentSubmission.ServiceTimesheets.Add(currentDay);
         }
 
         private string openFilename()
