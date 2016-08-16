@@ -311,5 +311,13 @@ namespace Service_Reader
 
             return retval;
         }
+
+        public List<ServiceSubmissionModel> AllServiceSubmissions
+        {
+            get
+            {
+                return importedSubmissions;
+            }
+        }
     }
 }
