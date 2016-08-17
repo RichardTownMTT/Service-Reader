@@ -79,8 +79,8 @@ namespace Service_Reader
             currentServiceSubmission.UserSurname = row[5];
             currentServiceSubmission.UserFirstName = row[6];
             currentServiceSubmission.ResponseId = row[7];
-            string dateFormatMinutes = "M/d/yyyy HH:mm";
-            string dateFormatSeconds = "M/d/yyyy HH:mm:ss";
+            string dateFormatMinutes = "d/M/yyyy HH:mm";
+            string dateFormatSeconds = "d/M/yyyy HH:mm:ss";
             string responseDate = row[8];
             //RT 15/8/16 - The time is either includes minutes or does not.  
             try
@@ -113,7 +113,7 @@ namespace Service_Reader
             currentServiceSubmission.MachineSerial = row[20];
             currentServiceSubmission.MachineController = row[21];
             string jobStartDate = row[22];
-            currentServiceSubmission.JobStart = DateTime.ParseExact(jobStartDate, "d/M/yyyy", CultureInfo.InvariantCulture);
+            currentServiceSubmission.JobStart = DateTime.ParseExact(jobStartDate, dateFormatSeconds, CultureInfo.InvariantCulture);
             currentServiceSubmission.CustomerOrderNo = row[23];
             currentServiceSubmission.MttJobNumber = row[24];
             currentServiceSubmission.JobDescription = row[25];
@@ -142,7 +142,7 @@ namespace Service_Reader
             currentServiceSubmission.CustomerSignatureUrl = row[60];
             currentServiceSubmission.CustomerSignName = row[61];
             string signedDate = row[62];
-            currentServiceSubmission.DtSigned = DateTime.ParseExact(signedDate, "d/M/yyyy", CultureInfo.InvariantCulture);
+            currentServiceSubmission.DtSigned = DateTime.ParseExact(signedDate, dateFormatSeconds, CultureInfo.InvariantCulture);
             currentServiceSubmission.MttEngSignatureUrl = row[63];
         }
 
@@ -156,7 +156,7 @@ namespace Service_Reader
             //The times may be with / without the date, depending on when they were imported.
             //Need to load the service date first, in case we need it for the times
             string serviceDate = row[40];
-            currentDay.DtServiceDay = DateTime.ParseExact(serviceDate, "d/M/yyyy", CultureInfo.InvariantCulture);
+            currentDay.DtServiceDay = DateTime.ParseExact(serviceDate, dateFormatSeconds, CultureInfo.InvariantCulture);
 
             string travelStartTime = row[26];
             try
