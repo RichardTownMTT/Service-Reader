@@ -25,7 +25,7 @@ namespace Service_Reader
         private MigraDoc.DocumentObjectModel.Color tableBorderColour = new MigraDoc.DocumentObjectModel.Color(191, 191, 191);
         private MigraDoc.DocumentObjectModel.Color mttPurple = new MigraDoc.DocumentObjectModel.Color(80, 77, 133);
         private MigraDoc.DocumentObjectModel.Color separatorGrey = new MigraDoc.DocumentObjectModel.Color(183, 202, 216);
-        private double borderWidth = 0.25;
+        private double borderWidth = 0.5;
 
         private Table jobDetailsTable;
         private Table timesheetTable;
