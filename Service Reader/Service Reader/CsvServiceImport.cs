@@ -6,6 +6,7 @@ using CsvHelper;
 using System.IO;
 using System.Globalization;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace Service_Reader
 {
@@ -22,6 +23,12 @@ namespace Service_Reader
         {
             //First get the user to select the file with the data
             string csvFilename = openFilename();
+            //RT 18/8/16 - csv filename can return empty string if cancelled.
+            if (csvFilename.Equals(""))
+            {
+                MessageBox.Show("No csv file selected");
+                return false;
+            }
             csvTextReader = File.OpenText(csvFilename);
             csvReaderInput = new CsvReader(csvTextReader);
             csvReaderInput.Configuration.Delimiter = ",";
@@ -67,7 +74,7 @@ namespace Service_Reader
             }
 
 
-            return false;
+            return true;
         }
 
         private void loadNewSubmission(string[] row)
