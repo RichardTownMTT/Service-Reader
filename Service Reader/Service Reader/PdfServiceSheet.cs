@@ -176,7 +176,13 @@ namespace Service_Reader
         private void createFooter()
         {
             Section currentSection = (Section)serviceSheetDoc.Sections.LastObject;
-            Table footerTable = currentSection.Footers.Primary.AddTable();
+            //RT 18/8/16 - Adding a text frame and setting this to the bottom of the page
+            MigraDoc.DocumentObjectModel.Shapes.TextFrame footerTf = currentSection.Footers.Primary.AddTextFrame();
+            Table footerTable = footerTf.AddTable();
+            footerTf.RelativeVertical = MigraDoc.DocumentObjectModel.Shapes.RelativeVertical.Page;
+            footerTf.MarginTop = new Unit(28.5, UnitType.Centimeter);
+
+            //Table footerTable = currentSection.Footers.Primary.AddTable();
             footerTable.AddColumn("4cm");
             footerTable.AddColumn("10cm");
             footerTable.AddColumn("4cm");
