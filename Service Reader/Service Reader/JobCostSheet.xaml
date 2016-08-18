@@ -4,10 +4,57 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Service_Reader"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             mc:Ignorable="d" >
+    <UserControl.Resources>
+        <DataTemplate x:Key="serviceSubmissionTemplate" DataType="{x:Type local:ServiceSubmissionModel}">
+            <local:ServiceSubmissionDetails DataContext="{Binding}" />
+        </DataTemplate>
+    </UserControl.Resources>
     <Grid>
-        <Label x:Name="label" Content="Job Cost Sheet" HorizontalAlignment="Left" Margin="68,118,0,0" VerticalAlignment="Top"/>
-
+        <Grid.DataContext>
+            <local:JobCostSheetViewModel/>
+        </Grid.DataContext>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="250"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <local:UcCanvasUser x:Name="ucUserDetails" userName="{Binding CurrentUser.Username, Mode=TwoWay}" password="{Binding CurrentUser.Password, Mode=TwoWay}" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4"/>
+        <DatePicker x:Name="dtSubmissionsFrom" SelectedDate="{Binding FromDate}" Grid.Column="1" Grid.Row="1"/>
+        <Label x:Name="label" Content="From" Grid.Column="0" Grid.Row="1"/>
+        <DatePicker x:Name="dtSubmissionsTo" SelectedDate="{Binding ToDate}" Grid.Row="1" Grid.Column="3"/>
+        <Label x:Name="labelTo" Content="To" Grid.Column="2" Grid.Row="1"/>
+        <Button Content="Load CSV" Command="{Binding loadCsv}" Grid.Column="0" Grid.Row="2" Margin="5" />
+        <Button Content="Create Cost Sheet" Command="{Binding createCostSheet}" Grid.Column="1" Grid.Row="2" Margin="5" />
+        <DataGrid x:Name="dataGrid" ItemsSource="{Binding AllServiceSubmissions}" AutoGenerateColumns="False" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="6" Margin="5" SelectedItem="{Binding Path=SelectedSubmission}" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Submission No" Binding="{Binding SubmissionNo}"/>
+                <DataGridTextColumn Header="Engineer" Binding="{Binding EngineerFullName}"/>
+                <DataGridTextColumn Header="Customer" Binding="{Binding Customer}"/>
+                <DataGridTextColumn Header="Job Start" Binding="{Binding JobStart, StringFormat=\{0:dd/MM/yy\}}"/>
+            </DataGrid.Columns>
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Approved}" Value="True">
+                            <Setter Property="Background" Value="LightGreen"></Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Approved}" Value="False">
+                            <Setter Property="Background" Value="LightCyan"></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
+        </DataGrid>
+        <local:ServiceSubmissionDetails IsEnabled="{Binding SelectedSubmission.EditMode}" x:Name="ucSubmissions" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="5" Margin="5" currentSubmission="{Binding SelectedSubmission}"/>
     </Grid>
 </UserControl>

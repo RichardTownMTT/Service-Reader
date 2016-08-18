@@ -16,26 +16,6 @@ namespace Service_Reader
         private List<ServiceSubmissionModel> allServiceSubmissions;
         private ServiceSubmissionModel selectedSubmission;
         private ICommand loadCsvCommand;
-        private ICommand createCostSheetCommand;
-
-        public ICommand createCostSheet
-        {
-            get
-            {
-                if (createCostSheetCommand == null)
-                {
-                    createCostSheetCommand = new RelayCommand(param => this.costSheetCreator());
-                }
-                return createCostSheetCommand;
-            }
-        }
-
-        private void costSheetCreator()
-        {
-            CreateCostSheet costSheetExporter = new CreateCostSheet();
-            bool success = costSheetExporter.exportDataToCostSheet(selectedSubmission);
-            MessageBox.Show("Need to check for success");
-        }
 
         public ICommand loadCsv
         {

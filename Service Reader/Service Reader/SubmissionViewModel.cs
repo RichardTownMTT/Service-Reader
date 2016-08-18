@@ -17,7 +17,7 @@ namespace Service_Reader
         private DateTime fromDate;
         private DateTime toDate;
         private ServiceSubmissionModel selectedSubmission;
-        private ICommand createPdfServiceSheetCommand;
+        //private ICommand createPdfServiceSheetCommand;
         private ICommand editSubmissionCommand;
         private ICommand saveEditSubmissionCommand;
         private ICommand cancelEditSubmissionCommand;
@@ -48,17 +48,17 @@ namespace Service_Reader
             }
         }
 
-        public ICommand CreatePdfServiceSheet
-        {
-            get
-            {
-                if (createPdfServiceSheetCommand == null)
-                {
-                    createPdfServiceSheetCommand = new RelayCommand(param => this.createPdfServiceSheetForSubmission());
-                }
-                return createPdfServiceSheetCommand;
-            }
-        }
+        //public ICommand CreatePdfServiceSheet
+        //{
+        //    get
+        //    {
+        //        if (createPdfServiceSheetCommand == null)
+        //        {
+        //            createPdfServiceSheetCommand = new RelayCommand(param => this.createPdfServiceSheetForSubmission());
+        //        }
+        //        return createPdfServiceSheetCommand;
+        //    }
+        //}
 
         //RT 3/8/16 - adding commands for the save, edit and cancel commands.  These also toggle the readonly properties on the service submission
         public ICommand editSubmission
@@ -145,25 +145,25 @@ namespace Service_Reader
             Boolean successful = exporter.exportDataToCsv(allServiceSubmissions);
         }
 
-        private void createPdfServiceSheetForSubmission()
-        {
-            //Check if there is a current sheet
-            if (selectedSubmission == null)
-            {
-                MessageBox.Show("Error - no sheet selected");
-                return;
-            }
-            PdfServiceSheet serviceSheetCreator = new PdfServiceSheet();
-            Boolean sheetCreated = serviceSheetCreator.createPdfSheetForSubmission(selectedSubmission);
-            if (sheetCreated)
-            {
-                MessageBox.Show("Sheet created");
-            }
-            else
-            {
-                MessageBox.Show("Error creating service sheet");
-            }
-        }
+        //private void createPdfServiceSheetForSubmission()
+        //{
+        //    //Check if there is a current sheet
+        //    if (selectedSubmission == null)
+        //    {
+        //        MessageBox.Show("Error - no sheet selected");
+        //        return;
+        //    }
+        //    PdfServiceSheet serviceSheetCreator = new PdfServiceSheet();
+        //    Boolean sheetCreated = serviceSheetCreator.createPdfSheetForSubmission(selectedSubmission);
+        //    if (sheetCreated)
+        //    {
+        //        MessageBox.Show("Sheet created");
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("Error creating service sheet");
+        //    }
+        //}
 
         private void getCanvasSubmissions()
         {
