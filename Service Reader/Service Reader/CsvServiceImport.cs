@@ -72,7 +72,8 @@ namespace Service_Reader
                 }
                 
             }
-
+            //RT 18/8/16 - Need to save the last submssion
+            importedSubmissions.Add(currentServiceSubmission);
 
             return true;
         }
