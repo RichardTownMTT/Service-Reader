@@ -337,7 +337,17 @@ namespace Service_Reader
 
             addLineToFollowupTable("Additional faults found", currentSheet.AdditionalFaultsFound);
             addLineToFollowupTable("Parts required", currentSheet.PartsForFollowup);
-            addLineToFollowupTable("Quote required", currentSheet.QuoteRequired.ToString());
+            //RT 18/8/16 - Quote required should be yes/no
+            bool quoteRequired = currentSheet.QuoteRequired;
+            if (quoteRequired)
+            {
+                addLineToFollowupTable("Quote required", "Yes");
+            }
+            else
+            {
+                addLineToFollowupTable("Quote required", "No");
+            }
+            //addLineToFollowupTable("Quote required", currentSheet.QuoteRequired.ToString());
 
             Row rowImages= followupTable.AddRow();
             rowImages.Cells[0].MergeRight = 1;
