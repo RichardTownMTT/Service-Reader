@@ -63,6 +63,8 @@ namespace Service_Reader
                 }
                 else
                 {
+                    //RT - 20/8/16 - Need to recalculate the times as we have added the last day
+                    currentServiceSubmission.updateTimes();
                     importedSubmissions.Add(currentServiceSubmission);
                     Console.WriteLine("Submission: " + currentReadSubmissionNo + " created");
                     currentReadSubmissionNo = submissionNo;
@@ -72,6 +74,10 @@ namespace Service_Reader
                 }
                 
             }
+
+            //RT - 20/8/16 - Need to recalculate the times as we have added the last day
+            currentServiceSubmission.updateTimes();
+
             //RT 18/8/16 - Need to save the last submssion
             importedSubmissions.Add(currentServiceSubmission);
 
