@@ -87,6 +87,7 @@
     <Compile Include="CreateCostSheet.cs" />
     <Compile Include="CsvServiceExport.cs" />
     <Compile Include="CsvServiceImport.cs" />
+    <Compile Include="CustomDataGrid.cs" />
     <Compile Include="PdfServiceSheet.cs" />
     <Compile Include="ServiceDayViewModel.cs" />
     <Compile Include="SubmissionViewModel.cs" />

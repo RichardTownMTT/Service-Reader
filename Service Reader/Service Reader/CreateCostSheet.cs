@@ -7,13 +7,20 @@ using Excel = Microsoft.Office.Interop.Excel;
 using Microsoft.Win32;
 using System.Windows;
 using System.Collections.ObjectModel;
+using System.Collections;
 
 namespace Service_Reader
 {
     //This is used to export the service sheet data to the costing sheet in excel
     public class CreateCostSheet
     {
-        public bool exportDataToCostSheet(ServiceSubmissionModel submission)
+        private Excel._Application excelApplication;
+        private Excel._Workbook excelWorkbook;
+        private Excel.Worksheet excelWorksheet;
+
+        //RT 20/8/16 - Changing to multiple rows
+        //public bool exportDataToCostSheet(ServiceSubmissionModel submission)
+        public bool exportDataToCostSheet(IList submissions)
         {
             string filename = openFilename();
             if (filename.Equals(""))
@@ -22,36 +29,65 @@ namespace Service_Reader
                 return false;
             }
 
-            bool success = createJobCostingSheet(submission, filename);
+
+            //RT 20/8/16 - Changing to deal with multiple sheets
+            //bool success = createJobCostingSheet(submission, filename);
+            bool success = createCostingSheetForSubmission(submissions, filename);
 
 
             return success;
         }
 
-        private bool createJobCostingSheet(ServiceSubmissionModel submission, string filename)
+        private bool createCostingSheetForSubmission(IList submissions, string filename)
         {
+            int lineNumber = -1;
+            //Loop through the submissions and add to the sheet.
+            //First one will set the job details
+            bool firstSubmission = true;
+
+            foreach (ServiceSubmissionModel submission in submissions)
+            {
+                lineNumber = createJobCostingSheet(submission, filename, firstSubmission, lineNumber);
+                firstSubmission = false;
+            }
+
+            if (lineNumber>-1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            //return success;
+        }
+
+        //private bool createJobCostingSheet(ServiceSubmissionModel submission, string filename)
+        private int createJobCostingSheet(ServiceSubmissionModel submission, string filename, bool firstSubmission, int lineNumber)
+        {
+            Excel.Range range;
             //First Open excel
-            Excel._Application excelApplication;
-            Excel._Workbook excelWorkbook;
 
-            excelApplication = new Excel.Application();
-            excelApplication.Visible = true;
-            excelWorkbook = excelApplication.Workbooks.Open(filename);
+            if (firstSubmission)
+            {
+                excelApplication = new Excel.Application();
+                excelApplication.Visible = true;
+                excelWorkbook = excelApplication.Workbooks.Open(filename);
 
-            Excel.Worksheet excelWorksheet = excelWorkbook.ActiveSheet;
+                excelWorksheet = excelWorkbook.ActiveSheet;
 
-            //Add the job title
-            string customer = submission.Customer;
-            string machineMake = submission.MachineMakeModel;
-            string serialNumber = submission.MachineSerial;
-            string jobDescription = submission.JobDescription;
+                //Add the job title
+                string customer = submission.Customer;
+                string machineMake = submission.MachineMakeModel;
+                string serialNumber = submission.MachineSerial;
+                string jobDescription = submission.JobDescription;
 
-            Excel.Range range = excelWorksheet.Cells[13, 1];
-            range.Value2 = string.Concat(customer, " - ", machineMake, " - S/N: ", serialNumber, " - ", jobDescription);
+                range = excelWorksheet.Cells[13, 1];
+                range.Value2 = string.Concat(customer, " - ", machineMake, " - S/N: ", serialNumber, " - ", jobDescription);
 
-            range = excelWorksheet.Cells[11, 9];
-            range.Value2 = submission.MttJobNumber;
-
+                range = excelWorksheet.Cells[11, 9];
+                range.Value2 = submission.MttJobNumber;
+            }
             //Load all the days and loop through them. Output to the sheet
             ObservableCollection<ServiceDayModel> serviceDays = submission.ServiceTimesheets;
 
@@ -62,7 +98,17 @@ namespace Service_Reader
 
             int sheetNo = submission.SubmissionNo;
 
-            int currentSpreadsheetRow = 17;
+            int currentSpreadsheetRow;
+
+            if (lineNumber == -1)
+            {
+                currentSpreadsheetRow = 17;
+            }
+            else
+            {
+                currentSpreadsheetRow = lineNumber++;
+            }
+            
 
             foreach (ServiceDayModel currentDay in serviceDays)
             {
@@ -108,7 +154,7 @@ namespace Service_Reader
 
             MessageBox.Show("Need to handle bank holidays");
 
-            return true;
+            return currentSpreadsheetRow;
         }
 
         private int convertBoolToIntForAllowances(bool booleanValue)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,7 @@ namespace Service_Reader
 
         private List<ServiceSubmissionModel> allServiceSubmissions;
         private ServiceSubmissionModel selectedSubmission;
+        private IList selectedSubmissions;
         private ICommand loadCsvCommand;
         private ICommand createCostSheetCommand;
 
@@ -33,7 +35,9 @@ namespace Service_Reader
         private void costSheetCreator()
         {
             CreateCostSheet costSheetExporter = new CreateCostSheet();
-            bool success = costSheetExporter.exportDataToCostSheet(selectedSubmission);
+            //RT 20/8/16 - Changing creator to deal with multiple sheets
+            //bool success = costSheetExporter.exportDataToCostSheet(selectedSubmission);
+            bool success = costSheetExporter.exportDataToCostSheet(selectedSubmissions);
             MessageBox.Show("Need to check for success");
         }
 
@@ -82,6 +86,19 @@ namespace Service_Reader
                 {
                     selectedSubmission = value;
                     onPropertyChanged("SelectedSubmission");
+                }
+            }
+        }
+
+        public IList SelectedSubmissions
+        {
+            get { return selectedSubmissions; }
+            set
+            {
+                if (value != selectedSubmissions)
+                {
+                    selectedSubmissions = value;
+                    onPropertyChanged("SelectedSubmissions");
                 }
             }
         }
