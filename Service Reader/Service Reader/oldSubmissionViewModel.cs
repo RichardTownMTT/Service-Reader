@@ -178,9 +178,9 @@ namespace Service_Reader
             }
 
             //RT 5/6/16 - adding in download of images
-            winImageDownloadProgessBar downloadImagesScreen = new winImageDownloadProgessBar(getAllSubmissions, currentUser);
-            bool? result = downloadImagesScreen.ShowDialog();
-            getAllSubmissions = downloadImagesScreen.Submissions;
+            //winImageDownloadProgessBar downloadImagesScreen = new winImageDownloadProgessBar(getAllSubmissions, currentUser);
+            //bool? result = downloadImagesScreen.ShowDialog();
+            //getAllSubmissions = downloadImagesScreen.Submissions;
             MessageBox.Show("Add error catch.  Can't use messages in worker thread!");
         }
 

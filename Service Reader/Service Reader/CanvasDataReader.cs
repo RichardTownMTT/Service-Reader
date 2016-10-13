@@ -142,6 +142,55 @@ namespace Service_Reader
 
             XElement rootElement;
 
+            rootElement = loadElements(canvasUrl);
+            if (rootElement == null)
+            {
+                //Failed validation or download failed.  Error will have been shown
+                return null;
+            }
+
+            XElement totalPagesNode = rootElement.Element("TotalPages");
+            int noOfPages = Convert.ToInt32(totalPagesNode.Value);
+
+            //RT 13/10/16 - Adding support for multiple pages from Canvas
+            int pageCounter = 1;
+
+            List<ServiceSheet> allSubmissions = new List<ServiceSheet>();
+
+            while (pageCounter <= noOfPages)
+            {
+                if (pageCounter == 1)
+                {
+                    XElement submissions = rootElement.Element("Submissions");
+
+                    //ServiceSubmissionModel[] allSubmissions;
+                    allSubmissions.AddRange(parseSubmissions(submissions));
+                }
+                else
+                {
+                    canvasUrl = "https://www.gocanvas.com/apiv2/submissions.xml?username=" + canvasUsername + "&password=" + canvasPassword + "&form_id=1285373&begin_date=" + startDateStr + "&end_date=" + endDateStr + "&page=" +pageCounter;
+
+                    rootElement = loadElements(canvasUrl);
+                    if (rootElement == null)
+                    {
+                        //Failed validation or download failed.  Error will have been shown
+                        return null;
+                    }
+
+                    XElement submissions = rootElement.Element("Submissions");
+
+                    //ServiceSubmissionModel[] allSubmissions;
+                    allSubmissions.AddRange(parseSubmissions(submissions));
+                }
+                pageCounter++;
+            }
+
+            return allSubmissions;
+        }
+
+        private static XElement loadElements(string canvasUrl)
+        {
+            XElement rootElement;
             try
             {
                 XDocument xDoc = XDocument.Load(canvasUrl);
@@ -160,18 +209,7 @@ namespace Service_Reader
             {
                 return null;
             }
-
-            XElement totalPagesNode = rootElement.Element("TotalPages");
-            string noOfPages = totalPagesNode.Value;
-
-            XElement submissions = rootElement.Element("Submissions");
-
-            //ServiceSubmissionModel[] allSubmissions;
-            List<ServiceSheet> allSubmissions;
-            allSubmissions = parseSubmissions(submissions);
-
-
-            return allSubmissions;
+            return rootElement;
         }
 
         private static string validateCanvasXml(XElement rootElement)
