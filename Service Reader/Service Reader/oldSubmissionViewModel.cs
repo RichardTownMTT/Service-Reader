@@ -8,15 +8,15 @@ using System.Windows;
 
 namespace Service_Reader
 {
-    public class SubmissionViewModel : ObservableObject, IPageViewModel
+    public class oldSubmissionViewModel : ObservableObject, IPageViewModel
     {
-        private List<ServiceSubmissionModel> allServiceSubmissions;
+        private List<ServiceSheet> allServiceSubmissions;
         //private ServiceSubmissionModel[] allServiceSubmissions;
         private CanvasUserModel currentUser;
         private ICommand getCanvasDataCommand;
         private DateTime fromDate;
         private DateTime toDate;
-        private ServiceSubmissionModel selectedSubmission;
+        private oldServiceSubmissionModel selectedSubmission;
         //private ICommand createPdfServiceSheetCommand;
         private ICommand editSubmissionCommand;
         private ICommand saveEditSubmissionCommand;
@@ -28,7 +28,7 @@ namespace Service_Reader
             get { return "Process Canvas Data"; }
         }
 
-        public SubmissionViewModel()
+        public oldSubmissionViewModel()
         {
             currentUser = new CanvasUserModel();
             fromDate = DateTime.Now.AddDays(-7);
@@ -141,8 +141,8 @@ namespace Service_Reader
 
         private void csvExport()
         {
-            CsvServiceExport exporter = new CsvServiceExport();
-            Boolean successful = exporter.exportDataToCsv(allServiceSubmissions);
+            //CsvServiceExport exporter = new CsvServiceExport();
+            //Boolean successful = exporter.exportDataToCsv(allServiceSubmissions);
         }
 
         //private void createPdfServiceSheetForSubmission()
@@ -167,9 +167,9 @@ namespace Service_Reader
 
         private void getCanvasSubmissions()
         {
-            string fromDateStr = fromDate.ToString("MM/dd/yy");
-            string toDateStr = toDate.ToString("MM/dd/yy");
-            getAllSubmissions = CanvasDataReader.downloadXml(currentUser.Username, currentUser.Password, fromDateStr, toDateStr);
+            //string fromDateStr = fromDate.ToString("MM/dd/yy");
+            //string toDateStr = toDate.ToString("MM/dd/yy");
+            getAllSubmissions = CanvasDataReader.downloadXml(currentUser.Username, currentUser.Password, FromDate, ToDate);
 
             //If no submissions have been returned, then exit.  None available, or error has occured.
             if (getAllSubmissions == null)
@@ -184,7 +184,7 @@ namespace Service_Reader
             MessageBox.Show("Add error catch.  Can't use messages in worker thread!");
         }
 
-        public List<ServiceSubmissionModel> getAllSubmissions
+        public List<ServiceSheet> getAllSubmissions
         {
             get { return allServiceSubmissions; }
             set
@@ -197,7 +197,7 @@ namespace Service_Reader
             }
         }
 
-        public ServiceSubmissionModel SelectedSubmission
+        public oldServiceSubmissionModel SelectedSubmission
         {
             get { return selectedSubmission; }
             set

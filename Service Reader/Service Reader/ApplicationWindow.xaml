@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Service Reader" WindowState="Maximized" Height="300" Width="300">
     <Window.Resources>
-        <DataTemplate DataType="{x:Type local:SubmissionViewModel}">
+        <DataTemplate DataType="{x:Type local:oldSubmissionViewModel}">
             <local:UcCanvasSubmissionsOverview/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type local:IssueServiceReportViewModel}">

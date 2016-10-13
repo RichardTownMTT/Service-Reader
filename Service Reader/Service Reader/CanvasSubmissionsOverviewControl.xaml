@@ -6,13 +6,13 @@
         xmlns:local="clr-namespace:Service_Reader"
         mc:Ignorable="d" d:DesignHeight="2000" Name="ucSubmissionOverview">
     <UserControl.Resources>
-        <DataTemplate x:Key="serviceSubmissionTemplate" DataType="{x:Type local:ServiceSubmissionModel}">
+        <DataTemplate x:Key="serviceSubmissionTemplate" DataType="{x:Type local:oldServiceSubmissionModel}">
             <local:ServiceSubmissionDetails DataContext="{Binding}" />
         </DataTemplate>
     </UserControl.Resources>
     <Grid>
         <Grid.DataContext>
-            <local:SubmissionViewModel/>
+            <local:oldSubmissionViewModel/>
         </Grid.DataContext>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>

@@ -14,8 +14,8 @@ namespace Service_Reader
         public string Name
         { get { return "Job Cost Sheet"; } }
 
-        private List<ServiceSubmissionModel> allServiceSubmissions;
-        private ServiceSubmissionModel selectedSubmission;
+        private List<oldServiceSubmissionModel> allServiceSubmissions;
+        private oldServiceSubmissionModel selectedSubmission;
         private IList selectedSubmissions;
         private ICommand loadCsvCommand;
         private ICommand createCostSheetCommand;
@@ -61,7 +61,7 @@ namespace Service_Reader
             AllServiceSubmissions = csvImporter.AllServiceSubmissions;
         }
 
-        public List<ServiceSubmissionModel> AllServiceSubmissions
+        public List<oldServiceSubmissionModel> AllServiceSubmissions
         {
             get
             {
@@ -77,7 +77,7 @@ namespace Service_Reader
             }
         }
 
-        public ServiceSubmissionModel SelectedSubmission
+        public oldServiceSubmissionModel SelectedSubmission
         {
             get { return selectedSubmission; }
             set
@@ -103,7 +103,7 @@ namespace Service_Reader
             }
         }
 
-        public List<ServiceSubmissionModel> getAllSubmissions
+        public List<oldServiceSubmissionModel> getAllSubmissions
         {
             get { return allServiceSubmissions; }
             set

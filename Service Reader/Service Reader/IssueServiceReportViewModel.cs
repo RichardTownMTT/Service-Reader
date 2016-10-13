@@ -16,8 +16,8 @@ namespace Service_Reader
             get { return "Issue Service Reports"; }
         }
 
-        private List<ServiceSubmissionModel> allServiceSubmissions;
-        private ServiceSubmissionModel selectedSubmission;
+        private List<oldServiceSubmissionModel> allServiceSubmissions;
+        private oldServiceSubmissionModel selectedSubmission;
         private ICommand loadCsvCommand;
         //private ICommand createCostSheetCommand;
         private ICommand createPdfServiceSheetCommand;
@@ -57,24 +57,25 @@ namespace Service_Reader
             }
         }
 
-        private void getCanvasSubmissions()
-        {
-            string fromDateStr = fromDate.ToString("MM/dd/yy");
-            string toDateStr = toDate.ToString("MM/dd/yy");
-            getAllSubmissions = CanvasDataReader.downloadXml(currentUser.Username, currentUser.Password, fromDateStr, toDateStr);
+        //RT 12/10/16 - Not used
+        //private void getCanvasSubmissions()
+        //{
+        //    string fromDateStr = fromDate.ToString("MM/dd/yy");
+        //    string toDateStr = toDate.ToString("MM/dd/yy");
+        //    getAllSubmissions = CanvasDataReader.downloadXml(currentUser.Username, currentUser.Password, fromDateStr, toDateStr);
 
-            //If no submissions have been returned, then exit.  None available, or error has occured.
-            if (getAllSubmissions == null)
-            {
-                return;
-            }
+        //    //If no submissions have been returned, then exit.  None available, or error has occured.
+        //    if (getAllSubmissions == null)
+        //    {
+        //        return;
+        //    }
 
-            //RT 5/6/16 - adding in download of images
-            winImageDownloadProgessBar downloadImagesScreen = new winImageDownloadProgessBar(getAllSubmissions, currentUser);
-            bool? result = downloadImagesScreen.ShowDialog();
-            getAllSubmissions = downloadImagesScreen.Submissions;
-            MessageBox.Show("Add error catch.  Can't use messages in worker thread!");
-        }
+        //    //RT 5/6/16 - adding in download of images
+        //    winImageDownloadProgessBar downloadImagesScreen = new winImageDownloadProgessBar(getAllSubmissions, currentUser);
+        //    bool? result = downloadImagesScreen.ShowDialog();
+        //    getAllSubmissions = downloadImagesScreen.Submissions;
+        //    MessageBox.Show("Add error catch.  Can't use messages in worker thread!");
+        //}
 
         //public ICommand createCostSheet
         //{
@@ -115,7 +116,7 @@ namespace Service_Reader
             AllServiceSubmissions = csvImporter.AllServiceSubmissions;
         }
 
-        public List<ServiceSubmissionModel> AllServiceSubmissions
+        public List<oldServiceSubmissionModel> AllServiceSubmissions
         {
             get
             {
@@ -131,7 +132,7 @@ namespace Service_Reader
             }
         }
 
-        public ServiceSubmissionModel SelectedSubmission
+        public oldServiceSubmissionModel SelectedSubmission
         {
             get { return selectedSubmission; }
             set
@@ -144,7 +145,7 @@ namespace Service_Reader
             }
         }
 
-        public List<ServiceSubmissionModel> getAllSubmissions
+        public List<oldServiceSubmissionModel> getAllSubmissions
         {
             get { return allServiceSubmissions; }
             set

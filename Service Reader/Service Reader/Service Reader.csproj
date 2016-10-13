@@ -39,6 +39,14 @@
       <HintPath>..\packages\CsvHelper.2.16.0.0\lib\net45\CsvHelper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MigraDoc.DocumentObjectModel-wpf, Version=1.50.3915.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
       <HintPath>..\packages\PDFsharp-MigraDoc-wpf.1.50.3915-beta2\lib\net30\MigraDoc.DocumentObjectModel-wpf.dll</HintPath>
       <Private>True</Private>
@@ -60,8 +68,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -84,13 +95,40 @@
       <DependentUpon>ApplicationWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ApplicationViewModel.cs" />
+    <Compile Include="CanvasHistoricalData.cs">
+      <DependentUpon>ServiceModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CanvasRawData.cs">
+      <DependentUpon>ServiceModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="CreateCostSheet.cs" />
     <Compile Include="CsvServiceExport.cs" />
     <Compile Include="CsvServiceImport.cs" />
     <Compile Include="CustomDataGrid.cs" />
     <Compile Include="PdfServiceSheet.cs" />
-    <Compile Include="ServiceDayViewModel.cs" />
-    <Compile Include="SubmissionViewModel.cs" />
+    <Compile Include="ServiceDay.cs">
+      <DependentUpon>ServiceModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="oldServiceDayViewModel.cs" />
+    <Compile Include="ServiceModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ServiceModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ServiceModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ServiceModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ServiceModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ServiceModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="ServiceSheet.cs">
+      <DependentUpon>ServiceModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="oldSubmissionViewModel.cs" />
     <Compile Include="CanvasUserModel.cs" />
     <Compile Include="HistoryTracker.xaml.cs">
       <DependentUpon>HistoryTracker.xaml</DependentUpon>
@@ -107,11 +145,12 @@
     <Compile Include="JobCostSheetViewModel.cs" />
     <Compile Include="ObservableObject.cs" />
     <Compile Include="RelayCommand.cs" />
-    <Compile Include="ServiceDayModel.cs" />
+    <Compile Include="oldServiceDayModel.cs" />
+    <Compile Include="ServiceSheetViewModel.cs" />
     <Compile Include="ServiceSubmissionDetails.xaml.cs">
       <DependentUpon>ServiceSubmissionDetails.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ServiceSubmissionModel.cs" />
+    <Compile Include="oldServiceSubmissionModel.cs" />
     <Compile Include="CanvasUserControl.xaml.cs">
       <DependentUpon>CanvasUserControl.xaml</DependentUpon>
     </Compile>
@@ -192,6 +231,13 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <EntityDeploy Include="ServiceModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ServiceModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="ServiceModel.edmx.diagram">
+      <DependentUpon>ServiceModel.edmx</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -230,6 +276,21 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ServiceModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ServiceModel.edmx</DependentUpon>
+      <LastGenOutput>ServiceModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="ServiceModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ServiceModel.edmx</DependentUpon>
+      <LastGenOutput>ServiceModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

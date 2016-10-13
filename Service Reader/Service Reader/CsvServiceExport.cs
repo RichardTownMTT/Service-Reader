@@ -16,7 +16,7 @@ namespace Service_Reader
         private CsvWriter csvWriterOutput;
 
         //Pass in multiple sheets
-        public Boolean exportDataToCsv(List<ServiceSubmissionModel> submissionsToExport)
+        public Boolean exportDataToCsv(List<oldServiceSubmissionModel> submissionsToExport)
         {
             string outputFilename = createFilename();
 
@@ -31,7 +31,7 @@ namespace Service_Reader
             csvWriterOutput = new CsvWriter(csvTextWriter);
 
             //Loop through the sheets 
-            foreach (ServiceSubmissionModel submission in submissionsToExport)
+            foreach (oldServiceSubmissionModel submission in submissionsToExport)
             {
                 //For each submission, create the csv export
                 createExportLinesForSubmission(submission);
@@ -42,9 +42,9 @@ namespace Service_Reader
             return true;
         }
 
-        private void createExportLinesForSubmission(ServiceSubmissionModel submission)
+        private void createExportLinesForSubmission(oldServiceSubmissionModel submission)
         {
-            ObservableCollection<ServiceDayModel> serviceDays = submission.ServiceTimesheets;
+            ObservableCollection<oldServiceDayModel> serviceDays = submission.ServiceTimesheets;
             int noOfDays = serviceDays.Count;
 
             for (int counter = 0; counter < noOfDays ; counter++)
@@ -102,7 +102,7 @@ namespace Service_Reader
                 string jobDescription = submission.JobDescription;
                 csvWriterOutput.WriteField(jobDescription);
 
-                ServiceDayModel currentDay = serviceDays[counter];
+                oldServiceDayModel currentDay = serviceDays[counter];
                 createExportLineForDay(currentDay);
 
                 double totalTimeOnsite = submission.TotalTimeOnsite;
@@ -158,7 +158,7 @@ namespace Service_Reader
 
         }
 
-        private void createExportLineForDay(ServiceDayModel currentDay)
+        private void createExportLineForDay(oldServiceDayModel currentDay)
         {
             //This adds the day to the export
             DateTime travelStart = currentDay.TravelStartTime;

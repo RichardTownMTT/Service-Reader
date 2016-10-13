@@ -14,8 +14,8 @@ namespace Service_Reader
     {
         private TextReader csvTextReader;
         private CsvReader csvReaderInput;
-        private ServiceSubmissionModel currentServiceSubmission;
-        List<ServiceSubmissionModel> importedSubmissions;
+        private oldServiceSubmissionModel currentServiceSubmission;
+        List<oldServiceSubmissionModel> importedSubmissions;
 
         //This class imports the historical data from a csv file and displays it in the application
 
@@ -40,7 +40,7 @@ namespace Service_Reader
             //If not, then it it a new submssion
 
             int currentReadSubmissionNo = -1;
-            importedSubmissions = new List<ServiceSubmissionModel>();
+            importedSubmissions = new List<oldServiceSubmissionModel>();
 
             while (csvReaderInput.Read())
             {
@@ -52,7 +52,7 @@ namespace Service_Reader
                 if (currentReadSubmissionNo == -1)
                 {
                     currentReadSubmissionNo = submissionNo;
-                    currentServiceSubmission = new ServiceSubmissionModel();
+                    currentServiceSubmission = new oldServiceSubmissionModel();
                     loadNewSubmission(row);
                     continue;
                 }
@@ -68,7 +68,7 @@ namespace Service_Reader
                     importedSubmissions.Add(currentServiceSubmission);
                     Console.WriteLine("Submission: " + currentReadSubmissionNo + " created");
                     currentReadSubmissionNo = submissionNo;
-                    currentServiceSubmission = new ServiceSubmissionModel();
+                    currentServiceSubmission = new oldServiceSubmissionModel();
                     loadNewSubmission(row);
                     
                 }
@@ -134,7 +134,7 @@ namespace Service_Reader
 
             //Need to load the days
             //First set the timesheets up on the current service submission
-            currentServiceSubmission.ServiceTimesheets = new ObservableCollection<ServiceDayModel>();
+            currentServiceSubmission.ServiceTimesheets = new ObservableCollection<oldServiceDayModel>();
             loadDayForSubmission(row, currentServiceSubmission);
 
             currentServiceSubmission.TotalTimeOnsite = Convert.ToDouble(row[41]);
@@ -160,13 +160,13 @@ namespace Service_Reader
             currentServiceSubmission.MttEngSignatureUrl = row[63];
         }
 
-        private void loadDayForSubmission(string[] row, ServiceSubmissionModel currentSubmission)
+        private void loadDayForSubmission(string[] row, oldServiceSubmissionModel currentSubmission)
         {
             string dateFormatMinutes = "d/M/yyyy HH:mm";
             string dateFormatSeconds = "d/M/yyyy H:mm:ss";
 
             //Need to set the submission on the service day
-            ServiceDayModel currentDay = new ServiceDayModel(currentSubmission);
+            oldServiceDayModel currentDay = new oldServiceDayModel(currentSubmission);
             //The times may be with / without the date, depending on when they were imported.
             //Need to load the service date first, in case we need it for the times
             string serviceDate = row[40];
@@ -329,7 +329,7 @@ namespace Service_Reader
             return retval;
         }
 
-        public List<ServiceSubmissionModel> AllServiceSubmissions
+        public List<oldServiceSubmissionModel> AllServiceSubmissions
         {
             get
             {

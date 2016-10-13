@@ -12,11 +12,11 @@ namespace Service_Reader
     /// </summary>
     public partial class ServiceSubmissionDetails : UserControl
     {
-        public ServiceSubmissionModel currentSubmission
+        public oldServiceSubmissionModel currentSubmission
         {
             get
             {
-                return (ServiceSubmissionModel)GetValue(currentSubmissionDP);
+                return (oldServiceSubmissionModel)GetValue(currentSubmissionDP);
             }
             set
             {
@@ -24,7 +24,7 @@ namespace Service_Reader
             }
         }
         public static readonly DependencyProperty currentSubmissionDP =
-            DependencyProperty.Register("currentSubmission", typeof(ServiceSubmissionModel), typeof(ServiceSubmissionDetails), new PropertyMetadata(null));
+            DependencyProperty.Register("currentSubmission", typeof(oldServiceSubmissionModel), typeof(ServiceSubmissionDetails), new PropertyMetadata(null));
 
         //public ServiceSubmissionDetails(ServiceSubmission serviceSheet, string username, string password)
         public ServiceSubmissionDetails()

@@ -13,8 +13,8 @@ namespace Service_Reader
         public String Name
         { get { return "History Tracker"; } }
 
-        private List<ServiceSubmissionModel> allServiceSubmissions;
-        private ServiceSubmissionModel selectedSubmission;
+        private List<oldServiceSubmissionModel> allServiceSubmissions;
+        private oldServiceSubmissionModel selectedSubmission;
         private ICommand loadCsvCommand;
 
         public ICommand loadCsv
@@ -37,7 +37,7 @@ namespace Service_Reader
             AllServiceSubmissions = csvImporter.AllServiceSubmissions;
         }
 
-        public List<ServiceSubmissionModel> AllServiceSubmissions
+        public List<oldServiceSubmissionModel> AllServiceSubmissions
         {
             get
             {
@@ -53,7 +53,7 @@ namespace Service_Reader
             }
         }
 
-        public ServiceSubmissionModel SelectedSubmission
+        public oldServiceSubmissionModel SelectedSubmission
         {
             get { return selectedSubmission; }
             set

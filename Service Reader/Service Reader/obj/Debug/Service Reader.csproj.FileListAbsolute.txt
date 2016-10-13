@@ -97,3 +97,8 @@ C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Read
 C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\Service Reader.exe
 C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\Service Reader.pdb
 C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\Service Reader.csproj.ResolveComReference.cache
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\bin\Debug\EntityFramework.dll
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\bin\Debug\EntityFramework.xml
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\Service Reader_Content.g.cs

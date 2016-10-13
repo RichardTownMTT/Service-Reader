@@ -45,7 +45,7 @@ namespace Service_Reader
             //First one will set the job details
             bool firstSubmission = true;
 
-            foreach (ServiceSubmissionModel submission in submissions)
+            foreach (oldServiceSubmissionModel submission in submissions)
             {
                 lineNumber = createJobCostingSheet(submission, filename, firstSubmission, lineNumber);
                 firstSubmission = false;
@@ -63,7 +63,7 @@ namespace Service_Reader
         }
 
         //private bool createJobCostingSheet(ServiceSubmissionModel submission, string filename)
-        private int createJobCostingSheet(ServiceSubmissionModel submission, string filename, bool firstSubmission, int lineNumber)
+        private int createJobCostingSheet(oldServiceSubmissionModel submission, string filename, bool firstSubmission, int lineNumber)
         {
             Excel.Range range;
             //First Open excel
@@ -89,7 +89,7 @@ namespace Service_Reader
                 range.Value2 = submission.MttJobNumber;
             }
             //Load all the days and loop through them. Output to the sheet
-            ObservableCollection<ServiceDayModel> serviceDays = submission.ServiceTimesheets;
+            ObservableCollection<oldServiceDayModel> serviceDays = submission.ServiceTimesheets;
 
             //Need the engineers initials for each row
             string engFirstName = submission.UserFirstName;
@@ -110,7 +110,7 @@ namespace Service_Reader
             }
             
 
-            foreach (ServiceDayModel currentDay in serviceDays)
+            foreach (oldServiceDayModel currentDay in serviceDays)
             {
                 range = excelWorksheet.Cells[currentSpreadsheetRow, 1];
                 range.Value2 = currentDay.DtServiceDay;
@@ -172,7 +172,7 @@ namespace Service_Reader
             return retval;
         }
 
-        private double calculateOvertimeHours(ServiceDayModel currentDay)
+        private double calculateOvertimeHours(oldServiceDayModel currentDay)
         {
             //Monday - Thursday are the first 8 hours onsite.
             //Friday is the first 6
@@ -217,7 +217,7 @@ namespace Service_Reader
             return retval;
         }
 
-        private double calculateStandardHours(ServiceDayModel currentDay)
+        private double calculateStandardHours(oldServiceDayModel currentDay)
         {
             //Monday - Thursday are the first 8 hours onsite.
             //Friday is the first 6

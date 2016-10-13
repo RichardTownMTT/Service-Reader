@@ -16,7 +16,7 @@ namespace Service_Reader
     public class PdfServiceSheet
     {
         private Document serviceSheetDoc;
-        private ServiceSubmissionModel currentSheet;
+        private oldServiceSubmissionModel currentSheet;
         private string COLUMN_ONE_WIDTH = "6.43cm";
         private string COLUMN_TWO_WIDTH = "9.87cm";
         private MigraDoc.DocumentObjectModel.Color headerGrey = new MigraDoc.DocumentObjectModel.Color(191, 191, 191);
@@ -33,7 +33,7 @@ namespace Service_Reader
         private Table followupTable;
         private Table signoffTable;
 
-        public Boolean createPdfSheetForSubmission(ServiceSubmissionModel serviceSubmissionSheet)
+        public Boolean createPdfSheetForSubmission(oldServiceSubmissionModel serviceSubmissionSheet)
         {
             Boolean successful = false;
             currentSheet = serviceSubmissionSheet;
@@ -509,7 +509,7 @@ namespace Service_Reader
                     row1Title.Cells[0].Shading.Color = headerGrey;
                 }
 
-                ServiceDayModel currentDay = currentSheet.ServiceTimesheets[counter];
+                oldServiceDayModel currentDay = currentSheet.ServiceTimesheets[counter];
                 addDayToTimesheet(currentDay, counter);
 
                 counter = counter + 1;
@@ -519,7 +519,7 @@ namespace Service_Reader
             currentSection.AddParagraph();
         }
 
-        private void addDayToTimesheet(ServiceDayModel currentDay, int dayCounter)
+        private void addDayToTimesheet(oldServiceDayModel currentDay, int dayCounter)
         {
             //Add the header of the day title
 

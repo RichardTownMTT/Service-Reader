@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Service_Reader
 {
-    public class ServiceDayViewModel : ObservableObject
+    public class oldServiceDayViewModel : ObservableObject
     {
-        private List<ServiceDayModel> allServiceDays;
+        private List<oldServiceDayModel> allServiceDays;
 
-        public List<ServiceDayModel> getAllServiceDays
+        public List<oldServiceDayModel> getAllServiceDays
         {
             get { return allServiceDays; }
             set

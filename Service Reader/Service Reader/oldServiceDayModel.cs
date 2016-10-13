@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Service_Reader
 {
-    public class ServiceDayModel : ObservableObject
+    public class oldServiceDayModel : ObservableObject
     {
         private DateTime m_dtServiceDay;
         private DateTime m_travelStartTime;
@@ -24,17 +24,17 @@ namespace Service_Reader
         private string m_dailyReport;
         private string m_partsSupplied;
         //Adding a reference to the Service Submission, to update the sum totals
-        private ServiceSubmissionModel m_currentServiceSubmission;
+        private oldServiceSubmissionModel m_currentServiceSubmission;
 
         //Flag to pause updating the times.  Used when restoring from a backup.
         private Boolean pauseUpdates = false;
 
-        public ServiceDayModel(ServiceSubmissionModel currentSubmission)
+        public oldServiceDayModel(oldServiceSubmissionModel currentSubmission)
         {
             CurrentServiceSubmission = currentSubmission;
         }
 
-        public ServiceDayModel(ServiceDayModel backupDay, ServiceSubmissionModel serviceBackup)
+        public oldServiceDayModel(oldServiceDayModel backupDay, oldServiceSubmissionModel serviceBackup)
         {
             pauseUpdates = true;
             DtServiceDay = backupDay.DtServiceDay;
@@ -56,9 +56,9 @@ namespace Service_Reader
             pauseUpdates = false;
         }
 
-        public static ServiceDayModel backupServiceDay(ServiceDayModel masterServiceDay, ServiceSubmissionModel backupServiceDay)
+        public static oldServiceDayModel backupServiceDay(oldServiceDayModel masterServiceDay, oldServiceSubmissionModel backupServiceDay)
         {
-            ServiceDayModel backupData = new ServiceDayModel(backupServiceDay);
+            oldServiceDayModel backupData = new oldServiceDayModel(backupServiceDay);
             backupData.DtServiceDay = masterServiceDay.DtServiceDay;
             backupData.TravelStartTime = masterServiceDay.TravelStartTime;
             backupData.ArrivalOnsiteTime = masterServiceDay.ArrivalOnsiteTime;
@@ -355,7 +355,7 @@ namespace Service_Reader
             }
         }
 
-        public ServiceSubmissionModel CurrentServiceSubmission
+        public oldServiceSubmissionModel CurrentServiceSubmission
         {
             get
             {

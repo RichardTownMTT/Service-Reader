@@ -8,7 +8,7 @@ using System.Windows.Media;
 namespace Service_Reader
 {
     //Model for the service submission
-    public class ServiceSubmissionModel : ObservableObject, IEditableObject
+    public class oldServiceSubmissionModel : ObservableObject, IEditableObject
     {
         //Class variables
         private int m_submissionVersion = 0;
@@ -50,7 +50,7 @@ namespace Service_Reader
         private string m_customerSignName = "";
         private DateTime m_dtSigned;
         private string m_mttEngSignatureUrl = "";
-        private ObservableCollection<ServiceDayModel> m_serviceTimesheets;
+        private ObservableCollection<oldServiceDayModel> m_serviceTimesheets;
         //Images for the class
         private ImageSource m_mttEngineerSignature;
         private ImageSource m_customerSignature;
@@ -67,7 +67,7 @@ namespace Service_Reader
         private Boolean m_approved = false;
 
         //RT 9/7/16 - Adding ability to cancel
-        private ServiceSubmissionModel m_backupData;
+        private oldServiceSubmissionModel m_backupData;
         private ICommand BeginEditCommand;
         private ICommand CancelEditCommand;
         private ICommand SaveEditCommand;
@@ -75,9 +75,9 @@ namespace Service_Reader
         //RT 25/7/16 - Adding edit mode flag
         private Boolean editMode = false;
 
-        public static ServiceSubmissionModel backupSubmission(ServiceSubmissionModel masterSubmission)
+        public static oldServiceSubmissionModel backupSubmission(oldServiceSubmissionModel masterSubmission)
         {
-            ServiceSubmissionModel backupSubmission = new ServiceSubmissionModel();
+            oldServiceSubmissionModel backupSubmission = new oldServiceSubmissionModel();
             backupSubmission.SubmissionNo = masterSubmission.SubmissionNo;
             backupSubmission.SubmissionVersion = masterSubmission.SubmissionVersion;
             backupSubmission.Username = masterSubmission.Username;
@@ -130,11 +130,11 @@ namespace Service_Reader
             backupSubmission.DtResponse = masterSubmission.DtResponse;
             backupSubmission.DtDevice = masterSubmission.DtDevice;
 
-            ObservableCollection<ServiceDayModel> backupServiceDays = new ObservableCollection<ServiceDayModel>();
+            ObservableCollection<oldServiceDayModel> backupServiceDays = new ObservableCollection<oldServiceDayModel>();
             
-            foreach (ServiceDayModel masterServiceDay in masterSubmission.ServiceTimesheets)
+            foreach (oldServiceDayModel masterServiceDay in masterSubmission.ServiceTimesheets)
             {
-                ServiceDayModel backupServiceDay = ServiceDayModel.backupServiceDay(masterServiceDay, backupSubmission);
+                oldServiceDayModel backupServiceDay = oldServiceDayModel.backupServiceDay(masterServiceDay, backupSubmission);
                 backupServiceDays.Add(backupServiceDay);
             }
 
@@ -203,7 +203,7 @@ namespace Service_Reader
                 double totalTimeToSiteUpdate = 0;
                 double totalTimeFromSiteUpdate = 0;
                 double totalTimeOnsiteUpdate = 0;
-                foreach (ServiceDayModel currentDay in ServiceTimesheets)
+                foreach (oldServiceDayModel currentDay in ServiceTimesheets)
                 {
                     totalTimeToSiteUpdate += currentDay.TravelTimeToSite;
                     totalTimeFromSiteUpdate += currentDay.TravelTimeFromSite;
@@ -223,7 +223,7 @@ namespace Service_Reader
             {
                 Console.WriteLine("Warning - Already in edit mode");
             }
-            m_backupData = ServiceSubmissionModel.backupSubmission(this);
+            m_backupData = oldServiceSubmissionModel.backupSubmission(this);
             //RT 25/7/16 - When we start the edit, set the edit flag
             EditMode = true;
         }
@@ -234,7 +234,7 @@ namespace Service_Reader
             {
                 return;
             }
-            m_backupData = new ServiceSubmissionModel();
+            m_backupData = new oldServiceSubmissionModel();
             //RT 25/7/16 - set the edit mode to fault
             EditMode = false;
         }
@@ -299,11 +299,11 @@ namespace Service_Reader
             this.Image5 = m_backupData.Image5;
             this.Approved = m_backupData.Approved;
 
-            this.ServiceTimesheets = new ObservableCollection<ServiceDayModel>();
+            this.ServiceTimesheets = new ObservableCollection<oldServiceDayModel>();
 
-            foreach (ServiceDayModel backupDay in m_backupData.ServiceTimesheets)
+            foreach (oldServiceDayModel backupDay in m_backupData.ServiceTimesheets)
             {
-                ServiceDayModel restoredDay = new ServiceDayModel(backupDay, this);
+                oldServiceDayModel restoredDay = new oldServiceDayModel(backupDay, this);
                 this.ServiceTimesheets.Add(restoredDay);
             }
 
@@ -965,7 +965,7 @@ namespace Service_Reader
             }
         }
 
-        public ObservableCollection<ServiceDayModel> ServiceTimesheets
+        public ObservableCollection<oldServiceDayModel> ServiceTimesheets
         {
             get
             {
