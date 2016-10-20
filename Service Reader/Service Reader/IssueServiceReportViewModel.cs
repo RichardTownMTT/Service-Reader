@@ -8,13 +8,13 @@ using System.Windows.Input;
 
 namespace Service_Reader
 {
-    public class IssueServiceReportViewModel : ObservableObject, IPageViewModel
+    public class IssueServiceReportViewModel : ObservableObject
     {
         //This is used to issue the service reports.  The data is loaded from the csv file
-        public String Name
-        {
-            get { return "Issue Service Reports"; }
-        }
+        //public String Name
+        //{
+        //    get { return "Issue Service Reports"; }
+        //}
 
         private List<oldServiceSubmissionModel> allServiceSubmissions;
         private oldServiceSubmissionModel selectedSubmission;

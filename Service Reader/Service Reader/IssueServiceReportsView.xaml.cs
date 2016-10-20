@@ -16,14 +16,13 @@ using System.Windows.Shapes;
 namespace Service_Reader
 {
     /// <summary>
-    /// Interaction logic for HistoryTracker.xaml
+    /// Interaction logic for IssueServiceReports.xaml
     /// </summary>
-    public partial class HistoryTracker : UserControl
+    public partial class IssueServiceReportsView : UserControl
     {
-        public HistoryTracker()
+        public IssueServiceReportsView()
         {
             InitializeComponent();
         }
-
     }
 }

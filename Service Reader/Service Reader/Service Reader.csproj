@@ -130,17 +130,16 @@
     </Compile>
     <Compile Include="oldSubmissionViewModel.cs" />
     <Compile Include="CanvasUserModel.cs" />
-    <Compile Include="HistoryTracker.xaml.cs">
-      <DependentUpon>HistoryTracker.xaml</DependentUpon>
+    <Compile Include="HistoryTrackerView.xaml.cs">
+      <DependentUpon>HistoryTrackerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="HistoryTrackerViewModel.cs" />
-    <Compile Include="IPageViewModel.cs" />
-    <Compile Include="IssueServiceReports.xaml.cs">
-      <DependentUpon>IssueServiceReports.xaml</DependentUpon>
+    <Compile Include="IssueServiceReportsView.xaml.cs">
+      <DependentUpon>IssueServiceReportsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="IssueServiceReportViewModel.cs" />
-    <Compile Include="JobCostSheet.xaml.cs">
-      <DependentUpon>JobCostSheet.xaml</DependentUpon>
+    <Compile Include="JobCostSheetView.xaml.cs">
+      <DependentUpon>JobCostSheetView.xaml</DependentUpon>
     </Compile>
     <Compile Include="JobCostSheetViewModel.cs" />
     <Compile Include="ObservableObject.cs" />
@@ -164,19 +163,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="HistoryTracker.xaml">
+    <Page Include="HistoryTrackerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="IssueServiceReports.xaml">
+    <Page Include="IssueServiceReportsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="JobCostSheet.xaml">
+    <Page Include="JobCostSheetView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="CanvasSubmissionsOverviewControl.xaml">
+    <Page Include="CanvasSubmissionsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -185,8 +184,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CanvasDataReader.cs" />
-    <Compile Include="CanvasSubmissionsOverviewControl.xaml.cs">
-      <DependentUpon>CanvasSubmissionsOverviewControl.xaml</DependentUpon>
+    <Compile Include="CanvasSubmissionsView.xaml.cs">
+      <DependentUpon>CanvasSubmissionsView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="ServiceSubmissionDetails.xaml">

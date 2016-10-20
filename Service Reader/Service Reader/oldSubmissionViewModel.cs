@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace Service_Reader
 {
-    public class oldSubmissionViewModel : ObservableObject, IPageViewModel
+    public class oldSubmissionViewModel : ObservableObject
     {
         private List<ServiceSheet> allServiceSubmissions;
         //private ServiceSubmissionModel[] allServiceSubmissions;
@@ -16,17 +16,17 @@ namespace Service_Reader
         private ICommand getCanvasDataCommand;
         private DateTime fromDate;
         private DateTime toDate;
-        private oldServiceSubmissionModel selectedSubmission;
+        private ServiceSheet selectedSubmission;
         //private ICommand createPdfServiceSheetCommand;
         private ICommand editSubmissionCommand;
         private ICommand saveEditSubmissionCommand;
         private ICommand cancelEditSubmissionCommand;
         private ICommand exportToCsvCommand;
 
-        public string Name
-        {
-            get { return "Process Canvas Data"; }
-        }
+        //public string Name
+        //{
+        //    get { return "Process Canvas Data"; }
+        //}
 
         public oldSubmissionViewModel()
         {
@@ -61,71 +61,71 @@ namespace Service_Reader
         //}
 
         //RT 3/8/16 - adding commands for the save, edit and cancel commands.  These also toggle the readonly properties on the service submission
-        public ICommand editSubmission
-        {
-            get
-            {
-                if (editSubmissionCommand == null)
-                {
-                   editSubmissionCommand = new RelayCommand(param => this.beginEdit());
-                }
-                return editSubmissionCommand;
-            }
-        }
+        //public ICommand editSubmission
+        //{
+        //    get
+        //    {
+        //        if (editSubmissionCommand == null)
+        //        {
+        //           editSubmissionCommand = new RelayCommand(param => this.beginEdit());
+        //        }
+        //        return editSubmissionCommand;
+        //    }
+        //}
 
-       private void beginEdit()
-        {
-            if (selectedSubmission == null)
-            {
-                MessageBox.Show("No submission selected.");
-                return;
-            }
-            selectedSubmission.BeginEdit();  
-        }
+       //private void beginEdit()
+       // {
+       //     if (selectedSubmission == null)
+       //     {
+       //         MessageBox.Show("No submission selected.");
+       //         return;
+       //     }
+       //     selectedSubmission.BeginEdit();  
+       // }
 
-        public ICommand saveSubmission
-        {
-            get
-            {
-                if (saveEditSubmissionCommand == null)
-                {
-                    saveEditSubmissionCommand = new RelayCommand(param => this.saveEdit());
-                }
-                return saveEditSubmissionCommand;
-            }
-        }
+        //public ICommand saveSubmission
+        //{
+        //    get
+        //    {
+        //        if (saveEditSubmissionCommand == null)
+        //        {
+        //            saveEditSubmissionCommand = new RelayCommand(param => this.saveEdit());
+        //        }
+        //        return saveEditSubmissionCommand;
+        //    }
+        //}
 
-        private void saveEdit()
-        {
-            if (selectedSubmission == null)
-            {
-                MessageBox.Show("No submission selected.");
-                return;
-            }
-            selectedSubmission.EndEdit();
-        }
+        //private void saveEdit()
+        //{
+        //    if (selectedSubmission == null)
+        //    {
+        //        MessageBox.Show("No submission selected.");
+        //        return;
+        //    }
+        //    selectedSubmission.EndEdit();
+        //}
 
-        public ICommand cancelEditSubmission
-        {
-            get
-            {
-                if (cancelEditSubmissionCommand == null)
-                {
-                    cancelEditSubmissionCommand = new RelayCommand(param => this.cancelEdit());
-                }
-                return cancelEditSubmissionCommand; ;
-            }
-        }
+        //public ICommand cancelEditSubmission
+        //{
+        //    get
+        //    {
+        //        if (cancelEditSubmissionCommand == null)
+        //        {
+        //            cancelEditSubmissionCommand = new RelayCommand(param => this.cancelEdit());
+        //        }
+        //        return cancelEditSubmissionCommand; ;
+        //    }
+        //}
 
-        private void cancelEdit()
-        {
-            if (selectedSubmission == null)
-            {
-                MessageBox.Show("No submission selected.");
-                return;
-            }
-            selectedSubmission.CancelEdit();
-        }
+        //private void cancelEdit()
+        //{
+        //    if (selectedSubmission == null)
+        //    {
+        //        MessageBox.Show("No submission selected.");
+        //        return;
+        //    }
+        //    selectedSubmission.CancelEdit();
+        //}
 
         public ICommand exportToCsv
         {
@@ -197,24 +197,24 @@ namespace Service_Reader
             }
         }
 
-        public oldServiceSubmissionModel SelectedSubmission
-        {
-            get { return selectedSubmission; }
-            set
-            {
-                if (value != selectedSubmission)
-                {
-                    //RT 25/7/16 - Get rid of any unsaved changes
-                    if (selectedSubmission != null)
-                    {
-                        selectedSubmission.CancelEdit();
-                    }
-                    selectedSubmission = value;
-                    onPropertyChanged("SelectedSubmission");
-                    Console.WriteLine("Selected Submission Changed");
-                }
-            }
-        }
+        //public ServiceSheet SelectedSubmission
+        //{
+        //    get { return selectedSubmission; }
+        //    set
+        //    {
+        //        if (value != selectedSubmission)
+        //        {
+        //            //RT 25/7/16 - Get rid of any unsaved changes
+        //            if (selectedSubmission != null)
+        //            {
+        //                selectedSubmission.CancelEdit();
+        //            }
+        //            selectedSubmission = value;
+        //            onPropertyChanged("SelectedSubmission");
+        //            Console.WriteLine("Selected Submission Changed");
+        //        }
+        //    }
+        //}
 
         public DateTime FromDate
         {

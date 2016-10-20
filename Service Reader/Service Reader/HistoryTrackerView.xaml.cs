@@ -16,13 +16,14 @@ using System.Windows.Shapes;
 namespace Service_Reader
 {
     /// <summary>
-    /// Interaction logic for JobCostSheet.xaml
+    /// Interaction logic for HistoryTracker.xaml
     /// </summary>
-    public partial class JobCostSheet : UserControl
+    public partial class HistoryTrackerView : UserControl
     {
-        public JobCostSheet()
+        public HistoryTrackerView()
         {
             InitializeComponent();
         }
+
     }
 }

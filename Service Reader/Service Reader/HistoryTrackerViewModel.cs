@@ -8,10 +8,10 @@ using System.Windows.Input;
 
 namespace Service_Reader
 {
-    public class HistoryTrackerViewModel : ObservableObject, IPageViewModel
+    public class HistoryTrackerViewModel : ObservableObject
     {
-        public String Name
-        { get { return "History Tracker"; } }
+        //public String Name
+        //{ get { return "History Tracker"; } }
 
         private List<oldServiceSubmissionModel> allServiceSubmissions;
         private oldServiceSubmissionModel selectedSubmission;

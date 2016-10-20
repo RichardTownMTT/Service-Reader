@@ -1,10 +1,10 @@
 ﻿
 
 FC:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\ApplicationWindow.xaml;;
-FC:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\HistoryTracker.xaml;;
-FC:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\IssueServiceReports.xaml;;
-FC:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\JobCostSheet.xaml;;
-FC:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\CanvasSubmissionsOverviewControl.xaml;;
+FC:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\HistoryTrackerView.xaml;;
+FC:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\IssueServiceReportsView.xaml;;
+FC:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\JobCostSheetView.xaml;;
+FC:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\CanvasSubmissionsView.xaml;;
 FC:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\ServiceSubmissionDetails.xaml;;
 FC:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\CanvasUserControl.xaml;;
 FC:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\ServiceDayView.xaml;;

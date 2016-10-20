@@ -1,18 +1,18 @@
-﻿<UserControl x:Class="Service_Reader.IssueServiceReports"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Service_Reader"
-             mc:Ignorable="d" >
+﻿<UserControl x:Class="Service_Reader.CanvasSubmissionsView" 
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Service_Reader"
+        mc:Ignorable="d" d:DesignHeight="2000" Name="ucSubmissionOverview" >
     <UserControl.Resources>
-        <DataTemplate x:Key="serviceSubmissionTemplate" DataType="{x:Type local:oldServiceSubmissionModel}">
+        <DataTemplate x:Key="serviceSubmissionTemplate" DataType="{x:Type local:ServiceSheet}">
             <local:ServiceSubmissionDetails DataContext="{Binding}" />
         </DataTemplate>
     </UserControl.Resources>
     <Grid>
         <Grid.DataContext>
-            <local:IssueServiceReportViewModel/>
+            <local:ServiceSheet/>
         </Grid.DataContext>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -33,9 +33,12 @@
         <Label x:Name="label" Content="From" Grid.Column="0" Grid.Row="1"/>
         <DatePicker x:Name="dtSubmissionsTo" SelectedDate="{Binding ToDate}" Grid.Row="1" Grid.Column="3"/>
         <Label x:Name="labelTo" Content="To" Grid.Column="2" Grid.Row="1"/>
-        <Button Content="Load CSV" Command="{Binding loadCsv}" Grid.Column="0" Grid.Row="2" Margin="5" />
-        <Button Content="Print Sheet" Command="{Binding CreatePdfServiceSheet}" Grid.Column="1" Grid.Row="2" Margin="5"/>
-        <DataGrid x:Name="dataGrid" ItemsSource="{Binding AllServiceSubmissions}" AutoGenerateColumns="False" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="6" Margin="5" SelectedItem="{Binding Path=SelectedSubmission}" >
+        <Button x:Name="DownloadCanvasData" Content="Download Sheets" Command="{Binding GetXmlDataCommand}" Grid.Column="4" Grid.Row="1" Margin="5"/>
+        <Button Content="Edit" Command="{Binding editSubmission}" Grid.Column="0" Grid.Row="2" Margin="5"/>
+        <Button Content="Save" Command="{Binding saveSubmission}" Grid.Column="1" Grid.Row="2" Margin="5"/>
+        <Button Content="Cancel" Command="{Binding cancelEditSubmission}" Grid.Column="2" Grid.Row="2" Margin="5"/>
+        <Button Content="Export to csv" Command="{Binding exportToCsv}" Grid.Column="3" Grid.Row="2" Margin="5"/>
+        <DataGrid x:Name="dataGrid" ItemsSource="{Binding getAllSubmissions}" AutoGenerateColumns="False" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="6" Margin="5" SelectedItem="{Binding Path=SelectedSubmission}" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Submission No" Binding="{Binding SubmissionNo}"/>
                 <DataGridTextColumn Header="Engineer" Binding="{Binding EngineerFullName}"/>

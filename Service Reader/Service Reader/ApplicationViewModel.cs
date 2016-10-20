@@ -8,64 +8,158 @@ namespace Service_Reader
 {
     public class ApplicationViewModel : ObservableObject
     {
-        private ICommand changePageCommand;
-        private IPageViewModel currentPageViewModel;
-        private List<IPageViewModel> allPageViewModels;
+        //RT 20/10/16 - Creating a command for each view switch
+        //private ICommand changeViewCommand;
+        private ICommand m_processCanvasDataCommand;
+        private ICommand m_issueServiceReportsCommand;
+        private ICommand m_historyTrackerCommand;
+        private ICommand m_jobCostSheetCommand;
+        private object m_currentPageView;
+        private List<object> m_allPageViews;
 
         public ApplicationViewModel()
         {
-            AllPageViewModels.Add(new oldSubmissionViewModel());
-            allPageViewModels.Add(new IssueServiceReportViewModel());
-            allPageViewModels.Add(new HistoryTrackerViewModel());
-            allPageViewModels.Add(new JobCostSheetViewModel());
-            currentPageViewModel = AllPageViewModels[0];
+            AllPageViews.Add(new CanvasSubmissionsView());
+            AllPageViews.Add(new IssueServiceReportsView());
+            AllPageViews.Add(new HistoryTrackerView());
+            AllPageViews.Add(new JobCostSheetView());
+            CurrentPageView = AllPageViews[0];
         }
 
-        public ICommand ChangePageCommand
+        //public ICommand ChangeViewCommand
+        //{
+        //    get
+        //    {
+        //        if (changeViewCommand== null)
+        //        {
+        //            changeViewCommand = new RelayCommand(p => ChangeViewModel(p), p => p is object);
+        //        }
+        //        return changeViewCommand;
+        //    }
+        //}
+
+        public List<object> AllPageViews
         {
             get
             {
-                if (changePageCommand == null)
+                if (m_allPageViews == null)
                 {
-                    changePageCommand = new RelayCommand(p => ChangeViewModel((IPageViewModel)p), p => p is IPageViewModel);
+                    m_allPageViews = new List<object>();
                 }
-                return changePageCommand;
+                return m_allPageViews;
             }
         }
 
-        public List<IPageViewModel> AllPageViewModels
+        public object CurrentPageView
         {
             get
             {
-                if (allPageViewModels == null)
-                {
-                    allPageViewModels = new List<IPageViewModel>();
-                }
-                return allPageViewModels;
-            }
-        }
-
-        public IPageViewModel CurrentPageViewModel
-        {
-            get
-            {
-                return currentPageViewModel;
+                return m_currentPageView;
             }
             set
             {
-                if (allPageViewModels != value)
+                if (m_currentPageView != value)
                 {
-                    currentPageViewModel = value;
-                    onPropertyChanged("CurrentPageViewModel");
+                    m_currentPageView = value;
+                    onPropertyChanged("CurrentPageView");
                 }
             }
         }
-        private void ChangeViewModel(IPageViewModel viewModel)
-        {
-            if (!AllPageViewModels.Contains(viewModel))
-                AllPageViewModels.Add(viewModel);
 
-            CurrentPageViewModel = AllPageViewModels.FirstOrDefault(vm => vm == viewModel);
+        public ICommand ProcessCanvasDataCommand
+        {
+            get
+            {
+                if (m_processCanvasDataCommand == null)
+                {
+                    m_processCanvasDataCommand = new RelayCommand(param => selectCanvasDataView());
+                }
+                return m_processCanvasDataCommand;
+            }
+
+            set
+            {
+                m_processCanvasDataCommand = value;
+            }
+        }
+
+        public ICommand IssueServiceReportsCommand
+        {
+            get
+            {
+                if (m_issueServiceReportsCommand == null)
+                {
+                    m_issueServiceReportsCommand = new RelayCommand(param => selectIssueServiceReportsView());
+                }
+                return m_issueServiceReportsCommand;
+            }
+
+            set
+            {
+                m_issueServiceReportsCommand = value;
+            }
+        }
+
+        public ICommand HistoryTrackerCommand
+        {
+            get
+            {
+                if (m_historyTrackerCommand == null)
+                {
+                    m_historyTrackerCommand = new RelayCommand(param => selectHistoryTrackerView());
+                }
+                return m_historyTrackerCommand;
+            }
+
+            set
+            {
+                m_historyTrackerCommand = value;
+            }
+        }
+
+        public ICommand JobCostSheetCommand
+        {
+            get
+            {
+                if (m_jobCostSheetCommand == null)
+                {
+                    m_jobCostSheetCommand = new RelayCommand(param => selectJobCostSheetView());
+                }
+                return m_jobCostSheetCommand;
+            }
+
+            set
+            {
+                m_jobCostSheetCommand = value;
+            }
+        }
+
+        private void selectJobCostSheetView()
+        {
+            CurrentPageView = AllPageViews[3];
+        }
+
+        private void selectHistoryTrackerView()
+        {
+            CurrentPageView = AllPageViews[2];
+        }
+
+        private void selectIssueServiceReportsView()
+        {
+            CurrentPageView = AllPageViews[1];
+        }
+
+        private void selectCanvasDataView()
+        {
+            CurrentPageView = AllPageViews[0];
+        }
+
+        private void ChangeViewModel(object view)
+        {
+            if (!AllPageViews.Contains(view))
+                AllPageViews.Add(view);
+
+            CurrentPageView = AllPageViews.FirstOrDefault(vm => vm == view);
         }
     }
 }

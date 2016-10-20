@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Service_Reader
 {
     /// <summary>
-    /// Interaction logic for IssueServiceReports.xaml
+    /// Interaction logic for JobCostSheet.xaml
     /// </summary>
-    public partial class IssueServiceReports : UserControl
+    public partial class JobCostSheetView : UserControl
     {
-        public IssueServiceReports()
+        public JobCostSheetView()
         {
             InitializeComponent();
         }

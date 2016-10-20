@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              x:Name="LayoutRoot"
              d:DesignHeight="315.464" d:DesignWidth="638.66" Margin="5" BorderBrush="Black" BorderThickness="0.5">
-    <Grid>
+    <Grid ScrollViewer.VerticalScrollBarVisibility="Disabled">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>

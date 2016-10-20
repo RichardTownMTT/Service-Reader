@@ -9,10 +9,10 @@ using System.Windows.Input;
 
 namespace Service_Reader
 {
-    public class JobCostSheetViewModel : ObservableObject, IPageViewModel
+    public class JobCostSheetViewModel : ObservableObject
     {
-        public string Name
-        { get { return "Job Cost Sheet"; } }
+        //public string Name
+        //{ get { return "Job Cost Sheet"; } }
 
         private List<oldServiceSubmissionModel> allServiceSubmissions;
         private oldServiceSubmissionModel selectedSubmission;

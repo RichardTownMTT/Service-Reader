@@ -6,36 +6,17 @@
         xmlns:local="clr-namespace:Service_Reader"
         mc:Ignorable="d"
         Title="Service Reader" WindowState="Maximized" Height="300" Width="300">
-    <Window.Resources>
-        <DataTemplate DataType="{x:Type local:oldSubmissionViewModel}">
-            <local:UcCanvasSubmissionsOverview/>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type local:IssueServiceReportViewModel}">
-            <local:IssueServiceReports/>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type local:HistoryTrackerViewModel}">
-            <local:HistoryTracker/>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type local:JobCostSheetViewModel}">
-            <local:JobCostSheet/>
-        </DataTemplate>
-    </Window.Resources>
-
     <DockPanel>
         <Border DockPanel.Dock="Left" BorderBrush="Black" BorderThickness="0,0,1,0" Width="Auto">
-            <ItemsControl ItemsSource="{Binding AllPageViewModels}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Button Content="{Binding Name}"
-                                Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
-                                CommandParameter="{Binding }"
-                                Margin="2,5" Padding="5"/>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+            <StackPanel>
+                <Button Content="Process Canvas Data" Margin="5" Command="{Binding ProcessCanvasDataCommand}"/>
+                <Button Content="Issue Service Reports" Margin="5" Command="{Binding IssueServiceReportsCommand}"/>
+                <Button Content="History Tracker" Margin="5" Command="{Binding HistoryTrackerCommand}"/>
+                <Button Content="Job Cost Sheet" Margin="5" Command="{Binding JobCostSheetCommand}"/>
+            </StackPanel>
         </Border>
         <ScrollViewer HorizontalScrollBarVisibility="Auto">
-            <ContentControl Content="{Binding CurrentPageViewModel}" />
+            <ContentControl Content="{Binding CurrentPageView, Mode=OneWay}" />
         </ScrollViewer>
         </DockPanel>
     </Window>
