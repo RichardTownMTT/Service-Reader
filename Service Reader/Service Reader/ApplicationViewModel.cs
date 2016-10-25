@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Service_Reader
 {
-    public class ApplicationViewModel : ObservableObject
+    class ApplicationViewModel : ObservableObject
     {
         //RT 20/10/16 - Creating a command for each view switch
         //private ICommand changeViewCommand;

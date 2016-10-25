@@ -169,19 +169,19 @@ namespace Service_Reader
         {
             //string fromDateStr = fromDate.ToString("MM/dd/yy");
             //string toDateStr = toDate.ToString("MM/dd/yy");
-            getAllSubmissions = CanvasDataReader.downloadXml(currentUser.Username, currentUser.Password, FromDate, ToDate);
+            //getAllSubmissions = CanvasDataReader.downloadXml(currentUser.Username, currentUser.Password, FromDate, ToDate);
 
-            //If no submissions have been returned, then exit.  None available, or error has occured.
-            if (getAllSubmissions == null)
-            {
-                return;
-            }
+            ////If no submissions have been returned, then exit.  None available, or error has occured.
+            //if (getAllSubmissions == null)
+            //{
+            //    return;
+            //}
 
-            //RT 5/6/16 - adding in download of images
-            //winImageDownloadProgessBar downloadImagesScreen = new winImageDownloadProgessBar(getAllSubmissions, currentUser);
-            //bool? result = downloadImagesScreen.ShowDialog();
-            //getAllSubmissions = downloadImagesScreen.Submissions;
-            MessageBox.Show("Add error catch.  Can't use messages in worker thread!");
+            ////RT 5/6/16 - adding in download of images
+            ////winImageDownloadProgessBar downloadImagesScreen = new winImageDownloadProgessBar(getAllSubmissions, currentUser);
+            ////bool? result = downloadImagesScreen.ShowDialog();
+            ////getAllSubmissions = downloadImagesScreen.Submissions;
+            //MessageBox.Show("Add error catch.  Can't use messages in worker thread!");
         }
 
         public List<ServiceSheet> getAllSubmissions

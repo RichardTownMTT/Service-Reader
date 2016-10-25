@@ -28,7 +28,7 @@
             <RowDefinition Height="250"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <local:UcCanvasUser x:Name="ucUserDetails" userName="{Binding CurrentUser.Username, Mode=TwoWay}" password="{Binding CurrentUser.Password, Mode=TwoWay}" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4"/>
+        <local:CanvasUserView x:Name="ucUserDetails" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4"/>
         <DatePicker x:Name="dtSubmissionsFrom" SelectedDate="{Binding FromDate}" Grid.Column="1" Grid.Row="1"/>
         <Label x:Name="label" Content="From" Grid.Column="0" Grid.Row="1"/>
         <DatePicker x:Name="dtSubmissionsTo" SelectedDate="{Binding ToDate}" Grid.Row="1" Grid.Column="3"/>

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Service_Reader"
         mc:Ignorable="d"
-        Title="Service Reader" WindowState="Maximized" Height="300" Width="300">
+        Title="Service Reader" WindowState="Maximized" Height="300" Width="300" >
     <DockPanel>
         <Border DockPanel.Dock="Left" BorderBrush="Black" BorderThickness="0,0,1,0" Width="Auto">
             <StackPanel>

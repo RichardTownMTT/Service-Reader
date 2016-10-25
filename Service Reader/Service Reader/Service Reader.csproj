@@ -101,6 +101,8 @@
     <Compile Include="CanvasRawData.cs">
       <DependentUpon>ServiceModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="CanvasSubmissionsViewModel.cs" />
+    <Compile Include="CanvasUserViewModel.cs" />
     <Compile Include="CreateCostSheet.cs" />
     <Compile Include="CsvServiceExport.cs" />
     <Compile Include="CsvServiceImport.cs" />
@@ -145,13 +147,12 @@
     <Compile Include="ObservableObject.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="oldServiceDayModel.cs" />
-    <Compile Include="ServiceSheetViewModel.cs" />
     <Compile Include="ServiceSubmissionDetails.xaml.cs">
       <DependentUpon>ServiceSubmissionDetails.xaml</DependentUpon>
     </Compile>
     <Compile Include="oldServiceSubmissionModel.cs" />
-    <Compile Include="CanvasUserControl.xaml.cs">
-      <DependentUpon>CanvasUserControl.xaml</DependentUpon>
+    <Compile Include="CanvasUserView.xaml.cs">
+      <DependentUpon>CanvasUserView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ServiceDayView.xaml.cs">
       <DependentUpon>ServiceDayView.xaml</DependentUpon>
@@ -192,7 +193,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="CanvasUserControl.xaml">
+    <Page Include="CanvasUserView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

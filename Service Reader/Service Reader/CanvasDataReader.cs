@@ -133,7 +133,7 @@ namespace Service_Reader
 
         //RT 12/10/16 - Rewriting to use new classes of servicesheet, serviceDay
         //public static List<oldServiceSubmissionModel> downloadXml(string canvasUsername, string canvasPassword, string beginDate, string endDate)
-        public static List<ServiceSheet> downloadXml(string canvasUsername, string canvasPassword, DateTime beginDate, DateTime endDate)
+        public static ObservableCollection<ServiceSheet> downloadXml(string canvasUsername, string canvasPassword, DateTime beginDate, DateTime endDate)
         {
             //RT 13/10/16 - Date must be in the USA format
             string startDateStr = beginDate.ToString("MM/dd/yyyy", null);
@@ -185,7 +185,8 @@ namespace Service_Reader
                 pageCounter++;
             }
 
-            return allSubmissions;
+            ObservableCollection<ServiceSheet> retval = new ObservableCollection<ServiceSheet>(allSubmissions);
+            return retval;
         }
 
         private static XElement loadElements(string canvasUrl)
