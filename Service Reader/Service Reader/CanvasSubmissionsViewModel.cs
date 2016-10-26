@@ -15,6 +15,7 @@ namespace Service_Reader
         private CanvasUserModel m_canvasUser;
         private DateTime m_dtStartSubmissionsDownload;
         private DateTime m_dtEndSubmissionsDownload;
+        private ServiceSheet m_selectedSubmission;
 
         //These are all the loaded canvas sheets
         private ObservableCollection<ServiceSheet> m_allServiceSheets;
@@ -102,6 +103,21 @@ namespace Service_Reader
             set
             {
                 m_allServiceSheets = value;
+                onPropertyChanged("AllServiceSheets");
+            }
+        }
+
+        public ServiceSheet SelectedSubmission
+        {
+            get
+            {
+                return m_selectedSubmission;
+            }
+
+            set
+            {
+                m_selectedSubmission = value;
+                onPropertyChanged("SelectedSubmission");
             }
         }
 
