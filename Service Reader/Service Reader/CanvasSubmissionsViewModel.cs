@@ -15,10 +15,10 @@ namespace Service_Reader
         private CanvasUserModel m_canvasUser;
         private DateTime m_dtStartSubmissionsDownload;
         private DateTime m_dtEndSubmissionsDownload;
-        private ServiceSheet m_selectedSubmission;
+        private ServiceSheetViewModel m_selectedSubmission;
 
         //These are all the loaded canvas sheets
-        private ObservableCollection<ServiceSheet> m_allServiceSheets;
+        private ObservableCollection<ServiceSheetViewModel> m_allServiceSheets;
 
         //Command to download the canvas data
         private ICommand m_canvasDataDownloadCommand;
@@ -93,7 +93,7 @@ namespace Service_Reader
             }
         }
 
-        public ObservableCollection<ServiceSheet> AllServiceSheets
+        public ObservableCollection<ServiceSheetViewModel> AllServiceSheets
         {
             get
             {
@@ -107,7 +107,7 @@ namespace Service_Reader
             }
         }
 
-        public ServiceSheet SelectedSubmission
+        public ServiceSheetViewModel SelectedSubmission
         {
             get
             {

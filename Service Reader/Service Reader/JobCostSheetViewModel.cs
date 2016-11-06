@@ -37,7 +37,7 @@ namespace Service_Reader
             CreateCostSheet costSheetExporter = new CreateCostSheet();
             //RT 20/8/16 - Changing creator to deal with multiple sheets
             //bool success = costSheetExporter.exportDataToCostSheet(selectedSubmission);
-            bool success = costSheetExporter.exportDataToCostSheet(selectedSubmissions);
+            //bool success = costSheetExporter.exportDataToCostSheet(selectedSubmissions);
             MessageBox.Show("Need to check for success");
         }
 

@@ -12,11 +12,11 @@ namespace Service_Reader
     /// </summary>
     public partial class ServiceSubmissionDetails : UserControl
     {
-        public ServiceSheet currentSubmission
+        public ServiceSheetViewModel currentSubmissionVM
         {
             get
             {
-                return (ServiceSheet)GetValue(currentSubmissionDP);
+                return (ServiceSheetViewModel)GetValue(currentSubmissionDP);
             }
             set
             {
@@ -24,7 +24,7 @@ namespace Service_Reader
             }
         }
         public static readonly DependencyProperty currentSubmissionDP =
-            DependencyProperty.Register("currentSubmission", typeof(ServiceSheet), typeof(ServiceSubmissionDetails), new PropertyMetadata(null));
+            DependencyProperty.Register("currentSubmissionVM", typeof(ServiceSheetViewModel), typeof(ServiceSubmissionDetails), new PropertyMetadata(null));
 
         //public ServiceSubmissionDetails(ServiceSubmission serviceSheet, string username, string password)
         public ServiceSubmissionDetails()
@@ -84,6 +84,11 @@ namespace Service_Reader
         //    imgEngineerSignature.Source = CanvasDataReader.getImage(serviceSheet.mttEngSignatureUrl, username, password);
 
     }
+
+        private void test(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            Console.WriteLine(this.currentSubmissionVM.ServiceSubmission.CanvasResponseId);
+        }
 
 
         //private void displayTimesheets(ServiceDayModel[] allTimesheets)

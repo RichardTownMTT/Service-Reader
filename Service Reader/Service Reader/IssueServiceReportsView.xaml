@@ -55,6 +55,5 @@
                 </Style>
             </DataGrid.RowStyle>
         </DataGrid>
-        <local:ServiceSubmissionDetails IsEnabled="{Binding SelectedSubmission.EditMode}" x:Name="ucSubmissions" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="5" Margin="5" currentSubmission="{Binding SelectedSubmission}"/>
-    </Grid>
+         </Grid>
 </UserControl>

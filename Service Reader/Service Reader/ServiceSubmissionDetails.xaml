@@ -19,7 +19,7 @@
                 <Label Content="Submission No." Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"/>
                 <Label Content="Engineer" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center"/>
 
-                <TextBox Name="txtSubmissionNo" Grid.Column="1" Grid.Row="0" Margin="5" Width="200" HorizontalAlignment="Left" IsReadOnly="True" Text="{Binding Path=currentSubmission.SubmissionNo}"/>
+                <TextBox Name="txtSubmissionNo" Grid.Column="1" Grid.Row="0" Margin="5" Width="200" HorizontalAlignment="Left" IsReadOnly="True" Text="{Binding Path=currentSubmission}" MouseEnter="test"/>
                 <TextBox Name="txtEngineer" Grid.Column="1" Grid.Row="1" Margin="5" Width="200" HorizontalAlignment="Left" IsReadOnly="True" Text="{Binding Path=currentSubmission.EngineerFullName, Mode=OneWay}"/>
             </Grid>
         </GroupBox>
