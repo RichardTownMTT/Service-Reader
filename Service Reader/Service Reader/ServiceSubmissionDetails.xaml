@@ -4,8 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Service_Reader"
-        mc:Ignorable="d">
-    <StackPanel Orientation="Vertical" x:Name="LayoutRoot" >
+        mc:Ignorable="d" x:Name="LayoutRoot">
+    <StackPanel Orientation="Vertical" >
+        <StackPanel.DataContext>
+            <local:CanvasSubmissionsViewModel/>
+        </StackPanel.DataContext>
         <GroupBox Header="Submission Details">
             <Grid>
                 <Grid.RowDefinitions>

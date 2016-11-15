@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace Service_Reader
 {
-    class CanvasSubmissionsViewModel : ObservableObject
+    public class CanvasSubmissionsViewModel : ObservableObject
     {
         //Stores the login details for Canvas
         private CanvasUserModel m_canvasUser;

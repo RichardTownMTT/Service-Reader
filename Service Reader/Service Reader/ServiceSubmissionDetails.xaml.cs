@@ -12,11 +12,12 @@ namespace Service_Reader
     /// </summary>
     public partial class ServiceSubmissionDetails : UserControl
     {
-        public ServiceSheetViewModel currentSubmissionVM
+        private CanvasSubmissionsViewModel m_submissionVM;
+        public CanvasSubmissionsViewModel currentSubmissionVM
         {
             get
             {
-                return (ServiceSheetViewModel)GetValue(currentSubmissionDP);
+                return (CanvasSubmissionsViewModel)GetValue(currentSubmissionDP);
             }
             set
             {
@@ -24,13 +25,13 @@ namespace Service_Reader
             }
         }
         public static readonly DependencyProperty currentSubmissionDP =
-            DependencyProperty.Register("currentSubmissionVM", typeof(ServiceSheetViewModel), typeof(ServiceSubmissionDetails), new PropertyMetadata(null));
+            DependencyProperty.Register("currentSubmissionVM", typeof(CanvasSubmissionsViewModel), typeof(ServiceSubmissionDetails), new PropertyMetadata(null));
 
         //public ServiceSubmissionDetails(ServiceSubmission serviceSheet, string username, string password)
         public ServiceSubmissionDetails()
         {
-            InitializeComponent();
-            LayoutRoot.DataContext = this;
+           InitializeComponent();
+           m_submissionVM = (CanvasSubmissionsViewModel)LayoutRoot.DataContext;
 
 
         //    this.DataContext = serviceSheet;
@@ -87,7 +88,12 @@ namespace Service_Reader
 
         private void test(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            Console.WriteLine(this.currentSubmissionVM.ServiceSubmission.CanvasResponseId);
+            if (m_submissionVM == null)
+            {
+                CanvasSubmissionsViewModel submissionsVM = (CanvasSubmissionsViewModel)LayoutRoot.DataContext;
+                Console.WriteLine(submissionsVM.SelectedSubmission.ServiceSubmission.CanvasResponseId);
+            }
+            Console.WriteLine(m_submissionVM.SelectedSubmission.ServiceSubmission.CanvasResponseId);
         }
 
 
