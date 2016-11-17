@@ -4,11 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Service_Reader"
-        mc:Ignorable="d" x:Name="LayoutRoot">
-    <StackPanel Orientation="Vertical" >
-        <StackPanel.DataContext>
-            <local:CanvasSubmissionsViewModel/>
-        </StackPanel.DataContext>
+        mc:Ignorable="d" >
+    <StackPanel Orientation="Vertical" x:Name="LayoutRoot">
+        <!-- StackPanel.DataContext>
+            <local:ServiceSheetViewModel/>
+        </ !-->
         <GroupBox Header="Submission Details">
             <Grid>
                 <Grid.RowDefinitions>
@@ -22,8 +22,8 @@
                 <Label Content="Submission No." Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"/>
                 <Label Content="Engineer" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center"/>
 
-                <TextBox Name="txtSubmissionNo" Grid.Column="1" Grid.Row="0" Margin="5" Width="200" HorizontalAlignment="Left" IsReadOnly="True" Text="{Binding Path=currentSubmission}" MouseEnter="test"/>
-                <TextBox Name="txtEngineer" Grid.Column="1" Grid.Row="1" Margin="5" Width="200" HorizontalAlignment="Left" IsReadOnly="True" Text="{Binding Path=currentSubmission.EngineerFullName, Mode=OneWay}"/>
+                <TextBox Name="txtSubmissionNo" Grid.Column="1" Grid.Row="0" Margin="5" Width="200" HorizontalAlignment="Left" IsReadOnly="True" Text="{Binding Path=currentSubmissionVM.ServiceSubmission.SubmissionNumber}" MouseEnter="test"/>
+                <TextBox Name="txtEngineer" Grid.Column="1" Grid.Row="1" Margin="5" Width="200" HorizontalAlignment="Left" IsReadOnly="True" Text="{Binding Path=currentSubmissionVM.ServiceSubmission.UserFirstName, Mode=OneWay}"/>
             </Grid>
         </GroupBox>
         <GroupBox Header="Customer">
@@ -48,16 +48,16 @@
                 <Label Content="Address 2" Grid.Column="2" Grid.Row="1"/>
                 <Label Content="Town/City " Grid.Column="4" Grid.Row="1"/>
                 <Label Content="Postcode" Grid.Column="6" Grid.Row="1"/>
-                <TextBox Name="txtCustomer" Grid.Column="1" Grid.Row="0" Margin="5" Text="{Binding Path=currentSubmission.Customer}"/>
-                <TextBox Name="txtAddress1" Grid.Column="1" Grid.Row="1" Margin="5" Text="{Binding Path=currentSubmission.Address1}"/>
-                <TextBox Name="txtAddress2" Grid.Column="3" Grid.Row="1" Margin="5" Text="{Binding Path=currentSubmission.Address2}"/>
-                <TextBox Name="txtTownCity" Grid.Column="5" Grid.Row="1" Margin="5" Text="{Binding Path=currentSubmission.TownCity}"/>
-                <TextBox Name="txtPostcode" Grid.Column="7" Grid.Row="1" Margin="5" Text="{Binding Path=currentSubmission.Postcode}"/>
+                <TextBox Name="txtCustomer" Grid.Column="1" Grid.Row="0" Margin="5" Text="{Binding Path=currentSubmissionVM.Test}"/>
+                <TextBox Name="txtAddress1" Grid.Column="1" Grid.Row="1" Margin="5" />
+                <TextBox Name="txtAddress2" Grid.Column="3" Grid.Row="1" Margin="5" />
+                <TextBox Name="txtTownCity" Grid.Column="5" Grid.Row="1" Margin="5" />
+                <TextBox Name="txtPostcode" Grid.Column="7" Grid.Row="1" Margin="5" />
 
                 <Label Content="Customer Contact" Grid.Column="0" Grid.Row="3"/>
                 <Label Content="Customer Phone" Grid.Column="2" Grid.Row="3"/>
-                <TextBox Name="txtCustomerContact" Grid.Column="1" Grid.Row="3" Margin="5" Text="{Binding Path=currentSubmission.CustomerContact}"/>
-                <TextBox Name="txtCustomerPhone" Grid.Column="3" Grid.Row="3" Margin="5" Text="{Binding Path=currentSubmission.CustomerPhone}"/>
+                <TextBox Name="txtCustomerContact" Grid.Column="1" Grid.Row="3" Margin="5" />
+                <TextBox Name="txtCustomerPhone" Grid.Column="3" Grid.Row="3" Margin="5" />
             </Grid>
         </GroupBox>
         <GroupBox Header="Job Details">
@@ -80,19 +80,19 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Content="Job Start Date" Grid.Column="0" Grid.Row="0"/>
-                <DatePicker Name="dtJobStart" Grid.Column="1" Grid.Row="0" Margin="2" SelectedDate="{Binding Path=currentSubmission.JobStart}"/>
+                <DatePicker Name="dtJobStart" Grid.Column="1" Grid.Row="0" Margin="2" />
                 <Label Content="Machine Make/Model" Grid.Column="0" Grid.Row="1"/>
                 <Label Content="Machine Serial" Grid.Column="2" Grid.Row="1"/>
                 <Label Content="Machine Controller" Grid.Column="4" Grid.Row="1"/>
-                <TextBox Name="txtMakeModel" Grid.Column="1" Grid.Row="1" Margin="5" Text="{Binding Path=currentSubmission.MachineMakeModel}"/>
-                <TextBox Name="txtMachineSerial" Grid.Column="3" Grid.Row="1" Margin="5" Text="{Binding Path=currentSubmission.MachineSerial}"/>
-                <TextBox Name="txtMachineController" Grid.Column="5" Grid.Row="1" Margin="5" Text="{Binding Path=currentSubmission.MachineController}"/>
+                <TextBox Name="txtMakeModel" Grid.Column="1" Grid.Row="1" Margin="5" />
+                <TextBox Name="txtMachineSerial" Grid.Column="3" Grid.Row="1" Margin="5" />
+                <TextBox Name="txtMachineController" Grid.Column="5" Grid.Row="1" Margin="5" />
                 <Label Content="Customer Order No" Grid.Column="2" Grid.Row="2"/>
                 <Label Content="MTT Job No" Grid.Column="0" Grid.Row="2"/>
-                <TextBox Name="txtCustomerOrderNo" Grid.Column="3" Grid.Row="2" Margin="5" Text="{Binding Path=currentSubmission.CustomerOrderNo}"/>
-                <TextBox Name="txtMttJobNo" Grid.Column="1" Grid.Row="2" Margin="5" Text="{Binding Path=currentSubmission.MttJobNumber}"/>
+                <TextBox Name="txtCustomerOrderNo" Grid.Column="3" Grid.Row="2" Margin="5" />
+                <TextBox Name="txtMttJobNo" Grid.Column="1" Grid.Row="2" Margin="5" />
                 <Label Content="Job Description" Grid.Column="0" Grid.Row="3"/>
-                <TextBox Name="txtJobDescription" Grid.Column="1" Grid.Row="3" Margin="5" Grid.ColumnSpan="3" Height="50" Text="{Binding Path=currentSubmission.JobDescription}"/>
+                <TextBox Name="txtJobDescription" Grid.Column="1" Grid.Row="3" Margin="5" Grid.ColumnSpan="3" Height="50" />
             </Grid>
         </GroupBox>
         <GroupBox Header="Timesheets">

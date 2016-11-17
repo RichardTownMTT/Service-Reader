@@ -46,6 +46,6 @@
                 <DataGridTextColumn Header="Submission No" Binding="{Binding ServiceSubmission.UserFirstName}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <local:ServiceSubmissionDetails x:Name="ucSubmissions" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="5" Margin="5" currentSubmissionVM="{Binding SelectedSubmission}"/>
+        <local:ServiceSubmissionDetails x:Name="ucSubmissions" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="5" Margin="5" currentSubmissionVM ="{Binding SelectedSubmission}"/>
     </Grid>
 </UserControl>
