@@ -63,6 +63,7 @@ namespace Service_Reader
             set
             {
                 ServiceSubmission.Customer = value;
+                onPropertyChanged("Customer");
             }
         }
 
@@ -75,6 +76,7 @@ namespace Service_Reader
             set
             {
                 ServiceSubmission.AddressLine1 = value;
+                onPropertyChanged("AddressLine1");
             }
         }
 
@@ -87,6 +89,7 @@ namespace Service_Reader
             set
             {
                 ServiceSubmission.AddressLine2 = value;
+                onPropertyChanged("AddressLine2");
             }
         }
 
@@ -99,6 +102,7 @@ namespace Service_Reader
             set
             {
                 ServiceSubmission.TownCity = value;
+                onPropertyChanged("TownCity");
             }
         }
 
@@ -111,6 +115,7 @@ namespace Service_Reader
             set
             {
                 ServiceSubmission.Postcode = value;
+                onPropertyChanged("Postcode");
             }
         }
 
@@ -123,6 +128,7 @@ namespace Service_Reader
             set
             {
                 ServiceSubmission.CustomerContact = value;
+                onPropertyChanged("CustomerContact");
             }
         }
 
@@ -135,6 +141,7 @@ namespace Service_Reader
             set
             {
                 ServiceSubmission.CustomerPhoneNo = value;
+                onPropertyChanged("CustomerPhone");
             }
         }
 
@@ -147,6 +154,7 @@ namespace Service_Reader
             set
             {
                 ServiceSubmission.DtJobStart = value;
+                onPropertyChanged("JobStartDate");
             }
         }
 
@@ -159,6 +167,7 @@ namespace Service_Reader
             set
             {
                 ServiceSubmission.MachineMakeModel = value;
+                onPropertyChanged("MachineMakeModel");
             }
         }
 
@@ -171,6 +180,7 @@ namespace Service_Reader
             set
             {
                 ServiceSubmission.MachineSerial = value;
+                onPropertyChanged("MachineSerialNo");
             }
         }
 
@@ -183,6 +193,7 @@ namespace Service_Reader
             set
             {
                 ServiceSubmission.CncControl = value;
+                onPropertyChanged("MachineController");
             }
         }
 
@@ -195,6 +206,7 @@ namespace Service_Reader
             set
             {
                 ServiceSubmission.MttJobNumber = value;
+                onPropertyChanged("MttJobNo");
             }
         }
 
@@ -207,6 +219,7 @@ namespace Service_Reader
             set
             {
                 ServiceSubmission.CustomerOrderNo = value;
+                onPropertyChanged("CustomerOrderNo");
             }
         }
 
@@ -219,6 +232,7 @@ namespace Service_Reader
             set
             {
                 ServiceSubmission.JobDescription = value;
+                onPropertyChanged("JobDescription");
             }
         }
 
@@ -246,6 +260,7 @@ namespace Service_Reader
             set
             {
                 ServiceSubmission.JobStatus = value;
+                onPropertyChanged("JobStatus");
             }
         }
 
@@ -258,6 +273,7 @@ namespace Service_Reader
             set
             {
                 ServiceSubmission.FinalJobReport = value;
+                onPropertyChanged("FinalJobReport");
             }
         }
 
@@ -270,6 +286,7 @@ namespace Service_Reader
             set
             {
                 ServiceSubmission.AdditionalFaults = value;
+                onPropertyChanged("AdditionalFaultsFound");
             }
         }
 
@@ -282,6 +299,7 @@ namespace Service_Reader
             set
             {
                 ServiceSubmission.QuoteRequired = value;
+                onPropertyChanged("QuoteRequired");
             }
         }
 
@@ -294,6 +312,7 @@ namespace Service_Reader
             set
             {
                 ServiceSubmission.FollowUpPartsRequired = value;
+                onPropertyChanged("PartsForFollowup");
             }
         }
 
@@ -354,6 +373,7 @@ namespace Service_Reader
             set
             {
                 ServiceSubmission.CustomerName = value;
+                onPropertyChanged("CustomerSignedName");
             }
         }
 
@@ -366,6 +386,7 @@ namespace Service_Reader
             set
             {
                 ServiceSubmission.DtSigned = value;
+                onPropertyChanged("DtSigned");
             }
         }
 

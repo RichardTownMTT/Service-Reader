@@ -37,6 +37,7 @@ namespace Service_Reader
             set
             {
                 ServiceDay.DtReport = value;
+                onPropertyChanged("ServiceDate");
             }
         }
 
@@ -49,6 +50,7 @@ namespace Service_Reader
             set
             {
                 ServiceDay.TravelStartTime = value;
+                onPropertyChanged("TravelStartTime");
             }
         }
 
@@ -61,6 +63,7 @@ namespace Service_Reader
             set
             {
                 ServiceDay.ArrivalOnsiteTime = value;
+                onPropertyChanged("ArrivalOnsiteTime");
             }
         }
 
@@ -73,6 +76,7 @@ namespace Service_Reader
             set
             {
                 ServiceDay.DepartureSiteTime = value;
+                onPropertyChanged("DepartSiteTime");
             }
         }
 
@@ -85,6 +89,7 @@ namespace Service_Reader
             set
             {
                 ServiceDay.TravelEndTime = value;
+                onPropertyChanged("TravelEndTime");
             }
         }
 
@@ -97,6 +102,7 @@ namespace Service_Reader
             set
             {
                 ServiceDay.Mileage = value;
+                onPropertyChanged("Mileage");
             }
         }
 
@@ -123,6 +129,7 @@ namespace Service_Reader
                 {
                     ServiceDay.DailyAllowance = 0;
                 }
+                onPropertyChanged("DailyAllowance");
             }
         }
 
@@ -149,6 +156,7 @@ namespace Service_Reader
                 {
                     ServiceDay.OvernightAllowance = 0;
                 }
+                onPropertyChanged("OvernightAllowance");
             }
         }
 
@@ -175,6 +183,7 @@ namespace Service_Reader
                 {
                     ServiceDay.BarrierPayment = 0;
                 }
+                onPropertyChanged("BarrierPayment");
             }
         }
 
@@ -187,6 +196,7 @@ namespace Service_Reader
             set
             {
                 ServiceDay.TravelToSiteTime = value;
+                onPropertyChanged("TravelTimeToSite");
             }
         }
 
@@ -199,6 +209,7 @@ namespace Service_Reader
             set
             {
                 ServiceDay.TravelFromSiteTime = value;
+                onPropertyChanged("TravelTimeFromSite");
             }
         }
 
@@ -211,6 +222,7 @@ namespace Service_Reader
             set
             {
                 ServiceDay.TotalTravelTime = value;
+                onPropertyChanged("TotalTravelTime");
             }
         }
 
@@ -223,6 +235,7 @@ namespace Service_Reader
             set
             {
                 ServiceDay.TotalOnsiteTime = value;
+                onPropertyChanged("TotalTimeOnsite");
             }
         }
 
@@ -235,6 +248,7 @@ namespace Service_Reader
             set
             {
                 ServiceDay.DailyReport = value;
+                onPropertyChanged("DailyReport");
             }
         }
 
@@ -247,6 +261,7 @@ namespace Service_Reader
             set
             {
                 ServiceDay.PartsSuppliedToday = value;
+                onPropertyChanged("PartsSupplied");
             }
         }
     }
