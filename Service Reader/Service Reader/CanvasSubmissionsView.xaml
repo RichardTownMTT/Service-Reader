@@ -39,14 +39,23 @@
         <Button Content="Export to csv" Command="{Binding exportToCsv}" Grid.Column="3" Grid.Row="2" Margin="5"/>
         <DataGrid x:Name="dataGrid" ItemsSource="{Binding AllServiceSheets}" AutoGenerateColumns="False" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5" SelectedItem="{Binding Path=SelectedSubmission}" CanUserAddRows="False" IsReadOnly="True" SelectionMode="Single">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Submission No" Binding="{Binding SubmissionNumber}"/>
-                <DataGridTextColumn Header="Engineer" Binding="{Binding EngineerFullName}"/>
-                <DataGridTextColumn Header="Customer" Binding="{Binding Customer}"/>
-                <DataGridTextColumn Header="Job Start Date" Binding="{Binding JobStartDate}"/>
-                <DataGridTextColumn Header="Machine" Binding="{Binding MachineMakeModel}"/>
-                <DataGridTextColumn Header="MTT Job Number" Binding="{Binding MttJobNo}"/>
-                <DataGridTextColumn Header="Job Description" Binding="{Binding JobDescription}"/>
+                <DataGridTextColumn Header="Submission No" Binding="{Binding SubmissionNumber}" />
+                <DataGridTextColumn Header="Engineer" Binding="{Binding EngineerFullName}" />
+                <DataGridTextColumn Header="Customer" Binding="{Binding Customer}" />
+                <DataGridTextColumn Header="Job Start Date" Binding="{Binding JobStartDate, StringFormat=dd/MM/yyyy}" />
+                <DataGridTextColumn Header="Machine" Binding="{Binding MachineMakeModel}" />
+                <DataGridTextColumn Header="MTT Job Number" Binding="{Binding MttJobNo}" />
+                <DataGridTextColumn Header="Job Description" Binding="{Binding JobDescription}" />
             </DataGrid.Columns>
+            <DataGrid.Resources>
+                <Style TargetType="{x:Type DataGridRow}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding OfficeApproval}" Value="False">
+                            <Setter Property="FontWeight" Value="Bold" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.Resources>
         </DataGrid>
         <local:ServiceSubmissionDetails x:Name="ucSubmissions" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="5" Margin="5" currentSubmissionVM ="{Binding SelectedSubmission}"/>
     </Grid>

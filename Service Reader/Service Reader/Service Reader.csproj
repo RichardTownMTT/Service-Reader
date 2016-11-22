@@ -98,6 +98,7 @@
     <Compile Include="CanvasHistoricalData.cs">
       <DependentUpon>ServiceModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="CanvasImageDownloadViewModel.cs" />
     <Compile Include="CanvasRawData.cs">
       <DependentUpon>ServiceModel.tt</DependentUpon>
     </Compile>
@@ -159,8 +160,8 @@
     <Compile Include="ServiceDayView.xaml.cs">
       <DependentUpon>ServiceDayView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CanvasImageDownloadProgessBar.xaml.cs">
-      <DependentUpon>CanvasImageDownloadProgessBar.xaml</DependentUpon>
+    <Compile Include="CanvasImageDownloadView.xaml.cs">
+      <DependentUpon>CanvasImageDownloadView.xaml</DependentUpon>
     </Compile>
     <Page Include="ApplicationWindow.xaml">
       <SubType>Designer</SubType>
@@ -203,7 +204,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="CanvasImageDownloadProgessBar.xaml">
+    <Page Include="CanvasImageDownloadView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

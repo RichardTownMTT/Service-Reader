@@ -186,10 +186,10 @@
                 <Label Content="Customer Name" Grid.Column="0" Grid.Row="1"/>
                 <Label Content="Date Signed" Grid.Column="0" Grid.Row="2"/>
                 <Label Content="Engineer Signature" Grid.Column="0" Grid.Row="3"/>
-                <Image Grid.Column="1" Grid.Row="0" Margin ="5"  Source="{Binding currentSubmission.CustomerSignature}" HorizontalAlignment="Left" Stretch="Fill" Width="300" Grid.ColumnSpan="2"/>
-                <TextBox Name="txtCustomerSignName" Grid.Column="1" Grid.Row="1" Margin ="5" Text="{Binding currentSubmission.CustomerSignedName}"/>
-                <DatePicker Name="dtSigned" Grid.Column="1" Grid.Row="2" Margin ="5" SelectedDate="{Binding currentSubmission.DtSigned}"/>
-                <Image Name="imgEngineerSignature" Source="{Binding currentSubmission.MttEngineerSignature}" HorizontalAlignment="Left" Stretch="Fill" Grid.Column="1" Grid.Row="3" Margin="5" Width="300" Grid.ColumnSpan="2"/>
+                <Image Grid.Column="1" Grid.Row="0" Margin ="5"  Source="{Binding currentSubmissionVM.CustomerSignature}" HorizontalAlignment="Left" Stretch="Fill" Width="300" Grid.ColumnSpan="2"/>
+                <TextBox Name="txtCustomerSignName" Grid.Column="1" Grid.Row="1" Margin ="5" Text="{Binding currentSubmissionVM.CustomerSignedName}"/>
+                <DatePicker Name="dtSigned" Grid.Column="1" Grid.Row="2" Margin ="5" SelectedDate="{Binding currentSubmissionVM.DtSigned}"/>
+                <Image Name="imgEngineerSignature" Source="{Binding currentSubmissionVM.MttEngineerSignature}" HorizontalAlignment="Left" Stretch="Fill" Grid.Column="1" Grid.Row="3" Margin="5" Width="300" Grid.ColumnSpan="2"/>
             </Grid>
         </GroupBox>
         <GroupBox Header="Office Approval">

@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace Service_Reader 
 {
@@ -12,6 +13,15 @@ namespace Service_Reader
         private ServiceSheet m_serviceSubmission;
         //This isn't saved, just used to check that the submission has been read.
         private bool m_officeApproval = false;
+        //These are the images, which are cached on the VM.  Downloaded from the Canvas Site
+        private ImageSource m_mttEngineerSignature;
+        private ImageSource m_customerSignature;
+        private ImageSource m_image1;
+        private ImageSource m_image2;
+        private ImageSource m_image3;
+        private ImageSource m_image4;
+        private ImageSource m_image5;
+
         public ServiceSheet ServiceSubmission
         {
             get
@@ -374,5 +384,158 @@ namespace Service_Reader
             }
         }
 
+        public string MttEngSignatureUrl
+        {
+            get
+            {
+                return ServiceSubmission.MttEngSignatureUrl;
+            }
+        }
+
+        public string CustomerSignatureUrl
+        {
+            get
+            {
+                return ServiceSubmission.CustomerSignatureUrl;
+            }
+        }
+
+        public string Image1Url
+        {
+            get
+            {
+                return ServiceSubmission.Image1Url;
+            }
+        }
+
+        public string Image2Url
+        {
+            get
+            {
+                return ServiceSubmission.Image2Url;
+            }
+        }
+
+        public string Image3Url
+        {
+            get
+            {
+                return ServiceSubmission.Image3Url;
+            }
+        }
+
+        public string Image4Url
+        {
+            get
+            {
+                return ServiceSubmission.Image4Url;
+            }
+        }
+
+        public string Image5Url
+        {
+            get
+            {
+                return ServiceSubmission.Image5Url;
+            }
+        }
+
+        public ImageSource MttEngineerSignature
+        {
+            get
+            {
+                return m_mttEngineerSignature;
+            }
+
+            set
+            {
+                m_mttEngineerSignature = value;
+                onPropertyChanged("MttEngineerSignature");
+            }
+        }
+
+        public ImageSource CustomerSignature
+        {
+            get
+            {
+                return m_customerSignature;
+            }
+
+            set
+            {
+                m_customerSignature = value;
+                onPropertyChanged("CustomerSignature");
+            }
+        }
+
+        public ImageSource Image1
+        {
+            get
+            {
+                return m_image1;
+            }
+
+            set
+            {
+                m_image1 = value;
+                onPropertyChanged("Image1");
+            }
+        }
+
+        public ImageSource Image2
+        {
+            get
+            {
+                return m_image2;
+            }
+
+            set
+            {
+                m_image2 = value;
+                onPropertyChanged("Image2");
+            }
+        }
+
+        public ImageSource Image3
+        {
+            get
+            {
+                return m_image3;
+            }
+
+            set
+            {
+                m_image3 = value;
+                onPropertyChanged("Image3");
+            }
+        }
+
+        public ImageSource Image4
+        {
+            get
+            {
+                return m_image4;
+            }
+
+            set
+            {
+                m_image4 = value;
+                onPropertyChanged("Image4");
+            }
+        }
+
+        public ImageSource Image5
+        {
+            get
+            {
+                return m_image5;
+            }
+
+            set
+            {
+                m_image5 = value;
+                onPropertyChanged("Image5");
+            }
+        }
     }
 }

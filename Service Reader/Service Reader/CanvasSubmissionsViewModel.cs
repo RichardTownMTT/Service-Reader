@@ -130,7 +130,17 @@ namespace Service_Reader
             {
                 return;
             }
-            
+
+            //Now we need to download the images from Canvas, using a progress bar
+            CanvasImageDownloadView imageDownloadView = new CanvasImageDownloadView();
+            List<ServiceSheetViewModel> serviceSheetList = new List<ServiceSheetViewModel>(AllServiceSheets);
+            CanvasImageDownloadViewModel imageVM = new CanvasImageDownloadViewModel(serviceSheetList, CanvasUser);
+            imageDownloadView.DataContext = imageVM;
+            bool? result = imageDownloadView.ShowDialog();
+            //Set the servicesheets back to the result from the dialog
+
+            AllServiceSheets = new ObservableCollection<ServiceSheetViewModel>(imageVM.AllServices);
+
             MessageBox.Show("Add error catch.  Can't use messages in worker thread!");
         }
     }
