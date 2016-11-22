@@ -30,22 +30,10 @@ namespace Service_Reader
         //public ServiceSubmissionDetails(ServiceSubmission serviceSheet, string username, string password)
         public ServiceSubmissionDetails()
         {
-           InitializeComponent();
-           LayoutRoot.DataContext = this;
-           
+            InitializeComponent();
+            LayoutRoot.DataContext = this;
 
-    }
 
-        private void test(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            if (currentSubmissionVM == null)
-            {
-                CanvasSubmissionsViewModel submissionsVM = (CanvasSubmissionsViewModel)LayoutRoot.DataContext;
-                Console.WriteLine(submissionsVM.SelectedSubmission.ServiceSubmission.CanvasResponseId);
-            }
-            Console.WriteLine(currentSubmissionVM.ServiceSubmission.CanvasResponseId);
         }
-
-        
     }
 }

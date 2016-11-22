@@ -5,9 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Service_Reader"
              mc:Ignorable="d" 
-             x:Name="LayoutRoot"
-             d:DesignHeight="315.464" d:DesignWidth="638.66" Margin="5" BorderBrush="Black" BorderThickness="0.5">
-    <Grid ScrollViewer.VerticalScrollBarVisibility="Disabled">
+             d:DesignHeight="315.464" d:DesignWidth="638.66" Margin="5" BorderBrush="Black" BorderThickness="0.5" x:Name="UcServiceDayView">
+    <Grid ScrollViewer.VerticalScrollBarVisibility="Disabled" x:Name="LayoutRoot">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -28,7 +27,7 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <Label Content="Date" Grid.Column="0" Grid.Row="0"/>
-        <DatePicker Name="dtServiceDayEntered" Grid.Column="1" Grid.Row="0" SelectedDate="{Binding DtServiceDay}"/>
+        <DatePicker Grid.Column="1" Grid.Row="0" SelectedDate="{Binding ServiceDate}" MouseEnter="test"/>
         <Label Content="Travel Start" Grid.Column="0" Grid.Row="1"/>
         <Label Content="Arrival Onsite" Grid.Column="1" Grid.Row="1"/>
         <Label Content="Depart Site" Grid.Column="2" Grid.Row="1"/>
@@ -41,7 +40,7 @@
         <Label Content="Daily Allowance" Grid.Column="1" Grid.Row="3" />
         <Label Content="Overnight Allowance" Grid.Column="2" Grid.Row="3" />
         <Label Content="Barrier Payment" Grid.Column="3" Grid.Row="3" />
-        <TextBox Name="txtMileage" Grid.Column="0" Grid.Row="4" Margin="5" Text="{Binding Path=Mileage}" IsReadOnly="True"/>
+        <TextBox Name="txtMileage" Grid.Column="0" Grid.Row="4" Margin="5" Text="{Binding Mileage}" IsReadOnly="True"/>
         <CheckBox Grid.Column="1" Grid.Row="4" Margin="5" IsChecked="{Binding DailyAllowance}" IsEnabled="False"/>
         <CheckBox Grid.Column="2" Grid.Row="4" Margin="5" IsChecked="{Binding OvernightAllowance}" IsEnabled="False"/>
         <CheckBox Grid.Column="3" Grid.Row="4" Margin="5" IsChecked="{Binding BarrierPayment}" IsEnabled="False"/>

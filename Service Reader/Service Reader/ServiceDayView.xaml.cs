@@ -21,34 +21,30 @@ namespace Service_Reader
     public partial class ServiceDayView : UserControl
     {
 
-        //public ServiceDayViewModel currentTimesheet
-        //{
-        //    get
-        //    {
-        //        return (ServiceDayViewModel)GetValue(currentTimesheetDP);
-        //    }
-        //    set
-        //    {
-        //        SetValue(currentTimesheetDP, value);
-        //    }
-        //}
-        //public static readonly DependencyProperty currentTimesheetDP =
-        //    DependencyProperty.Register("currentSubmission", typeof(ServiceDayViewModel), typeof(ServiceDayView), new PropertyMetadata(null));
+        public ServiceDayViewModel serviceDayVM
+        {
+            get
+            {
+                return (ServiceDayViewModel)GetValue(ServiceDayDP);
+            }
+            set
+            {
+                SetValue(ServiceDayDP, value);
+            }
+        }
 
+        public static DependencyProperty ServiceDayDP = DependencyProperty.Register("serviceDayVM", typeof(ServiceDayViewModel), typeof(ServiceDayView), new PropertyMetadata(null));
 
-
-        //public object travelStart
-        //{
-        //    get { return GetValue(dpTravelStart); }
-        //    set { SetValue(dpTravelStart, value); }
-        //}
-
-        //public static readonly DependencyProperty dpTravelStart = DependencyProperty.Register("travelStart", typeof(object), typeof(ViewEditServiceDay), new PropertyMetadata(""));
-
+        
         public ServiceDayView()
         { 
             InitializeComponent();
             //LayoutRoot.DataContext = this;
+        }
+
+        private void test(object sender, MouseEventArgs e)
+        {
+            Console.WriteLine(UcServiceDayView.DataContext.ToString());
         }
     }
 }
