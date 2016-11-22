@@ -5,11 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Service_Reader"
         mc:Ignorable="d" d:DesignHeight="2000" Name="ucSubmissionOverview" >
-    <UserControl.Resources>
-        <DataTemplate x:Key="serviceSubmissionTemplate" DataType="{x:Type local:ServiceSheet}">
-            <local:ServiceSubmissionDetails DataContext="{Binding}" />
-        </DataTemplate>
-    </UserControl.Resources>
+   
     <Grid>
         <Grid.DataContext>
             <local:CanvasSubmissionsViewModel/>
@@ -41,7 +37,7 @@
         <Button Content="Save" Command="{Binding saveSubmission}" Grid.Column="1" Grid.Row="2" Margin="5"/>
         <Button Content="Cancel" Command="{Binding cancelEditSubmission}" Grid.Column="2" Grid.Row="2" Margin="5"/>
         <Button Content="Export to csv" Command="{Binding exportToCsv}" Grid.Column="3" Grid.Row="2" Margin="5"/>
-        <DataGrid x:Name="dataGrid" ItemsSource="{Binding AllServiceSheets}" AutoGenerateColumns="False" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5" SelectedItem="{Binding Path=SelectedSubmission}" >
+        <DataGrid x:Name="dataGrid" ItemsSource="{Binding AllServiceSheets}" AutoGenerateColumns="False" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5" SelectedItem="{Binding Path=SelectedSubmission}" CanUserAddRows="False" IsReadOnly="True" SelectionMode="Single">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Submission No" Binding="{Binding SubmissionNumber}"/>
                 <DataGridTextColumn Header="Engineer" Binding="{Binding EngineerFullName}"/>
