@@ -657,5 +657,61 @@ namespace Service_Reader
                 onPropertyChanged("Image5");
             }
         }
+
+        public string Username
+        {
+            get
+            {
+                return ServiceSubmission.Username;
+            }
+        }
+
+        public string UserSurname
+        {
+            get
+            {
+                return ServiceSubmission.UserSurname;
+            }
+        }
+
+        public string UserFirstName
+        {
+            get
+            {
+                return ServiceSubmission.UserSurname;
+            }
+        }
+
+        public string ResponseId
+        {
+            get
+            {
+                return ServiceSubmission.CanvasResponseId;
+            }
+        }
+
+        public DateTime DtResponse
+        {
+            get
+            {
+                return ServiceSubmission.DtResponse;
+            }
+        }
+
+        public DateTime DtDevice
+        {
+            get
+            {
+                return ServiceSubmission.DtDevice;
+            }
+        }
+
+        public int SubmissionVersion
+        {
+            get
+            {
+                return ServiceSubmission.SubmissionFormVersion;
+            }
+        }
     }
 }

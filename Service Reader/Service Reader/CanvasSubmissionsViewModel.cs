@@ -22,6 +22,8 @@ namespace Service_Reader
 
         //Command to download the canvas data
         private ICommand m_canvasDataDownloadCommand;
+        //RT 23/11/16 - Adding command to create CSV from data
+        private ICommand m_exportCsvCommand;
 
         //Creator for the class.  Sets the defaults, e.g. start/end date
         public CanvasSubmissionsViewModel()
@@ -90,6 +92,44 @@ namespace Service_Reader
             set
             {
                 m_canvasDataDownloadCommand = value;
+            }
+        }
+
+        public ICommand CsvExportCommand
+        {
+            get
+            {
+                if (m_exportCsvCommand == null)
+                {
+                    m_exportCsvCommand = new RelayCommand(param => exportCsvData());
+                }
+                return m_exportCsvCommand;
+            }
+            set
+            {
+                m_exportCsvCommand = value;
+            }
+        }
+
+        private void exportCsvData()
+        {
+            //Need to go through the submissions and check that each has been approved.
+            foreach (ServiceSheetViewModel sheet in AllServiceSheets)
+            {
+                if(!sheet.OfficeApproval)
+                {
+                    MessageBox.Show("Service sheets need approving before they can be exported.", "Error");
+                    return;
+                }
+            }
+
+            //This exports all the downloaded service sheets to csv
+            CsvServiceExport exporter = new CsvServiceExport();
+            bool success = exporter.exportDataToCsv(AllServiceSheets);
+
+            if (success)
+            {
+                MessageBox.Show("Canvas data exported to CSV", "Exported");
             }
         }
 

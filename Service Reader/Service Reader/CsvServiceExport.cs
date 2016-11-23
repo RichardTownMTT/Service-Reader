@@ -16,7 +16,7 @@ namespace Service_Reader
         private CsvWriter csvWriterOutput;
 
         //Pass in multiple sheets
-        public Boolean exportDataToCsv(List<oldServiceSubmissionModel> submissionsToExport)
+        public Boolean exportDataToCsv(ObservableCollection<ServiceSheetViewModel> submissionsToExport)
         {
             string outputFilename = createFilename();
 
@@ -31,7 +31,7 @@ namespace Service_Reader
             csvWriterOutput = new CsvWriter(csvTextWriter);
 
             //Loop through the sheets 
-            foreach (oldServiceSubmissionModel submission in submissionsToExport)
+            foreach (ServiceSheetViewModel submission in submissionsToExport)
             {
                 //For each submission, create the csv export
                 createExportLinesForSubmission(submission);
@@ -42,9 +42,11 @@ namespace Service_Reader
             return true;
         }
 
-        private void createExportLinesForSubmission(oldServiceSubmissionModel submission)
+        private void createExportLinesForSubmission(ServiceSheetViewModel submission)
         {
-            ObservableCollection<oldServiceDayModel> serviceDays = submission.ServiceTimesheets;
+            //A line is created for each service day, not submission, so we need to go through the number of days.  
+            //There will be multiple duplicated fields.
+            ObservableCollection<ServiceDayViewModel> serviceDays = submission.AllServiceDayVMs;
             int noOfDays = serviceDays.Count;
 
             for (int counter = 0; counter < noOfDays ; counter++)
@@ -53,7 +55,7 @@ namespace Service_Reader
                 //Start date and end date are not taken - They only appear in the csv export
                 csvWriterOutput.WriteField("");
                 csvWriterOutput.WriteField("");
-                int submissionNo = submission.SubmissionNo;
+                int submissionNo = submission.SubmissionNumber;
                 csvWriterOutput.WriteField(submissionNo);
                 //Export app name - set manually
                 csvWriterOutput.WriteField("Service Sheet");
@@ -75,9 +77,9 @@ namespace Service_Reader
                 csvWriterOutput.WriteField(formVersion);
                 string customer = submission.Customer;
                 csvWriterOutput.WriteField(customer);
-                string address1 = submission.Address1;
+                string address1 = submission.AddressLine1;
                 csvWriterOutput.WriteField(address1);
-                string address2 = submission.Address2;
+                string address2 = submission.AddressLine2;
                 csvWriterOutput.WriteField(address2);
                 string townCity = submission.TownCity;
                 csvWriterOutput.WriteField(townCity);
@@ -89,20 +91,20 @@ namespace Service_Reader
                 csvWriterOutput.WriteField(customerPhone);
                 string makeModel = submission.MachineMakeModel;
                 csvWriterOutput.WriteField(makeModel);
-                string serialNo = submission.MachineSerial;
+                string serialNo = submission.MachineSerialNo;
                 csvWriterOutput.WriteField(serialNo);
                 string cncControl = submission.MachineController;
                 csvWriterOutput.WriteField(cncControl);
-                DateTime dtStart = submission.JobStart;
+                DateTime dtStart = submission.JobStartDate;
                 csvWriterOutput.WriteField(dtStart);
                 string orderNo = submission.CustomerOrderNo;
                 csvWriterOutput.WriteField(orderNo);
-                string mttJobNo = submission.MttJobNumber;
+                string mttJobNo = submission.MttJobNo;
                 csvWriterOutput.WriteField(mttJobNo);
                 string jobDescription = submission.JobDescription;
                 csvWriterOutput.WriteField(jobDescription);
 
-                oldServiceDayModel currentDay = serviceDays[counter];
+                ServiceDayViewModel currentDay = serviceDays[counter];
                 createExportLineForDay(currentDay);
 
                 double totalTimeOnsite = submission.TotalTimeOnsite;
@@ -132,33 +134,55 @@ namespace Service_Reader
                 //Images for follow-up work - Doesn't need to be set
                 csvWriterOutput.WriteField("");
                 //RT 11/8/2016 - Adding in the start of the image url. 
-                string imageUrlStart = "http://www.gocanvas.com/values/";
-                string image1 = imageUrlStart + submission.Image1Url;
-                csvWriterOutput.WriteField(image1);
-                string image2 = imageUrlStart + submission.Image2Url;
-                csvWriterOutput.WriteField(image2);
-                string image3 = imageUrlStart + submission.Image3Url;
-                csvWriterOutput.WriteField(image3);
-                string image4 = imageUrlStart + submission.Image4Url;
-                csvWriterOutput.WriteField(image4);
-                string image5 = imageUrlStart + submission.Image5Url;
-                csvWriterOutput.WriteField(image5);
+                //RT 23/11/16 - Changing this to a method
+                writeUrl(submission.Image1Url);
+                //string imageUrlStart = "http://www.gocanvas.com/values/";
+                //string image1 = imageUrlStart + submission.Image1Url;
+                //csvWriterOutput.WriteField(image1);
+                writeUrl(submission.Image2Url);
+                //string image2 = imageUrlStart + submission.Image2Url;
+                //csvWriterOutput.WriteField(image2);
+                writeUrl(submission.Image3Url);
+                //string image3 = imageUrlStart + submission.Image3Url;
+                //csvWriterOutput.WriteField(image3);
+                //string image4 = imageUrlStart + submission.Image4Url;
+                writeUrl(submission.Image4Url);
+                //csvWriterOutput.WriteField(image4);
+                //string image5 = imageUrlStart + submission.Image5Url;
+                writeUrl(submission.Image5Url);
+                //csvWriterOutput.WriteField(image5);
                 //Certify is next - don't set
                 csvWriterOutput.WriteField("");
-                string customerSignature = imageUrlStart + submission.CustomerSignatureUrl;
-                csvWriterOutput.WriteField(customerSignature);
-                string customerName = submission.CustomerSignName;
+                //string customerSignature = imageUrlStart + submission.CustomerSignatureUrl;
+                //csvWriterOutput.WriteField(customerSignature);
+                writeUrl(submission.CustomerSignatureUrl);
+                string customerName = submission.CustomerSignedName;
                 csvWriterOutput.WriteField(customerName);
                 DateTime dtSigned = submission.DtSigned;
                 csvWriterOutput.WriteField(dtSigned);
-                string mttSignature = imageUrlStart + submission.MttEngSignatureUrl;
-                csvWriterOutput.WriteField(mttSignature);
+                //string mttSignature = imageUrlStart + submission.MttEngSignatureUrl;
+                //csvWriterOutput.WriteField(mttSignature);
+                writeUrl(submission.MttEngSignatureUrl);
                 csvWriterOutput.NextRecord();
             }
 
         }
 
-        private void createExportLineForDay(oldServiceDayModel currentDay)
+        private void writeUrl(string inputStr)
+        {
+            string imageUrlStart = "http://www.gocanvas.com/values/";
+            if (inputStr == "")
+            {
+                csvWriterOutput.WriteField("");
+            }
+            else
+            {
+                string stringToWrite = imageUrlStart + inputStr;
+                csvWriterOutput.WriteField(stringToWrite);
+            }
+        }
+
+        private void createExportLineForDay(ServiceDayViewModel currentDay)
         {
             //This adds the day to the export
             DateTime travelStart = currentDay.TravelStartTime;
@@ -189,7 +213,7 @@ namespace Service_Reader
             csvWriterOutput.WriteField(dailyReport);
             string partsSupplied = currentDay.PartsSupplied;
             csvWriterOutput.WriteField(partsSupplied);
-            DateTime dtTimesheet = currentDay.DtServiceDay;
+            DateTime dtTimesheet = currentDay.ServiceDate;
             csvWriterOutput.WriteField(dtTimesheet);
         }
 
@@ -212,12 +236,5 @@ namespace Service_Reader
             return retval;
         }
 
-
-
-       
-
-        //Add a new row to the export with the data from the sheet and day.  One row per day
-
-        //Save the export
     }
 }
