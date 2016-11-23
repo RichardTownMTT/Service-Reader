@@ -27,7 +27,17 @@ namespace Service_Reader
                 return false;
             }
             
-            csvTextWriter = File.CreateText(outputFilename);
+            //RT 23/11/16 - If the file is already open, then it will throw an error here.
+            try
+            {
+                csvTextWriter = File.CreateText(outputFilename);
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine(ex.ToString());
+                MessageBox.Show("The export failed. The file is already open. Please close it and try again.", "Error");
+                return false;
+            }
             csvWriterOutput = new CsvWriter(csvTextWriter);
 
             //Loop through the sheets 
@@ -38,6 +48,7 @@ namespace Service_Reader
             }
 
             csvTextWriter.Close();
+            
             //If we get to here, then all created successfully
             return true;
         }

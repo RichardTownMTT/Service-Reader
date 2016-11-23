@@ -80,7 +80,7 @@ namespace Service_Reader
             }
         }
 
-        internal void recalculateTravelTime()
+        public void recalculateTravelTime()
         {
             double travelTime = 0;
             foreach(ServiceDayViewModel day in AllServiceDayVMs)
@@ -116,7 +116,7 @@ namespace Service_Reader
             }
         }
 
-        internal void recalulateTimeOnsite()
+        public void recalulateTimeOnsite()
         {
             double timeOnsite = 0;
             foreach (ServiceDayViewModel serviceDay in AllServiceDayVMs)
@@ -165,7 +165,7 @@ namespace Service_Reader
             }
         }
 
-        internal void recalculateMileage()
+        public void recalculateMileage()
         {
             int updatedMileage = 0;
             foreach(ServiceDayViewModel day in AllServiceDayVMs)
@@ -188,7 +188,7 @@ namespace Service_Reader
             }
         }
 
-        internal void recalculateDailyAllowances()
+        public void recalculateDailyAllowances()
         {
             int updatedDA = 0;
             foreach (ServiceDayViewModel day in AllServiceDayVMs)
@@ -214,7 +214,7 @@ namespace Service_Reader
             }
         }
 
-        internal void recalculateOvernightAllowances()
+        public void recalculateOvernightAllowances()
         {
             int updatedOA = 0;
             foreach(ServiceDayViewModel day in AllServiceDayVMs)
@@ -240,7 +240,7 @@ namespace Service_Reader
             }
         }
 
-        internal void recalculateBarrierPayments()
+        public void recalculateBarrierPayments()
         {
             int updatedBP = 0;
             foreach(ServiceDayViewModel day in AllServiceDayVMs)

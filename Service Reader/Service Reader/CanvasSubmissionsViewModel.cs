@@ -123,6 +123,13 @@ namespace Service_Reader
                 }
             }
 
+            int noOfSheets = AllServiceSheets.Count;
+            MessageBoxResult result = MessageBox.Show(noOfSheets.ToString() + " sheets will be exported to csv.  Do you want to continue?", "Export", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.No)
+            {
+                return;
+            }
+
             //This exports all the downloaded service sheets to csv
             CsvServiceExport exporter = new CsvServiceExport();
             bool success = exporter.exportDataToCsv(AllServiceSheets);
