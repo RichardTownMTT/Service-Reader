@@ -207,11 +207,39 @@ namespace Service_Reader
             double mileage = currentDay.Mileage;
             csvWriterOutput.WriteField(mileage);
             Boolean dailyAllowance = currentDay.DailyAllowance;
-            csvWriterOutput.WriteField(dailyAllowance);
+            //RT 23/11/16 - Changing boolean output to 1/0
+            if (dailyAllowance)
+            {
+                csvWriterOutput.WriteField(1);
+            }
+            else
+            {
+                csvWriterOutput.WriteField(0);
+            }
+            //csvWriterOutput.WriteField(dailyAllowance);
+
             Boolean overnightAllowance = currentDay.OvernightAllowance;
-            csvWriterOutput.WriteField(overnightAllowance);
+            if (overnightAllowance)
+            {
+                csvWriterOutput.WriteField(1);
+            }
+            else
+            {
+                csvWriterOutput.WriteField(0);
+            }
+            //csvWriterOutput.WriteField(overnightAllowance);
+
+
             Boolean barrierPayment = currentDay.BarrierPayment;
-            csvWriterOutput.WriteField(barrierPayment);
+            if (barrierPayment)
+            {
+                csvWriterOutput.WriteField(1);
+            }
+            else
+            {
+                csvWriterOutput.WriteField(0);
+            }
+            //csvWriterOutput.WriteField(barrierPayment);
             double travelTimeToSite = currentDay.TravelTimeToSite;
             csvWriterOutput.WriteField(travelTimeToSite);
             double travelTimeFromSite = currentDay.TravelTimeFromSite;
