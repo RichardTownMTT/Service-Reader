@@ -7,8 +7,8 @@
         mc:Ignorable="d"
         Title="Service Reader" WindowState="Maximized" Height="300" Width="300" >
     <DockPanel>
-        <Border DockPanel.Dock="Left" BorderBrush="Black" BorderThickness="0,0,1,0" Width="Auto">
-            <StackPanel>
+        <Border DockPanel.Dock="Top" BorderBrush="Black" BorderThickness="0,0,1,0" Width="Auto">
+            <StackPanel Orientation="Horizontal" >
                 <Button Content="Process Canvas Data" Margin="5" Command="{Binding ProcessCanvasDataCommand}"/>
                 <Button Content="Issue Service Reports" Margin="5" Command="{Binding IssueServiceReportsCommand}"/>
                 <Button Content="History Tracker" Margin="5" Command="{Binding HistoryTrackerCommand}"/>

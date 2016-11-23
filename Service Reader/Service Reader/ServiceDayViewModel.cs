@@ -51,7 +51,21 @@ namespace Service_Reader
             {
                 ServiceDay.TravelStartTime = value;
                 onPropertyChanged("TravelStartTime");
+                //If the travel start is altered, then the travel to site needs recalculating
+                recalculateTravelTimeToSite();
             }
+        }
+
+        private void recalculateTravelTimeToSite()
+        {
+           TimeSpan travelToSite = ArrivalOnsiteTime - TravelStartTime;
+           TravelTimeToSite = travelToSite.TotalHours;
+           recalculateTotalTravelTime();
+        }
+
+        private void recalculateTotalTravelTime()
+        {
+            TotalTravelTime = TravelTimeToSite + TravelTimeFromSite;
         }
 
         public DateTime ArrivalOnsiteTime
@@ -64,7 +78,15 @@ namespace Service_Reader
             {
                 ServiceDay.ArrivalOnsiteTime = value;
                 onPropertyChanged("ArrivalOnsiteTime");
+                recalculateTravelTimeToSite();
+                recalculateTimeOnsite();
             }
+        }
+
+        private void recalculateTimeOnsite()
+        {
+            TimeSpan timeOnsite = DepartSiteTime - ArrivalOnsiteTime;
+            TotalTimeOnsite = timeOnsite.TotalHours;
         }
 
         public DateTime DepartSiteTime
@@ -77,7 +99,16 @@ namespace Service_Reader
             {
                 ServiceDay.DepartureSiteTime = value;
                 onPropertyChanged("DepartSiteTime");
+                recalculateTimeOnsite();
+                recalculateTravelFromSite();
             }
+        }
+
+        private void recalculateTravelFromSite()
+        {
+            TimeSpan travelFrom = TravelEndTime - DepartSiteTime;
+            TravelTimeFromSite = travelFrom.TotalHours;
+            recalculateTotalTravelTime();
         }
 
         public DateTime TravelEndTime
@@ -90,6 +121,7 @@ namespace Service_Reader
             {
                 ServiceDay.TravelEndTime = value;
                 onPropertyChanged("TravelEndTime");
+                recalculateTravelFromSite();
             }
         }
 

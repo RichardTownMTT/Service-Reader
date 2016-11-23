@@ -40,10 +40,10 @@
         <Label Content="Daily Allowance" Grid.Column="1" Grid.Row="3" />
         <Label Content="Overnight Allowance" Grid.Column="2" Grid.Row="3" />
         <Label Content="Barrier Payment" Grid.Column="3" Grid.Row="3" />
-        <TextBox Name="txtMileage" Grid.Column="0" Grid.Row="4" Margin="5" Text="{Binding Mileage}" IsReadOnly="True"/>
-        <CheckBox Grid.Column="1" Grid.Row="4" Margin="5" IsChecked="{Binding DailyAllowance}" IsEnabled="False"/>
-        <CheckBox Grid.Column="2" Grid.Row="4" Margin="5" IsChecked="{Binding OvernightAllowance}" IsEnabled="False"/>
-        <CheckBox Grid.Column="3" Grid.Row="4" Margin="5" IsChecked="{Binding BarrierPayment}" IsEnabled="False"/>
+        <TextBox Name="txtMileage" Grid.Column="0" Grid.Row="4" Margin="5" Text="{Binding Mileage}"/>
+        <CheckBox Grid.Column="1" Grid.Row="4" Margin="5" IsChecked="{Binding DailyAllowance}" />
+        <CheckBox Grid.Column="2" Grid.Row="4" Margin="5" IsChecked="{Binding OvernightAllowance}" />
+        <CheckBox Grid.Column="3" Grid.Row="4" Margin="5" IsChecked="{Binding BarrierPayment}" />
         <Label Content="Travel time to site" Grid.Column="0" Grid.Row="5"/>
         <Label Content="Travel time from site" Grid.Column="1" Grid.Row="5"/>
         <Label Content="Total travel" Grid.Column="2" Grid.Row="5"/>
