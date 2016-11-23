@@ -80,6 +80,16 @@ namespace Service_Reader
             }
         }
 
+        internal void recalculateTravelTime()
+        {
+            double travelTime = 0;
+            foreach(ServiceDayViewModel day in AllServiceDayVMs)
+            {
+                travelTime += day.TotalTravelTime;
+            }
+            TotalTravelTime = travelTime;
+        }
+
         public string AddressLine2
         {
             get
@@ -104,6 +114,16 @@ namespace Service_Reader
                 ServiceSubmission.TownCity = value;
                 onPropertyChanged("TownCity");
             }
+        }
+
+        internal void recalulateTimeOnsite()
+        {
+            double timeOnsite = 0;
+            foreach (ServiceDayViewModel serviceDay in AllServiceDayVMs)
+            {
+                timeOnsite += serviceDay.TotalTimeOnsite;
+            }
+            TotalTimeOnsite = timeOnsite;
         }
 
         public string Postcode
@@ -145,6 +165,16 @@ namespace Service_Reader
             }
         }
 
+        internal void recalculateMileage()
+        {
+            int updatedMileage = 0;
+            foreach(ServiceDayViewModel day in AllServiceDayVMs)
+            {
+                updatedMileage += day.Mileage;
+            }
+            TotalMileage = updatedMileage;
+        }
+
         public DateTime JobStartDate
         {
             get
@@ -156,6 +186,19 @@ namespace Service_Reader
                 ServiceSubmission.DtJobStart = value;
                 onPropertyChanged("JobStartDate");
             }
+        }
+
+        internal void recalculateDailyAllowances()
+        {
+            int updatedDA = 0;
+            foreach (ServiceDayViewModel day in AllServiceDayVMs)
+            {
+                if (day.DailyAllowance)
+                {
+                    updatedDA++;
+                }
+            }
+            TotalDailyAllowances = updatedDA;
         }
 
         public string MachineMakeModel
@@ -171,6 +214,19 @@ namespace Service_Reader
             }
         }
 
+        internal void recalculateOvernightAllowances()
+        {
+            int updatedOA = 0;
+            foreach(ServiceDayViewModel day in AllServiceDayVMs)
+            {
+                if (day.OvernightAllowance)
+                {
+                    updatedOA++;
+                }
+            }
+            TotalOvernightAllowances = updatedOA;
+        }
+
         public string MachineSerialNo
         {
             get
@@ -182,6 +238,19 @@ namespace Service_Reader
                 ServiceSubmission.MachineSerial = value;
                 onPropertyChanged("MachineSerialNo");
             }
+        }
+
+        internal void recalculateBarrierPayments()
+        {
+            int updatedBP = 0;
+            foreach(ServiceDayViewModel day in AllServiceDayVMs)
+            {
+                if(day.BarrierPayment)
+                {
+                    updatedBP++;
+                }
+            }
+            TotalBarrierPayments = updatedBP;
         }
 
         public string MachineController
@@ -243,7 +312,7 @@ namespace Service_Reader
                 ObservableCollection<ServiceDayViewModel> retval = new ObservableCollection<ServiceDayViewModel>();
                 foreach (ServiceDay sd in ServiceSubmission.ServiceDays)
                 {
-                    ServiceDayViewModel serviceDay = new ServiceDayViewModel(sd);
+                    ServiceDayViewModel serviceDay = new ServiceDayViewModel(sd, this);
                     retval.Add(serviceDay);
                 }
 
@@ -322,6 +391,11 @@ namespace Service_Reader
             {
                 return ServiceSubmission.JobTotalTimeOnsite;
             }
+            set
+            {
+                ServiceSubmission.JobTotalTimeOnsite = value;
+                onPropertyChanged("TotalTimeOnsite");
+            }
         }
 
         public double TotalTravelTime
@@ -330,37 +404,62 @@ namespace Service_Reader
             {
                 return ServiceSubmission.JobTotalTravelTime;
             }
+            set
+            {
+                ServiceSubmission.JobTotalTravelTime = value;
+                onPropertyChanged("TotalTravelTime");
+            }
         }
 
-        public double TotalMileage
+        public int TotalMileage
         {
             get
             {
                 return ServiceSubmission.JobTotalMileage;
             }
+            set
+            {
+                ServiceSubmission.JobTotalMileage = value;
+                onPropertyChanged("TotalMileage");
+            }
         }
 
-        public double TotalDailyAllowances
+        public int TotalDailyAllowances
         {
             get
             {
                 return ServiceSubmission.TotalDailyAllowances;
             }
+            set
+            {
+                ServiceSubmission.TotalDailyAllowances = value;
+                onPropertyChanged("TotalDailyAllowances");
+            }
         }
 
-        public double TotalOvernightAllowances
+        public int TotalOvernightAllowances
         {
             get
             {
                 return ServiceSubmission.TotalOvernightAllowances;
             }
+            set
+            {
+                ServiceSubmission.TotalOvernightAllowances = value;
+                onPropertyChanged("TotalOvernightAllowances");
+            }
         }
 
-        public double TotalBarrierPayments
+        public int TotalBarrierPayments
         {
             get
             {
                 return ServiceSubmission.TotalBarrierPayments;
+            }
+            set
+            {
+                ServiceSubmission.TotalBarrierPayments = value;
+                onPropertyChanged("TotalBarrierPayments");
             }
         }
 

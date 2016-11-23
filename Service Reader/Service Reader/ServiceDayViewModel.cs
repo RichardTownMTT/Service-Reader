@@ -9,9 +9,14 @@ namespace Service_Reader
     public class ServiceDayViewModel : ObservableObject
     {
        private ServiceDay m_serviceDay;
-       public ServiceDayViewModel(ServiceDay currentDay)
+        //Adding a reference to the containing service sheet, so the total times can be updated
+
+       private ServiceSheetViewModel m_parentServiceDayVM;
+
+        public ServiceDayViewModel(ServiceDay currentDay, ServiceSheetViewModel parentVM)
         {
             ServiceDay = currentDay;
+            ParentServiceDayVM = parentVM;
         }
 
         public ServiceDay ServiceDay
@@ -66,6 +71,7 @@ namespace Service_Reader
         private void recalculateTotalTravelTime()
         {
             TotalTravelTime = TravelTimeToSite + TravelTimeFromSite;
+            ParentServiceDayVM.recalculateTravelTime();
         }
 
         public DateTime ArrivalOnsiteTime
@@ -87,6 +93,8 @@ namespace Service_Reader
         {
             TimeSpan timeOnsite = DepartSiteTime - ArrivalOnsiteTime;
             TotalTimeOnsite = timeOnsite.TotalHours;
+            //Need to recalculate the total time on the holding service sheet
+            ParentServiceDayVM.recalulateTimeOnsite();
         }
 
         public DateTime DepartSiteTime
@@ -135,6 +143,7 @@ namespace Service_Reader
             {
                 ServiceDay.Mileage = value;
                 onPropertyChanged("Mileage");
+                ParentServiceDayVM.recalculateMileage();
             }
         }
 
@@ -162,6 +171,8 @@ namespace Service_Reader
                     ServiceDay.DailyAllowance = 0;
                 }
                 onPropertyChanged("DailyAllowance");
+                //Update the daily allowance total on the parent VM
+                ParentServiceDayVM.recalculateDailyAllowances();
             }
         }
 
@@ -189,6 +200,7 @@ namespace Service_Reader
                     ServiceDay.OvernightAllowance = 0;
                 }
                 onPropertyChanged("OvernightAllowance");
+                ParentServiceDayVM.recalculateOvernightAllowances();
             }
         }
 
@@ -216,6 +228,7 @@ namespace Service_Reader
                     ServiceDay.BarrierPayment = 0;
                 }
                 onPropertyChanged("BarrierPayment");
+                ParentServiceDayVM.recalculateBarrierPayments();
             }
         }
 
@@ -294,6 +307,19 @@ namespace Service_Reader
             {
                 ServiceDay.PartsSuppliedToday = value;
                 onPropertyChanged("PartsSupplied");
+            }
+        }
+
+        public ServiceSheetViewModel ParentServiceDayVM
+        {
+            get
+            {
+                return m_parentServiceDayVM;
+            }
+
+            set
+            {
+                m_parentServiceDayVM = value;
             }
         }
     }
