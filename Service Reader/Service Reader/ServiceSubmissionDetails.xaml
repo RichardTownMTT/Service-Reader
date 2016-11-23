@@ -134,11 +134,11 @@
                 <TextBox Name="txtAdditionalFaultsFound" Grid.Column="1" Grid.Row="2" Margin ="5" Text="{Binding Path=currentSubmissionVM.AdditionalFaultsFound}"/>
                 <CheckBox Name="chkQuoteRequired" Grid.Column="1" Grid.Row="3" Margin ="5" IsChecked="{Binding Path=currentSubmissionVM.QuoteRequired}"/>
                 <TextBox Name="txtPartsForFollowup" Grid.Column="1" Grid.Row="4" Margin ="5" Text="{Binding Path=currentSubmissionVM.PartsForFollowup}"/>
-                <Image Grid.Column="1" Grid.Row="5" Margin ="5" Source="{Binding Path=currentSubmission.Image1}" HorizontalAlignment="Left" Stretch="Fill" Width="300" Grid.ColumnSpan="2"/>
-                <Image Grid.Column="1" Grid.Row="6" Margin ="5" Source="{Binding Path=currentSubmission.Image2}" HorizontalAlignment="Left" Stretch="Fill" Width="300" Grid.ColumnSpan="2"/>
-                <Image Grid.Column="1" Grid.Row="7" Margin ="5" Source="{Binding Path=currentSubmission.Image3}" HorizontalAlignment="Left" Stretch="Fill" Width="300" Grid.ColumnSpan="2"/>
-                <Image Grid.Column="1" Grid.Row="8" Margin ="5" Source="{Binding Path=currentSubmission.Image4}" HorizontalAlignment="Left" Stretch="Fill" Width="300" Grid.ColumnSpan="2"/>
-                <Image Grid.Column="1" Grid.Row="9" Margin ="5" Source="{Binding Path=currentSubmission.Image5}" HorizontalAlignment="Left" Stretch="Fill" Width="300" Grid.ColumnSpan="2"/>
+                <Image Grid.Column="1" Grid.Row="5" Margin ="5" Source="{Binding Path=currentSubmissionVM.Image1}" HorizontalAlignment="Left" Stretch="Fill" Width="300" Grid.ColumnSpan="2"/>
+                <Image Grid.Column="1" Grid.Row="6" Margin ="5" Source="{Binding Path=currentSubmissionVM.Image2}" HorizontalAlignment="Left" Stretch="Fill" Width="300" Grid.ColumnSpan="2"/>
+                <Image Grid.Column="1" Grid.Row="7" Margin ="5" Source="{Binding Path=currentSubmissionVM.Image3}" HorizontalAlignment="Left" Stretch="Fill" Width="300" Grid.ColumnSpan="2"/>
+                <Image Grid.Column="1" Grid.Row="8" Margin ="5" Source="{Binding Path=currentSubmissionVM.Image4}" HorizontalAlignment="Left" Stretch="Fill" Width="300" Grid.ColumnSpan="2"/>
+                <Image Grid.Column="1" Grid.Row="9" Margin ="5" Source="{Binding Path=currentSubmissionVM.Image5}" HorizontalAlignment="Left" Stretch="Fill" Width="300" Grid.ColumnSpan="2"/>
             </Grid>
         </GroupBox>
         <GroupBox Header="Submission Times">

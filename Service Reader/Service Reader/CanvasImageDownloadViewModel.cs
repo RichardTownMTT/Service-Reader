@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 
 namespace Service_Reader
@@ -29,12 +30,19 @@ namespace Service_Reader
         private int m_minimumDownloadedItems;
         private int m_maximumDownloadedItems;
         private int m_currentStatus;
-        private bool m_dialogComplete = false;
 
         private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             AllServices = (List<ServiceSheetViewModel>)e.Result;
-            DialogComplete = true;
+            //Close the current dialog
+            foreach (Window currentWindow in Application.Current.Windows)
+            {
+                if (currentWindow.GetType() == typeof(CanvasImageDownloadView))
+                {
+                    currentWindow.Close();
+                    return;
+                }
+            }
         }
 
         private void setMaxMinProgressBar()
@@ -197,18 +205,5 @@ namespace Service_Reader
             }
         }
 
-        public bool DialogComplete
-        {
-            get
-            {
-                return m_dialogComplete;
-            }
-
-            set
-            {
-                m_dialogComplete = value;
-                onPropertyChanged("DialogComplete");
-            }
-        }
     }
 }
