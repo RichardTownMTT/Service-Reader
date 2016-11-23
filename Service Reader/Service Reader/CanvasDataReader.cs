@@ -10,6 +10,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using System.Drawing;
 using System.Windows.Media;
+using System.Text;
 
 namespace Service_Reader
 {
@@ -63,6 +64,13 @@ namespace Service_Reader
                 WebClient wc = new WebClient();
                 byte[] downloadedData = wc.DownloadData(canvasUrl);
 
+                //RT 23/11/16 - Adding Canvas standard error checks
+                string errorCode = canvasErrorCode(downloadedData);
+                if (!errorCode.Equals(""))
+                {
+                    return null;
+                }
+                
                 MemoryStream ms = new MemoryStream(downloadedData);
 
                 BitmapImage bmImage = new BitmapImage();
@@ -86,6 +94,23 @@ namespace Service_Reader
             //    return null;
             //}
             return returnedImage;
+        }
+
+        private static string canvasErrorCode(byte[] downloadedData)
+        {
+            //This method returns the canvas error code, or null if the data is correct.
+            try
+            {
+                string response = Encoding.ASCII.GetString(downloadedData);
+                XDocument xDoc = XDocument.Parse(response);
+                return validateCanvasXml(xDoc.Root);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                //Unable to parse canvas error, so return null.
+                return "";
+            }
         }
 
         public static string FOLLOWUP_PARTS = "Parts required for follow-up work";

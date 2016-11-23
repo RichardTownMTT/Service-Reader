@@ -186,9 +186,15 @@ namespace Service_Reader
             bool? result = imageDownloadView.ShowDialog();
             //Set the servicesheets back to the result from the dialog
 
-            AllServiceSheets = new ObservableCollection<ServiceSheetViewModel>(imageVM.AllServices);
-
-            MessageBox.Show("Add error catch.  Can't use messages in worker thread!");
+            if (result == true)
+            {
+                AllServiceSheets = new ObservableCollection<ServiceSheetViewModel>(imageVM.AllServices);
+            }
+            else
+            {
+                AllServiceSheets = new ObservableCollection<ServiceSheetViewModel>();
+            }
+            
         }
     }
 }

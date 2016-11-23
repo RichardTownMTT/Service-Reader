@@ -39,8 +39,16 @@ namespace Service_Reader
             {
                 if (currentWindow.GetType() == typeof(CanvasImageDownloadView))
                 {
-                    currentWindow.Close();
-                    return;
+                    if (AllServices == null)
+                    {
+                        currentWindow.DialogResult = false;
+                    }
+                    else
+                    {
+                        currentWindow.DialogResult = true;
+                    }
+                    //currentWindow.Close();
+                    //return;
                 }
             }
         }
@@ -74,14 +82,31 @@ namespace Service_Reader
             {
                 downloadUrl = currentSubmission.MttEngSignatureUrl;
                 ImageSource imgEngSignature = CanvasDataReader.downloadImage(downloadUrl, CurrentUser);
+
+                //If there has been an error with the image download, then return an empty collection
+                if (imgEngSignature == null)
+                {
+                    updatedSubmissions = null;
+                    return;
+                }
+                
                 currentSubmission.MttEngineerSignature = imgEngSignature;
                 currentSubmission.MttEngineerSignature.Freeze();
+                
 
                 //Download the customer signature
                 customerSignatureUrl = currentSubmission.CustomerSignatureUrl;
                 if (!customerSignatureUrl.Equals(""))
                 {
                     ImageSource imgCustSignature = CanvasDataReader.downloadImage(customerSignatureUrl, CurrentUser);
+                    
+                    //If there has been an error with the image download, then return an empty collection
+                    if (imgCustSignature == null)
+                    {
+                        updatedSubmissions = null;
+                        return;
+                    }
+
                     currentSubmission.CustomerSignature = imgCustSignature;
                     currentSubmission.CustomerSignature.Freeze();
                 }
@@ -91,6 +116,14 @@ namespace Service_Reader
                 if (!image1Url.Equals(""))
                 {
                     ImageSource img1 = CanvasDataReader.downloadImage(image1Url, CurrentUser);
+
+                    //If there has been an error with the image download, then return an empty collection
+                    if (img1 == null)
+                    {
+                        updatedSubmissions = null;
+                        return;
+                    }
+
                     currentSubmission.Image1 = img1;
                     currentSubmission.Image1.Freeze();
                 }
@@ -99,6 +132,14 @@ namespace Service_Reader
                 if (!image2Url.Equals(""))
                 {
                     ImageSource img2 = CanvasDataReader.downloadImage(image2Url, CurrentUser);
+
+                    //If there has been an error with the image download, then return an empty collection
+                    if (img2 == null)
+                    {
+                        updatedSubmissions = null;
+                        return;
+                    }
+
                     currentSubmission.Image2 = img2;
                     currentSubmission.Image2.Freeze();
                 }
@@ -107,6 +148,14 @@ namespace Service_Reader
                 if (!image3Url.Equals(""))
                 {
                     ImageSource img3 = CanvasDataReader.downloadImage(image3Url, CurrentUser);
+
+                    //If there has been an error with the image download, then return an empty collection
+                    if (img3 == null)
+                    {
+                        updatedSubmissions = null;
+                        return;
+                    }
+
                     currentSubmission.Image3 = img3;
                     currentSubmission.Image3.Freeze();
                 }
@@ -115,6 +164,14 @@ namespace Service_Reader
                 if (!image4Url.Equals(""))
                 {
                     ImageSource img4 = CanvasDataReader.downloadImage(image4Url, CurrentUser);
+
+                    //If there has been an error with the image download, then return an empty collection
+                    if (img4 == null)
+                    {
+                        updatedSubmissions = null;
+                        return;
+                    }
+
                     currentSubmission.Image4 = img4;
                     currentSubmission.Image4.Freeze();
                 }
@@ -123,6 +180,14 @@ namespace Service_Reader
                 if (!image5Url.Equals(""))
                 {
                     ImageSource img5 = CanvasDataReader.downloadImage(image5Url, CurrentUser);
+
+                    //If there has been an error with the image download, then return an empty collection
+                    if (img5 == null)
+                    {
+                        updatedSubmissions = null;
+                        return;
+                    }
+
                     currentSubmission.Image5 = img5;
                     currentSubmission.Image5.Freeze();
                 }
