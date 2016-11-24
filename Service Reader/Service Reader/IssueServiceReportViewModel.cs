@@ -113,7 +113,7 @@ namespace Service_Reader
             CsvServiceImport csvImporter = new CsvServiceImport();
             Boolean successful = csvImporter.importCsvData();
             MessageBox.Show("Need to check for success!");
-            AllServiceSubmissions = csvImporter.AllServiceSubmissions;
+            //AllServiceSubmissions = csvImporter.AllServiceSubmissions;
         }
 
         public List<oldServiceSubmissionModel> AllServiceSubmissions

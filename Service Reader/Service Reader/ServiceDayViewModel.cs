@@ -19,6 +19,12 @@ namespace Service_Reader
             ParentServiceDayVM = parentVM;
         }
 
+        public ServiceDayViewModel(ServiceSheetViewModel parentVM)
+        {
+            ServiceDay = new ServiceDay();
+            ParentServiceDayVM = parentVM;
+        }
+
         public ServiceDay ServiceDay
         {
             get

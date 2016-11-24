@@ -14,8 +14,8 @@ namespace Service_Reader
     {
         private TextReader csvTextReader;
         private CsvReader csvReaderInput;
-        private oldServiceSubmissionModel currentServiceSubmission;
-        List<oldServiceSubmissionModel> importedSubmissions;
+        private ServiceSheetViewModel currentServiceSubmission;
+        ObservableCollection<ServiceSheetViewModel> importedSubmissions;
 
         //This class imports the historical data from a csv file and displays it in the application
 
@@ -40,7 +40,7 @@ namespace Service_Reader
             //If not, then it it a new submssion
 
             int currentReadSubmissionNo = -1;
-            importedSubmissions = new List<oldServiceSubmissionModel>();
+            importedSubmissions = new ObservableCollection<ServiceSheetViewModel>();
 
             while (csvReaderInput.Read())
             {
@@ -52,7 +52,7 @@ namespace Service_Reader
                 if (currentReadSubmissionNo == -1)
                 {
                     currentReadSubmissionNo = submissionNo;
-                    currentServiceSubmission = new oldServiceSubmissionModel();
+                    currentServiceSubmission = new ServiceSheetViewModel();
                     loadNewSubmission(row);
                     continue;
                 }
@@ -64,11 +64,12 @@ namespace Service_Reader
                 else
                 {
                     //RT - 20/8/16 - Need to recalculate the times as we have added the last day
-                    currentServiceSubmission.updateTimes();
+                    //RT - 24/11/16 - No we don't, this is done at the end!
+                    //currentServiceSubmission.updateTimes();
                     importedSubmissions.Add(currentServiceSubmission);
                     Console.WriteLine("Submission: " + currentReadSubmissionNo + " created");
                     currentReadSubmissionNo = submissionNo;
-                    currentServiceSubmission = new oldServiceSubmissionModel();
+                    currentServiceSubmission = new ServiceSheetViewModel();
                     loadNewSubmission(row);
                     
                 }
@@ -76,7 +77,7 @@ namespace Service_Reader
             }
 
             //RT - 20/8/16 - Need to recalculate the times as we have added the last day
-            currentServiceSubmission.updateTimes();
+            currentServiceSubmission.updateAllTimes();
 
             //RT 18/8/16 - Need to save the last submssion
             importedSubmissions.Add(currentServiceSubmission);
@@ -87,7 +88,7 @@ namespace Service_Reader
         private void loadNewSubmission(string[] row)
         {
             //First two dates aren't read
-            currentServiceSubmission.SubmissionNo = Convert.ToInt32(row[2]);
+            currentServiceSubmission.SubmissionNumber = Convert.ToInt32(row[2]);
             //App Name isn't used
             currentServiceSubmission.Username = row[4];
             currentServiceSubmission.UserSurname = row[5];
@@ -117,32 +118,32 @@ namespace Service_Reader
             //Submission Form name not used
             currentServiceSubmission.SubmissionVersion = Convert.ToInt32(row[11]);
             currentServiceSubmission.Customer = row[12];
-            currentServiceSubmission.Address1 = row[13];
-            currentServiceSubmission.Address2 = row[14];
+            currentServiceSubmission.AddressLine1 = row[13];
+            currentServiceSubmission.AddressLine2 = row[14];
             currentServiceSubmission.TownCity = row[15];
             currentServiceSubmission.Postcode = row[16];
             currentServiceSubmission.CustomerContact = row[17];
             currentServiceSubmission.CustomerPhone = row[18];
             currentServiceSubmission.MachineMakeModel = row[19];
-            currentServiceSubmission.MachineSerial = row[20];
+            currentServiceSubmission.MachineSerialNo = row[20];
             currentServiceSubmission.MachineController = row[21];
             string jobStartDate = row[22];
-            currentServiceSubmission.JobStart = DateTime.ParseExact(jobStartDate, dateFormatSeconds, CultureInfo.InvariantCulture);
+            currentServiceSubmission.JobStartDate = DateTime.ParseExact(jobStartDate, "d/M/yyyy", CultureInfo.InvariantCulture);
             currentServiceSubmission.CustomerOrderNo = row[23];
-            currentServiceSubmission.MttJobNumber = row[24];
+            currentServiceSubmission.MttJobNo = row[24];
             currentServiceSubmission.JobDescription = row[25];
 
             //Need to load the days
             //First set the timesheets up on the current service submission
-            currentServiceSubmission.ServiceTimesheets = new ObservableCollection<oldServiceDayModel>();
+            //currentServiceSubmission.AllServiceDayVMs = new ObservableCollection<ServiceDayViewModel>();
             loadDayForSubmission(row, currentServiceSubmission);
 
             currentServiceSubmission.TotalTimeOnsite = Convert.ToDouble(row[41]);
             currentServiceSubmission.TotalTravelTime = Convert.ToDouble(row[42]);
-            currentServiceSubmission.TotalMileage = Convert.ToDouble(row[43]);
-            currentServiceSubmission.TotalDailyAllowances = Convert.ToDouble(row[44]);
-            currentServiceSubmission.TotalOvernightAllowances = Convert.ToDouble(row[45]);
-            currentServiceSubmission.TotalBarrierPayments = Convert.ToDouble(row[46]);
+            currentServiceSubmission.TotalMileage = Convert.ToInt32(row[43]);
+            currentServiceSubmission.TotalDailyAllowances = Convert.ToInt32(row[44]);
+            currentServiceSubmission.TotalOvernightAllowances = Convert.ToInt32(row[45]);
+            currentServiceSubmission.TotalBarrierPayments = Convert.ToInt32(row[46]);
             currentServiceSubmission.JobStatus = row[47];
             currentServiceSubmission.FinalJobReport = row[48];
             currentServiceSubmission.AdditionalFaultsFound = row[50];
@@ -154,23 +155,23 @@ namespace Service_Reader
             currentServiceSubmission.Image4Url = row[57];
             currentServiceSubmission.Image5Url = row[58];
             currentServiceSubmission.CustomerSignatureUrl = row[60];
-            currentServiceSubmission.CustomerSignName = row[61];
+            currentServiceSubmission.CustomerSignedName = row[61];
             string signedDate = row[62];
-            currentServiceSubmission.DtSigned = DateTime.ParseExact(signedDate, dateFormatSeconds, CultureInfo.InvariantCulture);
+            currentServiceSubmission.DtSigned = DateTime.ParseExact(signedDate, "d/M/yyyy", CultureInfo.InvariantCulture);
             currentServiceSubmission.MttEngSignatureUrl = row[63];
         }
 
-        private void loadDayForSubmission(string[] row, oldServiceSubmissionModel currentSubmission)
+        private void loadDayForSubmission(string[] row, ServiceSheetViewModel currentSubmission)
         {
             string dateFormatMinutes = "d/M/yyyy HH:mm";
             string dateFormatSeconds = "d/M/yyyy H:mm:ss";
 
             //Need to set the submission on the service day
-            oldServiceDayModel currentDay = new oldServiceDayModel(currentSubmission);
+            ServiceDayViewModel currentDay = new ServiceDayViewModel(currentSubmission);
             //The times may be with / without the date, depending on when they were imported.
             //Need to load the service date first, in case we need it for the times
             string serviceDate = row[40];
-            currentDay.DtServiceDay = DateTime.ParseExact(serviceDate, dateFormatSeconds, CultureInfo.InvariantCulture);
+            currentDay.ServiceDate = DateTime.ParseExact(serviceDate, "d/M/yyyy", CultureInfo.InvariantCulture);
 
             string travelStartTime = row[26];
             try
@@ -244,7 +245,7 @@ namespace Service_Reader
                 }
             }
 
-            currentDay.Mileage = Convert.ToDouble(row[30]);
+            currentDay.Mileage = Convert.ToInt32(row[30]);
             try
             {
                 currentDay.DailyAllowance = Convert.ToBoolean(row[31]);
@@ -307,7 +308,7 @@ namespace Service_Reader
             currentDay.PartsSupplied = row[39];
 
             //RT 16/8/16 - Saving the timesheet
-            currentSubmission.ServiceTimesheets.Add(currentDay);
+            //currentSubmission.AllServiceDayVMs.
         }
 
         private string openFilename()
@@ -329,7 +330,7 @@ namespace Service_Reader
             return retval;
         }
 
-        public List<oldServiceSubmissionModel> AllServiceSubmissions
+        public ObservableCollection<ServiceSheetViewModel> AllServiceSubmissions
         {
             get
             {

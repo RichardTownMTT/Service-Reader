@@ -22,6 +22,11 @@ namespace Service_Reader
         private ImageSource m_image4;
         private ImageSource m_image5;
 
+        public ServiceSheetViewModel()
+        {
+            ServiceSubmission = new ServiceSheet();
+        }
+
         public ServiceSheet ServiceSubmission
         {
             get
@@ -51,6 +56,11 @@ namespace Service_Reader
             get
             {
                 return ServiceSubmission.SubmissionNumber;
+            }
+            set
+            {
+                ServiceSubmission.SubmissionNumber = value;
+                onPropertyChanged("SubmissionNumber");
             }
         }
 
@@ -124,6 +134,17 @@ namespace Service_Reader
                 timeOnsite += serviceDay.TotalTimeOnsite;
             }
             TotalTimeOnsite = timeOnsite;
+        }
+
+        public void updateAllTimes()
+        {
+            //RT 24/11/16 - This is used when importing data
+            recalculateBarrierPayments();
+            recalculateDailyAllowances();
+            recalculateOvernightAllowances();
+            recalculateMileage();
+            recalculateTravelTime();
+            recalulateTimeOnsite();
         }
 
         public string Postcode
@@ -510,6 +531,11 @@ namespace Service_Reader
             {
                 return ServiceSubmission.MttEngSignatureUrl;
             }
+            set
+            {
+                ServiceSubmission.MttEngSignatureUrl = value;
+                onPropertyChanged("MttEngSignatureUrl");
+            }
         }
 
         public string CustomerSignatureUrl
@@ -517,6 +543,11 @@ namespace Service_Reader
             get
             {
                 return ServiceSubmission.CustomerSignatureUrl;
+            }
+            set
+            {
+                ServiceSubmission.CustomerSignatureUrl = value;
+                onPropertyChanged("CustomerSignatureUrl");
             }
         }
 
@@ -526,6 +557,11 @@ namespace Service_Reader
             {
                 return ServiceSubmission.Image1Url;
             }
+            set
+            {
+                ServiceSubmission.Image1Url = value;
+                onPropertyChanged("Image1Url");
+            }
         }
 
         public string Image2Url
@@ -533,6 +569,11 @@ namespace Service_Reader
             get
             {
                 return ServiceSubmission.Image2Url;
+            }
+            set
+            {
+                ServiceSubmission.Image2Url = value;
+                onPropertyChanged("Image2Url");
             }
         }
 
@@ -542,6 +583,11 @@ namespace Service_Reader
             {
                 return ServiceSubmission.Image3Url;
             }
+            set
+            {
+                ServiceSubmission.Image3Url = value;
+                onPropertyChanged("Image3Url");
+            }
         }
 
         public string Image4Url
@@ -550,6 +596,11 @@ namespace Service_Reader
             {
                 return ServiceSubmission.Image4Url;
             }
+            set
+            {
+                ServiceSubmission.Image4Url = value;
+                onPropertyChanged("Image4Url");
+            }
         }
 
         public string Image5Url
@@ -557,6 +608,11 @@ namespace Service_Reader
             get
             {
                 return ServiceSubmission.Image5Url;
+            }
+            set
+            {
+                ServiceSubmission.Image5Url = value;
+                onPropertyChanged("Image5Url");
             }
         }
 
@@ -664,6 +720,11 @@ namespace Service_Reader
             {
                 return ServiceSubmission.Username;
             }
+            set
+            {
+                ServiceSubmission.Username = value;
+                onPropertyChanged("Username");
+            }
         }
 
         public string UserSurname
@@ -672,13 +733,23 @@ namespace Service_Reader
             {
                 return ServiceSubmission.UserSurname;
             }
+            set
+            {
+                ServiceSubmission.UserSurname = value;
+                onPropertyChanged("UserSurname");
+            }
         }
 
         public string UserFirstName
         {
             get
             {
-                return ServiceSubmission.UserSurname;
+                return ServiceSubmission.UserFirstName;
+            }
+            set
+            {
+                ServiceSubmission.UserFirstName = value;
+                onPropertyChanged("UserFirstName");
             }
         }
 
@@ -688,6 +759,11 @@ namespace Service_Reader
             {
                 return ServiceSubmission.CanvasResponseId;
             }
+            set
+            {
+                ServiceSubmission.CanvasResponseId = value;
+                onPropertyChanged("ResponseId");
+            }
         }
 
         public DateTime DtResponse
@@ -695,6 +771,11 @@ namespace Service_Reader
             get
             {
                 return ServiceSubmission.DtResponse;
+            }
+            set
+            {
+                ServiceSubmission.DtResponse = value;
+                onPropertyChanged("DtResponse");
             }
         }
 
@@ -704,6 +785,11 @@ namespace Service_Reader
             {
                 return ServiceSubmission.DtDevice;
             }
+            set
+            {
+                ServiceSubmission.DtDevice = value;
+                onPropertyChanged("DtDevice");
+            }
         }
 
         public int SubmissionVersion
@@ -711,6 +797,11 @@ namespace Service_Reader
             get
             {
                 return ServiceSubmission.SubmissionFormVersion;
+            }
+            set
+            {
+                ServiceSubmission.SubmissionFormVersion = value;
+                onPropertyChanged("SubmissionVersion");
             }
         }
     }

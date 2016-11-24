@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,60 +11,63 @@ namespace Service_Reader
 {
     public class HistoryTrackerViewModel : ObservableObject
     {
-        //public String Name
-        //{ get { return "History Tracker"; } }
-
-        private List<oldServiceSubmissionModel> allServiceSubmissions;
-        private oldServiceSubmissionModel selectedSubmission;
+        private ObservableCollection<ServiceSheetViewModel> m_allServiceSheets;
         private ICommand loadCsvCommand;
+        private ServiceSheetViewModel m_selectedSubmission;
+        
 
-        public ICommand loadCsv
+
+        public ObservableCollection<ServiceSheetViewModel> AllServiceSheets
+        {
+            get
+            {
+                return m_allServiceSheets;
+            }
+
+            set
+            {
+                m_allServiceSheets = value;
+                onPropertyChanged("AllServiceSheets");
+            }
+        }
+
+        public ICommand LoadCsvCommand
         {
             get
             {
                 if (loadCsvCommand == null)
                 {
-                    loadCsvCommand = new RelayCommand(param => this.loadCsvData());
+                    loadCsvCommand = new RelayCommand(param => loadHistoricalDataFromCsv());
                 }
                 return loadCsvCommand;
             }
+
+            set
+            {
+                loadCsvCommand = value;
+            }
         }
 
-        private void loadCsvData()
-        {
-            CsvServiceImport csvImporter = new CsvServiceImport();
-            Boolean successful = csvImporter.importCsvData();
-            MessageBox.Show("Need to check for success!");
-            AllServiceSubmissions = csvImporter.AllServiceSubmissions;
-        }
-
-        public List<oldServiceSubmissionModel> AllServiceSubmissions
+        public ServiceSheetViewModel SelectedSubmission
         {
             get
             {
-                return allServiceSubmissions;
+                return m_selectedSubmission;
             }
+
             set
             {
-                if (value != allServiceSubmissions)
-                {
-                    allServiceSubmissions = value;
-                    onPropertyChanged("AllServiceSubmissions");
-                }
+                m_selectedSubmission = value;
+                onPropertyChanged("SelectedSubmission");
             }
         }
 
-        public oldServiceSubmissionModel SelectedSubmission
+        private void loadHistoricalDataFromCsv()
         {
-            get { return selectedSubmission; }
-            set
-            {
-                if (value != selectedSubmission)
-                {
-                    selectedSubmission = value;
-                    onPropertyChanged("SelectedSubmission");
-                }
-            }
+            //RT - This calls the import csv and loads the csv file previously created from the Canvas Submissions screen.
+            CsvServiceImport importer = new CsvServiceImport();
+            bool result = importer.importCsvData();
+            AllServiceSheets = importer.AllServiceSubmissions;
         }
     }
 }
