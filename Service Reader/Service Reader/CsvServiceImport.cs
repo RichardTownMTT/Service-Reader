@@ -171,7 +171,7 @@ namespace Service_Reader
             //The times may be with / without the date, depending on when they were imported.
             //Need to load the service date first, in case we need it for the times
             string serviceDate = row[40];
-            currentDay.ServiceDate = DateTime.ParseExact(serviceDate, "d/M/yyyy", CultureInfo.InvariantCulture);
+            currentDay.DtReport = DateTime.ParseExact(serviceDate, "d/M/yyyy", CultureInfo.InvariantCulture);
 
             string travelStartTime = row[26];
             try
@@ -212,18 +212,18 @@ namespace Service_Reader
             string departureTime = row[28];
             try
             {
-                currentDay.DepartSiteTime = DateTime.ParseExact(departureTime, dateFormatMinutes, CultureInfo.InvariantCulture);
+                currentDay.DepartureSiteTime = DateTime.ParseExact(departureTime, dateFormatMinutes, CultureInfo.InvariantCulture);
             }
             catch
             {
                 try
                 {
-                    currentDay.DepartSiteTime = DateTime.ParseExact(departureTime, dateFormatSeconds, CultureInfo.InvariantCulture);
+                    currentDay.DepartureSiteTime = DateTime.ParseExact(departureTime, dateFormatSeconds, CultureInfo.InvariantCulture);
                 }
                 catch
                 {
                     string departureIncDate = serviceDate + " " + departureTime;
-                    currentDay.DepartSiteTime = DateTime.ParseExact(departureIncDate, dateFormatMinutes, CultureInfo.InvariantCulture);
+                    currentDay.DepartureSiteTime = DateTime.ParseExact(departureIncDate, dateFormatMinutes, CultureInfo.InvariantCulture);
                 }
             }
 
@@ -246,66 +246,69 @@ namespace Service_Reader
             }
 
             currentDay.Mileage = Convert.ToInt32(row[30]);
-            try
-            {
-                currentDay.DailyAllowance = Convert.ToBoolean(row[31]);
-            }
-            catch
-            {
-                //If this fails, then it nust be an integer
-                int dailyAllowance = Convert.ToInt32(row[31]);
-                if (dailyAllowance == 1)
-                {
-                    currentDay.DailyAllowance = true;
-                }
-                else
-                {
-                    currentDay.DailyAllowance = false;
-                }
-            }
+            //try
+            //{
+            //    currentDay.ServiceDay.DailyAllowance = Convert.ToBoolean(row[31]);
+            //}
+            //catch
+            //{
+            //If this fails, then it nust be an integer
+            //    int dailyAllowance = Convert.ToInt32(row[31]);
+            //    if (dailyAllowance == 1)
+            //    {
+            //        currentDay.ServiceDay.DailyAllowance = true;
+            //    }
+            //    else
+            //    {
+            //        currentDay.ServiceDay.DailyAllowance = false;
+            //    }
+            ////}
 
-            try
-            {
-                currentDay.OvernightAllowance = Convert.ToBoolean(row[32]);
-            }
-            catch
-            {
-                //If this fails, then it nust be an integer
-                int overnightAllowance = Convert.ToInt32(row[32]);
-                if (overnightAllowance == 1)
-                {
-                    currentDay.OvernightAllowance = true;
-                }
-                else
-                {
-                    currentDay.OvernightAllowance = false;
-                }
-            }
+            currentDay.DailyAllowance = Convert.ToInt32(row[31]);
 
-            try
-            {
-                currentDay.BarrierPayment = Convert.ToBoolean(row[33]);
-            }
-            catch
-            {
-                //If this fails, then it nust be an integer
-                int barrierPayment = Convert.ToInt32(row[33]);
-                if (barrierPayment == 1)
-                {
-                    currentDay.BarrierPayment = true;
-                }
-                else
-                {
-                    currentDay.BarrierPayment = false;
-                }
-            }
+            //try
+            //{
+            //    currentDay.ServiceDay.OvernightAllowance = Convert.ToBoolean(row[32]);
+            //}
+            //catch
+            //{
+            //    //If this fails, then it nust be an integer
+            //    int overnightAllowance = Convert.ToInt32(row[32]);
+            //    if (overnightAllowance == 1)
+            //    {
+            //        currentDay.ServiceDay.OvernightAllowance = true;
+            //    }
+            //    else
+            //    {
+            //        currentDay.ServiceDay.OvernightAllowance = false;
+            //    }
+            //}
+            currentDay.OvernightAllowance = Convert.ToInt32(row[32]);
+            //try
+            //{
+            //    currentDay.ServiceDay.BarrierPayment = Convert.ToBoolean(row[33]);
+            //}
+            //catch
+            //{
+            //    //If this fails, then it nust be an integer
+            //    int barrierPayment = Convert.ToInt32(row[33]);
+            //    if (barrierPayment == 1)
+            //    {
+            //        currentDay.ServiceDay.BarrierPayment = true;
+            //    }
+            //    else
+            //    {
+            //        currentDay.ServiceDay.BarrierPayment = false;
+            //    }
+            //}
+            currentDay.BarrierPayment = Convert.ToInt32(row[33]);
 
-            currentDay.TravelTimeToSite = Convert.ToDouble(row[34]);
-            currentDay.TravelTimeFromSite = Convert.ToDouble(row[35]);
+            currentDay.TravelToSiteTime = Convert.ToDouble(row[34]);
+            currentDay.TravelFromSiteTime = Convert.ToDouble(row[35]);
             currentDay.TotalTravelTime = Convert.ToDouble(row[36]);
-            currentDay.TotalTimeOnsite = Convert.ToDouble(row[37]);
+            currentDay.TotalOnsiteTime = Convert.ToDouble(row[37]);
             currentDay.DailyReport = row[38];
-            currentDay.PartsSupplied = row[39];
+            currentDay.PartsSuppliedToday = row[39];
 
             //RT 16/8/16 - Saving the timesheet
             //currentSubmission.AllServiceDayVMs.
