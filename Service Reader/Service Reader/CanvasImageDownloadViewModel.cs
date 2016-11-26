@@ -12,10 +12,10 @@ namespace Service_Reader
 {
     public class CanvasImageDownloadViewModel : ObservableObject
     {
-        public CanvasImageDownloadViewModel(List<ServiceSheetViewModel> serviceVMs, CanvasUserModel user)
+        public CanvasImageDownloadViewModel(List<ServiceSheetViewModel> serviceVMs, CanvasUserViewModel canvasUserEntered)
         {
             AllServices = serviceVMs;
-            CurrentUser = user;
+            CanvasUser = canvasUserEntered;
             setMaxMinProgressBar();
             BackgroundWorker worker = new BackgroundWorker();
             worker.WorkerReportsProgress = true;
@@ -25,7 +25,7 @@ namespace Service_Reader
             worker.RunWorkerAsync();
         }
 
-        private CanvasUserModel m_currentUser;
+        private CanvasUserViewModel m_canvasUser;
         private List<ServiceSheetViewModel> m_allServices;
         private int m_minimumDownloadedItems;
         private int m_maximumDownloadedItems;
@@ -81,7 +81,7 @@ namespace Service_Reader
             foreach (ServiceSheetViewModel currentSubmission in AllServices.ToList())
             {
                 downloadUrl = currentSubmission.MttEngSignatureUrl;
-                ImageSource imgEngSignature = CanvasDataReader.downloadImage(downloadUrl, CurrentUser);
+                ImageSource imgEngSignature = CanvasDataReader.downloadImage(downloadUrl, CanvasUser);
 
                 //If there has been an error with the image download, then return an empty collection
                 if (imgEngSignature == null)
@@ -98,7 +98,7 @@ namespace Service_Reader
                 customerSignatureUrl = currentSubmission.CustomerSignatureUrl;
                 if (!customerSignatureUrl.Equals(""))
                 {
-                    ImageSource imgCustSignature = CanvasDataReader.downloadImage(customerSignatureUrl, CurrentUser);
+                    ImageSource imgCustSignature = CanvasDataReader.downloadImage(customerSignatureUrl, CanvasUser);
                     
                     //If there has been an error with the image download, then return an empty collection
                     if (imgCustSignature == null)
@@ -115,7 +115,7 @@ namespace Service_Reader
                 image1Url = currentSubmission.Image1Url;
                 if (!image1Url.Equals(""))
                 {
-                    ImageSource img1 = CanvasDataReader.downloadImage(image1Url, CurrentUser);
+                    ImageSource img1 = CanvasDataReader.downloadImage(image1Url, CanvasUser);
 
                     //If there has been an error with the image download, then return an empty collection
                     if (img1 == null)
@@ -131,7 +131,7 @@ namespace Service_Reader
                 image2Url = currentSubmission.Image2Url;
                 if (!image2Url.Equals(""))
                 {
-                    ImageSource img2 = CanvasDataReader.downloadImage(image2Url, CurrentUser);
+                    ImageSource img2 = CanvasDataReader.downloadImage(image2Url, CanvasUser);
 
                     //If there has been an error with the image download, then return an empty collection
                     if (img2 == null)
@@ -147,7 +147,7 @@ namespace Service_Reader
                 image3Url = currentSubmission.Image3Url;
                 if (!image3Url.Equals(""))
                 {
-                    ImageSource img3 = CanvasDataReader.downloadImage(image3Url, CurrentUser);
+                    ImageSource img3 = CanvasDataReader.downloadImage(image3Url, CanvasUser);
 
                     //If there has been an error with the image download, then return an empty collection
                     if (img3 == null)
@@ -163,7 +163,7 @@ namespace Service_Reader
                 image4Url = currentSubmission.Image4Url;
                 if (!image4Url.Equals(""))
                 {
-                    ImageSource img4 = CanvasDataReader.downloadImage(image4Url, CurrentUser);
+                    ImageSource img4 = CanvasDataReader.downloadImage(image4Url, CanvasUser);
 
                     //If there has been an error with the image download, then return an empty collection
                     if (img4 == null)
@@ -179,7 +179,7 @@ namespace Service_Reader
                 image5Url = currentSubmission.Image5Url;
                 if (!image5Url.Equals(""))
                 {
-                    ImageSource img5 = CanvasDataReader.downloadImage(image5Url, CurrentUser);
+                    ImageSource img5 = CanvasDataReader.downloadImage(image5Url, CanvasUser);
 
                     //If there has been an error with the image download, then return an empty collection
                     if (img5 == null)
@@ -201,15 +201,15 @@ namespace Service_Reader
             e.Result = updatedSubmissions;
         }
 
-        public CanvasUserModel CurrentUser
+        public CanvasUserViewModel CanvasUser
         {
             get
             {
-                return m_currentUser;
+                return m_canvasUser;
             }
             set
             {
-                m_currentUser = value;
+                m_canvasUser = value;
                 onPropertyChanged("CurrentUser");
             }
         }

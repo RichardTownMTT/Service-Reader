@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Service_Reader
@@ -12,7 +13,7 @@ namespace Service_Reader
     public class CanvasSubmissionsViewModel : ObservableObject
     {
         //Stores the login details for Canvas
-        private CanvasUserModel m_canvasUser;
+        private CanvasUserViewModel m_canvasUser;
         private DateTime m_dtStartSubmissionsDownload;
         private DateTime m_dtEndSubmissionsDownload;
         private ServiceSheetViewModel m_selectedSubmission;
@@ -33,10 +34,10 @@ namespace Service_Reader
             //Set the start to be a week ago by default
             DtStartSubmissionsDownload = DtStartSubmissionsDownload.AddDays(-7);
 
-            CanvasUser = new CanvasUserModel();
+            CanvasUserVM = new CanvasUserViewModel();
         }
 
-        public CanvasUserModel CanvasUser
+        public CanvasUserViewModel CanvasUserVM
         {
             get
             {
@@ -84,7 +85,7 @@ namespace Service_Reader
             {
                 if (m_canvasDataDownloadCommand == null)
                 {
-                    m_canvasDataDownloadCommand = new RelayCommand(param => downloadCanvasData());
+                    m_canvasDataDownloadCommand = new RelayCommand(downloadCanvasData);
                 }
                 return m_canvasDataDownloadCommand;
             }
@@ -168,9 +169,12 @@ namespace Service_Reader
             }
         }
 
-        private void downloadCanvasData()
+        private void downloadCanvasData(object canvasPasswordBox)
         {
-            AllServiceSheets = CanvasDataReader.downloadXml(CanvasUser.Username, CanvasUser.Password, DtStartSubmissionsDownload, DtEndSubmissionsDownload);
+            CanvasUserVM.CanvasPasswordBox = (PasswordBox)canvasPasswordBox;
+            //RT 26/11/16 - Changing the password to use a PasswordBox for security
+            //AllServiceSheets = CanvasDataReader.downloadXml(CanvasUser.Username, CanvasUser.Password, DtStartSubmissionsDownload, DtEndSubmissionsDownload);
+            AllServiceSheets = CanvasDataReader.downloadXml(CanvasUserVM, DtStartSubmissionsDownload, DtEndSubmissionsDownload);
 
             //If no submissions have been returned, then exit.  None available, or error has occured.  Error will have been shown already
             if (AllServiceSheets == null)
@@ -181,7 +185,7 @@ namespace Service_Reader
             //Now we need to download the images from Canvas, using a progress bar
             CanvasImageDownloadView imageDownloadView = new CanvasImageDownloadView();
             List<ServiceSheetViewModel> serviceSheetList = new List<ServiceSheetViewModel>(AllServiceSheets);
-            CanvasImageDownloadViewModel imageVM = new CanvasImageDownloadViewModel(serviceSheetList, CanvasUser);
+            CanvasImageDownloadViewModel imageVM = new CanvasImageDownloadViewModel(serviceSheetList, CanvasUserVM);
             imageDownloadView.DataContext = imageVM;
             bool? result = imageDownloadView.ShowDialog();
             //Set the servicesheets back to the result from the dialog

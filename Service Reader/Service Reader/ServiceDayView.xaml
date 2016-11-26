@@ -6,7 +6,11 @@
              xmlns:local="clr-namespace:Service_Reader"
              mc:Ignorable="d" 
              d:DesignHeight="315.464" d:DesignWidth="638.66" Margin="5" BorderBrush="Black" BorderThickness="0.5" x:Name="UcServiceDayView">
-    <Grid ScrollViewer.VerticalScrollBarVisibility="Disabled" x:Name="LayoutRoot">
+    <Expander x:Name="LayoutRoot">
+        <Expander.Header>
+            <TextBlock Text="{Binding ServiceDate, StringFormat=dd/MM/yy}" />
+        </Expander.Header>
+        <Grid ScrollViewer.VerticalScrollBarVisibility="Disabled">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -57,4 +61,5 @@
         <Label Content="Parts Supplied" Grid.Column="0" Grid.Row="9"/>
         <TextBox Name="txtPartsSupplied" Grid.Column="0" Grid.Row="10" Margin="5" Width="500" HorizontalAlignment="Left" AcceptsReturn="True" Grid.ColumnSpan="4" TextWrapping="Wrap" Text="{Binding PartsSupplied}" SpellCheck.IsEnabled="True"/>
     </Grid>
+    </Expander>
 </UserControl>

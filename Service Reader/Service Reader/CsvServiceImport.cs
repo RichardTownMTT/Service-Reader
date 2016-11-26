@@ -171,7 +171,7 @@ namespace Service_Reader
             //The times may be with / without the date, depending on when they were imported.
             //Need to load the service date first, in case we need it for the times
             string serviceDate = row[40];
-            currentDay.DtReport = DateTime.ParseExact(serviceDate, "d/M/yyyy", CultureInfo.InvariantCulture);
+            currentDay.ServiceDate = DateTime.ParseExact(serviceDate, "d/M/yyyy", CultureInfo.InvariantCulture);
 
             string travelStartTime = row[26];
             try
@@ -212,18 +212,18 @@ namespace Service_Reader
             string departureTime = row[28];
             try
             {
-                currentDay.DepartureSiteTime = DateTime.ParseExact(departureTime, dateFormatMinutes, CultureInfo.InvariantCulture);
+                currentDay.DepartSiteTime = DateTime.ParseExact(departureTime, dateFormatMinutes, CultureInfo.InvariantCulture);
             }
             catch
             {
                 try
                 {
-                    currentDay.DepartureSiteTime = DateTime.ParseExact(departureTime, dateFormatSeconds, CultureInfo.InvariantCulture);
+                    currentDay.DepartSiteTime = DateTime.ParseExact(departureTime, dateFormatSeconds, CultureInfo.InvariantCulture);
                 }
                 catch
                 {
                     string departureIncDate = serviceDate + " " + departureTime;
-                    currentDay.DepartureSiteTime = DateTime.ParseExact(departureIncDate, dateFormatMinutes, CultureInfo.InvariantCulture);
+                    currentDay.DepartSiteTime = DateTime.ParseExact(departureIncDate, dateFormatMinutes, CultureInfo.InvariantCulture);
                 }
             }
 
@@ -264,7 +264,7 @@ namespace Service_Reader
             //    }
             ////}
 
-            currentDay.DailyAllowance = Convert.ToInt32(row[31]);
+            currentDay.DailyAllowance = Convert.ToBoolean(row[31]);
 
             //try
             //{
@@ -283,7 +283,7 @@ namespace Service_Reader
             //        currentDay.ServiceDay.OvernightAllowance = false;
             //    }
             //}
-            currentDay.OvernightAllowance = Convert.ToInt32(row[32]);
+            currentDay.OvernightAllowance = Convert.ToBoolean(row[32]);
             //try
             //{
             //    currentDay.ServiceDay.BarrierPayment = Convert.ToBoolean(row[33]);
@@ -301,14 +301,14 @@ namespace Service_Reader
             //        currentDay.ServiceDay.BarrierPayment = false;
             //    }
             //}
-            currentDay.BarrierPayment = Convert.ToInt32(row[33]);
+            currentDay.BarrierPayment = Convert.ToBoolean(row[33]);
 
-            currentDay.TravelToSiteTime = Convert.ToDouble(row[34]);
-            currentDay.TravelFromSiteTime = Convert.ToDouble(row[35]);
+            currentDay.TravelTimeToSite = Convert.ToDouble(row[34]);
+            currentDay.TravelTimeFromSite = Convert.ToDouble(row[35]);
             currentDay.TotalTravelTime = Convert.ToDouble(row[36]);
-            currentDay.TotalOnsiteTime = Convert.ToDouble(row[37]);
+            currentDay.TotalTimeOnsite = Convert.ToDouble(row[37]);
             currentDay.DailyReport = row[38];
-            currentDay.PartsSuppliedToday = row[39];
+            currentDay.PartsSupplied = row[39];
 
             //RT 16/8/16 - Saving the timesheet
             //currentSubmission.AllServiceDayVMs.

@@ -3,14 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace Service_Reader
 {
-    class CanvasUserViewModel : ObservableObject
+    public class CanvasUserViewModel : ObservableObject
     {
+        public CanvasUserViewModel()
+        {
+            CanvasUser = new CanvasUserModel();
+        }
+
         private CanvasUserModel m_canvasUser;
 
-        public CanvasUserModel CanvasUser
+        private CanvasUserModel CanvasUser
         {
             get
             {
@@ -21,6 +27,31 @@ namespace Service_Reader
             {
                 m_canvasUser = value;
                 onPropertyChanged("CanvasUser");
+            }
+        }
+
+        public string UserName
+        {
+            get
+            {
+                return CanvasUser.Username;
+            }
+            set
+            {
+                CanvasUser.Username = value;
+                onPropertyChanged("UserName");
+            }
+        }
+
+        public PasswordBox CanvasPasswordBox
+        {
+            get
+            {
+                return CanvasUser.PasswordBoxEntry;
+            }
+            set
+            {
+                CanvasUser.PasswordBoxEntry = value;
             }
         }
     }

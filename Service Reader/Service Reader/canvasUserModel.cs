@@ -15,7 +15,9 @@ namespace Service_Reader
         private string m_username = "";
         //RT 21/10/16 - Changing to use a password box
         //private string m_password = "";
-        private String m_password;
+        //private String m_password;
+        //RT 26/11/16 - Changing password to be a password box.
+        private PasswordBox m_passwordBoxEntry;
 
         public string Username
         {
@@ -51,16 +53,30 @@ namespace Service_Reader
         //    }
         //}
 
-        public String Password
+        //public String Password
+        //{
+        //    get
+        //    {
+        //        return m_password;
+        //    }
+
+        //    set
+        //    {
+        //        m_password = value;
+        //    }
+        //}
+
+        public PasswordBox PasswordBoxEntry
         {
             get
             {
-                return m_password;
+                return m_passwordBoxEntry;
             }
 
             set
             {
-                m_password = value;
+                m_passwordBoxEntry = value;
+                onPropertyChanged("PasswordBox");
             }
         }
     }
