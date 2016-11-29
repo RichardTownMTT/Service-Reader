@@ -8,132 +8,138 @@ namespace Service_Reader
 {
     public class ServiceDayViewModel : ObservableObject
     {
-       private ServiceDay m_serviceDay;
+        //RT 28/11/16 - This class doesn't properly implement the MVVM pattern.  Fixing this now.
+        private DateTime m_travelStartTime;
+        private DateTime m_arrivalOnsiteTime;
+        private DateTime m_departureSiteTime;
+        private DateTime m_travelEndTime;
+        private int m_mileage;
+        private int m_dailyAllowance;
+        private int m_overnightAllowance;
+        private int m_barrierPayment;
+        private double m_travelTimeToSite;
+        private double m_travelTimeFromSite;
+        private double m_totalTravelTime;
+        private double m_totalOnsiteTime;
+        private string m_dailyReport;
+        private string m_partsSuppliedToday;
+        private DateTime m_dtReport;
+
+        //This is the reference to the service day model
+        private ServiceDay m_serviceDayModel;
         //Adding a reference to the containing service sheet, so the total times can be updated
+        private ServiceSheetViewModel m_parentServiceSheetVM;
 
-       private ServiceSheetViewModel m_parentServiceDayVM;
-
-        public ServiceDayViewModel(ServiceDay currentDay, ServiceSheetViewModel parentVM)
+        //Class constructors
+        public ServiceDayViewModel(DateTime dtTravelStart, DateTime dtArrivalOnsite, DateTime dtDepartSite, DateTime dtTravelEnd, int mileageEntered, bool dailyAllowanceEntered,
+            bool overnightAllowanceEntered, bool barrierPaymentEntered, double travelTimeToSiteEntered, double travelTimeFromSiteEntered, double totalTravelTimeEntered, double timeOnsiteEntered, string dailyReportEntered,
+            string partsSuppliedEntered, DateTime dtServiceDateEntered, ServiceSheetViewModel parentVM)
         {
-            ServiceDay = currentDay;
-            ParentServiceDayVM = parentVM;
+            this.TravelStartTime = dtTravelStart;
+            this.ArrivalOnsiteTime = dtArrivalOnsite;
+            this.DepartureSiteTime = dtDepartSite;
+            this.TravelEndTime = dtTravelEnd;
+            this.Mileage = mileageEntered;
+            this.DailyAllowance = dailyAllowanceEntered;
+            this.OvernightAllowance = overnightAllowanceEntered;
+            this.BarrierPayment = barrierPaymentEntered;
+            this.TravelTimeToSite = travelTimeToSiteEntered;
+            this.TravelTimeFromSite = travelTimeFromSiteEntered;
+            this.TotalTravelTime = totalTravelTimeEntered;
+            this.TotalOnsiteTime = timeOnsiteEntered;
+            this.DailyReport = dailyReportEntered;
+            this.PartsSuppliedToday = partsSuppliedEntered;
+            this.DtReport = dtServiceDateEntered;
+            this.ParentServiceSheetVM = parentVM;
         }
 
-        public ServiceDayViewModel(ServiceSheetViewModel parentVM)
+        private ServiceDayViewModel()
         {
-            ServiceDay = new ServiceDay();
-            ParentServiceDayVM = parentVM;
+
         }
 
-        public ServiceDay ServiceDay
+        public void Save()
         {
-            get
+            if (ServiceDayModel == null)
             {
-                return m_serviceDay;
+                ServiceDayModel = new ServiceDay();
             }
-
-            set
-            {
-                m_serviceDay = value;
-                onPropertyChanged("ServiceDay");
-            }
-        }
-
-        public DateTime ServiceDate
-        {
-            get
-            {
-                return ServiceDay.DtReport;
-            }
-            set
-            {
-                ServiceDay.DtReport = value;
-                onPropertyChanged("ServiceDate");
-            }
+            ServiceDayModel.ArrivalOnsiteTime = m_arrivalOnsiteTime;
+            ServiceDayModel.BarrierPayment = m_barrierPayment;
+            ServiceDayModel.DailyAllowance = m_dailyAllowance;
+            ServiceDayModel.DailyReport = m_dailyReport;
+            ServiceDayModel.DepartureSiteTime = m_departureSiteTime;
+            ServiceDayModel.DtReport = m_dtReport;
+            ServiceDayModel.Mileage = m_mileage;
+            ServiceDayModel.OvernightAllowance = m_overnightAllowance;
+            ServiceDayModel.PartsSuppliedToday = m_partsSuppliedToday;
+            ServiceDayModel.TotalOnsiteTime = m_totalOnsiteTime;
+            ServiceDayModel.TotalTravelTime = m_totalTravelTime;
+            ServiceDayModel.TravelEndTime = m_travelEndTime;
+            ServiceDayModel.TravelFromSiteTime = m_travelTimeFromSite;
+            ServiceDayModel.TravelStartTime = m_travelStartTime;
+            ServiceDayModel.TravelToSiteTime = m_travelTimeToSite;
+            ServiceDayModel.ServiceSheet = ParentServiceSheetVM.ServiceSubmission;
         }
 
         public DateTime TravelStartTime
         {
             get
             {
-                return ServiceDay.TravelStartTime;
+                return m_travelStartTime;
             }
+
             set
             {
-                ServiceDay.TravelStartTime = value;
+                m_travelStartTime = value;
                 onPropertyChanged("TravelStartTime");
                 //If the travel start is altered, then the travel to site needs recalculating
                 recalculateTravelTimeToSite();
             }
         }
 
-        private void recalculateTravelTimeToSite()
-        {
-           TimeSpan travelToSite = ArrivalOnsiteTime - TravelStartTime;
-           TravelTimeToSite = travelToSite.TotalHours;
-           recalculateTotalTravelTime();
-        }
-
-        private void recalculateTotalTravelTime()
-        {
-            TotalTravelTime = TravelTimeToSite + TravelTimeFromSite;
-            ParentServiceDayVM.recalculateTravelTime();
-        }
-
         public DateTime ArrivalOnsiteTime
         {
             get
             {
-                return ServiceDay.ArrivalOnsiteTime;
+                return m_arrivalOnsiteTime;
             }
+
             set
             {
-                ServiceDay.ArrivalOnsiteTime = value;
+                m_arrivalOnsiteTime = value;
                 onPropertyChanged("ArrivalOnsiteTime");
                 recalculateTravelTimeToSite();
                 recalculateTimeOnsite();
             }
         }
 
-        private void recalculateTimeOnsite()
-        {
-            TimeSpan timeOnsite = DepartSiteTime - ArrivalOnsiteTime;
-            TotalTimeOnsite = timeOnsite.TotalHours;
-            //Need to recalculate the total time on the holding service sheet
-            ParentServiceDayVM.recalulateTimeOnsite();
-        }
-
-        public DateTime DepartSiteTime
+        public DateTime DepartureSiteTime
         {
             get
             {
-                return ServiceDay.DepartureSiteTime;
+                return m_departureSiteTime;
             }
+
             set
             {
-                ServiceDay.DepartureSiteTime = value;
-                onPropertyChanged("DepartSiteTime");
+                m_departureSiteTime = value;
+                onPropertyChanged("DepartureSiteTime");
                 recalculateTimeOnsite();
                 recalculateTravelFromSite();
             }
-        }
-
-        private void recalculateTravelFromSite()
-        {
-            TimeSpan travelFrom = TravelEndTime - DepartSiteTime;
-            TravelTimeFromSite = travelFrom.TotalHours;
-            recalculateTotalTravelTime();
         }
 
         public DateTime TravelEndTime
         {
             get
             {
-                return ServiceDay.TravelEndTime;
+                return m_travelEndTime;
             }
+
             set
             {
-                ServiceDay.TravelEndTime = value;
+                m_travelEndTime = value;
                 onPropertyChanged("TravelEndTime");
                 recalculateTravelFromSite();
             }
@@ -143,13 +149,13 @@ namespace Service_Reader
         {
             get
             {
-                return ServiceDay.Mileage;
+                return m_mileage;
             }
+
             set
             {
-                ServiceDay.Mileage = value;
+                m_mileage = value;
                 onPropertyChanged("Mileage");
-                ParentServiceDayVM.recalculateMileage();
             }
         }
 
@@ -157,7 +163,7 @@ namespace Service_Reader
         {
             get
             {
-                if (ServiceDay.DailyAllowance == 1)
+                if (m_dailyAllowance == 1)
                 {
                     return true;
                 }
@@ -166,19 +172,24 @@ namespace Service_Reader
                     return false;
                 }
             }
+
             set
             {
                 if (value)
                 {
-                    ServiceDay.DailyAllowance = 1;
+                    m_dailyAllowance = 1;
                 }
                 else
                 {
-                    ServiceDay.DailyAllowance = 0;
+                    m_dailyAllowance = 0;
                 }
                 onPropertyChanged("DailyAllowance");
-                //Update the daily allowance total on the parent VM
-                ParentServiceDayVM.recalculateDailyAllowances();
+                
+                //RT 29/11/16 - If we haven't set the parentVM, then we are just setting up the days.
+                if (ParentServiceSheetVM != null)
+                {
+                    ParentServiceSheetVM.recalculateDailyAllowances(); 
+                }
             }
         }
 
@@ -186,7 +197,7 @@ namespace Service_Reader
         {
             get
             {
-                if (ServiceDay.OvernightAllowance == 1)
+                if (m_overnightAllowance == 1)
                 {
                     return true;
                 }
@@ -195,18 +206,23 @@ namespace Service_Reader
                     return false;
                 }
             }
+
             set
             {
                 if (value)
                 {
-                    ServiceDay.OvernightAllowance = 1;
+                    m_overnightAllowance = 1;
                 }
                 else
                 {
-                    ServiceDay.OvernightAllowance = 0;
+                    m_overnightAllowance = 0;
                 }
                 onPropertyChanged("OvernightAllowance");
-                ParentServiceDayVM.recalculateOvernightAllowances();
+                //RT 29/11/16 - If we haven't set the parentVM, then we are just setting up the days.
+                if (ParentServiceSheetVM != null)
+                {
+                    ParentServiceSheetVM.recalculateOvernightAllowances();
+                }
             }
         }
 
@@ -214,7 +230,7 @@ namespace Service_Reader
         {
             get
             {
-                if (ServiceDay.BarrierPayment == 1)
+                if (m_barrierPayment == 1)
                 {
                     return true;
                 }
@@ -223,18 +239,23 @@ namespace Service_Reader
                     return false;
                 }
             }
+
             set
             {
                 if (value)
                 {
-                    ServiceDay.BarrierPayment = 1;
+                    m_barrierPayment = 1;
                 }
                 else
                 {
-                    ServiceDay.BarrierPayment = 0;
+                    m_barrierPayment = 0;
                 }
                 onPropertyChanged("BarrierPayment");
-                ParentServiceDayVM.recalculateBarrierPayments();
+                //RT 29/11/16 - If we haven't set the parentVM, then we are just setting up the days.
+                if (ParentServiceSheetVM != null)
+                {
+                    ParentServiceSheetVM.recalculateBarrierPayments();
+                }
             }
         }
 
@@ -242,11 +263,12 @@ namespace Service_Reader
         {
             get
             {
-                return ServiceDay.TravelToSiteTime;
+                return m_travelTimeToSite;
             }
+
             set
             {
-                ServiceDay.TravelToSiteTime = value;
+                m_travelTimeToSite = value;
                 onPropertyChanged("TravelTimeToSite");
             }
         }
@@ -255,11 +277,12 @@ namespace Service_Reader
         {
             get
             {
-                return ServiceDay.TravelFromSiteTime;
+                return m_travelTimeFromSite;
             }
+
             set
             {
-                ServiceDay.TravelFromSiteTime = value;
+                m_travelTimeFromSite = value;
                 onPropertyChanged("TravelTimeFromSite");
             }
         }
@@ -268,25 +291,27 @@ namespace Service_Reader
         {
             get
             {
-                return ServiceDay.TotalTravelTime;
+                return m_totalTravelTime;
             }
+
             set
             {
-                ServiceDay.TotalTravelTime = value;
+                m_totalTravelTime = value;
                 onPropertyChanged("TotalTravelTime");
             }
         }
 
-        public double TotalTimeOnsite
+        public double TotalOnsiteTime
         {
             get
             {
-                return ServiceDay.TotalOnsiteTime;
+                return m_totalOnsiteTime;
             }
+
             set
             {
-                ServiceDay.TotalOnsiteTime = value;
-                onPropertyChanged("TotalTimeOnsite");
+                m_totalOnsiteTime = value;
+                onPropertyChanged("TotalOnsiteTime");
             }
         }
 
@@ -294,39 +319,398 @@ namespace Service_Reader
         {
             get
             {
-                return ServiceDay.DailyReport;
+                return m_dailyReport;
             }
+
             set
             {
-                ServiceDay.DailyReport = value;
+                m_dailyReport = value;
                 onPropertyChanged("DailyReport");
             }
         }
 
-        public string PartsSupplied
+        public string PartsSuppliedToday
         {
             get
             {
-                return ServiceDay.PartsSuppliedToday;
-            }
-            set
-            {
-                ServiceDay.PartsSuppliedToday = value;
-                onPropertyChanged("PartsSupplied");
-            }
-        }
-
-        public ServiceSheetViewModel ParentServiceDayVM
-        {
-            get
-            {
-                return m_parentServiceDayVM;
+                return m_partsSuppliedToday;
             }
 
             set
             {
-                m_parentServiceDayVM = value;
+                m_partsSuppliedToday = value;
+                onPropertyChanged("PartsSuppliedToday");
             }
         }
+
+        public DateTime DtReport
+        {
+            get
+            {
+                return m_dtReport;
+            }
+
+            set
+            {
+                m_dtReport = value;
+                onPropertyChanged("DtReport");
+            }
+        }
+
+       public ServiceDay ServiceDayModel
+        {
+            get
+            {
+                return m_serviceDayModel;
+            }
+
+            set
+            {
+                m_serviceDayModel = value;
+                onPropertyChanged("ServiceDayModel");
+            }
+        }
+
+        public ServiceSheetViewModel ParentServiceSheetVM
+        {
+            get
+            {
+                return m_parentServiceSheetVM;
+            }
+
+            set
+            {
+                m_parentServiceSheetVM = value;
+                onPropertyChanged("ParentServiceSheetVM");
+            }
+        }
+
+        //public ServiceDayViewModel(ServiceDay currentDay, ServiceSheetViewModel parentVM)
+        //{
+        //    ServiceDay = currentDay;
+        //    ParentServiceDayVM = parentVM;
+        //}
+
+        //public ServiceDayViewModel(ServiceSheetViewModel parentVM)
+        //{
+        //    ServiceDay = new ServiceDay();
+        //    ParentServiceDayVM = parentVM;
+        //}
+
+        //public DateTime ServiceDate
+        //{
+        //    get
+        //    {
+        //        return ServiceDay.DtReport;
+        //    }
+        //    set
+        //    {
+        //        ServiceDay.DtReport = value;
+        //        onPropertyChanged("ServiceDate");
+        //    }
+        //}
+
+        //public DateTime TravelStartTime
+        //{
+        //    get
+        //    {
+        //        return ServiceDay.TravelStartTime;
+        //    }
+        //    set
+        //    {
+        //        ServiceDay.TravelStartTime = value;
+        //        onPropertyChanged("TravelStartTime");
+        //        //If the travel start is altered, then the travel to site needs recalculating
+        //        recalculateTravelTimeToSite();
+        //    }
+        //}
+
+        private void recalculateTravelTimeToSite()
+        {
+           //RT 29/11/16 - If we haven't set the parentVM, then we are just setting up the days.
+           if (ParentServiceSheetVM == null)
+            {
+                return;
+            }
+           TimeSpan travelToSite = ArrivalOnsiteTime - TravelStartTime;
+           TravelTimeToSite = travelToSite.TotalHours;
+           recalculateTotalTravelTime();
+        }
+
+        private void recalculateTotalTravelTime()
+        {
+            //RT 29/11/16 - If we haven't set the parentVM, then we are just setting up the days.
+            if (ParentServiceSheetVM == null)
+            {
+                return;
+            }
+            TotalTravelTime = TravelTimeToSite + TravelTimeFromSite;
+            ParentServiceSheetVM.recalculateTravelTime();
+        }
+
+        private void recalculateTimeOnsite()
+        {
+            //RT 29/11/16 - If we haven't set the parentVM, then we are just setting up the days.
+            if (ParentServiceSheetVM == null)
+            {
+                return;
+            }
+            TimeSpan timeOnsite = DepartureSiteTime - ArrivalOnsiteTime;
+            TotalOnsiteTime = timeOnsite.TotalHours;
+            //Need to recalculate the total time on the holding service sheet
+            ParentServiceSheetVM.recalulateTimeOnsite();
+        }
+
+        private void recalculateTravelFromSite()
+        {
+            //RT 29/11/16 - If we haven't set the parentVM, then we are just setting up the days.
+            if (ParentServiceSheetVM == null)
+            {
+                return;
+            }
+            TimeSpan travelFrom = TravelEndTime - DepartureSiteTime;
+            TravelTimeFromSite = travelFrom.TotalHours;
+            recalculateTotalTravelTime();
+        }
+
+        //public DateTime ArrivalOnsiteTime
+        //{
+        //    get
+        //    {
+        //        return ServiceDay.ArrivalOnsiteTime;
+        //    }
+        //    set
+        //    {
+        //        ServiceDay.ArrivalOnsiteTime = value;
+        //        onPropertyChanged("ArrivalOnsiteTime");
+        //        recalculateTravelTimeToSite();
+        //        recalculateTimeOnsite();
+        //    }
+        //}
+
+
+
+        //public DateTime DepartSiteTime
+        //{
+        //    get
+        //    {
+        //        return ServiceDay.DepartureSiteTime;
+        //    }
+        //    set
+        //    {
+        //        ServiceDay.DepartureSiteTime = value;
+        //        onPropertyChanged("DepartSiteTime");
+        //        recalculateTimeOnsite();
+        //        recalculateTravelFromSite();
+        //    }
+        //}
+
+
+
+        //public DateTime TravelEndTime
+        //{
+        //    get
+        //    {
+        //        return ServiceDay.TravelEndTime;
+        //    }
+        //    set
+        //    {
+        //        ServiceDay.TravelEndTime = value;
+        //        onPropertyChanged("TravelEndTime");
+        //        recalculateTravelFromSite();
+        //    }
+        //}
+
+        //public int Mileage
+        //{
+        //    get
+        //    {
+        //        return ServiceDay.Mileage;
+        //    }
+        //    set
+        //    {
+        //        ServiceDay.Mileage = value;
+        //        onPropertyChanged("Mileage");
+        //        ParentServiceDayVM.recalculateMileage();
+        //    }
+        //}
+
+        //public bool DailyAllowance
+        //{
+        //    get
+        //    {
+        //        if (ServiceDay.DailyAllowance == 1)
+        //        {
+        //            return true;
+        //        }
+        //        else
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    set
+        //    {
+        //        if (value)
+        //        {
+        //            ServiceDay.DailyAllowance = 1;
+        //        }
+        //        else
+        //        {
+        //            ServiceDay.DailyAllowance = 0;
+        //        }
+        //        onPropertyChanged("DailyAllowance");
+        //        //Update the daily allowance total on the parent VM
+        //        ParentServiceDayVM.recalculateDailyAllowances();
+        //    }
+        //}
+
+        //public bool OvernightAllowance
+        //{
+        //    get
+        //    {
+        //        if (ServiceDay.OvernightAllowance == 1)
+        //        {
+        //            return true;
+        //        }
+        //        else
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    set
+        //    {
+        //        if (value)
+        //        {
+        //            ServiceDay.OvernightAllowance = 1;
+        //        }
+        //        else
+        //        {
+        //            ServiceDay.OvernightAllowance = 0;
+        //        }
+        //        onPropertyChanged("OvernightAllowance");
+        //        ParentServiceDayVM.recalculateOvernightAllowances();
+        //    }
+        //}
+
+        //public bool BarrierPayment
+        //{
+        //    get
+        //    {
+        //        if (ServiceDay.BarrierPayment == 1)
+        //        {
+        //            return true;
+        //        }
+        //        else
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    set
+        //    {
+        //        if (value)
+        //        {
+        //            ServiceDay.BarrierPayment = 1;
+        //        }
+        //        else
+        //        {
+        //            ServiceDay.BarrierPayment = 0;
+        //        }
+        //        onPropertyChanged("BarrierPayment");
+        //        ParentServiceDayVM.recalculateBarrierPayments();
+        //    }
+        //}
+
+        //public double TravelTimeToSite
+        //{
+        //    get
+        //    {
+        //        return ServiceDay.TravelToSiteTime;
+        //    }
+        //    set
+        //    {
+        //        ServiceDay.TravelToSiteTime = value;
+        //        onPropertyChanged("TravelTimeToSite");
+        //    }
+        //}
+
+        //public double TravelTimeFromSite
+        //{
+        //    get
+        //    {
+        //        return ServiceDay.TravelFromSiteTime;
+        //    }
+        //    set
+        //    {
+        //        ServiceDay.TravelFromSiteTime = value;
+        //        onPropertyChanged("TravelTimeFromSite");
+        //    }
+        //}
+
+        //public double TotalTravelTime
+        //{
+        //    get
+        //    {
+        //        return ServiceDay.TotalTravelTime;
+        //    }
+        //    set
+        //    {
+        //        ServiceDay.TotalTravelTime = value;
+        //        onPropertyChanged("TotalTravelTime");
+        //    }
+        //}
+
+        //public double TotalTimeOnsite
+        //{
+        //    get
+        //    {
+        //        return ServiceDay.TotalOnsiteTime;
+        //    }
+        //    set
+        //    {
+        //        ServiceDay.TotalOnsiteTime = value;
+        //        onPropertyChanged("TotalTimeOnsite");
+        //    }
+        //}
+
+        //public string DailyReport
+        //{
+        //    get
+        //    {
+        //        return ServiceDay.DailyReport;
+        //    }
+        //    set
+        //    {
+        //        ServiceDay.DailyReport = value;
+        //        onPropertyChanged("DailyReport");
+        //    }
+        //}
+
+        //public string PartsSupplied
+        //{
+        //    get
+        //    {
+        //        return ServiceDay.PartsSuppliedToday;
+        //    }
+        //    set
+        //    {
+        //        ServiceDay.PartsSuppliedToday = value;
+        //        onPropertyChanged("PartsSupplied");
+        //    }
+        //}
+
+        //public ServiceSheetViewModel ParentServiceDayVM
+        //{
+        //    get
+        //    {
+        //        return ParentServiceDayVM1;
+        //    }
+
+        //    set
+        //    {
+        //        ParentServiceDayVM1 = value;
+        //    }
+        //}
+
+
     }
 }
