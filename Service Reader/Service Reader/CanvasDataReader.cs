@@ -608,9 +608,8 @@ namespace Service_Reader
             }
 
             //Need to sort the observable collection
-
-            //AllServiceDayViewModels retvalSorted = new AllServiceDayViewModels(retval.OrderBy(a => a.DtReport));
-            MessageBox.Show("Implemenent sorting");
+            ObservableCollection<ServiceDayViewModel> sortedDays = new ObservableCollection<ServiceDayViewModel>(retval.AllServiceDayVMs.OrderBy(a => a.DtReport));
+            retval.AllServiceDayVMs = sortedDays;
 
             return retval;
         }
