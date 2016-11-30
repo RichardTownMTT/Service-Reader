@@ -18,7 +18,7 @@ namespace Service_Reader
     /// <summary>
     /// Interaction logic for UcCanvasUser.xaml
     /// </summary>
-    public partial class CanvasUserView : UserControl
+    public partial class CanvasUserView : Window
     {
         public CanvasUserView()
         {

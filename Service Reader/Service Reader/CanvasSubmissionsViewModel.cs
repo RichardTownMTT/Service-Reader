@@ -34,7 +34,7 @@ namespace Service_Reader
             //Set the start to be a week ago by default
             DtStartSubmissionsDownload = DtStartSubmissionsDownload.AddDays(-7);
 
-            CanvasUserVM = new CanvasUserViewModel();
+            //CanvasUserVM = new CanvasUserViewModel();
         }
 
         public CanvasUserViewModel CanvasUserVM
@@ -171,7 +171,12 @@ namespace Service_Reader
 
         private void downloadCanvasData(object canvasPasswordBox)
         {
-            CanvasUserVM.CanvasPasswordBox = (PasswordBox)canvasPasswordBox;
+            CanvasUserVM = new CanvasUserViewModel();
+            CanvasUserView userView = new CanvasUserView();
+            userView.DataContext = CanvasUserVM;
+            bool? userResult = userView.ShowDialog();
+            
+            //CanvasUserVM.CanvasPasswordBox = (PasswordBox)canvasPasswordBox;
             //RT 26/11/16 - Changing the password to use a PasswordBox for security
             //AllServiceSheets = CanvasDataReader.downloadXml(CanvasUser.Username, CanvasUser.Password, DtStartSubmissionsDownload, DtEndSubmissionsDownload);
             AllServiceSheets = CanvasDataReader.downloadXml(CanvasUserVM, DtStartSubmissionsDownload, DtEndSubmissionsDownload);
