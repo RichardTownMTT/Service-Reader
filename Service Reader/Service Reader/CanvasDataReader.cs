@@ -284,25 +284,63 @@ namespace Service_Reader
         }
 
         //public static oldServiceSubmissionModel createSubmissionForXml(XElement submissionXml)
+        //RT  - 29/11/16 - Rewriting to use the VM
         public static ServiceSheetViewModel createSubmissionForXml(XElement submissionXml)
         {
-            ServiceSheetViewModel retval = new ServiceSheetViewModel();
-            ServiceSheet serviceSheetReturn = new ServiceSheet();
-            serviceSheetReturn.SubmissionNumber = Int32.Parse(submissionXml.Element(SUBMISSION_NUMBER).Value);
+            //ServiceSheetViewModel retval = new ServiceSheetViewModel();
+            //ServiceSheet serviceSheetReturn = new ServiceSheet();
+            int submissionNumberEntered = Int32.Parse(submissionXml.Element(SUBMISSION_NUMBER).Value);
             //RT 11/8/16 - Adding in the response id
-            serviceSheetReturn.CanvasResponseId = submissionXml.Element(RESPONSE_ID).Value;
+            string canvasResponseIdEntered = submissionXml.Element(RESPONSE_ID).Value;
             //Adding response date time
             string responseDateStr = submissionXml.Element(RESPONSE_DATE_TIME).Value;
-            serviceSheetReturn.DtResponse = Convert.ToDateTime(responseDateStr);
+            DateTime dtResponseEntered = Convert.ToDateTime(responseDateStr);
             //Adding device date
             string deviceDateStr = submissionXml.Element(DEVICE_DATE_TIME).Value;
-            serviceSheetReturn.DtDevice = Convert.ToDateTime(deviceDateStr);
+            DateTime dtDeviceEntered = Convert.ToDateTime(deviceDateStr);
             //Submission version is in the form element
             XElement formDetailsXml = submissionXml.Element(FORM);
-            serviceSheetReturn.SubmissionFormVersion = Int32.Parse(formDetailsXml.Element(SUBMISSION_VERSION).Value);
-            serviceSheetReturn.Username = submissionXml.Element(USERNAME).Value;
-            serviceSheetReturn.UserFirstName = submissionXml.Element(FIRST_NAME).Value;
-            serviceSheetReturn.UserSurname = submissionXml.Element(SURNAME).Value;
+            int submissionFormVersionEntered = Int32.Parse(formDetailsXml.Element(SUBMISSION_VERSION).Value);
+            string usernameEntered = submissionXml.Element(USERNAME).Value;
+            string userFirstNameEntered = submissionXml.Element(FIRST_NAME).Value;
+            string userSurnameEntered = submissionXml.Element(SURNAME).Value;
+
+            string customerEntered = "";
+            string addressLine1Entered = "";
+            string addressLine2Entered = "";
+            string townCityEntered = "";
+            string postcodeEntered = "";
+            string customerContactEntered = "";
+            string customerPhoneNoEntered = "";
+            string machineMakeModelEntered = "";
+            string machineSerialEntered = "";
+            string cncControlEntered = "";
+            string jobStartStr = "";
+            DateTime dtJobStartEntered = new DateTime();
+            string customerOrderNoEntered = "";
+            string mttJobNumberEntered = "";
+            string jobDescriptionEntered = "";
+            double jobTotalTimeOnsiteEntered;
+            double jobTotalTravelTimeEntered;
+            int mileageEntered;
+            int totalDaEntered;
+            int totalOaEntered;
+            int totalBpEntered;
+            string jobStatusEntered = "";
+            string finalJobReportEntered = "";
+            string additionalFaultsEntered = "";
+            bool quoteRequiredEntered;
+            string followUpPartsRequiredEntered = "";
+            string image1UrlEntered = "";
+            string image2UrlEntered = "";
+            string image3UrlEntered = "";
+            string image4UrlEntered = "";
+            string image5UrlEntered = "";
+            string customerSignatureUrlEntered = "";
+            string customerNameEntered = "";
+            DateTime dtSignedEntered;
+            string mttEngSignatureUrlEntered = "";
+            AllServiceDayViewModels dayVMs = null;
 
             XElement sectionsXml = submissionXml.Element(SECTIONS);
             // Loop through the sections
@@ -316,23 +354,22 @@ namespace Service_Reader
                     XElement responsesXml = screenXml.Element(RESPONSES);
                     //Parse the job details
 
-                    serviceSheetReturn.Customer = xmlResult(CUSTOMER, responsesXml);
-                    serviceSheetReturn.AddressLine1 = xmlResult(ADDRESS_1, responsesXml);
-                    serviceSheetReturn.AddressLine2 = xmlResult(ADDRESS_2, responsesXml);
-                    serviceSheetReturn.TownCity = xmlResult(TOWN_CITY, responsesXml);
-                    serviceSheetReturn.Postcode = xmlResult(POSTCODE, responsesXml);
-                    serviceSheetReturn.CustomerContact = xmlResult(CUSTOMER_CONTACT, responsesXml);
-                    serviceSheetReturn.CustomerPhoneNo = xmlResult(CUSTOMER_PHONE, responsesXml);
-                    serviceSheetReturn.MachineMakeModel = xmlResult(MACHINE_MAKE_MODEL, responsesXml);
-                    //RT 11/8/16 - Adding serial number
-                    serviceSheetReturn.MachineSerial = xmlResult(SERIAL_NUMBER, responsesXml);
+                    customerEntered = xmlResult(CUSTOMER, responsesXml);
+                    addressLine1Entered = xmlResult(ADDRESS_1, responsesXml);
+                    addressLine2Entered = xmlResult(ADDRESS_2, responsesXml);
+                    townCityEntered = xmlResult(TOWN_CITY, responsesXml);
+                    postcodeEntered = xmlResult(POSTCODE, responsesXml);
+                    customerContactEntered = xmlResult(CUSTOMER_CONTACT, responsesXml);
+                    customerPhoneNoEntered = xmlResult(CUSTOMER_PHONE, responsesXml);
+                    machineMakeModelEntered = xmlResult(MACHINE_MAKE_MODEL, responsesXml);
+                    machineSerialEntered = xmlResult(SERIAL_NUMBER, responsesXml);
 
-                    serviceSheetReturn.CncControl = xmlResult(MACHINE_CONTROL, responsesXml);
-                    string jobStartStr = xmlResult(JOB_START_DATE, responsesXml);
-                    serviceSheetReturn.DtJobStart = Convert.ToDateTime(jobStartStr);
-                    serviceSheetReturn.CustomerOrderNo = xmlResult(CUSTOMER_ORDER, responsesXml);
-                    serviceSheetReturn.MttJobNumber = xmlResult(MTT_JOB_NO, responsesXml);
-                    serviceSheetReturn.JobDescription = xmlResult(JOB_DESC, responsesXml);
+                    cncControlEntered = xmlResult(MACHINE_CONTROL, responsesXml);
+                    jobStartStr = xmlResult(JOB_START_DATE, responsesXml);
+                    dtJobStartEntered = Convert.ToDateTime(jobStartStr);
+                    customerOrderNoEntered = xmlResult(CUSTOMER_ORDER, responsesXml);
+                    mttJobNumberEntered = xmlResult(MTT_JOB_NO, responsesXml);
+                    jobDescriptionEntered = xmlResult(JOB_DESC, responsesXml);
 
                 }
                 else if (sectionName.Equals(TIME_SHEET))
@@ -341,7 +378,7 @@ namespace Service_Reader
                     XElement screenXml = screensXml.Element(SCREEN);
                     XElement responseGroupsXml = screenXml.Element(RESPONSE_GROUPS);
                     //retval.ServiceTimesheets = ServiceDay.createDays(responseGroupsXml);
-                    serviceSheetReturn.ServiceDays= createDays(responseGroupsXml);
+                    dayVMs = createDays(responseGroupsXml);
                 }
                 else if (sectionName.Equals(JOB_SIGNOFF))
                 {
@@ -349,92 +386,282 @@ namespace Service_Reader
                     XElement screenXml = screensXml.Element(SCREEN);
                     XElement responsesXml = screenXml.Element(RESPONSES);
 
-                    serviceSheetReturn.JobTotalTimeOnsite = Convert.ToDouble(xmlResult(JOB_TOTAL_TIME_ONSITE, responsesXml));
-                    serviceSheetReturn.JobTotalTravelTime = Convert.ToDouble(xmlResult(TOTAL_TRAVEL_TIME, responsesXml));
+                    jobTotalTimeOnsiteEntered = Convert.ToDouble(xmlResult(JOB_TOTAL_TIME_ONSITE, responsesXml));
+                    jobTotalTravelTimeEntered = Convert.ToDouble(xmlResult(TOTAL_TRAVEL_TIME, responsesXml));
 
                     //RT 13/10/16 - Mileage, daily/overnight and BP are int, although canvas returns a string like a double.  There will never be a decimal point in them
-                    double mileageRead = Convert.ToDouble(xmlResult(TOTAL_MILEAGE, responsesXml));
-                    serviceSheetReturn.JobTotalMileage = (int)mileageRead;
-                    double totalDaRead = Convert.ToDouble(xmlResult(TOTAL_DAILY_ALLOWANCES, responsesXml));
-                    serviceSheetReturn.TotalDailyAllowances = (int)totalDaRead;
-                    double totalOaRead = Convert.ToDouble(xmlResult(TOTAL_OVERNIGHT_ALLOWANCES, responsesXml));
-                    serviceSheetReturn.TotalOvernightAllowances = (int)totalOaRead;
-                    double totalBpRead = Convert.ToDouble(xmlResult(TOTAL_BARRIER_PAYMENTS, responsesXml));
-                    serviceSheetReturn.TotalBarrierPayments = (int)totalBpRead;
-                    serviceSheetReturn.JobStatus = xmlResult(JOB_STATUS, responsesXml);
-                    serviceSheetReturn.FinalJobReport = xmlResult(FINAL_JOB_REPORT, responsesXml);
-                    serviceSheetReturn.AdditionalFaults = xmlResult(ADDITIONAL_FAULTS_FOUND, responsesXml);
-                    serviceSheetReturn.QuoteRequired = Convert.ToBoolean(xmlResult(QUOTE_REQUIRED, responsesXml));
-                    serviceSheetReturn.FollowUpPartsRequired = xmlResult(FOLLOWUP_PARTS, responsesXml);
-                    serviceSheetReturn.Image1Url = xmlResult(IMAGE_1_URL, responsesXml);
-                    serviceSheetReturn.Image2Url = xmlResult(IMAGE_2_URL, responsesXml);
-                    serviceSheetReturn.Image3Url = xmlResult(IMAGE_3_URL, responsesXml);
-                    serviceSheetReturn.Image4Url = xmlResult(IMAGE_4_URL, responsesXml);
-                    serviceSheetReturn.Image5Url = xmlResult(IMAGE_5_URL, responsesXml);
-                    serviceSheetReturn.CustomerSignatureUrl = xmlResult(CUSTOMER_SIGNATURE, responsesXml);
-                    serviceSheetReturn.CustomerName = xmlResult(CUSTOMER_NAME, responsesXml);
-                    serviceSheetReturn.DtSigned = Convert.ToDateTime(xmlResult(DATE_SIGNED, responsesXml));
-                    serviceSheetReturn.MttEngSignatureUrl = xmlResult(MTT_ENG_SIGNATURE, responsesXml);
+                    double mileageDouble = Convert.ToDouble(xmlResult(TOTAL_MILEAGE, responsesXml));
+                    mileageEntered = (int)mileageDouble;
+                    double totalDaDouble = Convert.ToDouble(xmlResult(TOTAL_DAILY_ALLOWANCES, responsesXml));
+                    totalDaEntered = (int)totalDaDouble;
+                    double totalOaDouble = Convert.ToDouble(xmlResult(TOTAL_OVERNIGHT_ALLOWANCES, responsesXml));
+                    totalOaEntered = (int)totalOaDouble;
+                    double totalBpDouble = Convert.ToDouble(xmlResult(TOTAL_BARRIER_PAYMENTS, responsesXml));
+                    totalBpEntered = (int)totalBpDouble;
+                    jobStatusEntered = xmlResult(JOB_STATUS, responsesXml);
+                    finalJobReportEntered = xmlResult(FINAL_JOB_REPORT, responsesXml);
+                    additionalFaultsEntered = xmlResult(ADDITIONAL_FAULTS_FOUND, responsesXml);
+                    quoteRequiredEntered = Convert.ToBoolean(xmlResult(QUOTE_REQUIRED, responsesXml));
+                    followUpPartsRequiredEntered = xmlResult(FOLLOWUP_PARTS, responsesXml);
+                    image1UrlEntered = xmlResult(IMAGE_1_URL, responsesXml);
+                    image2UrlEntered = xmlResult(IMAGE_2_URL, responsesXml);
+                    image3UrlEntered = xmlResult(IMAGE_3_URL, responsesXml);
+                    image4UrlEntered = xmlResult(IMAGE_4_URL, responsesXml);
+                    image5UrlEntered = xmlResult(IMAGE_5_URL, responsesXml);
+                    customerSignatureUrlEntered = xmlResult(CUSTOMER_SIGNATURE, responsesXml);
+                    customerNameEntered = xmlResult(CUSTOMER_NAME, responsesXml);
+                    dtSignedEntered = Convert.ToDateTime(xmlResult(DATE_SIGNED, responsesXml));
+                    mttEngSignatureUrlEntered = xmlResult(MTT_ENG_SIGNATURE, responsesXml);
+
+                    //Now we create the Service Sheet VM
+                    ServiceSheetViewModel retval = new ServiceSheetViewModel(submissionNumberEntered, "", userFirstNameEntered, userSurnameEntered, canvasResponseIdEntered, dtResponseEntered,
+                        dtDeviceEntered, "", submissionFormVersionEntered, customerEntered, addressLine1Entered, addressLine2Entered, townCityEntered, postcodeEntered, customerContactEntered,
+                        customerPhoneNoEntered, machineMakeModelEntered, machineSerialEntered, cncControlEntered, dtJobStartEntered, customerOrderNoEntered, mttJobNumberEntered, jobDescriptionEntered,
+                        jobTotalTimeOnsiteEntered, jobTotalTravelTimeEntered, mileageEntered, totalDaEntered, totalOaEntered, totalBpEntered, jobStatusEntered, finalJobReportEntered, additionalFaultsEntered,
+                        quoteRequiredEntered, followUpPartsRequiredEntered, image1UrlEntered, image2UrlEntered, image3UrlEntered, image4UrlEntered, image5UrlEntered, customerSignatureUrlEntered, customerNameEntered, dtSignedEntered,
+                        mttEngSignatureUrlEntered, dayVMs, usernameEntered);
+                    retval.Save();
+
+                    return retval;
                 }
                 else
                 {
                     new Exception("Unknown Canvas Data Section");
                 }
-                
-            }
-            retval.ServiceSubmission = serviceSheetReturn;
-            return retval;
-        }
 
-        public static ICollection<ServiceDay> createDays(XElement allDays)
+            }
+
+            //If we get to here, then an error has occurred.
+            return null;
+            //retval.ServiceSubmission = serviceSheetReturn;
+            //return retval;
+        }
+        //public static ServiceSheetViewModel createSubmissionForXml(XElement submissionXml)
+        //{
+        //    ServiceSheetViewModel retval = new ServiceSheetViewModel();
+        //    ServiceSheet serviceSheetReturn = new ServiceSheet();
+        //    serviceSheetReturn.SubmissionNumber = Int32.Parse(submissionXml.Element(SUBMISSION_NUMBER).Value);
+        //    //RT 11/8/16 - Adding in the response id
+        //    serviceSheetReturn.CanvasResponseId = submissionXml.Element(RESPONSE_ID).Value;
+        //    //Adding response date time
+        //    string responseDateStr = submissionXml.Element(RESPONSE_DATE_TIME).Value;
+        //    serviceSheetReturn.DtResponse = Convert.ToDateTime(responseDateStr);
+        //    //Adding device date
+        //    string deviceDateStr = submissionXml.Element(DEVICE_DATE_TIME).Value;
+        //    serviceSheetReturn.DtDevice = Convert.ToDateTime(deviceDateStr);
+        //    //Submission version is in the form element
+        //    XElement formDetailsXml = submissionXml.Element(FORM);
+        //    serviceSheetReturn.SubmissionFormVersion = Int32.Parse(formDetailsXml.Element(SUBMISSION_VERSION).Value);
+        //    serviceSheetReturn.Username = submissionXml.Element(USERNAME).Value;
+        //    serviceSheetReturn.UserFirstName = submissionXml.Element(FIRST_NAME).Value;
+        //    serviceSheetReturn.UserSurname = submissionXml.Element(SURNAME).Value;
+
+        //    XElement sectionsXml = submissionXml.Element(SECTIONS);
+        //    // Loop through the sections
+        //    foreach (XElement sectionXml in sectionsXml.Elements())
+        //    {
+        //        string sectionName = sectionXml.Element(SECTION_NAME).Value;
+        //        if (sectionName.Equals(JOB_DETAILS))
+        //        {
+        //            XElement screensXml = sectionXml.Element(SCREENS);
+        //            XElement screenXml = screensXml.Element(SCREEN);
+        //            XElement responsesXml = screenXml.Element(RESPONSES);
+        //            //Parse the job details
+
+        //            serviceSheetReturn.Customer = xmlResult(CUSTOMER, responsesXml);
+        //            serviceSheetReturn.AddressLine1 = xmlResult(ADDRESS_1, responsesXml);
+        //            serviceSheetReturn.AddressLine2 = xmlResult(ADDRESS_2, responsesXml);
+        //            serviceSheetReturn.TownCity = xmlResult(TOWN_CITY, responsesXml);
+        //            serviceSheetReturn.Postcode = xmlResult(POSTCODE, responsesXml);
+        //            serviceSheetReturn.CustomerContact = xmlResult(CUSTOMER_CONTACT, responsesXml);
+        //            serviceSheetReturn.CustomerPhoneNo = xmlResult(CUSTOMER_PHONE, responsesXml);
+        //            serviceSheetReturn.MachineMakeModel = xmlResult(MACHINE_MAKE_MODEL, responsesXml);
+        //            //RT 11/8/16 - Adding serial number
+        //            serviceSheetReturn.MachineSerial = xmlResult(SERIAL_NUMBER, responsesXml);
+
+        //            serviceSheetReturn.CncControl = xmlResult(MACHINE_CONTROL, responsesXml);
+        //            string jobStartStr = xmlResult(JOB_START_DATE, responsesXml);
+        //            serviceSheetReturn.DtJobStart = Convert.ToDateTime(jobStartStr);
+        //            serviceSheetReturn.CustomerOrderNo = xmlResult(CUSTOMER_ORDER, responsesXml);
+        //            serviceSheetReturn.MttJobNumber = xmlResult(MTT_JOB_NO, responsesXml);
+        //            serviceSheetReturn.JobDescription = xmlResult(JOB_DESC, responsesXml);
+
+        //        }
+        //        else if (sectionName.Equals(TIME_SHEET))
+        //        {
+        //            XElement screensXml = sectionXml.Element(SCREENS);
+        //            XElement screenXml = screensXml.Element(SCREEN);
+        //            XElement responseGroupsXml = screenXml.Element(RESPONSE_GROUPS);
+        //            //retval.ServiceTimesheets = ServiceDay.createDays(responseGroupsXml);
+        //            serviceSheetReturn.ServiceDays= createDays(responseGroupsXml);
+        //        }
+        //        else if (sectionName.Equals(JOB_SIGNOFF))
+        //        {
+        //            XElement screensXml = sectionXml.Element(SCREENS);
+        //            XElement screenXml = screensXml.Element(SCREEN);
+        //            XElement responsesXml = screenXml.Element(RESPONSES);
+
+        //            serviceSheetReturn.JobTotalTimeOnsite = Convert.ToDouble(xmlResult(JOB_TOTAL_TIME_ONSITE, responsesXml));
+        //            serviceSheetReturn.JobTotalTravelTime = Convert.ToDouble(xmlResult(TOTAL_TRAVEL_TIME, responsesXml));
+
+        //            //RT 13/10/16 - Mileage, daily/overnight and BP are int, although canvas returns a string like a double.  There will never be a decimal point in them
+        //            double mileageRead = Convert.ToDouble(xmlResult(TOTAL_MILEAGE, responsesXml));
+        //            serviceSheetReturn.JobTotalMileage = (int)mileageRead;
+        //            double totalDaRead = Convert.ToDouble(xmlResult(TOTAL_DAILY_ALLOWANCES, responsesXml));
+        //            serviceSheetReturn.TotalDailyAllowances = (int)totalDaRead;
+        //            double totalOaRead = Convert.ToDouble(xmlResult(TOTAL_OVERNIGHT_ALLOWANCES, responsesXml));
+        //            serviceSheetReturn.TotalOvernightAllowances = (int)totalOaRead;
+        //            double totalBpRead = Convert.ToDouble(xmlResult(TOTAL_BARRIER_PAYMENTS, responsesXml));
+        //            serviceSheetReturn.TotalBarrierPayments = (int)totalBpRead;
+        //            serviceSheetReturn.JobStatus = xmlResult(JOB_STATUS, responsesXml);
+        //            serviceSheetReturn.FinalJobReport = xmlResult(FINAL_JOB_REPORT, responsesXml);
+        //            serviceSheetReturn.AdditionalFaults = xmlResult(ADDITIONAL_FAULTS_FOUND, responsesXml);
+        //            serviceSheetReturn.QuoteRequired = Convert.ToBoolean(xmlResult(QUOTE_REQUIRED, responsesXml));
+        //            serviceSheetReturn.FollowUpPartsRequired = xmlResult(FOLLOWUP_PARTS, responsesXml);
+        //            serviceSheetReturn.Image1Url = xmlResult(IMAGE_1_URL, responsesXml);
+        //            serviceSheetReturn.Image2Url = xmlResult(IMAGE_2_URL, responsesXml);
+        //            serviceSheetReturn.Image3Url = xmlResult(IMAGE_3_URL, responsesXml);
+        //            serviceSheetReturn.Image4Url = xmlResult(IMAGE_4_URL, responsesXml);
+        //            serviceSheetReturn.Image5Url = xmlResult(IMAGE_5_URL, responsesXml);
+        //            serviceSheetReturn.CustomerSignatureUrl = xmlResult(CUSTOMER_SIGNATURE, responsesXml);
+        //            serviceSheetReturn.CustomerName = xmlResult(CUSTOMER_NAME, responsesXml);
+        //            serviceSheetReturn.DtSigned = Convert.ToDateTime(xmlResult(DATE_SIGNED, responsesXml));
+        //            serviceSheetReturn.MttEngSignatureUrl = xmlResult(MTT_ENG_SIGNATURE, responsesXml);
+        //        }
+        //        else
+        //        {
+        //            new Exception("Unknown Canvas Data Section");
+        //        }
+
+        //    }
+        //    retval.ServiceSubmission = serviceSheetReturn;
+        //    return retval;
+        //}
+
+        //RT 29/11/16 - Rewiting to use new MVVM methods
+        public static AllServiceDayViewModels createDays(XElement allDays)
         {
-            int totalDays;
-            totalDays = allDays.Descendants(RESPONSE_GROUP).Count();
-            List<ServiceDay> retval = new List<ServiceDay>();
+            AllServiceDayViewModels retval = new AllServiceDayViewModels();
 
             foreach (XElement responseGroupXml in allDays.Elements())
             {
-                ServiceDay dayOfService = new ServiceDay();
                 string dtServiceStr = xmlResult(DATE, responseGroupXml);
-                dayOfService.DtReport = Convert.ToDateTime(dtServiceStr);
+                DateTime dtReport = Convert.ToDateTime(dtServiceStr);
                 XElement sectionXml = responseGroupXml.Element(SECTION);
                 XElement screensXml = sectionXml.Element(SCREENS);
                 XElement screenXml = screensXml.Element(SCREEN);
                 XElement responsesXml = screenXml.Element(RESPONSES);
 
                 string travelStartStr = xmlResult(TRAVEL_START, responsesXml);
-                dayOfService.TravelStartTime = Convert.ToDateTime(dtServiceStr + " " + travelStartStr);
+                DateTime TravelStartTime = Convert.ToDateTime(dtServiceStr + " " + travelStartStr);
                 string arrivalOnsiteStr = xmlResult(ARRIVE_ONSITE, responsesXml);
-                dayOfService.ArrivalOnsiteTime = Convert.ToDateTime(dtServiceStr + " " + arrivalOnsiteStr);
+                DateTime ArrivalOnsiteTime = Convert.ToDateTime(dtServiceStr + " " + arrivalOnsiteStr);
                 string departSiteStr = xmlResult(DEPART_SITE, responsesXml);
-                dayOfService.DepartureSiteTime = Convert.ToDateTime(dtServiceStr + " " + departSiteStr);
+                DateTime DepartureSiteTime = Convert.ToDateTime(dtServiceStr + " " + departSiteStr);
                 string travelEndStr = xmlResult(TRAVEL_END, responsesXml);
-                dayOfService.TravelEndTime = Convert.ToDateTime(dtServiceStr + " " + travelEndStr);
-                dayOfService.Mileage = Convert.ToInt32(xmlResult(MILEAGE, responsesXml));
+                DateTime TravelEndTime = Convert.ToDateTime(dtServiceStr + " " + travelEndStr);
+                int Mileage = Convert.ToInt32(xmlResult(MILEAGE, responsesXml));
                 string currentXmlResult = xmlResult(DAILY_ALLOWANCE, responsesXml);
-                dayOfService.DailyAllowance = Convert.ToInt32(currentXmlResult);
+                int DailyAllowance = Convert.ToInt32(currentXmlResult);
+                bool da;
+                if (DailyAllowance == 1)
+                {
+                    da = true;
+                }
+                else
+                {
+                    da = false;
+                }
                 currentXmlResult = xmlResult(OVERNIGHT_ALLOWANCE, responsesXml);
-                dayOfService.OvernightAllowance = Convert.ToInt32(currentXmlResult);
+                int OvernightAllowance = Convert.ToInt32(currentXmlResult);
+                bool oN;
+                if (OvernightAllowance == 1)
+                {
+                    oN = true;
+                }
+                else
+                {
+                    oN = false;
+                }
                 currentXmlResult = xmlResult(BARRIER_PAYMENT, responsesXml);
-                dayOfService.BarrierPayment = Convert.ToInt32(currentXmlResult);
-                dayOfService.TravelToSiteTime = Convert.ToDouble(xmlResult(TRAVEL_TO_SITE, responsesXml));
-                dayOfService.TravelFromSiteTime = Convert.ToDouble(xmlResult(TRAVEL_FROM_SITE, responsesXml));
-                dayOfService.TotalTravelTime = Convert.ToDouble(xmlResult(TOTAL_TRAVEL, responsesXml));
-                dayOfService.TotalOnsiteTime = Convert.ToDouble(xmlResult(TOTAL_TIME_ONSITE, responsesXml));
-                dayOfService.DailyReport = xmlResult(DAILY_REPORT, responsesXml);
-                dayOfService.PartsSuppliedToday = xmlResult(PARTS_SUPPLIED, responsesXml);
+                int BarrierPayment = Convert.ToInt32(currentXmlResult);
+                bool bP;
+                if (BarrierPayment == 1)
+                {
+                    bP = true;
+                }
+                else
+                {
+                    bP = false;
+                }
+                double TravelToSiteTime = Convert.ToDouble(xmlResult(TRAVEL_TO_SITE, responsesXml));
+                double TravelFromSiteTime = Convert.ToDouble(xmlResult(TRAVEL_FROM_SITE, responsesXml));
+                double TotalTravelTime = Convert.ToDouble(xmlResult(TOTAL_TRAVEL, responsesXml));
+                double TotalOnsiteTime = Convert.ToDouble(xmlResult(TOTAL_TIME_ONSITE, responsesXml));
+                string DailyReport = xmlResult(DAILY_REPORT, responsesXml);
+                string PartsSuppliedToday = xmlResult(PARTS_SUPPLIED, responsesXml);
 
-                //Adding a reference to the current submission
-                //dayOfService.CurrentServiceSubmission = currentSubmission;
-                retval.Add(dayOfService);
+                ServiceDayViewModel sd = new ServiceDayViewModel(TravelStartTime, ArrivalOnsiteTime, DepartureSiteTime, TravelEndTime, Mileage, da, oN,
+                    bP, TravelToSiteTime, TravelFromSiteTime, TotalTravelTime, TotalOnsiteTime, DailyReport, PartsSuppliedToday, dtReport, null);
+
+                retval.AddServiceDay(sd);
             }
 
             //Need to sort the observable collection
+            ObservableCollection<ServiceDayViewModel> sortedDays = new ObservableCollection<ServiceDayViewModel>(retval.AllServiceDayVMs.OrderBy(a => a.DtReport));
+            retval.AllServiceDayVMs = sortedDays;
 
-            List<ServiceDay> retvalSorted = new List<ServiceDay>(retval.OrderBy(a => a.DtReport));
-
-            return retvalSorted;
+            return retval;
         }
+        //public static ICollection<ServiceDay> createDays(XElement allDays)
+        //{
+        //    int totalDays;
+        //    totalDays = allDays.Descendants(RESPONSE_GROUP).Count();
+        //    List<ServiceDay> retval = new List<ServiceDay>();
+
+        //    foreach (XElement responseGroupXml in allDays.Elements())
+        //    {
+        //        ServiceDay dayOfService = new ServiceDay();
+        //        string dtServiceStr = xmlResult(DATE, responseGroupXml);
+        //        dayOfService.DtReport = Convert.ToDateTime(dtServiceStr);
+        //        XElement sectionXml = responseGroupXml.Element(SECTION);
+        //        XElement screensXml = sectionXml.Element(SCREENS);
+        //        XElement screenXml = screensXml.Element(SCREEN);
+        //        XElement responsesXml = screenXml.Element(RESPONSES);
+
+        //        string travelStartStr = xmlResult(TRAVEL_START, responsesXml);
+        //        dayOfService.TravelStartTime = Convert.ToDateTime(dtServiceStr + " " + travelStartStr);
+        //        string arrivalOnsiteStr = xmlResult(ARRIVE_ONSITE, responsesXml);
+        //        dayOfService.ArrivalOnsiteTime = Convert.ToDateTime(dtServiceStr + " " + arrivalOnsiteStr);
+        //        string departSiteStr = xmlResult(DEPART_SITE, responsesXml);
+        //        dayOfService.DepartureSiteTime = Convert.ToDateTime(dtServiceStr + " " + departSiteStr);
+        //        string travelEndStr = xmlResult(TRAVEL_END, responsesXml);
+        //        dayOfService.TravelEndTime = Convert.ToDateTime(dtServiceStr + " " + travelEndStr);
+        //        dayOfService.Mileage = Convert.ToInt32(xmlResult(MILEAGE, responsesXml));
+        //        string currentXmlResult = xmlResult(DAILY_ALLOWANCE, responsesXml);
+        //        dayOfService.DailyAllowance = Convert.ToInt32(currentXmlResult);
+        //        currentXmlResult = xmlResult(OVERNIGHT_ALLOWANCE, responsesXml);
+        //        dayOfService.OvernightAllowance = Convert.ToInt32(currentXmlResult);
+        //        currentXmlResult = xmlResult(BARRIER_PAYMENT, responsesXml);
+        //        dayOfService.BarrierPayment = Convert.ToInt32(currentXmlResult);
+        //        dayOfService.TravelToSiteTime = Convert.ToDouble(xmlResult(TRAVEL_TO_SITE, responsesXml));
+        //        dayOfService.TravelFromSiteTime = Convert.ToDouble(xmlResult(TRAVEL_FROM_SITE, responsesXml));
+        //        dayOfService.TotalTravelTime = Convert.ToDouble(xmlResult(TOTAL_TRAVEL, responsesXml));
+        //        dayOfService.TotalOnsiteTime = Convert.ToDouble(xmlResult(TOTAL_TIME_ONSITE, responsesXml));
+        //        dayOfService.DailyReport = xmlResult(DAILY_REPORT, responsesXml);
+        //        dayOfService.PartsSuppliedToday = xmlResult(PARTS_SUPPLIED, responsesXml);
+
+        //        //Adding a reference to the current submission
+        //        //dayOfService.CurrentServiceSubmission = currentSubmission;
+        //        retval.Add(dayOfService);
+        //    }
+
+        //    //Need to sort the observable collection
+
+        //    List<ServiceDay> retvalSorted = new List<ServiceDay>(retval.OrderBy(a => a.DtReport));
+
+        //    return retvalSorted;
+        //}
 
         //private static bool convertIntToBoolean(string currentXmlResult)
         //{

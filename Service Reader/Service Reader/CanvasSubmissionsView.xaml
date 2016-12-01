@@ -37,9 +37,9 @@
                 <DataGridTextColumn Header="Submission No" Binding="{Binding SubmissionNumber}" />
                 <DataGridTextColumn Header="Engineer" Binding="{Binding EngineerFullName}" />
                 <DataGridTextColumn Header="Customer" Binding="{Binding Customer}" />
-                <DataGridTextColumn Header="Job Start Date" Binding="{Binding JobStartDate, StringFormat=dd/MM/yyyy}" />
+                <DataGridTextColumn Header="Job Start Date" Binding="{Binding DtJobStart, StringFormat=dd/MM/yyyy}" />
                 <DataGridTextColumn Header="Machine" Binding="{Binding MachineMakeModel}" />
-                <DataGridTextColumn Header="MTT Job Number" Binding="{Binding MttJobNo}" />
+                <DataGridTextColumn Header="MTT Job Number" Binding="{Binding MttJobNumber}" />
                 <DataGridTextColumn Header="Job Description" Binding="{Binding JobDescription}" />
             </DataGrid.Columns>
             <DataGrid.Resources>

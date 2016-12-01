@@ -93,7 +93,7 @@ namespace Service_Reader
             currentServiceSubmission.Username = row[4];
             currentServiceSubmission.UserSurname = row[5];
             currentServiceSubmission.UserFirstName = row[6];
-            currentServiceSubmission.ResponseId = row[7];
+            currentServiceSubmission.CanvasResponseId = row[7];
             string dateFormatMinutes = "d/M/yyyy HH:mm";
             string dateFormatSeconds = "d/M/yyyy HH:mm:ss";
             string responseDate = row[8];
@@ -116,21 +116,21 @@ namespace Service_Reader
                 currentServiceSubmission.DtDevice = DateTime.ParseExact(deviceDate, dateFormatSeconds, CultureInfo.InvariantCulture);
             }
             //Submission Form name not used
-            currentServiceSubmission.SubmissionVersion = Convert.ToInt32(row[11]);
+            currentServiceSubmission.SubmissionFormVersion = Convert.ToInt32(row[11]);
             currentServiceSubmission.Customer = row[12];
             currentServiceSubmission.AddressLine1 = row[13];
             currentServiceSubmission.AddressLine2 = row[14];
             currentServiceSubmission.TownCity = row[15];
             currentServiceSubmission.Postcode = row[16];
             currentServiceSubmission.CustomerContact = row[17];
-            currentServiceSubmission.CustomerPhone = row[18];
+            currentServiceSubmission.CustomerPhoneNo = row[18];
             currentServiceSubmission.MachineMakeModel = row[19];
-            currentServiceSubmission.MachineSerialNo = row[20];
-            currentServiceSubmission.MachineController = row[21];
+            currentServiceSubmission.MachineSerial = row[20];
+            currentServiceSubmission.CncControl = row[21];
             string jobStartDate = row[22];
-            currentServiceSubmission.JobStartDate = DateTime.ParseExact(jobStartDate, "d/M/yyyy", CultureInfo.InvariantCulture);
+            currentServiceSubmission.DtJobStart = DateTime.ParseExact(jobStartDate, "d/M/yyyy", CultureInfo.InvariantCulture);
             currentServiceSubmission.CustomerOrderNo = row[23];
-            currentServiceSubmission.MttJobNo = row[24];
+            currentServiceSubmission.MttJobNumber = row[24];
             currentServiceSubmission.JobDescription = row[25];
 
             //Need to load the days
@@ -138,180 +138,285 @@ namespace Service_Reader
             //currentServiceSubmission.AllServiceDayVMs = new ObservableCollection<ServiceDayViewModel>();
             loadDayForSubmission(row, currentServiceSubmission);
 
-            currentServiceSubmission.TotalTimeOnsite = Convert.ToDouble(row[41]);
-            currentServiceSubmission.TotalTravelTime = Convert.ToDouble(row[42]);
-            currentServiceSubmission.TotalMileage = Convert.ToInt32(row[43]);
+            currentServiceSubmission.JobTotalTimeOnsite = Convert.ToDouble(row[41]);
+            currentServiceSubmission.JobTotalTravelTime = Convert.ToDouble(row[42]);
+            currentServiceSubmission.JobTotalMileage = Convert.ToInt32(row[43]);
             currentServiceSubmission.TotalDailyAllowances = Convert.ToInt32(row[44]);
             currentServiceSubmission.TotalOvernightAllowances = Convert.ToInt32(row[45]);
             currentServiceSubmission.TotalBarrierPayments = Convert.ToInt32(row[46]);
             currentServiceSubmission.JobStatus = row[47];
             currentServiceSubmission.FinalJobReport = row[48];
-            currentServiceSubmission.AdditionalFaultsFound = row[50];
+            currentServiceSubmission.AdditionalFaults = row[50];
             currentServiceSubmission.QuoteRequired = Convert.ToBoolean(row[51]);
-            currentServiceSubmission.PartsForFollowup = row[52];
+            currentServiceSubmission.FollowUpPartsRequired = row[52];
             currentServiceSubmission.Image1Url = row[54];
             currentServiceSubmission.Image2Url = row[55];
             currentServiceSubmission.Image3Url = row[56];
             currentServiceSubmission.Image4Url = row[57];
             currentServiceSubmission.Image5Url = row[58];
             currentServiceSubmission.CustomerSignatureUrl = row[60];
-            currentServiceSubmission.CustomerSignedName = row[61];
+            currentServiceSubmission.CustomerName = row[61];
             string signedDate = row[62];
             currentServiceSubmission.DtSigned = DateTime.ParseExact(signedDate, "d/M/yyyy", CultureInfo.InvariantCulture);
             currentServiceSubmission.MttEngSignatureUrl = row[63];
         }
 
+        //RT 28/11/16 - Rewriting this to use the MVVM pattern
+        //private void loadDayForSubmission(string[] row, ServiceSheetViewModel currentSubmission)
+        //{
+        //    string dateFormatMinutes = "d/M/yyyy HH:mm";
+        //    string dateFormatSeconds = "d/M/yyyy H:mm:ss";
+
+        //    //Need to set the submission on the service day
+        //    ServiceDayViewModel currentDay = new ServiceDayViewModel(currentSubmission);
+        //    //The times may be with / without the date, depending on when they were imported.
+        //    //Need to load the service date first, in case we need it for the times
+        //    string serviceDate = row[40];
+        //    currentDay.DtReport = DateTime.ParseExact(serviceDate, "d/M/yyyy", CultureInfo.InvariantCulture);
+
+        //    string travelStartTime = row[26];
+        //    try
+        //    {
+        //        currentDay.TravelStartTime = DateTime.ParseExact(travelStartTime, dateFormatMinutes, CultureInfo.InvariantCulture);
+        //    }
+        //    catch
+        //    {
+        //        try
+        //        {
+        //            currentDay.TravelStartTime = DateTime.ParseExact(travelStartTime, dateFormatSeconds, CultureInfo.InvariantCulture);
+        //        }
+        //        catch
+        //        {
+        //            string travelStartIncDate = serviceDate + " " + travelStartTime;
+        //            currentDay.TravelStartTime = DateTime.ParseExact(travelStartIncDate, dateFormatMinutes, CultureInfo.InvariantCulture);
+        //        }
+        //    }
+
+        //    string arrivalTimeOnsite = row[27];
+        //    try
+        //    {
+        //        currentDay.ArrivalOnsiteTime = DateTime.ParseExact(arrivalTimeOnsite, dateFormatMinutes, CultureInfo.InvariantCulture);
+        //    }
+        //    catch
+        //    {
+        //        try
+        //        {
+        //            currentDay.ArrivalOnsiteTime = DateTime.ParseExact(arrivalTimeOnsite, dateFormatSeconds, CultureInfo.InvariantCulture);
+        //        }
+        //        catch
+        //        {
+        //            string arrivalOnsiteIncDate = serviceDate + " " + arrivalTimeOnsite;
+        //            currentDay.ArrivalOnsiteTime = DateTime.ParseExact(arrivalOnsiteIncDate, dateFormatMinutes, CultureInfo.InvariantCulture);
+        //        }
+        //    }
+
+        //    string departureTime = row[28];
+        //    try
+        //    {
+        //        currentDay.DepartSiteTime = DateTime.ParseExact(departureTime, dateFormatMinutes, CultureInfo.InvariantCulture);
+        //    }
+        //    catch
+        //    {
+        //        try
+        //        {
+        //            currentDay.DepartSiteTime = DateTime.ParseExact(departureTime, dateFormatSeconds, CultureInfo.InvariantCulture);
+        //        }
+        //        catch
+        //        {
+        //            string departureIncDate = serviceDate + " " + departureTime;
+        //            currentDay.DepartSiteTime = DateTime.ParseExact(departureIncDate, dateFormatMinutes, CultureInfo.InvariantCulture);
+        //        }
+        //    }
+
+        //    string travelEndTime = row[29];
+        //    try
+        //    {
+        //        currentDay.TravelEndTime = DateTime.ParseExact(travelEndTime, dateFormatMinutes, CultureInfo.InvariantCulture);
+        //    }
+        //    catch
+        //    {
+        //        try
+        //        {
+        //            currentDay.TravelEndTime = DateTime.ParseExact(travelEndTime, dateFormatSeconds, CultureInfo.InvariantCulture);
+        //        }
+        //        catch
+        //        {
+        //            string travelEndIncDate = serviceDate + " " + travelEndTime;
+        //            currentDay.TravelEndTime = DateTime.ParseExact(travelEndIncDate, dateFormatMinutes, CultureInfo.InvariantCulture);
+        //        }
+        //    }
+
+        //    currentDay.Mileage = Convert.ToInt32(row[30]);
+        //    //try
+        //    //{
+        //    //    currentDay.ServiceDay.DailyAllowance = Convert.ToBoolean(row[31]);
+        //    //}
+        //    //catch
+        //    //{
+        //    //If this fails, then it nust be an integer
+        //    //    int dailyAllowance = Convert.ToInt32(row[31]);
+        //    //    if (dailyAllowance == 1)
+        //    //    {
+        //    //        currentDay.ServiceDay.DailyAllowance = true;
+        //    //    }
+        //    //    else
+        //    //    {
+        //    //        currentDay.ServiceDay.DailyAllowance = false;
+        //    //    }
+        //    ////}
+
+        //    currentDay.DailyAllowance = Convert.ToBoolean(row[31]);
+
+        //    //try
+        //    //{
+        //    //    currentDay.ServiceDay.OvernightAllowance = Convert.ToBoolean(row[32]);
+        //    //}
+        //    //catch
+        //    //{
+        //    //    //If this fails, then it nust be an integer
+        //    //    int overnightAllowance = Convert.ToInt32(row[32]);
+        //    //    if (overnightAllowance == 1)
+        //    //    {
+        //    //        currentDay.ServiceDay.OvernightAllowance = true;
+        //    //    }
+        //    //    else
+        //    //    {
+        //    //        currentDay.ServiceDay.OvernightAllowance = false;
+        //    //    }
+        //    //}
+        //    currentDay.OvernightAllowance = Convert.ToBoolean(row[32]);
+        //    //try
+        //    //{
+        //    //    currentDay.ServiceDay.BarrierPayment = Convert.ToBoolean(row[33]);
+        //    //}
+        //    //catch
+        //    //{
+        //    //    //If this fails, then it nust be an integer
+        //    //    int barrierPayment = Convert.ToInt32(row[33]);
+        //    //    if (barrierPayment == 1)
+        //    //    {
+        //    //        currentDay.ServiceDay.BarrierPayment = true;
+        //    //    }
+        //    //    else
+        //    //    {
+        //    //        currentDay.ServiceDay.BarrierPayment = false;
+        //    //    }
+        //    //}
+        //    currentDay.BarrierPayment = Convert.ToBoolean(row[33]);
+
+        //    currentDay.TravelTimeToSite = Convert.ToDouble(row[34]);
+        //    currentDay.TravelTimeFromSite = Convert.ToDouble(row[35]);
+        //    currentDay.TotalTravelTime = Convert.ToDouble(row[36]);
+        //    currentDay.TotalTimeOnsite = Convert.ToDouble(row[37]);
+        //    currentDay.DailyReport = row[38];
+        //    currentDay.PartsSupplied = row[39];
+
+        //    //RT 16/8/16 - Saving the timesheet
+        //    //currentSubmission.AllServiceDayVMs.
+        //}
         private void loadDayForSubmission(string[] row, ServiceSheetViewModel currentSubmission)
         {
             string dateFormatMinutes = "d/M/yyyy HH:mm";
             string dateFormatSeconds = "d/M/yyyy H:mm:ss";
 
             //Need to set the submission on the service day
-            ServiceDayViewModel currentDay = new ServiceDayViewModel(currentSubmission);
+            //ServiceDayViewModel currentDay = new ServiceDayViewModel(currentSubmission);
             //The times may be with / without the date, depending on when they were imported.
             //Need to load the service date first, in case we need it for the times
             string serviceDate = row[40];
-            currentDay.ServiceDate = DateTime.ParseExact(serviceDate, "d/M/yyyy", CultureInfo.InvariantCulture);
+            DateTime dtReport = DateTime.ParseExact(serviceDate, "d/M/yyyy", CultureInfo.InvariantCulture);
 
             string travelStartTime = row[26];
+            DateTime dtTravelStart;
             try
             {
-                currentDay.TravelStartTime = DateTime.ParseExact(travelStartTime, dateFormatMinutes, CultureInfo.InvariantCulture);
+                dtTravelStart = DateTime.ParseExact(travelStartTime, dateFormatMinutes, CultureInfo.InvariantCulture);
             }
             catch
             {
                 try
                 {
-                    currentDay.TravelStartTime = DateTime.ParseExact(travelStartTime, dateFormatSeconds, CultureInfo.InvariantCulture);
+                    dtTravelStart = DateTime.ParseExact(travelStartTime, dateFormatSeconds, CultureInfo.InvariantCulture);
                 }
                 catch
                 {
                     string travelStartIncDate = serviceDate + " " + travelStartTime;
-                    currentDay.TravelStartTime = DateTime.ParseExact(travelStartIncDate, dateFormatMinutes, CultureInfo.InvariantCulture);
+                    dtTravelStart = DateTime.ParseExact(travelStartIncDate, dateFormatMinutes, CultureInfo.InvariantCulture);
                 }
             }
 
             string arrivalTimeOnsite = row[27];
+            DateTime dtArrivalOnsite;
             try
             {
-                currentDay.ArrivalOnsiteTime = DateTime.ParseExact(arrivalTimeOnsite, dateFormatMinutes, CultureInfo.InvariantCulture);
+                dtArrivalOnsite = DateTime.ParseExact(arrivalTimeOnsite, dateFormatMinutes, CultureInfo.InvariantCulture);
             }
             catch
             {
                 try
                 {
-                    currentDay.ArrivalOnsiteTime = DateTime.ParseExact(arrivalTimeOnsite, dateFormatSeconds, CultureInfo.InvariantCulture);
+                    dtArrivalOnsite = DateTime.ParseExact(arrivalTimeOnsite, dateFormatSeconds, CultureInfo.InvariantCulture);
                 }
                 catch
                 {
                     string arrivalOnsiteIncDate = serviceDate + " " + arrivalTimeOnsite;
-                    currentDay.ArrivalOnsiteTime = DateTime.ParseExact(arrivalOnsiteIncDate, dateFormatMinutes, CultureInfo.InvariantCulture);
+                    dtArrivalOnsite = DateTime.ParseExact(arrivalOnsiteIncDate, dateFormatMinutes, CultureInfo.InvariantCulture);
                 }
             }
 
             string departureTime = row[28];
+            DateTime dtDeparture;
             try
             {
-                currentDay.DepartSiteTime = DateTime.ParseExact(departureTime, dateFormatMinutes, CultureInfo.InvariantCulture);
+                dtDeparture = DateTime.ParseExact(departureTime, dateFormatMinutes, CultureInfo.InvariantCulture);
             }
             catch
             {
                 try
                 {
-                    currentDay.DepartSiteTime = DateTime.ParseExact(departureTime, dateFormatSeconds, CultureInfo.InvariantCulture);
+                    dtDeparture = DateTime.ParseExact(departureTime, dateFormatSeconds, CultureInfo.InvariantCulture);
                 }
                 catch
                 {
                     string departureIncDate = serviceDate + " " + departureTime;
-                    currentDay.DepartSiteTime = DateTime.ParseExact(departureIncDate, dateFormatMinutes, CultureInfo.InvariantCulture);
+                    dtDeparture = DateTime.ParseExact(departureIncDate, dateFormatMinutes, CultureInfo.InvariantCulture);
                 }
             }
 
             string travelEndTime = row[29];
+            DateTime dtTravelEnd;
             try
             {
-                currentDay.TravelEndTime = DateTime.ParseExact(travelEndTime, dateFormatMinutes, CultureInfo.InvariantCulture);
+                dtTravelEnd = DateTime.ParseExact(travelEndTime, dateFormatMinutes, CultureInfo.InvariantCulture);
             }
             catch
             {
                 try
                 {
-                    currentDay.TravelEndTime = DateTime.ParseExact(travelEndTime, dateFormatSeconds, CultureInfo.InvariantCulture);
+                    dtTravelEnd = DateTime.ParseExact(travelEndTime, dateFormatSeconds, CultureInfo.InvariantCulture);
                 }
                 catch
                 {
                     string travelEndIncDate = serviceDate + " " + travelEndTime;
-                    currentDay.TravelEndTime = DateTime.ParseExact(travelEndIncDate, dateFormatMinutes, CultureInfo.InvariantCulture);
+                    dtTravelEnd = DateTime.ParseExact(travelEndIncDate, dateFormatMinutes, CultureInfo.InvariantCulture);
                 }
             }
 
-            currentDay.Mileage = Convert.ToInt32(row[30]);
-            //try
-            //{
-            //    currentDay.ServiceDay.DailyAllowance = Convert.ToBoolean(row[31]);
-            //}
-            //catch
-            //{
-            //If this fails, then it nust be an integer
-            //    int dailyAllowance = Convert.ToInt32(row[31]);
-            //    if (dailyAllowance == 1)
-            //    {
-            //        currentDay.ServiceDay.DailyAllowance = true;
-            //    }
-            //    else
-            //    {
-            //        currentDay.ServiceDay.DailyAllowance = false;
-            //    }
-            ////}
+            int mileage = Convert.ToInt32(row[30]);
+            bool dailyAllowance = Convert.ToBoolean(row[31]);
+            bool overnightAllowance = Convert.ToBoolean(row[32]);
+            bool barrierPayment = Convert.ToBoolean(row[33]);
+            double travelTimeToSite = Convert.ToDouble(row[34]);
+            double travelTimeFromSite = Convert.ToDouble(row[35]);
+            double totalTravelTime = Convert.ToDouble(row[36]);
+            double totalTimeOnsite = Convert.ToDouble(row[37]);
+            string dailyReport = row[38];
+            string partsSupplied = row[39];
+            //Now create the serviceDayVM
+            ServiceDayViewModel retval = new ServiceDayViewModel(dtTravelStart, dtArrivalOnsite, dtDeparture, dtTravelEnd, mileage, dailyAllowance, overnightAllowance, barrierPayment,
+                travelTimeToSite, travelTimeFromSite, totalTravelTime, totalTimeOnsite, dailyReport, partsSupplied, dtReport, currentSubmission);
 
-            currentDay.DailyAllowance = Convert.ToBoolean(row[31]);
-
-            //try
-            //{
-            //    currentDay.ServiceDay.OvernightAllowance = Convert.ToBoolean(row[32]);
-            //}
-            //catch
-            //{
-            //    //If this fails, then it nust be an integer
-            //    int overnightAllowance = Convert.ToInt32(row[32]);
-            //    if (overnightAllowance == 1)
-            //    {
-            //        currentDay.ServiceDay.OvernightAllowance = true;
-            //    }
-            //    else
-            //    {
-            //        currentDay.ServiceDay.OvernightAllowance = false;
-            //    }
-            //}
-            currentDay.OvernightAllowance = Convert.ToBoolean(row[32]);
-            //try
-            //{
-            //    currentDay.ServiceDay.BarrierPayment = Convert.ToBoolean(row[33]);
-            //}
-            //catch
-            //{
-            //    //If this fails, then it nust be an integer
-            //    int barrierPayment = Convert.ToInt32(row[33]);
-            //    if (barrierPayment == 1)
-            //    {
-            //        currentDay.ServiceDay.BarrierPayment = true;
-            //    }
-            //    else
-            //    {
-            //        currentDay.ServiceDay.BarrierPayment = false;
-            //    }
-            //}
-            currentDay.BarrierPayment = Convert.ToBoolean(row[33]);
-
-            currentDay.TravelTimeToSite = Convert.ToDouble(row[34]);
-            currentDay.TravelTimeFromSite = Convert.ToDouble(row[35]);
-            currentDay.TotalTravelTime = Convert.ToDouble(row[36]);
-            currentDay.TotalTimeOnsite = Convert.ToDouble(row[37]);
-            currentDay.DailyReport = row[38];
-            currentDay.PartsSupplied = row[39];
-
-            //RT 16/8/16 - Saving the timesheet
-            //currentSubmission.AllServiceDayVMs.
+            //This doesn't need to return anything, as the day has been set on the submission.
         }
 
         private string openFilename()

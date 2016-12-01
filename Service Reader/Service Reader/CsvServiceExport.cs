@@ -57,10 +57,10 @@ namespace Service_Reader
         {
             //A line is created for each service day, not submission, so we need to go through the number of days.  
             //There will be multiple duplicated fields.
-            ObservableCollection<ServiceDayViewModel> serviceDays = submission.AllServiceDayVMs;
-            int noOfDays = serviceDays.Count;
+            AllServiceDayViewModels allServiceDays = submission.AllServiceDays;
+            //ObservableCollection<ServiceDayViewModel> serviceDays = submission.AllServiceDayVMs;
 
-            for (int counter = 0; counter < noOfDays ; counter++)
+            foreach (ServiceDayViewModel day in allServiceDays.AllServiceDayVMs)
             {
                 //extract the sections from the service sheet that go into the CSV export
                 //Start date and end date are not taken - They only appear in the csv export
@@ -76,7 +76,7 @@ namespace Service_Reader
                 csvWriterOutput.WriteField(userLastName);
                 string userFirstName = submission.UserFirstName;
                 csvWriterOutput.WriteField(userFirstName);
-                string responseId = submission.ResponseId;
+                string responseId = submission.CanvasResponseId;
                 csvWriterOutput.WriteField(responseId);
                 DateTime responseDate = submission.DtResponse;
                 csvWriterOutput.WriteField(responseDate);
@@ -84,7 +84,7 @@ namespace Service_Reader
                 csvWriterOutput.WriteField(dtDevice);
                 //Submission form name set manually
                 csvWriterOutput.WriteField("Service Sheet");
-                int formVersion = submission.SubmissionVersion;
+                int formVersion = submission.SubmissionFormVersion;
                 csvWriterOutput.WriteField(formVersion);
                 string customer = submission.Customer;
                 csvWriterOutput.WriteField(customer);
@@ -98,31 +98,31 @@ namespace Service_Reader
                 csvWriterOutput.WriteField(postcode);
                 string customerContact = submission.CustomerContact;
                 csvWriterOutput.WriteField(customerContact);
-                string customerPhone = submission.CustomerPhone;
+                string customerPhone = submission.CustomerPhoneNo;
                 csvWriterOutput.WriteField(customerPhone);
                 string makeModel = submission.MachineMakeModel;
                 csvWriterOutput.WriteField(makeModel);
-                string serialNo = submission.MachineSerialNo;
+                string serialNo = submission.MachineSerial;
                 csvWriterOutput.WriteField(serialNo);
-                string cncControl = submission.MachineController;
+                string cncControl = submission.CncControl;
                 csvWriterOutput.WriteField(cncControl);
-                DateTime dtStart = submission.JobStartDate;
+                DateTime dtStart = submission.DtJobStart;
                 csvWriterOutput.WriteField(dtStart);
                 string orderNo = submission.CustomerOrderNo;
                 csvWriterOutput.WriteField(orderNo);
-                string mttJobNo = submission.MttJobNo;
+                string mttJobNo = submission.MttJobNumber;
                 csvWriterOutput.WriteField(mttJobNo);
                 string jobDescription = submission.JobDescription;
                 csvWriterOutput.WriteField(jobDescription);
 
-                ServiceDayViewModel currentDay = serviceDays[counter];
-                createExportLineForDay(currentDay);
+                //ServiceDayViewModel currentDay = day;
+                createExportLineForDay(day);
 
-                double totalTimeOnsite = submission.TotalTimeOnsite;
+                double totalTimeOnsite = submission.JobTotalTimeOnsite;
                 csvWriterOutput.WriteField(totalTimeOnsite);
-                double totalTravelTime = submission.TotalTravelTime;
+                double totalTravelTime = submission.JobTotalTravelTime;
                 csvWriterOutput.WriteField(totalTravelTime);
-                double mileage = submission.TotalMileage;
+                double mileage = submission.JobTotalMileage;
                 csvWriterOutput.WriteField(mileage);
                 double totalDailyAllowances = submission.TotalDailyAllowances;
                 csvWriterOutput.WriteField(totalDailyAllowances);
@@ -136,11 +136,11 @@ namespace Service_Reader
                 csvWriterOutput.WriteField(finalJobReport);
                 //Follow up work field is blank
                 csvWriterOutput.WriteField("");
-                string additionalFaultsFound = submission.AdditionalFaultsFound;
+                string additionalFaultsFound = submission.AdditionalFaults;
                 csvWriterOutput.WriteField(additionalFaultsFound);
                 Boolean followupWorkQuote = submission.QuoteRequired;
                 csvWriterOutput.WriteField(followupWorkQuote);
-                string partsForFollowup = submission.PartsForFollowup;
+                string partsForFollowup = submission.FollowUpPartsRequired;
                 csvWriterOutput.WriteField(partsForFollowup);
                 //Images for follow-up work - Doesn't need to be set
                 csvWriterOutput.WriteField("");
@@ -167,7 +167,7 @@ namespace Service_Reader
                 //string customerSignature = imageUrlStart + submission.CustomerSignatureUrl;
                 //csvWriterOutput.WriteField(customerSignature);
                 writeUrl(submission.CustomerSignatureUrl);
-                string customerName = submission.CustomerSignedName;
+                string customerName = submission.CustomerName;
                 csvWriterOutput.WriteField(customerName);
                 DateTime dtSigned = submission.DtSigned;
                 csvWriterOutput.WriteField(dtSigned);
@@ -176,6 +176,125 @@ namespace Service_Reader
                 writeUrl(submission.MttEngSignatureUrl);
                 csvWriterOutput.NextRecord();
             }
+
+            //int noOfDays = serviceDays.Count;
+
+            //for (int counter = 0; counter < noOfDays ; counter++)
+            //{
+            //    //extract the sections from the service sheet that go into the CSV export
+            //    //Start date and end date are not taken - They only appear in the csv export
+            //    csvWriterOutput.WriteField("");
+            //    csvWriterOutput.WriteField("");
+            //    int submissionNo = submission.SubmissionNumber;
+            //    csvWriterOutput.WriteField(submissionNo);
+            //    //Export app name - set manually
+            //    csvWriterOutput.WriteField("Service Sheet");
+            //    string username = submission.Username;
+            //    csvWriterOutput.WriteField(username);
+            //    string userLastName = submission.UserSurname;
+            //    csvWriterOutput.WriteField(userLastName);
+            //    string userFirstName = submission.UserFirstName;
+            //    csvWriterOutput.WriteField(userFirstName);
+            //    string responseId = submission.ResponseId;
+            //    csvWriterOutput.WriteField(responseId);
+            //    DateTime responseDate = submission.DtResponse;
+            //    csvWriterOutput.WriteField(responseDate);
+            //    DateTime dtDevice = submission.DtDevice;
+            //    csvWriterOutput.WriteField(dtDevice);
+            //    //Submission form name set manually
+            //    csvWriterOutput.WriteField("Service Sheet");
+            //    int formVersion = submission.SubmissionVersion;
+            //    csvWriterOutput.WriteField(formVersion);
+            //    string customer = submission.Customer;
+            //    csvWriterOutput.WriteField(customer);
+            //    string address1 = submission.AddressLine1;
+            //    csvWriterOutput.WriteField(address1);
+            //    string address2 = submission.AddressLine2;
+            //    csvWriterOutput.WriteField(address2);
+            //    string townCity = submission.TownCity;
+            //    csvWriterOutput.WriteField(townCity);
+            //    string postcode = submission.Postcode;
+            //    csvWriterOutput.WriteField(postcode);
+            //    string customerContact = submission.CustomerContact;
+            //    csvWriterOutput.WriteField(customerContact);
+            //    string customerPhone = submission.CustomerPhone;
+            //    csvWriterOutput.WriteField(customerPhone);
+            //    string makeModel = submission.MachineMakeModel;
+            //    csvWriterOutput.WriteField(makeModel);
+            //    string serialNo = submission.MachineSerialNo;
+            //    csvWriterOutput.WriteField(serialNo);
+            //    string cncControl = submission.MachineController;
+            //    csvWriterOutput.WriteField(cncControl);
+            //    DateTime dtStart = submission.JobStartDate;
+            //    csvWriterOutput.WriteField(dtStart);
+            //    string orderNo = submission.CustomerOrderNo;
+            //    csvWriterOutput.WriteField(orderNo);
+            //    string mttJobNo = submission.MttJobNo;
+            //    csvWriterOutput.WriteField(mttJobNo);
+            //    string jobDescription = submission.JobDescription;
+            //    csvWriterOutput.WriteField(jobDescription);
+
+            //    ServiceDayViewModel currentDay = serviceDays[counter];
+            //    createExportLineForDay(currentDay);
+
+            //    double totalTimeOnsite = submission.TotalTimeOnsite;
+            //    csvWriterOutput.WriteField(totalTimeOnsite);
+            //    double totalTravelTime = submission.TotalTravelTime;
+            //    csvWriterOutput.WriteField(totalTravelTime);
+            //    double mileage = submission.TotalMileage;
+            //    csvWriterOutput.WriteField(mileage);
+            //    double totalDailyAllowances = submission.TotalDailyAllowances;
+            //    csvWriterOutput.WriteField(totalDailyAllowances);
+            //    double totalOvernightAllowances = submission.TotalOvernightAllowances;
+            //    csvWriterOutput.WriteField(totalOvernightAllowances);
+            //    double totalBarrierPayments = submission.TotalBarrierPayments;
+            //    csvWriterOutput.WriteField(totalBarrierPayments);
+            //    string jobStatus = submission.JobStatus;
+            //    csvWriterOutput.WriteField(jobStatus);
+            //    string finalJobReport = submission.FinalJobReport;
+            //    csvWriterOutput.WriteField(finalJobReport);
+            //    //Follow up work field is blank
+            //    csvWriterOutput.WriteField("");
+            //    string additionalFaultsFound = submission.AdditionalFaultsFound;
+            //    csvWriterOutput.WriteField(additionalFaultsFound);
+            //    Boolean followupWorkQuote = submission.QuoteRequired;
+            //    csvWriterOutput.WriteField(followupWorkQuote);
+            //    string partsForFollowup = submission.PartsForFollowup;
+            //    csvWriterOutput.WriteField(partsForFollowup);
+            //    //Images for follow-up work - Doesn't need to be set
+            //    csvWriterOutput.WriteField("");
+            //    //RT 11/8/2016 - Adding in the start of the image url. 
+            //    //RT 23/11/16 - Changing this to a method
+            //    writeUrl(submission.Image1Url);
+            //    //string imageUrlStart = "http://www.gocanvas.com/values/";
+            //    //string image1 = imageUrlStart + submission.Image1Url;
+            //    //csvWriterOutput.WriteField(image1);
+            //    writeUrl(submission.Image2Url);
+            //    //string image2 = imageUrlStart + submission.Image2Url;
+            //    //csvWriterOutput.WriteField(image2);
+            //    writeUrl(submission.Image3Url);
+            //    //string image3 = imageUrlStart + submission.Image3Url;
+            //    //csvWriterOutput.WriteField(image3);
+            //    //string image4 = imageUrlStart + submission.Image4Url;
+            //    writeUrl(submission.Image4Url);
+            //    //csvWriterOutput.WriteField(image4);
+            //    //string image5 = imageUrlStart + submission.Image5Url;
+            //    writeUrl(submission.Image5Url);
+            //    //csvWriterOutput.WriteField(image5);
+            //    //Certify is next - don't set
+            //    csvWriterOutput.WriteField("");
+            //    //string customerSignature = imageUrlStart + submission.CustomerSignatureUrl;
+            //    //csvWriterOutput.WriteField(customerSignature);
+            //    writeUrl(submission.CustomerSignatureUrl);
+            //    string customerName = submission.CustomerSignedName;
+            //    csvWriterOutput.WriteField(customerName);
+            //    DateTime dtSigned = submission.DtSigned;
+            //    csvWriterOutput.WriteField(dtSigned);
+            //    //string mttSignature = imageUrlStart + submission.MttEngSignatureUrl;
+            //    //csvWriterOutput.WriteField(mttSignature);
+            //    writeUrl(submission.MttEngSignatureUrl);
+            //    csvWriterOutput.NextRecord();
+            //}
 
         }
 
@@ -200,7 +319,7 @@ namespace Service_Reader
             csvWriterOutput.WriteField(travelStart);
             DateTime arrivalOnsite = currentDay.ArrivalOnsiteTime;
             csvWriterOutput.WriteField(arrivalOnsite);
-            DateTime departureFromSite = currentDay.DepartSiteTime;
+            DateTime departureFromSite = currentDay.DepartureSiteTime;
             csvWriterOutput.WriteField(departureFromSite);
             DateTime travelEnd = currentDay.TravelEndTime;
             csvWriterOutput.WriteField(travelEnd);
@@ -246,13 +365,13 @@ namespace Service_Reader
             csvWriterOutput.WriteField(travelTimeFromSite);
             double totalTravelTime = currentDay.TotalTravelTime;
             csvWriterOutput.WriteField(totalTravelTime);
-            double totalTimeOnsite = currentDay.TotalTimeOnsite;
+            double totalTimeOnsite = currentDay.TotalOnsiteTime;
             csvWriterOutput.WriteField(totalTimeOnsite);
             string dailyReport = currentDay.DailyReport;
             csvWriterOutput.WriteField(dailyReport);
-            string partsSupplied = currentDay.PartsSupplied;
+            string partsSupplied = currentDay.PartsSuppliedToday;
             csvWriterOutput.WriteField(partsSupplied);
-            DateTime dtTimesheet = currentDay.ServiceDate;
+            DateTime dtTimesheet = currentDay.DtReport;
             csvWriterOutput.WriteField(dtTimesheet);
         }
 

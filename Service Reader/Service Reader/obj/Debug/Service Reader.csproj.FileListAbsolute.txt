@@ -1,18 +1,3 @@
-C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\Service Reader.csproj.ResolveComReference.cache
-C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\ApplicationWindow.g.cs
-C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\HistoryTrackerView.g.cs
-C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\IssueServiceReportsView.g.cs
-C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\JobCostSheetView.g.cs
-C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\CanvasSubmissionsView.g.cs
-C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\ServiceSubmissionDetails.g.cs
-C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\CanvasUserView.g.cs
-C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\ServiceDayView.g.cs
-C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\CanvasImageDownloadView.g.cs
-C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\App.g.cs
-C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\Service Reader_Content.g.cs
-C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\GeneratedInternalTypeHelper.g.cs
-C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\Service Reader_MarkupCompile.cache
-C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\Service Reader_MarkupCompile.lref
 C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\bin\Debug\Service Reader.exe.config
 C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\bin\Debug\Service Reader.exe
 C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\bin\Debug\Service Reader.pdb
@@ -38,6 +23,21 @@ C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Read
 C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\bin\Debug\de\MigraDoc.RtfRendering-wpf.resources.dll
 C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\bin\Debug\de\PdfSharp-wpf.resources.dll
 C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\bin\Debug\de\PdfSharp.Charting-wpf.resources.dll
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\Service Reader.csproj.ResolveComReference.cache
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\ApplicationWindow.g.cs
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\HistoryTrackerView.g.cs
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\IssueServiceReportsView.g.cs
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\JobCostSheetView.g.cs
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\CanvasSubmissionsView.g.cs
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\ServiceSubmissionDetails.g.cs
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\CanvasUserView.g.cs
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\ServiceDayView.g.cs
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\CanvasImageDownloadView.g.cs
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\App.g.cs
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\Service Reader_Content.g.cs
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\Service Reader_MarkupCompile.cache
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\Service Reader_MarkupCompile.lref
 C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\ApplicationWindow.baml
 C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\HistoryTrackerView.baml
 C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\IssueServiceReportsView.baml
@@ -53,21 +53,6 @@ C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Read
 C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\Service Reader.exe
 C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\Service Reader.pdb
 C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\Service Reader.csprojResolveAssemblyReference.cache
-C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\Service Reader.csproj.ResolveComReference.cache
-C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\ApplicationWindow.g.cs
-C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\HistoryTrackerView.g.cs
-C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\IssueServiceReportsView.g.cs
-C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\JobCostSheetView.g.cs
-C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\CanvasSubmissionsView.g.cs
-C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\ServiceSubmissionDetails.g.cs
-C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\CanvasUserView.g.cs
-C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\ServiceDayView.g.cs
-C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\CanvasImageDownloadView.g.cs
-C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\App.g.cs
-C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\Service Reader_Content.g.cs
-C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\GeneratedInternalTypeHelper.g.cs
-C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\Service Reader_MarkupCompile.cache
-C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\Service Reader_MarkupCompile.lref
 C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\bin\Debug\Service Reader.exe.config
 C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\bin\Debug\Service Reader.exe
 C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\bin\Debug\Service Reader.pdb
@@ -93,6 +78,21 @@ C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Read
 C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\bin\Debug\de\MigraDoc.RtfRendering-wpf.resources.dll
 C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\bin\Debug\de\PdfSharp-wpf.resources.dll
 C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\bin\Debug\de\PdfSharp.Charting-wpf.resources.dll
+C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\Service Reader.csproj.ResolveComReference.cache
+C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\ApplicationWindow.g.cs
+C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\HistoryTrackerView.g.cs
+C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\IssueServiceReportsView.g.cs
+C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\JobCostSheetView.g.cs
+C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\CanvasSubmissionsView.g.cs
+C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\ServiceSubmissionDetails.g.cs
+C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\CanvasUserView.g.cs
+C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\ServiceDayView.g.cs
+C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\CanvasImageDownloadView.g.cs
+C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\App.g.cs
+C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\Service Reader_Content.g.cs
+C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\Service Reader_MarkupCompile.cache
+C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\Service Reader_MarkupCompile.lref
 C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\ApplicationWindow.baml
 C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\HistoryTrackerView.baml
 C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\IssueServiceReportsView.baml
@@ -107,4 +107,3 @@ C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Read
 C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\Service Reader.csproj.GenerateResource.Cache
 C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\Service Reader.exe
 C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\Service Reader.pdb
-C:\Users\Admin\Documents\Richard Docs\Richard Coding\Service-Reader\Service Reader\Service Reader\obj\Debug\Service Reader.csprojResolveAssemblyReference.cache
