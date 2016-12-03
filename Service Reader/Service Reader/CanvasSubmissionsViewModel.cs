@@ -175,6 +175,12 @@ namespace Service_Reader
             CanvasUserView userView = new CanvasUserView();
             userView.DataContext = CanvasUserVM;
             bool? userResult = userView.ShowDialog();
+
+            //RT 3/12/16 - The box may have been cancelled
+            if (userResult != true)
+            {
+                return;
+            }
             
             //CanvasUserVM.CanvasPasswordBox = (PasswordBox)canvasPasswordBox;
             //RT 26/11/16 - Changing the password to use a PasswordBox for security
