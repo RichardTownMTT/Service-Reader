@@ -106,5 +106,3 @@ C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Read
 C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\Service Reader.exe
 C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\Service Reader.pdb
 C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\Service Reader.csprojResolveAssemblyReference.cache
-C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\bin\Debug\MvvmValidation.dll
-C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\bin\Debug\MvvmValidation.xml

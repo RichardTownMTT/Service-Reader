@@ -87,6 +87,14 @@ namespace Service_Reader
 
         private void loadNewSubmission(string[] row)
         {
+            //RT 6/12/16 - If the first date is blank, then we are loading a csv created with this application
+            bool serviceReaderCsv = false;
+            string startDateStr = row[0];
+            if (String.IsNullOrEmpty(startDateStr))
+            {
+                serviceReaderCsv = true;
+            }
+
             //First two dates aren't read
             currentServiceSubmission.SubmissionNumber = Convert.ToInt32(row[2]);
             //App Name isn't used
@@ -95,26 +103,44 @@ namespace Service_Reader
             currentServiceSubmission.UserFirstName = row[6];
             currentServiceSubmission.CanvasResponseId = row[7];
             string dateFormatMinutes = "d/M/yyyy HH:mm";
-            string dateFormatSeconds = "d/M/yyyy HH:mm:ss";
+            string dateFormatSecondsUSA = "M/d/yyyy HH:mm:ss";
             string responseDate = row[8];
-            //RT 15/8/16 - The time is either includes minutes or does not.  
-            try
+            //RT 15/8/16 - The time is either includes minutes or does not. 
+            //RT 6/12/16 - Changng this to use one of the two methods based on what created the row
+            if (serviceReaderCsv)
             {
                 currentServiceSubmission.DtResponse = DateTime.ParseExact(responseDate, dateFormatMinutes, CultureInfo.InvariantCulture);
-            }
-            catch
+            } 
+            else
             {
-                currentServiceSubmission.DtResponse = DateTime.ParseExact(responseDate, dateFormatSeconds, CultureInfo.InvariantCulture);
+                currentServiceSubmission.DtResponse = DateTime.ParseExact(responseDate, dateFormatSecondsUSA, CultureInfo.InvariantCulture);
             }
+            //try
+            //{
+            //    currentServiceSubmission.DtResponse = DateTime.ParseExact(responseDate, dateFormatMinutes, CultureInfo.InvariantCulture);
+            //}
+            //catch
+            //{
+            //    currentServiceSubmission.DtResponse = DateTime.ParseExact(responseDate, dateFormatSeconds, CultureInfo.InvariantCulture);
+            //}
             string deviceDate = row[9];
-            try
+
+            if (serviceReaderCsv)
             {
                 currentServiceSubmission.DtDevice = DateTime.ParseExact(deviceDate, dateFormatMinutes, CultureInfo.InvariantCulture);
             }
-            catch
+            else
             {
-                currentServiceSubmission.DtDevice = DateTime.ParseExact(deviceDate, dateFormatSeconds, CultureInfo.InvariantCulture);
+                currentServiceSubmission.DtDevice = DateTime.ParseExact(deviceDate, dateFormatSecondsUSA, CultureInfo.InvariantCulture);
             }
+            //try
+            //{
+            //    currentServiceSubmission.DtDevice = DateTime.ParseExact(deviceDate, dateFormatMinutes, CultureInfo.InvariantCulture);
+            //}
+            //catch
+            //{
+            //    currentServiceSubmission.DtDevice = DateTime.ParseExact(deviceDate, dateFormatSeconds, CultureInfo.InvariantCulture);
+            //}
             //Submission Form name not used
             currentServiceSubmission.SubmissionFormVersion = Convert.ToInt32(row[11]);
             currentServiceSubmission.Customer = row[12];
@@ -128,7 +154,16 @@ namespace Service_Reader
             currentServiceSubmission.MachineSerial = row[20];
             currentServiceSubmission.CncControl = row[21];
             string jobStartDate = row[22];
-            currentServiceSubmission.DtJobStart = DateTime.ParseExact(jobStartDate, "d/M/yyyy", CultureInfo.InvariantCulture);
+            //RT 6/12/16 - From canvas csv, this is a date, datetime from service reader
+            if (serviceReaderCsv)
+            {
+                currentServiceSubmission.DtJobStart = DateTime.ParseExact(jobStartDate, dateFormatMinutes, CultureInfo.InvariantCulture);
+            }
+            else
+            {
+                currentServiceSubmission.DtJobStart = DateTime.ParseExact(jobStartDate, "d/M/yyyy", CultureInfo.InvariantCulture);
+            }
+            //currentServiceSubmission.DtJobStart = DateTime.ParseExact(jobStartDate, "d/M/yyyy", CultureInfo.InvariantCulture);
             currentServiceSubmission.CustomerOrderNo = row[23];
             currentServiceSubmission.MttJobNumber = row[24];
             currentServiceSubmission.JobDescription = row[25];
@@ -157,7 +192,16 @@ namespace Service_Reader
             currentServiceSubmission.CustomerSignatureUrl = row[60];
             currentServiceSubmission.CustomerName = row[61];
             string signedDate = row[62];
-            currentServiceSubmission.DtSigned = DateTime.ParseExact(signedDate, "d/M/yyyy", CultureInfo.InvariantCulture);
+            //RT 6/12/16 - From canvas csv, this is a date, datetime from service reader
+            if (serviceReaderCsv)
+            {
+                currentServiceSubmission.DtSigned = DateTime.ParseExact(jobStartDate, dateFormatMinutes, CultureInfo.InvariantCulture);
+            }
+            else
+            {
+                currentServiceSubmission.DtSigned = DateTime.ParseExact(jobStartDate, "d/M/yyyy", CultureInfo.InvariantCulture);
+            }
+            //currentServiceSubmission.DtSigned = DateTime.ParseExact(signedDate, "d/M/yyyy", CultureInfo.InvariantCulture);
             currentServiceSubmission.MttEngSignatureUrl = row[63];
         }
 
@@ -316,96 +360,184 @@ namespace Service_Reader
         //}
         private void loadDayForSubmission(string[] row, ServiceSheetViewModel currentSubmission)
         {
+            //RT 6/12/16 - If the first date is blank, then we are loading a csv created with this application
+            bool serviceReaderCsv = false;
+            string startDateStr = row[0];
+            if (String.IsNullOrEmpty(startDateStr))
+            {
+                serviceReaderCsv = true;
+            }
+
             string dateFormatMinutes = "d/M/yyyy HH:mm";
-            string dateFormatSeconds = "d/M/yyyy H:mm:ss";
+            //RT 6/12/16 - varable no longer needed.  Added by accident
+            //string dateFormatSeconds = "d/M/yyyy H:mm:ss";
 
             //Need to set the submission on the service day
             //ServiceDayViewModel currentDay = new ServiceDayViewModel(currentSubmission);
             //The times may be with / without the date, depending on when they were imported.
             //Need to load the service date first, in case we need it for the times
             string serviceDate = row[40];
-            DateTime dtReport = DateTime.ParseExact(serviceDate, "d/M/yyyy", CultureInfo.InvariantCulture);
+            //RT 6/12/16 - From canvas csv, this is a date, datetime from service reader
+            DateTime dtReport;
+            if (serviceReaderCsv)
+            {
+                dtReport = DateTime.ParseExact(serviceDate, dateFormatMinutes, CultureInfo.InvariantCulture);
+            }
+            else
+            {
+                dtReport = DateTime.ParseExact(serviceDate, "d/M/yyyy", CultureInfo.InvariantCulture);
+            }
 
             string travelStartTime = row[26];
+
+            //RT 6/12/16 - Canvas created csv's are time only.  Service Reader ones include 
             DateTime dtTravelStart;
-            try
+            if (serviceReaderCsv)
             {
                 dtTravelStart = DateTime.ParseExact(travelStartTime, dateFormatMinutes, CultureInfo.InvariantCulture);
             }
-            catch
+            else
             {
-                try
-                {
-                    dtTravelStart = DateTime.ParseExact(travelStartTime, dateFormatSeconds, CultureInfo.InvariantCulture);
-                }
-                catch
-                {
-                    string travelStartIncDate = serviceDate + " " + travelStartTime;
-                    dtTravelStart = DateTime.ParseExact(travelStartIncDate, dateFormatMinutes, CultureInfo.InvariantCulture);
-                }
+                string travelStartIncDate = serviceDate + " " + travelStartTime;
+                dtTravelStart = DateTime.ParseExact(travelStartIncDate, dateFormatMinutes, CultureInfo.InvariantCulture);
             }
+            //try
+            //{
+            //    dtTravelStart = DateTime.ParseExact(travelStartTime, dateFormatMinutes, CultureInfo.InvariantCulture);
+            //}
+            //catch
+            //{
+            //    try
+            //    {
+            //        dtTravelStart = DateTime.ParseExact(travelStartTime, dateFormatSeconds, CultureInfo.InvariantCulture);
+            //    }
+            //    catch
+            //    {
+            //        string travelStartIncDate = serviceDate + " " + travelStartTime;
+            //        dtTravelStart = DateTime.ParseExact(travelStartIncDate, dateFormatMinutes, CultureInfo.InvariantCulture);
+            //    }
+            //}
 
             string arrivalTimeOnsite = row[27];
             DateTime dtArrivalOnsite;
-            try
+            if (serviceReaderCsv)
             {
                 dtArrivalOnsite = DateTime.ParseExact(arrivalTimeOnsite, dateFormatMinutes, CultureInfo.InvariantCulture);
             }
-            catch
+            else
             {
-                try
-                {
-                    dtArrivalOnsite = DateTime.ParseExact(arrivalTimeOnsite, dateFormatSeconds, CultureInfo.InvariantCulture);
-                }
-                catch
-                {
-                    string arrivalOnsiteIncDate = serviceDate + " " + arrivalTimeOnsite;
-                    dtArrivalOnsite = DateTime.ParseExact(arrivalOnsiteIncDate, dateFormatMinutes, CultureInfo.InvariantCulture);
-                }
+                string arrivalOnsiteIncDate = serviceDate + " " + arrivalTimeOnsite;
+                dtArrivalOnsite = DateTime.ParseExact(arrivalOnsiteIncDate, dateFormatMinutes, CultureInfo.InvariantCulture);
             }
+
+            //try
+            //{
+            //    dtArrivalOnsite = DateTime.ParseExact(arrivalTimeOnsite, dateFormatMinutes, CultureInfo.InvariantCulture);
+            //}
+            //catch
+            //{
+            //    try
+            //    {
+            //        dtArrivalOnsite = DateTime.ParseExact(arrivalTimeOnsite, dateFormatSeconds, CultureInfo.InvariantCulture);
+            //    }
+            //    catch
+            //    {
+            //        string arrivalOnsiteIncDate = serviceDate + " " + arrivalTimeOnsite;
+            //        dtArrivalOnsite = DateTime.ParseExact(arrivalOnsiteIncDate, dateFormatMinutes, CultureInfo.InvariantCulture);
+            //    }
+            //}
 
             string departureTime = row[28];
             DateTime dtDeparture;
-            try
+            if (serviceReaderCsv)
             {
                 dtDeparture = DateTime.ParseExact(departureTime, dateFormatMinutes, CultureInfo.InvariantCulture);
             }
-            catch
+            else
             {
-                try
-                {
-                    dtDeparture = DateTime.ParseExact(departureTime, dateFormatSeconds, CultureInfo.InvariantCulture);
-                }
-                catch
-                {
-                    string departureIncDate = serviceDate + " " + departureTime;
-                    dtDeparture = DateTime.ParseExact(departureIncDate, dateFormatMinutes, CultureInfo.InvariantCulture);
-                }
+                string departureIncDate = serviceDate + " " + departureTime;
+                dtDeparture = DateTime.ParseExact(departureIncDate, dateFormatMinutes, CultureInfo.InvariantCulture);
             }
+            //try
+            //{
+            //    dtDeparture = DateTime.ParseExact(departureTime, dateFormatMinutes, CultureInfo.InvariantCulture);
+            //}
+            //catch
+            //{
+            //    try
+            //    {
+            //        dtDeparture = DateTime.ParseExact(departureTime, dateFormatSeconds, CultureInfo.InvariantCulture);
+            //    }
+            //    catch
+            //    {
+            //        string departureIncDate = serviceDate + " " + departureTime;
+            //        dtDeparture = DateTime.ParseExact(departureIncDate, dateFormatMinutes, CultureInfo.InvariantCulture);
+            //    }
+            //}
 
             string travelEndTime = row[29];
             DateTime dtTravelEnd;
-            try
+            if (serviceReaderCsv)
             {
                 dtTravelEnd = DateTime.ParseExact(travelEndTime, dateFormatMinutes, CultureInfo.InvariantCulture);
             }
-            catch
+            else
             {
-                try
-                {
-                    dtTravelEnd = DateTime.ParseExact(travelEndTime, dateFormatSeconds, CultureInfo.InvariantCulture);
-                }
-                catch
-                {
-                    string travelEndIncDate = serviceDate + " " + travelEndTime;
-                    dtTravelEnd = DateTime.ParseExact(travelEndIncDate, dateFormatMinutes, CultureInfo.InvariantCulture);
-                }
+                string travelEndIncDate = serviceDate + " " + travelEndTime;
+                dtTravelEnd = DateTime.ParseExact(travelEndIncDate, dateFormatMinutes, CultureInfo.InvariantCulture);
             }
+            //try
+            //{
+            //    dtTravelEnd = DateTime.ParseExact(travelEndTime, dateFormatMinutes, CultureInfo.InvariantCulture);
+            //}
+            //catch
+            //{
+            //    try
+            //    {
+            //        dtTravelEnd = DateTime.ParseExact(travelEndTime, dateFormatSeconds, CultureInfo.InvariantCulture);
+            //    }
+            //    catch
+            //    {
+            //        string travelEndIncDate = serviceDate + " " + travelEndTime;
+            //        dtTravelEnd = DateTime.ParseExact(travelEndIncDate, dateFormatMinutes, CultureInfo.InvariantCulture);
+            //    }
+            //}
 
             int mileage = Convert.ToInt32(row[30]);
-            bool dailyAllowance = Convert.ToBoolean(row[31]);
-            bool overnightAllowance = Convert.ToBoolean(row[32]);
-            bool barrierPayment = Convert.ToBoolean(row[33]);
+            //RT 6/12/16  - The allowances are 1/0.  Need to convert to bool
+            string daStr = row[31];
+            bool dailyAllowance;
+            if (daStr.Equals("1"))
+            {
+                dailyAllowance = true;
+            }
+            else
+            {
+                dailyAllowance = false;
+            }
+            //bool dailyAllowance = Convert.ToBoolean(row[31]);
+            bool overnightAllowance;
+            string onStr = row[32];
+            if (onStr.Equals("1"))
+            {
+                overnightAllowance = true;
+            }
+            else
+            {
+                overnightAllowance = false;
+            }
+            //bool overnightAllowance = Convert.ToBoolean(row[32]);
+            bool barrierPayment;
+            string bpStr = row[33];
+            if (bpStr.Equals("1"))
+            {
+                barrierPayment = true;
+            }
+            else
+            {
+                barrierPayment = false;
+            }
+            //bool barrierPayment = Convert.ToBoolean(row[33]);
             double travelTimeToSite = Convert.ToDouble(row[34]);
             double travelTimeFromSite = Convert.ToDouble(row[35]);
             double totalTravelTime = Convert.ToDouble(row[36]);
@@ -415,7 +547,7 @@ namespace Service_Reader
             //Now create the serviceDayVM
             ServiceDayViewModel retval = new ServiceDayViewModel(dtTravelStart, dtArrivalOnsite, dtDeparture, dtTravelEnd, mileage, dailyAllowance, overnightAllowance, barrierPayment,
                 travelTimeToSite, travelTimeFromSite, totalTravelTime, totalTimeOnsite, dailyReport, partsSupplied, dtReport, currentSubmission);
-
+            currentSubmission.AddServiceDayViewModel(retval);
             //This doesn't need to return anything, as the day has been set on the submission.
         }
 
