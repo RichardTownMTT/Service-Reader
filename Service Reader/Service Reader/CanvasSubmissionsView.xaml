@@ -28,7 +28,7 @@
         <DatePicker x:Name="dtSubmissionsTo" SelectedDate="{Binding DtEndSubmissionsDownload}" Grid.Row="0" Grid.Column="3"/>
         <Label x:Name="labelTo" Content="To" Grid.Column="2" Grid.Row="0"/>
         <Button x:Name="DownloadCanvasData" Content="Download Sheets" Command="{Binding CanvasDataDownloadCommand}" Grid.Column="4" Grid.Row="0" Margin="5"/>
-        <Button Content="Edit" Grid.Column="0" Grid.Row="1" Margin="5"/>
+        <Button Content="Edit" Grid.Column="0" Grid.Row="1" Margin="5" Command="{Binding EditSubmissionCommand}"/>
         <Button Content="Save" Grid.Column="1" Grid.Row="1" Margin="5"/>
         <Button Content="Cancel" Grid.Column="2" Grid.Row="1" Margin="5"/>
         <Button Content="Export to csv" Grid.Column="3" Grid.Row="1" Margin="5" Command="{Binding CsvExportCommand}"/>

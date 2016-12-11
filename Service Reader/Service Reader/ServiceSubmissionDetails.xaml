@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Service_Reader"
         mc:Ignorable="d" >
-    <StackPanel Orientation="Vertical" x:Name="LayoutRoot">
+    <StackPanel Orientation="Vertical" x:Name="LayoutRoot" IsEnabled="{Binding currentSubmissionVM.EditMode}">
        <GroupBox Header="Submission Details">
             <Grid>
                 <Grid.RowDefinitions>

@@ -25,6 +25,8 @@ namespace Service_Reader
         private ICommand m_canvasDataDownloadCommand;
         //RT 23/11/16 - Adding command to create CSV from data
         private ICommand m_exportCsvCommand;
+        //RT 11/12/16 - Adding edit, save and cancel buttons
+        private ICommand m_editSubmissionCommand;
 
         //Creator for the class.  Sets the defaults, e.g. start/end date
         public CanvasSubmissionsViewModel()
@@ -167,6 +169,33 @@ namespace Service_Reader
                 m_selectedSubmission = value;
                 onPropertyChanged("SelectedSubmission");
             }
+        }
+
+        public ICommand EditSubmissionCommand
+        {
+            get
+            {
+                if (m_editSubmissionCommand == null)
+                {
+                    m_editSubmissionCommand = new RelayCommand(param => editSubmissionMode());
+                }
+                return m_editSubmissionCommand;
+            }
+
+            set
+            {
+                m_editSubmissionCommand = value;
+            }
+        }
+
+        private void editSubmissionMode()
+        {
+            if (SelectedSubmission == null)
+            {
+                MessageBox.Show("Please select a submission");
+                return;
+            }
+            SelectedSubmission.EditMode = true;
         }
 
         private void downloadCanvasData(object canvasPasswordBox)

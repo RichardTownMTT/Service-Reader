@@ -71,6 +71,8 @@ namespace Service_Reader
         private ImageSource m_image5;
 
         private AllServiceDayViewModels m_AllServiceDays;
+        //RT 11/12/16 - Adding an edit mode for the submission.
+        private bool m_editMode = false;
 
         //Creator for the VM
         public ServiceSheetViewModel(int submissionNoEntered, string appNameEntered, string userfirstNameEntered, string userSurnameEntered, string canvasResponseIdEntered, DateTime dtResponseEntered, 
@@ -1659,6 +1661,21 @@ namespace Service_Reader
                 onPropertyChanged("MttEngSignatureUrl");
             }
         }
+
+        public bool EditMode
+        {
+            get
+            {
+                return m_editMode;
+            }
+
+            set
+            {
+                m_editMode = value;
+                onPropertyChanged("EditMode");
+            }
+        }
+        
 
         public void AddServiceDayViewModel(ServiceDayViewModel serviceDayToAdd)
         {
