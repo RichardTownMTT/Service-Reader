@@ -10,7 +10,7 @@
         <Expander.Header>
             <TextBlock Text="{Binding DtReport, StringFormat=dd/MM/yy}" />
         </Expander.Header>
-        <Grid ScrollViewer.VerticalScrollBarVisibility="Disabled">
+        <Grid ScrollViewer.VerticalScrollBarVisibility="Disabled" IsEnabled="{Binding ParentServiceSheetVM.EditMode}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>

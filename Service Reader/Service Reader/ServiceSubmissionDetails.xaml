@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Service_Reader"
         mc:Ignorable="d" >
-    <StackPanel Orientation="Vertical" x:Name="LayoutRoot" IsEnabled="{Binding currentSubmissionVM.EditMode}">
+    <StackPanel Orientation="Vertical" x:Name="LayoutRoot">
        <GroupBox Header="Submission Details">
             <Grid>
                 <Grid.RowDefinitions>
@@ -23,7 +23,7 @@
                 <TextBox Name="txtEngineer" Grid.Column="1" Grid.Row="1" Margin="5" Width="200" HorizontalAlignment="Left" IsReadOnly="True" Text="{Binding Path=currentSubmissionVM.EngineerFullName, Mode=OneWay}"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Customer">
+        <GroupBox Header="Customer" IsEnabled="{Binding currentSubmissionVM.EditMode}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30"/>
@@ -57,7 +57,7 @@
                 <TextBox Name="txtCustomerPhone" Grid.Column="3" Grid.Row="3" Margin="5" Text="{Binding currentSubmissionVM.CustomerPhoneNo}"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Job Details">
+        <GroupBox Header="Job Details" IsEnabled="{Binding currentSubmissionVM.EditMode}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30"/>
@@ -101,7 +101,7 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </GroupBox>
-        <GroupBox Header="Job Completion Details">
+        <GroupBox Header="Job Completion Details" IsEnabled="{Binding currentSubmissionVM.EditMode}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -141,7 +141,7 @@
                 <Image Grid.Column="1" Grid.Row="9" Margin ="5" Source="{Binding Path=currentSubmissionVM.Image5}" HorizontalAlignment="Left" Stretch="Fill" Width="300" Grid.ColumnSpan="2"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Submission Times">
+        <GroupBox Header="Submission Times" IsEnabled="{Binding currentSubmissionVM.EditMode}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -169,7 +169,7 @@
                 <TextBox Name="txtTotalBarrierPayments" Grid.Column="1" Grid.Row="5" Margin ="5" IsReadOnly="True" Text="{Binding currentSubmissionVM.TotalBarrierPayments, Mode=OneWay}"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Job Signoff">
+        <GroupBox Header="Job Signoff" IsEnabled="{Binding currentSubmissionVM.EditMode}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="100"/>
@@ -192,7 +192,7 @@
                 <Image Name="imgEngineerSignature" Source="{Binding currentSubmissionVM.MttEngineerSignature}" HorizontalAlignment="Left" Stretch="Fill" Grid.Column="1" Grid.Row="3" Margin="5" Width="300" Grid.ColumnSpan="2"/>
             </Grid>
         </GroupBox>
-        <GroupBox Header="Office Approval">
+        <GroupBox Header="Office Approval" IsEnabled="{Binding currentSubmissionVM.EditMode}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>

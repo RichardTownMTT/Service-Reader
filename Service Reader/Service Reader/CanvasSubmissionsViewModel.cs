@@ -17,6 +17,8 @@ namespace Service_Reader
         private DateTime m_dtStartSubmissionsDownload;
         private DateTime m_dtEndSubmissionsDownload;
         private ServiceSheetViewModel m_selectedSubmission;
+        //RT 11/12/16 - Adding previous submission.  If editing and select submission changes, need to revert changes
+        private ServiceSheetViewModel m_previousSubmission;
 
         //These are all the loaded canvas sheets
         private ObservableCollection<ServiceSheetViewModel> m_allServiceSheets;
@@ -168,8 +170,24 @@ namespace Service_Reader
 
             set
             {
+                //RT 11/12/16 - Need to reset any changes on the previous submission
+                if (PreviousSubmission != null)
+                {
+                    discardChangesPreviousSubmission();
+                }
+                //First time, we need to set to this value
+                PreviousSubmission = value;
+                
                 m_selectedSubmission = value;
                 onPropertyChanged("SelectedSubmission");
+            }
+        }
+
+        private void discardChangesPreviousSubmission()
+        {
+            if (PreviousSubmission.EditMode)
+            {
+                PreviousSubmission.CancelEdit();
             }
         }
 
@@ -221,6 +239,19 @@ namespace Service_Reader
             set
             {
                 m_cancelEditCommand = value;
+            }
+        }
+
+        public ServiceSheetViewModel PreviousSubmission
+        {
+            get
+            {
+                return m_previousSubmission;
+            }
+
+            set
+            {
+                m_previousSubmission = value;
             }
         }
 
