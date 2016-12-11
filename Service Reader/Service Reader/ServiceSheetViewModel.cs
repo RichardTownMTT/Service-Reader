@@ -139,6 +139,63 @@ namespace Service_Reader
             }
             this.AllServiceDays = serviceDaysEntered;
         }
+
+        //RT 11/12/16 - This loads the values from the ServiceSheet and the ServiceDays
+        public void CancelEdit()
+        {
+            m_additionalFaults = ServiceSubmission.AdditionalFaults;
+            m_addressLine1 = ServiceSubmission.AddressLine1;
+            m_addressLine2 = ServiceSubmission.AddressLine2;
+            m_appName = ServiceSubmission.AppName;
+            m_canvasResponseId = ServiceSubmission.CanvasResponseId;
+            m_cncControl = ServiceSubmission.CncControl;
+            m_customer = ServiceSubmission.Customer;
+            m_customerContact = ServiceSubmission.CustomerContact;
+            m_customerName = ServiceSubmission.CustomerName;
+            m_customerOrderNo = ServiceSubmission.CustomerOrderNo;
+            m_customerPhoneNo = ServiceSubmission.CustomerPhoneNo;
+            m_customerSignatureUrl = ServiceSubmission.CustomerSignatureUrl;
+            m_dtDevice = ServiceSubmission.DtDevice;
+            m_dtEndSubmission = ServiceSubmission.DtEndSubmission;
+            m_dtJobStart = ServiceSubmission.DtJobStart;
+            m_dtResponse = ServiceSubmission.DtResponse;
+            m_dtSigned = ServiceSubmission.DtSigned;
+            m_dtStartSubmission = ServiceSubmission.DtStartSubmission;
+            m_finalJobReport = ServiceSubmission.FinalJobReport;
+            m_followUpPartsRequired = ServiceSubmission.FollowUpPartsRequired;
+            m_image1Url = ServiceSubmission.Image1Url;
+            m_image2Url = ServiceSubmission.Image2Url;
+            m_image3Url = ServiceSubmission.Image3Url;
+            m_image4Url = ServiceSubmission.Image4Url;
+            m_image5Url = ServiceSubmission.Image5Url;
+            m_jobDescription = ServiceSubmission.JobDescription;
+            m_jobStatus = ServiceSubmission.JobStatus;
+            m_jobTotalMileage = ServiceSubmission.JobTotalMileage;
+            m_jobTotalTimeOnsite = ServiceSubmission.JobTotalTimeOnsite;
+            m_jobTotalTravelTime = ServiceSubmission.JobTotalTravelTime;
+            m_machineMakeModel = ServiceSubmission.MachineMakeModel;
+            m_machineSerial = ServiceSubmission.MachineSerial;
+            m_mttEngSignatureUrl = ServiceSubmission.MttEngSignatureUrl;
+            m_mttJobNumber = ServiceSubmission.MttJobNumber;
+            m_postcode = ServiceSubmission.Postcode;
+            m_quoteRequired = ServiceSubmission.QuoteRequired;
+            m_submissionFormName = ServiceSubmission.SubmissionFormName;
+            m_submissionFormVersion  = ServiceSubmission.SubmissionFormVersion;
+            m_submissionNumber = ServiceSubmission.SubmissionNumber;
+            m_totalBarrierPayments = ServiceSubmission.TotalBarrierPayments;
+            m_totalDailyAllowances = ServiceSubmission.TotalDailyAllowances;
+            m_totalOvernightAllowances = ServiceSubmission.TotalOvernightAllowances;
+            m_townCity = ServiceSubmission.TownCity;
+            m_userFirstName = ServiceSubmission.UserFirstName;
+            m_username = ServiceSubmission.Username;
+            m_userSurname = ServiceSubmission.UserSurname;
+            foreach (ServiceDayViewModel sd in AllServiceDays.AllServiceDayVMs)
+            {
+                sd.CancelEdit();
+            }
+            EditMode = false;
+        }
+
         public ServiceSheetViewModel()
         {
             ServiceSubmission = new ServiceSheet();
@@ -203,7 +260,8 @@ namespace Service_Reader
             {
                 sd.Save();
             }
-    }
+            EditMode = false;
+        }
 
         //public ServiceSheet ServiceSubmission
         //{

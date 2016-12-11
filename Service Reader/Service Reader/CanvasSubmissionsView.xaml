@@ -29,8 +29,8 @@
         <Label x:Name="labelTo" Content="To" Grid.Column="2" Grid.Row="0"/>
         <Button x:Name="DownloadCanvasData" Content="Download Sheets" Command="{Binding CanvasDataDownloadCommand}" Grid.Column="4" Grid.Row="0" Margin="5"/>
         <Button Content="Edit" Grid.Column="0" Grid.Row="1" Margin="5" Command="{Binding EditSubmissionCommand}"/>
-        <Button Content="Save" Grid.Column="1" Grid.Row="1" Margin="5"/>
-        <Button Content="Cancel" Grid.Column="2" Grid.Row="1" Margin="5"/>
+        <Button Content="Save" Grid.Column="1" Grid.Row="1" Margin="5" Command="{Binding SaveSubmissionCommand}"/>
+        <Button Content="Cancel" Grid.Column="2" Grid.Row="1" Margin="5" Command="{Binding CancelEditCommand}"/>
         <Button Content="Export to csv" Grid.Column="3" Grid.Row="1" Margin="5" Command="{Binding CsvExportCommand}"/>
         <DataGrid x:Name="dataGrid" ItemsSource="{Binding AllServiceSheets}" AutoGenerateColumns="False" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="5" SelectedItem="{Binding Path=SelectedSubmission}" CanUserAddRows="False" IsReadOnly="True" SelectionMode="Single">
             <DataGrid.Columns>

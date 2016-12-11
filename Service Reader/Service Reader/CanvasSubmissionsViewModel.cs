@@ -27,6 +27,8 @@ namespace Service_Reader
         private ICommand m_exportCsvCommand;
         //RT 11/12/16 - Adding edit, save and cancel buttons
         private ICommand m_editSubmissionCommand;
+        private ICommand m_saveSubmissionCommand;
+        private ICommand m_cancelEditCommand;
 
         //Creator for the class.  Sets the defaults, e.g. start/end date
         public CanvasSubmissionsViewModel()
@@ -186,6 +188,75 @@ namespace Service_Reader
             {
                 m_editSubmissionCommand = value;
             }
+        }
+
+        public ICommand SaveSubmissionCommand
+        {
+            get
+            {
+                if (m_saveSubmissionCommand == null)
+                {
+                    m_saveSubmissionCommand = new RelayCommand(param => saveSubmission());
+                }
+                return m_saveSubmissionCommand;
+            }
+
+            set
+            {
+                m_saveSubmissionCommand = value;
+            }
+        }
+
+        public ICommand CancelEditCommand
+        {
+            get
+            {
+                if (m_cancelEditCommand == null)
+                {
+                    m_cancelEditCommand = new RelayCommand(param => cancelEditSubmission());
+                }
+                return m_cancelEditCommand;
+            }
+
+            set
+            {
+                m_cancelEditCommand = value;
+            }
+        }
+
+        private void cancelEditSubmission()
+        {
+            if (SelectedSubmission == null)
+            {
+                MessageBox.Show("Please select a submission");
+                return;
+            }
+
+            //If not in edit mode, then nothing to save.
+            if (SelectedSubmission.EditMode == false)
+            {
+                MessageBox.Show("This submission has not been edited.");
+                return;
+            }
+
+            SelectedSubmission.CancelEdit();
+        }
+
+        private void saveSubmission()
+        {
+            if (SelectedSubmission == null)
+            {
+                MessageBox.Show("Please select a submission");
+                return;
+            }
+
+            //If not in edit mode, then nothing to save.
+            if (SelectedSubmission.EditMode == false)
+            {
+                MessageBox.Show("Nothing to save. This submission has not been edited.");
+                return;
+            }
+            SelectedSubmission.Save();
         }
 
         private void editSubmissionMode()
