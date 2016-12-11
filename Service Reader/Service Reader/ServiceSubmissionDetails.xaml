@@ -163,10 +163,10 @@
                 <Label Content="Total Barrier Payments" Grid.Column="0" Grid.Row="5"/>
                 <TextBox Name="txtTotalTimeOnsite" Grid.Column="1" Grid.Row="0" Margin="5" IsReadOnly="True" Text="{Binding currentSubmissionVM.JobTotalTimeOnsite, Mode=OneWay}"/>
                 <TextBox Name="txtTotalTravelTime" Grid.Column="1" Grid.Row="1" Margin="5" IsReadOnly="True" Text="{Binding currentSubmissionVM.JobTotalTravelTime, Mode=OneWay}"/>
-                <TextBox Name="txtTotalMileage" Grid.Column="1" Grid.Row="2" Margin ="5" Text="{Binding currentSubmissionVM.JobTotalMileage, Mode=OneWay}"/>
-                <TextBox Name="txtTotalDailyAllowances" Grid.Column="1" Grid.Row="3" Margin ="5" Text="{Binding currentSubmissionVM.TotalDailyAllowances, Mode=OneWay}"/>
-                <TextBox Name="txtTotalOvernightAllowances" Grid.Column="1" Grid.Row="4" Margin ="5" Text="{Binding currentSubmissionVM.TotalOvernightAllowances, Mode=OneWay}"/>
-                <TextBox Name="txtTotalBarrierPayments" Grid.Column="1" Grid.Row="5" Margin ="5" Text="{Binding currentSubmissionVM.TotalBarrierPayments, Mode=OneWay}"/>
+                <TextBox Name="txtTotalMileage" Grid.Column="1" Grid.Row="2" Margin ="5" IsReadOnly="True" Text="{Binding currentSubmissionVM.JobTotalMileage, Mode=OneWay}"/>
+                <TextBox Name="txtTotalDailyAllowances" Grid.Column="1" Grid.Row="3" Margin ="5" IsReadOnly="True" Text="{Binding currentSubmissionVM.TotalDailyAllowances, Mode=OneWay}"/>
+                <TextBox Name="txtTotalOvernightAllowances" Grid.Column="1" Grid.Row="4" Margin ="5" IsReadOnly="True" Text="{Binding currentSubmissionVM.TotalOvernightAllowances, Mode=OneWay}"/>
+                <TextBox Name="txtTotalBarrierPayments" Grid.Column="1" Grid.Row="5" Margin ="5" IsReadOnly="True" Text="{Binding currentSubmissionVM.TotalBarrierPayments, Mode=OneWay}"/>
             </Grid>
         </GroupBox>
         <GroupBox Header="Job Signoff">

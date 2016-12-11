@@ -359,23 +359,46 @@ namespace Service_Reader
 
         public void CancelEdit()
         {
-            m_arrivalOnsiteTime = ServiceDayModel.ArrivalOnsiteTime;
-            m_barrierPayment = ServiceDayModel.BarrierPayment;
-            m_dailyAllowance = ServiceDayModel.DailyAllowance;
-            m_dailyReport = ServiceDayModel.DailyReport;
-            m_departureSiteTime = ServiceDayModel.DepartureSiteTime;
-            m_dtReport = ServiceDayModel.DtReport;
-            m_mileage = ServiceDayModel.Mileage;
-            m_overnightAllowance = ServiceDayModel.OvernightAllowance;
-            m_partsSuppliedToday = ServiceDayModel.PartsSuppliedToday;
-            m_totalOnsiteTime = ServiceDayModel.TotalOnsiteTime;
-            m_totalTravelTime = ServiceDayModel.TotalTravelTime;
-            m_travelEndTime = ServiceDayModel.TravelEndTime;
-            m_travelTimeFromSite = ServiceDayModel.TravelFromSiteTime;
-            m_travelStartTime = ServiceDayModel.TravelStartTime;
-            m_travelTimeToSite = ServiceDayModel.TravelToSiteTime;
-        }
+            ArrivalOnsiteTime = ServiceDayModel.ArrivalOnsiteTime;
+            if (ServiceDayModel.BarrierPayment == 1)
+            {
+                BarrierPayment = true;
+            }
+            else
+            {
+                BarrierPayment = false;
+            }
+            
+            if (ServiceDayModel.DailyAllowance == 1)
+            {
+                DailyAllowance = true;
+            }
+            else
+            {
+                DailyAllowance = false;
+            }
+            DailyReport = ServiceDayModel.DailyReport;
+            DepartureSiteTime = ServiceDayModel.DepartureSiteTime;
+            DtReport = ServiceDayModel.DtReport;
+            Mileage = ServiceDayModel.Mileage;
 
+            if (ServiceDayModel.OvernightAllowance == 1)
+            {
+                OvernightAllowance = true;
+            }
+            else
+            {
+                OvernightAllowance = false;
+            }
+            
+            PartsSuppliedToday = ServiceDayModel.PartsSuppliedToday;
+            TotalOnsiteTime = ServiceDayModel.TotalOnsiteTime;
+            TotalTravelTime = ServiceDayModel.TotalTravelTime;
+            TravelEndTime = ServiceDayModel.TravelEndTime;
+            TravelTimeFromSite = ServiceDayModel.TravelFromSiteTime;
+            TravelStartTime = ServiceDayModel.TravelStartTime;
+            TravelTimeToSite = ServiceDayModel.TravelToSiteTime;
+        }
         public ServiceDay ServiceDayModel
         {
             get
