@@ -5,11 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Service_Reader"
              mc:Ignorable="d" >
-    <UserControl.Resources>
-        <DataTemplate x:Key="serviceSubmissionTemplate" DataType="{x:Type local:oldServiceSubmissionModel}">
-            <local:ServiceSubmissionDetails DataContext="{Binding}" />
-        </DataTemplate>
-    </UserControl.Resources>
     <Grid>
         <Grid.DataContext>
             <local:JobCostSheetViewModel/>
@@ -26,27 +21,19 @@
             <RowDefinition Height="250"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Button Content="Load CSV" Grid.Column="0" Grid.Row="0" Margin="5" />
-        <Button Content="Create Cost Sheet" Grid.Column="1" Grid.Row="0" Margin="5" />
-        <local:CustomDataGrid x:Name="dataGrid" ItemsSource="{Binding AllServiceSubmissions}" AutoGenerateColumns="False" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="6" Margin="5" SelectedItemsList="{Binding Path=SelectedSubmissions, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
-            <local:CustomDataGrid.Columns>
-                <DataGridTextColumn Header="Submission No" Binding="{Binding SubmissionNo}"/>
-                <DataGridTextColumn Header="Engineer" Binding="{Binding EngineerFullName}"/>
-                <DataGridTextColumn Header="Customer" Binding="{Binding Customer}"/>
-                <DataGridTextColumn Header="Job Start" Binding="{Binding JobStart, StringFormat=\{0:dd/MM/yy\}}"/>
-            </local:CustomDataGrid.Columns>
-            <local:CustomDataGrid.RowStyle>
-                <Style TargetType="DataGridRow">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding Approved}" Value="True">
-                            <Setter Property="Background" Value="LightGreen"></Setter>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Approved}" Value="False">
-                            <Setter Property="Background" Value="LightCyan"></Setter>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </local:CustomDataGrid.RowStyle>
-        </local:CustomDataGrid>
-        </Grid>
+        <Button Content="Load CSV" Grid.Column="0" Grid.Row="0" Margin="5" Command="{Binding LoadCsvCommand}"/>
+        <Button Content="Create Cost Sheet" Grid.Column="1" Grid.Row="0" Margin="5" Command="{Binding CreateCostSheetCommand}" />
+        <DataGrid x:Name="dataGrid" ItemsSource="{Binding AllServiceSheets}" SelectedItem="{Binding SelectedSubmissions}" AutoGenerateColumns="False" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="6" Margin="5"   CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Submission No" Binding="{Binding SubmissionNumber}" />
+                <DataGridTextColumn Header="Engineer" Binding="{Binding EngineerFullName}" />
+                <DataGridTextColumn Header="Customer" Binding="{Binding Customer}" />
+                <DataGridTextColumn Header="Job Start Date" Binding="{Binding DtJobStart, StringFormat=dd/MM/yyyy}" />
+                <DataGridTextColumn Header="Machine" Binding="{Binding MachineMakeModel}" />
+                <DataGridTextColumn Header="MTT Job Number" Binding="{Binding MttJobNumber}" />
+                <DataGridTextColumn Header="Job Description" Binding="{Binding JobDescription}" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <local:ServiceSubmissionDetails x:Name="ucSubmissions" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5" Margin="5" currentSubmissionVM ="{Binding SelectedSubmission}"/>
+    </Grid>
 </UserControl>
