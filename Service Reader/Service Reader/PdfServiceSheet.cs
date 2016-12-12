@@ -15,8 +15,10 @@ namespace Service_Reader
 {
     public class PdfServiceSheet
     {
+        //RT 12/12/16 - Rewriting to use ViewModels
+
         private Document serviceSheetDoc;
-        private oldServiceSubmissionModel currentSheet;
+        private ServiceSheetViewModel currentSheet;
         private string COLUMN_ONE_WIDTH = "6.43cm";
         private string COLUMN_TWO_WIDTH = "9.87cm";
         private MigraDoc.DocumentObjectModel.Color headerGrey = new MigraDoc.DocumentObjectModel.Color(191, 191, 191);
@@ -33,7 +35,7 @@ namespace Service_Reader
         private Table followupTable;
         private Table signoffTable;
 
-        public Boolean createPdfSheetForSubmission(oldServiceSubmissionModel serviceSubmissionSheet)
+        public Boolean createPdfSheetForSubmission(ServiceSheetViewModel serviceSubmissionSheet)
         {
             Boolean successful = false;
             currentSheet = serviceSubmissionSheet;
@@ -157,7 +159,7 @@ namespace Service_Reader
 
             Section currentSection = (Section)serviceSheetDoc.Sections.LastObject;
             HeaderFooter header = currentSection.Headers.Primary;
-            Paragraph headerPara = header.AddParagraph("Report No. " + currentSheet.SubmissionNo);
+            Paragraph headerPara = header.AddParagraph("Report No. " + currentSheet.SubmissionNumber);
             headerPara.Format.Alignment = ParagraphAlignment.Right;
             header.Style = "Normal";
 
@@ -263,7 +265,7 @@ namespace Service_Reader
             row2Title.Cells[0].Shading.Color = entryHeaderGrey;
 
             addImageToSignoffTable("Customer signature", currentSheet.CustomerSignature, 2);
-            addLineToSignoffTable("Customer name", currentSheet.CustomerSignName);
+            addLineToSignoffTable("Customer name", currentSheet.CustomerName);
             addLineToSignoffTable("Date", currentSheet.DtSigned.ToShortDateString());
             addImageToSignoffTable("MTT engineer signature", currentSheet.MttEngineerSignature, 2);
             addLineToSignoffTable("MTT engineer", currentSheet.EngineerFullName);
@@ -341,8 +343,8 @@ namespace Service_Reader
 
             row1Title.KeepWith = 9;
 
-            addLineToFollowupTable("Additional faults found", currentSheet.AdditionalFaultsFound);
-            addLineToFollowupTable("Parts required", currentSheet.PartsForFollowup);
+            addLineToFollowupTable("Additional faults found", currentSheet.AdditionalFaults);
+            addLineToFollowupTable("Parts required", currentSheet.FollowUpPartsRequired);
             //RT 18/8/16 - Quote required should be yes/no
             bool quoteRequired = currentSheet.QuoteRequired;
             if (quoteRequired)
@@ -444,9 +446,9 @@ namespace Service_Reader
 
             row1Title.KeepWith = 8;
 
-            addLineToServiceReportTable("Total travel time", currentSheet.TotalTravelTime.ToString());
-            addLineToServiceReportTable("Total time onsite", currentSheet.TotalTimeOnsite.ToString());
-            addLineToServiceReportTable("Total mileage", currentSheet.TotalMileage.ToString());
+            addLineToServiceReportTable("Total travel time", currentSheet.JobTotalTravelTime.ToString());
+            addLineToServiceReportTable("Total time onsite", currentSheet.JobTotalTimeOnsite.ToString());
+            addLineToServiceReportTable("Total mileage", currentSheet.JobTotalMileage.ToString());
             addLineToServiceReportTable("Total daily allowances", currentSheet.TotalDailyAllowances.ToString());
             addLineToServiceReportTable("Total overnight allowances", currentSheet.TotalOvernightAllowances.ToString());
             //RT - If there are no barier payments, then don't include the total
@@ -494,12 +496,10 @@ namespace Service_Reader
             timesheetTable.Borders.Color = tableBorderColour;
             timesheetTable.Borders.Width = borderWidth;
 
-            int noOfDays = currentSheet.ServiceTimesheets.Count;
             int counter = 0;
-
-            while (counter < noOfDays)
+            foreach (ServiceDayViewModel sd in currentSheet.AllServiceDays.AllServiceDayVMs)
             {
-                if (counter ==0)
+                if (counter == 0)
                 {
                     Row row1Title = timesheetTable.AddRow();
                     row1Title.Cells[0].MergeRight = 1;
@@ -508,18 +508,39 @@ namespace Service_Reader
                     jobDetailsPara.AddFormattedText("IMESHEET ", "allCapsNextLetter");
                     row1Title.Cells[0].Shading.Color = headerGrey;
                 }
-
-                oldServiceDayModel currentDay = currentSheet.ServiceTimesheets[counter];
-                addDayToTimesheet(currentDay, counter);
+                
+                addDayToTimesheet(sd, counter);
 
                 counter = counter + 1;
             }
+            
+
+            //int noOfDays = currentSheet.ServiceTimesheets.Count;
+            //int counter = 0;
+
+            //while (counter < noOfDays)
+            //{
+            //    if (counter ==0)
+            //    {
+            //        Row row1Title = timesheetTable.AddRow();
+            //        row1Title.Cells[0].MergeRight = 1;
+            //        Paragraph jobDetailsPara = row1Title.Cells[0].AddParagraph();
+            //        jobDetailsPara.AddFormattedText("T", "allCapsFirstLetter");
+            //        jobDetailsPara.AddFormattedText("IMESHEET ", "allCapsNextLetter");
+            //        row1Title.Cells[0].Shading.Color = headerGrey;
+            //    }
+
+            //    oldServiceDayModel currentDay = currentSheet.ServiceTimesheets[counter];
+            //    addDayToTimesheet(currentDay, counter);
+
+            //    counter = counter + 1;
+            //}
 
             //Add a gap before the next section
             currentSection.AddParagraph();
         }
 
-        private void addDayToTimesheet(oldServiceDayModel currentDay, int dayCounter)
+        private void addDayToTimesheet(ServiceDayViewModel currentDay, int dayCounter)
         {
             //Add the header of the day title
 
@@ -536,11 +557,11 @@ namespace Service_Reader
             //Keep the rows together
             row1Title.KeepWith = 14;    
 
-            addLineToTimesheet("Date", currentDay.DtServiceDay.ToShortDateString());
-            addLineToTimesheet("Day", currentDay.DtServiceDay.ToString("dddd"));
+            addLineToTimesheet("Date", currentDay.DtReport.ToShortDateString());
+            addLineToTimesheet("Day", currentDay.DtReport.ToString("dddd"));
             addLineToTimesheet("Travel start time", currentDay.TravelStartTime.ToShortTimeString());
             addLineToTimesheet("Arrival time onsite", currentDay.ArrivalOnsiteTime.ToShortTimeString());
-            addLineToTimesheet("Departure time from site", currentDay.DepartSiteTime.ToShortTimeString());
+            addLineToTimesheet("Departure time from site", currentDay.DepartureSiteTime.ToShortTimeString());
             addLineToTimesheet("Travel end time", currentDay.TravelEndTime.ToShortTimeString());
             addLineToTimesheet("Mileage", currentDay.Mileage.ToString());
             //RT 5/7/16 - Changing the true/false for the allowances to 1 or 0
@@ -596,9 +617,9 @@ namespace Service_Reader
                 row1Title.KeepWith = 13;
             }
             addLineToTimesheet("Total travel time", currentDay.TotalTravelTime.ToString());
-            addLineToTimesheet("Total time onsite", currentDay.TotalTimeOnsite.ToString());
+            addLineToTimesheet("Total time onsite", currentDay.TotalOnsiteTime.ToString());
             addLineToTimesheet("Daily report", currentDay.DailyReport);
-            addLineToTimesheet("Parts supplied today", currentDay.PartsSupplied);
+            addLineToTimesheet("Parts supplied today", currentDay.PartsSuppliedToday);
         }
 
         private void createSheetTitle()
@@ -612,7 +633,7 @@ namespace Service_Reader
 
             Row row1 = timesheetHeaderTable.AddRow();
             row1.Cells[0].AddParagraph("SERVICE REPORT AND TIMESHEET");
-            row1.Cells[1].AddParagraph("No. " + currentSheet.SubmissionNo);
+            row1.Cells[1].AddParagraph("No. " + currentSheet.SubmissionNumber);
             timesheetHeaderTable.Style = "timesheetHeader";
 
             //Add a line break  at the end of the header
@@ -672,16 +693,16 @@ namespace Service_Reader
             row1Title.Cells[0].Shading.Color = headerGrey;
 
             addLineToJobDetails("Customer", currentSheet.Customer);
-            addLineToJobDetails("Address Line 1", currentSheet.Address1);
-            addLineToJobDetails("Address Line 2", currentSheet.Address2);
+            addLineToJobDetails("Address Line 1", currentSheet.AddressLine1);
+            addLineToJobDetails("Address Line 2", currentSheet.AddressLine2);
             addLineToJobDetails("Town/City", currentSheet.TownCity);
             addLineToJobDetails("Postcode", currentSheet.Postcode);
             addLineToJobDetails("Customer contact", currentSheet.CustomerContact);
-            addLineToJobDetails("Customer phone number", currentSheet.CustomerPhone);
+            addLineToJobDetails("Customer phone number", currentSheet.CustomerPhoneNo);
             addLineToJobDetails("Machine make and model", currentSheet.MachineMakeModel);
             addLineToJobDetails("Machine serial number", currentSheet.MachineSerial);
-            addLineToJobDetails("CNC controller", currentSheet.MachineController);
-            addLineToJobDetails("Job start date", currentSheet.JobStart.ToShortDateString());
+            addLineToJobDetails("CNC controller", currentSheet.CncControl);
+            addLineToJobDetails("Job start date", currentSheet.DtJobStart.ToShortDateString());
             addLineToJobDetails("Customer order no.", currentSheet.CustomerOrderNo);
             addLineToJobDetails("MTT job no.", currentSheet.MttJobNumber);
             addLineToJobDetails("Job description", currentSheet.JobDescription);
