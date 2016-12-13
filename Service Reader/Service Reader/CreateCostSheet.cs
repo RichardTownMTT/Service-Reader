@@ -20,7 +20,7 @@ namespace Service_Reader
 
         //RT 20/8/16 - Changing to multiple rows
         //public bool exportDataToCostSheet(ServiceSubmissionModel submission)
-        public bool exportDataToCostSheet(ObservableCollection<ServiceSheetViewModel> submissions)
+        public bool exportDataToCostSheet(IEnumerable<ServiceSheetViewModel> submissions)
         {
             string filename = openFilename();
             if (filename.Equals(""))
@@ -38,7 +38,7 @@ namespace Service_Reader
             return success;
         }
 
-        private bool createCostingSheetForSubmission(ObservableCollection<ServiceSheetViewModel> submissions, string filename)
+        private bool createCostingSheetForSubmission(IEnumerable<ServiceSheetViewModel> submissions, string filename)
         {
             int lineNumber = -1;
             //Loop through the submissions and add to the sheet.

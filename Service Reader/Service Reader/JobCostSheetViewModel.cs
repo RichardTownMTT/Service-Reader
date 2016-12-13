@@ -50,19 +50,19 @@ namespace Service_Reader
             }
         }
 
-        public ObservableCollection<ServiceSheetViewModel> SelectedSubmissions
-        {
-            get
-            {
-                return m_selectedSubmissions;
-            }
+        //public ObservableCollection<ServiceSheetViewModel> SelectedSubmissions
+        //{
+        //    get
+        //    {
+        //        return m_selectedSubmissions;
+        //    }
 
-            set
-            {
-                m_selectedSubmissions = value;
-                onPropertyChanged("SelectedSubmissions");
-            }
-        }
+        //    set
+        //    {
+        //        m_selectedSubmissions = value;
+        //        onPropertyChanged("SelectedSubmissions");
+        //    }
+        //}
 
         public ICommand CreateCostSheetCommand
         {
@@ -94,6 +94,15 @@ namespace Service_Reader
             CreateCostSheet costSheetExporter = new CreateCostSheet();
             bool success = costSheetExporter.exportDataToCostSheet(SelectedSubmissions);
             MessageBox.Show("Need to check for success");
+        }
+
+        //RT 13/12/16 - This is used to return all selected rows in the datagrid
+        public IEnumerable<ServiceSheetViewModel> SelectedSubmissions
+        {
+            get
+            {
+                return AllServiceSheets.Where(o => o.Selected);
+            }
         }
 
         //public string Name

@@ -73,6 +73,9 @@ namespace Service_Reader
         private AllServiceDayViewModels m_AllServiceDays;
         //RT 11/12/16 - Adding an edit mode for the submission.
         private bool m_editMode = false;
+        //RT 13/12/16 - Following is used to see if multiple sheets have been selected in datagrid
+        private bool m_selected = false;
+
 
         //Creator for the VM
         public ServiceSheetViewModel(int submissionNoEntered, string appNameEntered, string userfirstNameEntered, string userSurnameEntered, string canvasResponseIdEntered, DateTime dtResponseEntered, 
@@ -1733,7 +1736,19 @@ namespace Service_Reader
                 onPropertyChanged("EditMode");
             }
         }
-        
+
+        public bool Selected
+        {
+            get
+            {
+                return m_selected;
+            }
+
+            set
+            {
+                m_selected = value;
+            }
+        }
 
         public void AddServiceDayViewModel(ServiceDayViewModel serviceDayToAdd)
         {

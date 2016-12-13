@@ -23,7 +23,12 @@
         </Grid.RowDefinitions>
         <Button Content="Load CSV" Grid.Column="0" Grid.Row="0" Margin="5" Command="{Binding LoadCsvCommand}"/>
         <Button Content="Create Cost Sheet" Grid.Column="1" Grid.Row="0" Margin="5" Command="{Binding CreateCostSheetCommand}" />
-        <DataGrid x:Name="dataGrid" ItemsSource="{Binding AllServiceSheets}" SelectedItem="{Binding SelectedSubmissions}" AutoGenerateColumns="False" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="6" Margin="5"   CanUserAddRows="False">
+        <DataGrid x:Name="dataGrid" ItemsSource="{Binding AllServiceSheets}" AutoGenerateColumns="False" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="6" Margin="5"   CanUserAddRows="False">
+            <DataGrid.ItemContainerStyle>
+                <Style TargetType="{x:Type DataGridRow}">
+                    <Setter Property="IsSelected" Value="{Binding Selected}" />
+                </Style>
+            </DataGrid.ItemContainerStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Submission No" Binding="{Binding SubmissionNumber}" />
                 <DataGridTextColumn Header="Engineer" Binding="{Binding EngineerFullName}" />
