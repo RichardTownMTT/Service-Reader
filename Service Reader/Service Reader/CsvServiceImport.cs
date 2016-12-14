@@ -195,11 +195,11 @@ namespace Service_Reader
             //RT 6/12/16 - From canvas csv, this is a date, datetime from service reader
             if (serviceReaderCsv)
             {
-                currentServiceSubmission.DtSigned = DateTime.ParseExact(jobStartDate, dateFormatMinutes, CultureInfo.InvariantCulture);
+                currentServiceSubmission.DtSigned = DateTime.ParseExact(signedDate, dateFormatMinutes, CultureInfo.InvariantCulture);
             }
             else
             {
-                currentServiceSubmission.DtSigned = DateTime.ParseExact(jobStartDate, "d/M/yyyy", CultureInfo.InvariantCulture);
+                currentServiceSubmission.DtSigned = DateTime.ParseExact(signedDate, "d/M/yyyy", CultureInfo.InvariantCulture);
             }
             //currentServiceSubmission.DtSigned = DateTime.ParseExact(signedDate, "d/M/yyyy", CultureInfo.InvariantCulture);
             currentServiceSubmission.MttEngSignatureUrl = row[63];

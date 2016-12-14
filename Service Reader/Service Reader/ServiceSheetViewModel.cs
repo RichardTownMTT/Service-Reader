@@ -264,6 +264,7 @@ namespace Service_Reader
                 sd.Save();
             }
             EditMode = false;
+            
         }
 
         //public ServiceSheet ServiceSubmission
