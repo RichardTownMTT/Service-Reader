@@ -21,8 +21,6 @@ namespace Service_Reader
         }
     
         public int Id { get; set; }
-        public System.DateTime DtStartSubmission { get; set; }
-        public System.DateTime DtEndSubmission { get; set; }
         public int SubmissionNumber { get; set; }
         public string AppName { get; set; }
         public string Username { get; set; }

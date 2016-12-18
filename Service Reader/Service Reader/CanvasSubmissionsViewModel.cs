@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,6 +32,8 @@ namespace Service_Reader
         private ICommand m_editSubmissionCommand;
         private ICommand m_saveSubmissionCommand;
         private ICommand m_cancelEditCommand;
+        //RT 17/12/16 - Adding save to database option
+        private ICommand m_saveDatabaseCommand;
 
         //Creator for the class.  Sets the defaults, e.g. start/end date
         public CanvasSubmissionsViewModel()
@@ -252,6 +255,41 @@ namespace Service_Reader
             set
             {
                 m_previousSubmission = value;
+            }
+        }
+
+        public ICommand SaveDatabaseCommand
+        {
+            get
+            {
+                if (m_saveDatabaseCommand == null)
+                {
+                    m_saveDatabaseCommand = new RelayCommand(param => saveToDatabase());
+                }
+                return m_saveDatabaseCommand;
+            }
+
+            set
+            {
+                m_saveDatabaseCommand = value;
+            }
+        }
+
+        private void saveToDatabase()
+        {
+            //Saves all submissions to database
+            using (var dbContext = new ServiceSheetsEntities())
+            {
+                //dbContext.Database.Log = Console.Write;
+                foreach (ServiceSheetViewModel serviceVM in AllServiceSheets)
+                {
+                    dbContext.ServiceSheets.Add(serviceVM.ServiceSubmission);
+                    foreach (ServiceDayViewModel day in serviceVM.AllServiceDays.AllServiceDayVMs)
+                    {
+                        dbContext.ServiceDays.Add(day.ServiceDayModel);
+                    }
+                }
+                dbContext.SaveChanges();
             }
         }
 

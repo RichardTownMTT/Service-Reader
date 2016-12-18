@@ -12,8 +12,8 @@ namespace Service_Reader
     {
         //RT 29/11/16 - Changing this to properly implement MVVM
         private ServiceSheet m_serviceSubmission;
-        private DateTime m_dtStartSubmission;
-        private DateTime m_dtEndSubmission;
+        //private DateTime m_dtStartSubmission;
+        //private DateTime m_dtEndSubmission;
         private int m_submissionNumber;
         private string m_appName;
         private string m_username;
@@ -159,11 +159,11 @@ namespace Service_Reader
             CustomerPhoneNo = ServiceSubmission.CustomerPhoneNo;
             CustomerSignatureUrl = ServiceSubmission.CustomerSignatureUrl;
             DtDevice = ServiceSubmission.DtDevice;
-            DtEndSubmission = ServiceSubmission.DtEndSubmission;
+            //DtEndSubmission = ServiceSubmission.DtEndSubmission;
             DtJobStart = ServiceSubmission.DtJobStart;
             DtResponse = ServiceSubmission.DtResponse;
             DtSigned = ServiceSubmission.DtSigned;
-            DtStartSubmission = ServiceSubmission.DtStartSubmission;
+            //DtStartSubmission = ServiceSubmission.DtStartSubmission;
             FinalJobReport = ServiceSubmission.FinalJobReport;
             FollowUpPartsRequired = ServiceSubmission.FollowUpPartsRequired;
             Image1Url = ServiceSubmission.Image1Url;
@@ -225,11 +225,11 @@ namespace Service_Reader
             ServiceSubmission.CustomerPhoneNo = m_customerPhoneNo;
             ServiceSubmission.CustomerSignatureUrl = m_customerSignatureUrl;
             ServiceSubmission.DtDevice = m_dtDevice;
-            ServiceSubmission.DtEndSubmission = m_dtEndSubmission;
+            //ServiceSubmission.DtEndSubmission = m_dtEndSubmission;
             ServiceSubmission.DtJobStart = m_dtJobStart;
             ServiceSubmission.DtResponse = m_dtResponse;
             ServiceSubmission.DtSigned = m_dtSigned;
-            ServiceSubmission.DtStartSubmission = m_dtStartSubmission;
+            //ServiceSubmission.DtStartSubmission = m_dtStartSubmission;
             ServiceSubmission.FinalJobReport = m_finalJobReport;
             ServiceSubmission.FollowUpPartsRequired = m_followUpPartsRequired;
             ServiceSubmission.Image1Url = m_image1Url;
@@ -1080,33 +1080,33 @@ namespace Service_Reader
             }
         }
 
-        public DateTime DtStartSubmission
-        {
-            get
-            {
-                return m_dtStartSubmission;
-            }
+        //public DateTime DtStartSubmission
+        //{
+        //    get
+        //    {
+        //        return m_dtStartSubmission;
+        //    }
 
-            set
-            {
-                m_dtStartSubmission = value;
-                onPropertyChanged("DtStartSubmission");
-            }
-        }
+        //    set
+        //    {
+        //        m_dtStartSubmission = value;
+        //        onPropertyChanged("DtStartSubmission");
+        //    }
+        //}
 
-        public DateTime DtEndSubmission
-        {
-            get
-            {
-                return m_dtEndSubmission;
-            }
+        //public DateTime DtEndSubmission
+        //{
+        //    get
+        //    {
+        //        return m_dtEndSubmission;
+        //    }
 
-            set
-            {
-                m_dtEndSubmission = value;
-                onPropertyChanged("DtEndSubmission");
-            }
-        }
+        //    set
+        //    {
+        //        m_dtEndSubmission = value;
+        //        onPropertyChanged("DtEndSubmission");
+        //    }
+        //}
 
         public int SubmissionNumber
         {

@@ -32,6 +32,7 @@
         <Button Content="Save" Grid.Column="1" Grid.Row="1" Margin="5" Command="{Binding SaveSubmissionCommand}"/>
         <Button Content="Cancel" Grid.Column="2" Grid.Row="1" Margin="5" Command="{Binding CancelEditCommand}"/>
         <Button Content="Export to csv" Grid.Column="3" Grid.Row="1" Margin="5" Command="{Binding CsvExportCommand}"/>
+        <Button Content="Save to Database" Grid.Column="4" Grid.Row="1" Margin="5" Command="{Binding SaveDatabaseCommand}"/>
         <DataGrid x:Name="dataGrid" ItemsSource="{Binding AllServiceSheets}" AutoGenerateColumns="False" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="5" SelectedItem="{Binding Path=SelectedSubmission}" CanUserAddRows="False" IsReadOnly="True" SelectionMode="Single">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Submission No" Binding="{Binding SubmissionNumber}" />
