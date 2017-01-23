@@ -274,36 +274,43 @@ namespace Service_Reader
 
         private void saveToDatabase()
         {
-            CanvasUserVM = new UserViewModel(UserViewModel.DISPLAY_MODE_DATABASE);
-            UserView userView = new UserView();
-            userView.DataContext = CanvasUserVM;
-            bool? userResult = userView.ShowDialog();
+            //RT 23/1/17 - Moving this to the db class
+            //UserViewModel DBUserVM = new UserViewModel(UserViewModel.DISPLAY_MODE_DATABASE);
+            //UserView userView = new UserView();
+            //userView.DataContext = DBUserVM;
+            //bool? userResult = userView.ShowDialog();
 
-            //RT 3/12/16 - The box may have been cancelled
-            if (userResult != true)
-            {
-                return;
-            }
+            ////RT 3/12/16 - The box may have been cancelled
+            //if (userResult != true)
+            //{
+            //    return;
+            //}
 
-            
+            //RT 23/1/17 - Moving this to db class
             //Saves all submissions to database
-            using (var dbContext = new ServiceSheetsEntities())
+            //using (var dbContext = new ServiceSheetsEntities())
+            //{
+            //    System.Data.Common.DbConnection connection = dbContext.Database.Connection;
+            //    System.Data.Common.DbConnectionStringBuilder str = new System.Data.Common.DbConnectionStringBuilder();
+            //    str.ConnectionString = dbContext.Database.Connection.ConnectionString;
+            //    str.Add("Password", CanvasUserVM.PasswordBoxObj.Password);
+            //    dbContext.Database.Connection.ConnectionString = str.ConnectionString;
+            //    //dbContext.Database.Log = Console.Write;
+            //    foreach (ServiceSheetViewModel serviceVM in AllServiceSheets)
+            //    {
+            //        dbContext.ServiceSheets.Add(serviceVM.ServiceSubmission);
+            //        foreach (ServiceDayViewModel day in serviceVM.AllServiceDays.AllServiceDayVMs)
+            //        {
+            //            dbContext.ServiceDays.Add(day.ServiceDayModel);
+            //        }
+            //    }
+            //    dbContext.SaveChanges();
+            //}
+            bool saveSuccessful = DbServiceSheet.saveSheetsAndDays(AllServiceSheets);
+            if (!saveSuccessful)
             {
-                System.Data.Common.DbConnection connection = dbContext.Database.Connection;
-                System.Data.Common.DbConnectionStringBuilder str = new System.Data.Common.DbConnectionStringBuilder();
-                str.ConnectionString = dbContext.Database.Connection.ConnectionString;
-                str.Add("Password", CanvasUserVM.PasswordBoxObj.Password);
-                dbContext.Database.Connection.ConnectionString = str.ConnectionString;
-                //dbContext.Database.Log = Console.Write;
-                foreach (ServiceSheetViewModel serviceVM in AllServiceSheets)
-                {
-                    dbContext.ServiceSheets.Add(serviceVM.ServiceSubmission);
-                    foreach (ServiceDayViewModel day in serviceVM.AllServiceDays.AllServiceDayVMs)
-                    {
-                        dbContext.ServiceDays.Add(day.ServiceDayModel);
-                    }
-                }
-                dbContext.SaveChanges();
+                MessageBox.Show("Error saving to database.  Need to show error message!");
+                return;
             }
         }
 
@@ -392,7 +399,24 @@ namespace Service_Reader
             {
                 AllServiceSheets = new ObservableCollection<ServiceSheetViewModel>();
             }
-            
+
+            //RT23/1/17 - Check if the sheets have already been imported to the database
+            List<int> dbSubmissionNumbers = DbServiceSheet.getAllSubmissionNumbers();
+            removeServiceSheetsAlreadyProcessed(dbSubmissionNumbers);
+        }
+
+        private void removeServiceSheetsAlreadyProcessed(List<int> dbSubmissionNumbers)
+        {
+            MessageBox.Show("Removing sheets that have already been processed.");
+            for (int counter = AllServiceSheets.Count - 1; counter >= 0; counter--)
+            {
+                var serviceSheet = AllServiceSheets[counter];
+                int submissionNo = serviceSheet.SubmissionNumber;
+                if (dbSubmissionNumbers.Contains(submissionNo))
+                {
+                    AllServiceSheets.Remove(serviceSheet);
+                }
+            }   
         }
     }
 }

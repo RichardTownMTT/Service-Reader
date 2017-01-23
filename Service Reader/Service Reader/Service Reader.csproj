@@ -105,6 +105,7 @@
       <DependentUpon>ServiceModel.tt</DependentUpon>
     </Compile>
     <Compile Include="CanvasSubmissionsViewModel.cs" />
+    <Compile Include="DbServiceSheet.cs" />
     <Compile Include="UserViewModel.cs" />
     <Compile Include="CreateCostSheet.cs" />
     <Compile Include="CsvServiceExport.cs" />
