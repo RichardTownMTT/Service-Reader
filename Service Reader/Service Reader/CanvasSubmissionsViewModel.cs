@@ -173,7 +173,20 @@ namespace Service_Reader
                 //RT 11/12/16 - Need to reset any changes on the previous submission
                 if (PreviousSubmission != null)
                 {
-                    discardChangesPreviousSubmission();
+                    //RT 23/1/17 - If previous is being edited, warn user
+                    if (PreviousSubmission.EditMode)
+                    {
+                        MessageBoxResult continueChange = MessageBox.Show("Current record is being edited. Do you want to discard changes?", "Discard changes", MessageBoxButton.YesNo);
+                        if (continueChange == MessageBoxResult.Yes)
+                        {
+                            discardChangesPreviousSubmission();
+                        }                            
+                        else
+                        {
+                            return;
+                        }
+                    }
+                    
                 }
                 //First time, we need to set to this value
                 PreviousSubmission = value;
