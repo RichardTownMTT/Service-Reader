@@ -82,6 +82,16 @@ namespace Service_Reader
             ServiceDayModel.ServiceSheet = ParentServiceSheetVM.ServiceSubmission;
         }
 
+        //RT 23/1/17 - This is used to display the date on the expander.  Shows date and day
+        public string ReportDateAndDay
+        {
+            get
+            {
+                string day = DtReport.DayOfWeek.ToString();
+                return DtReport.ToShortDateString() + " - " + day;
+            }
+        }
+
         public DateTime TravelStartTime
         {
             get

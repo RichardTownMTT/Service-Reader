@@ -8,7 +8,7 @@
              d:DesignHeight="315.464" d:DesignWidth="638.66" Margin="5" BorderBrush="Black" BorderThickness="0.5" x:Name="UcServiceDayView">
     <Expander x:Name="LayoutRoot">
         <Expander.Header>
-            <TextBlock Text="{Binding DtReport, StringFormat=dd/MM/yy}" />
+            <TextBlock Text="{Binding ReportDateAndDay}" />
         </Expander.Header>
         <Grid ScrollViewer.VerticalScrollBarVisibility="Disabled" IsEnabled="{Binding ParentServiceSheetVM.EditMode}">
         <Grid.ColumnDefinitions>
