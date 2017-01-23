@@ -68,8 +68,9 @@ namespace Service_Reader
                 csvWriterOutput.WriteField("");
                 int submissionNo = submission.SubmissionNumber;
                 csvWriterOutput.WriteField(submissionNo);
-                //Export app name - set manually
-                csvWriterOutput.WriteField("Service Sheet");
+                //RT 23/1/17 - No longer set this manually
+                string appName = submission.AppName;
+                csvWriterOutput.WriteField(appName);
                 string username = submission.Username;
                 csvWriterOutput.WriteField(username);
                 string userLastName = submission.UserSurname;
@@ -82,8 +83,9 @@ namespace Service_Reader
                 csvWriterOutput.WriteField(responseDate);
                 DateTime dtDevice = submission.DtDevice;
                 csvWriterOutput.WriteField(dtDevice);
-                //Submission form name set manually
-                csvWriterOutput.WriteField("Service Sheet");
+                //RT 23/1/17 - Set the form name
+                string submissionFormName = submission.SubmissionFormName;
+                csvWriterOutput.WriteField(submissionFormName);
                 int formVersion = submission.SubmissionFormVersion;
                 csvWriterOutput.WriteField(formVersion);
                 string customer = submission.Customer;

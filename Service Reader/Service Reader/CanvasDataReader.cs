@@ -19,6 +19,7 @@ namespace Service_Reader
         //XML Labels for fields
         public static string SUBMISSION_NUMBER = "SubmissionNumber";
         public static string SUBMISSION_VERSION = "Version";
+        public static string SUBMISSION_FORM_NAME = "Name";
         public static string USERNAME = "UserName";
         public static string FIRST_NAME = "FirstName";
         public static string SURNAME = "LastName";
@@ -301,6 +302,10 @@ namespace Service_Reader
             DateTime dtDeviceEntered = Convert.ToDateTime(deviceDateStr);
             //Submission version is in the form element
             XElement formDetailsXml = submissionXml.Element(FORM);
+            //RT 23/1/17 - Adding app and form names
+            //The app name isn't contained in the XML, but won't change.
+            string submissionAppName = "Service Sheet";
+            string submissionFormName = formDetailsXml.Element(SUBMISSION_FORM_NAME).Value;
             int submissionFormVersionEntered = Int32.Parse(formDetailsXml.Element(SUBMISSION_VERSION).Value);
             string usernameEntered = submissionXml.Element(USERNAME).Value;
             string userFirstNameEntered = submissionXml.Element(FIRST_NAME).Value;
@@ -415,8 +420,8 @@ namespace Service_Reader
                     mttEngSignatureUrlEntered = xmlResult(MTT_ENG_SIGNATURE, responsesXml);
 
                     //Now we create the Service Sheet VM
-                    ServiceSheetViewModel retval = new ServiceSheetViewModel(submissionNumberEntered, "", userFirstNameEntered, userSurnameEntered, canvasResponseIdEntered, dtResponseEntered,
-                        dtDeviceEntered, "", submissionFormVersionEntered, customerEntered, addressLine1Entered, addressLine2Entered, townCityEntered, postcodeEntered, customerContactEntered,
+                    ServiceSheetViewModel retval = new ServiceSheetViewModel(submissionNumberEntered, submissionAppName, userFirstNameEntered, userSurnameEntered, canvasResponseIdEntered, dtResponseEntered,
+                        dtDeviceEntered, submissionFormName, submissionFormVersionEntered, customerEntered, addressLine1Entered, addressLine2Entered, townCityEntered, postcodeEntered, customerContactEntered,
                         customerPhoneNoEntered, machineMakeModelEntered, machineSerialEntered, cncControlEntered, dtJobStartEntered, customerOrderNoEntered, mttJobNumberEntered, jobDescriptionEntered,
                         jobTotalTimeOnsiteEntered, jobTotalTravelTimeEntered, mileageEntered, totalDaEntered, totalOaEntered, totalBpEntered, jobStatusEntered, finalJobReportEntered, additionalFaultsEntered,
                         quoteRequiredEntered, followUpPartsRequiredEntered, image1UrlEntered, image2UrlEntered, image3UrlEntered, image4UrlEntered, image5UrlEntered, customerSignatureUrlEntered, customerNameEntered, dtSignedEntered,
