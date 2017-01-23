@@ -18,9 +18,9 @@ namespace Service_Reader
     /// <summary>
     /// Interaction logic for UcCanvasUser.xaml
     /// </summary>
-    public partial class CanvasUserView : Window
+    public partial class UserView : Window
     {
-        public CanvasUserView()
+        public UserView()
         {
             InitializeComponent();
             //LayoutRoot.DataContext = this;

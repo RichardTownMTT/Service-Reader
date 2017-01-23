@@ -1,20 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
+using System.Configuration;
+using System.Data.Entity.Core.EntityClient;
 
 namespace Service_Reader
 {
     public class CanvasSubmissionsViewModel : ObservableObject
     {
         //Stores the login details for Canvas
-        private CanvasUserViewModel m_canvasUser;
+        private UserViewModel m_canvasUser;
         private DateTime m_dtStartSubmissionsDownload;
         private DateTime m_dtEndSubmissionsDownload;
         private ServiceSheetViewModel m_selectedSubmission;
@@ -46,7 +43,7 @@ namespace Service_Reader
             //CanvasUserVM = new CanvasUserViewModel();
         }
 
-        public CanvasUserViewModel CanvasUserVM
+        public UserViewModel CanvasUserVM
         {
             get
             {
@@ -277,9 +274,26 @@ namespace Service_Reader
 
         private void saveToDatabase()
         {
+            CanvasUserVM = new UserViewModel(UserViewModel.DISPLAY_MODE_DATABASE);
+            UserView userView = new UserView();
+            userView.DataContext = CanvasUserVM;
+            bool? userResult = userView.ShowDialog();
+
+            //RT 3/12/16 - The box may have been cancelled
+            if (userResult != true)
+            {
+                return;
+            }
+
+            
             //Saves all submissions to database
             using (var dbContext = new ServiceSheetsEntities())
             {
+                System.Data.Common.DbConnection connection = dbContext.Database.Connection;
+                System.Data.Common.DbConnectionStringBuilder str = new System.Data.Common.DbConnectionStringBuilder();
+                str.ConnectionString = dbContext.Database.Connection.ConnectionString;
+                str.Add("Password", CanvasUserVM.PasswordBoxObj.Password);
+                dbContext.Database.Connection.ConnectionString = str.ConnectionString;
                 //dbContext.Database.Log = Console.Write;
                 foreach (ServiceSheetViewModel serviceVM in AllServiceSheets)
                 {
@@ -340,8 +354,8 @@ namespace Service_Reader
 
         private void downloadCanvasData(object canvasPasswordBox)
         {
-            CanvasUserVM = new CanvasUserViewModel();
-            CanvasUserView userView = new CanvasUserView();
+            CanvasUserVM = new UserViewModel(UserViewModel.DISPLAY_MODE_CANVAS);
+            UserView userView = new UserView();
             userView.DataContext = CanvasUserVM;
             bool? userResult = userView.ShowDialog();
 

@@ -10,7 +10,7 @@ namespace Service_Reader
 {
     //Model for the canvas user login 
     //Stores the username and password
-    public class CanvasUserModel : ObservableObject
+    public class UserModel : ObservableObject
     {
         private string m_username = "";
         //RT 21/10/16 - Changing to use a password box

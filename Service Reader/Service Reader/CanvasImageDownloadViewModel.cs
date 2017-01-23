@@ -12,7 +12,7 @@ namespace Service_Reader
 {
     public class CanvasImageDownloadViewModel : ObservableObject
     {
-        public CanvasImageDownloadViewModel(List<ServiceSheetViewModel> serviceVMs, CanvasUserViewModel canvasUserEntered)
+        public CanvasImageDownloadViewModel(List<ServiceSheetViewModel> serviceVMs, UserViewModel canvasUserEntered)
         {
             AllServices = serviceVMs;
             CanvasUser = canvasUserEntered;
@@ -25,7 +25,7 @@ namespace Service_Reader
             worker.RunWorkerAsync();
         }
 
-        private CanvasUserViewModel m_canvasUser;
+        private UserViewModel m_canvasUser;
         private List<ServiceSheetViewModel> m_allServices;
         private int m_minimumDownloadedItems;
         private int m_maximumDownloadedItems;
@@ -201,7 +201,7 @@ namespace Service_Reader
             e.Result = updatedSubmissions;
         }
 
-        public CanvasUserViewModel CanvasUser
+        public UserViewModel CanvasUser
         {
             get
             {

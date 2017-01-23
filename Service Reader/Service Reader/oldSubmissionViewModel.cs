@@ -12,7 +12,7 @@ namespace Service_Reader
     {
         private List<ServiceSheet> allServiceSubmissions;
         //private ServiceSubmissionModel[] allServiceSubmissions;
-        private CanvasUserModel currentUser;
+        private UserModel currentUser;
         private ICommand getCanvasDataCommand;
         private DateTime fromDate;
         private DateTime toDate;
@@ -30,7 +30,7 @@ namespace Service_Reader
 
         public oldSubmissionViewModel()
         {
-            currentUser = new CanvasUserModel();
+            currentUser = new UserModel();
             fromDate = DateTime.Now.AddDays(-7);
             toDate = DateTime.Now;
         }
@@ -250,7 +250,7 @@ namespace Service_Reader
             }
         }
 
-        public CanvasUserModel CurrentUser
+        public UserModel CurrentUser
         {
             get
             {

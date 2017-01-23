@@ -53,9 +53,9 @@ namespace Service_Reader
         public static string RESPONSE_DATE_TIME = "Date";
         public static string DEVICE_DATE_TIME = "DeviceDate";
 
-        public static ImageSource downloadImage(string downloadUrl, CanvasUserViewModel currentUser)
+        public static ImageSource downloadImage(string downloadUrl, UserViewModel currentUser)
         {
-            string canvasUrl = "https://www.gocanvas.com/apiv2/images.xml?image_id=" + downloadUrl + "&username=" + currentUser.UserName +"&password=" + currentUser.CanvasPasswordBox.Password;
+            string canvasUrl = "https://www.gocanvas.com/apiv2/images.xml?image_id=" + downloadUrl + "&username=" + currentUser.UserName +"&password=" + currentUser.PasswordBoxObj.Password;
 
             ImageSource returnedImage;
 
@@ -80,9 +80,10 @@ namespace Service_Reader
 
                 returnedImage = bmImage;
             }
-            catch
+            catch (Exception ex)
             {
                 MessageBox.Show("Unable to download data.");
+                Console.WriteLine(ex.ToString());
                 return null;
             }
 
@@ -160,12 +161,12 @@ namespace Service_Reader
         //public static List<oldServiceSubmissionModel> downloadXml(string canvasUsername, string canvasPassword, string beginDate, string endDate)
         //RT 26/11/16 - Changing to use canvasUser
         //public static ObservableCollection<ServiceSheetViewModel> downloadXml(string canvasUsername, string canvasPassword, DateTime beginDate, DateTime endDate)
-        public static ObservableCollection<ServiceSheetViewModel> downloadXml(CanvasUserViewModel canvasUserVM, DateTime beginDate, DateTime endDate)
+        public static ObservableCollection<ServiceSheetViewModel> downloadXml(UserViewModel canvasUserVM, DateTime beginDate, DateTime endDate)
         {
             //RT 13/10/16 - Date must be in the USA format
             string startDateStr = beginDate.ToString("MM/dd/yyyy", null);
             string endDateStr = endDate.ToString("MM/dd/yyyy", null);
-            string canvasUrl = "https://www.gocanvas.com/apiv2/submissions.xml?username=" + canvasUserVM.UserName + "&password=" + canvasUserVM.CanvasPasswordBox.Password + "&form_id=1285373&begin_date=" + startDateStr + "&end_date=" + endDateStr;
+            string canvasUrl = "https://www.gocanvas.com/apiv2/submissions.xml?username=" + canvasUserVM.UserName + "&password=" + canvasUserVM.PasswordBoxObj.Password + "&form_id=1285373&begin_date=" + startDateStr + "&end_date=" + endDateStr;
 
             XElement rootElement;
 
@@ -195,7 +196,7 @@ namespace Service_Reader
                 }
                 else
                 {
-                    canvasUrl = "https://www.gocanvas.com/apiv2/submissions.xml?username=" + canvasUserVM.UserName + "&password=" + canvasUserVM.CanvasPasswordBox.Password + "&form_id=1285373&begin_date=" + startDateStr + "&end_date=" + endDateStr + "&page=" +pageCounter;
+                    canvasUrl = "https://www.gocanvas.com/apiv2/submissions.xml?username=" + canvasUserVM.UserName + "&password=" + canvasUserVM.PasswordBoxObj.Password + "&form_id=1285373&begin_date=" + startDateStr + "&end_date=" + endDateStr + "&page=" +pageCounter;
 
                     rootElement = loadElements(canvasUrl);
                     if (rootElement == null)
