@@ -399,7 +399,7 @@ namespace Service_Reader
             //Now we need to download the images from Canvas, using a progress bar
             CanvasImageDownloadView imageDownloadView = new CanvasImageDownloadView();
             List<ServiceSheetViewModel> serviceSheetList = new List<ServiceSheetViewModel>(AllServiceSheets);
-            CanvasImageDownloadViewModel imageVM = new CanvasImageDownloadViewModel(serviceSheetList, CanvasUserVM);
+            CanvasImageDownloadViewModel imageVM = new CanvasImageDownloadViewModel(serviceSheetList, CanvasUserVM, false);
             imageDownloadView.DataContext = imageVM;
             bool? result = imageDownloadView.ShowDialog();
             //Set the servicesheets back to the result from the dialog

@@ -117,6 +117,35 @@ namespace Service_Reader
                 return;
             }
             AllServiceSheets = new ObservableCollection<ServiceSheetViewModel>(serviceSheetsDownloaded);
+
+            //Now we need to download the images from Canvas
+
+            UserViewModel canvasUserVM = new UserViewModel(UserViewModel.DISPLAY_MODE_CANVAS);
+            UserView userView = new UserView();
+            userView.DataContext = canvasUserVM;
+            bool? userResult = userView.ShowDialog();
+
+            //RT 3/12/16 - The box may have been cancelled
+            if (userResult != true)
+            {
+                MessageBox.Show("Unable to download images. Exiting.");
+                AllServiceSheets = null;
+                return;
+            }
+            CanvasImageDownloadViewModel imageVM = new CanvasImageDownloadViewModel(AllServiceSheets.ToList(), canvasUserVM, true);
+            CanvasImageDownloadView imageDownloadView = new CanvasImageDownloadView();
+            imageDownloadView.DataContext = imageVM;
+            bool? result = imageDownloadView.ShowDialog();
+            //Set the servicesheets back to the result from the dialog
+
+            if (result == true)
+            {
+                AllServiceSheets = new ObservableCollection<ServiceSheetViewModel>(imageVM.AllServices);
+            }
+            else
+            {
+                AllServiceSheets = new ObservableCollection<ServiceSheetViewModel>();
+            }
         }
 
         private void createPdfServiceSheetForSubmission()

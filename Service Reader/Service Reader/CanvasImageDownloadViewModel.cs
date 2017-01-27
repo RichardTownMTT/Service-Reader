@@ -12,8 +12,10 @@ namespace Service_Reader
 {
     public class CanvasImageDownloadViewModel : ObservableObject
     {
-        public CanvasImageDownloadViewModel(List<ServiceSheetViewModel> serviceVMs, UserViewModel canvasUserEntered)
+        private static bool m_fullUrl;
+        public CanvasImageDownloadViewModel(List<ServiceSheetViewModel> serviceVMs, UserViewModel canvasUserEntered, bool fullUrlSet)
         {
+            FullUrl = fullUrlSet;
             AllServices = serviceVMs;
             CanvasUser = canvasUserEntered;
             setMaxMinProgressBar();
@@ -81,7 +83,7 @@ namespace Service_Reader
             foreach (ServiceSheetViewModel currentSubmission in AllServices.ToList())
             {
                 downloadUrl = currentSubmission.MttEngSignatureUrl;
-                ImageSource imgEngSignature = CanvasDataReader.downloadImage(downloadUrl, CanvasUser);
+                ImageSource imgEngSignature = CanvasDataReader.downloadImage(downloadUrl, CanvasUser, FullUrl);
 
                 //If there has been an error with the image download, then return an empty collection
                 if (imgEngSignature == null)
@@ -98,7 +100,7 @@ namespace Service_Reader
                 customerSignatureUrl = currentSubmission.CustomerSignatureUrl;
                 if (!customerSignatureUrl.Equals(""))
                 {
-                    ImageSource imgCustSignature = CanvasDataReader.downloadImage(customerSignatureUrl, CanvasUser);
+                    ImageSource imgCustSignature = CanvasDataReader.downloadImage(customerSignatureUrl, CanvasUser, FullUrl);
                     
                     //If there has been an error with the image download, then return an empty collection
                     if (imgCustSignature == null)
@@ -115,7 +117,7 @@ namespace Service_Reader
                 image1Url = currentSubmission.Image1Url;
                 if (!image1Url.Equals(""))
                 {
-                    ImageSource img1 = CanvasDataReader.downloadImage(image1Url, CanvasUser);
+                    ImageSource img1 = CanvasDataReader.downloadImage(image1Url, CanvasUser, FullUrl);
 
                     //If there has been an error with the image download, then return an empty collection
                     if (img1 == null)
@@ -131,7 +133,7 @@ namespace Service_Reader
                 image2Url = currentSubmission.Image2Url;
                 if (!image2Url.Equals(""))
                 {
-                    ImageSource img2 = CanvasDataReader.downloadImage(image2Url, CanvasUser);
+                    ImageSource img2 = CanvasDataReader.downloadImage(image2Url, CanvasUser, FullUrl);
 
                     //If there has been an error with the image download, then return an empty collection
                     if (img2 == null)
@@ -147,7 +149,7 @@ namespace Service_Reader
                 image3Url = currentSubmission.Image3Url;
                 if (!image3Url.Equals(""))
                 {
-                    ImageSource img3 = CanvasDataReader.downloadImage(image3Url, CanvasUser);
+                    ImageSource img3 = CanvasDataReader.downloadImage(image3Url, CanvasUser, FullUrl);
 
                     //If there has been an error with the image download, then return an empty collection
                     if (img3 == null)
@@ -163,7 +165,7 @@ namespace Service_Reader
                 image4Url = currentSubmission.Image4Url;
                 if (!image4Url.Equals(""))
                 {
-                    ImageSource img4 = CanvasDataReader.downloadImage(image4Url, CanvasUser);
+                    ImageSource img4 = CanvasDataReader.downloadImage(image4Url, CanvasUser, FullUrl);
 
                     //If there has been an error with the image download, then return an empty collection
                     if (img4 == null)
@@ -179,7 +181,7 @@ namespace Service_Reader
                 image5Url = currentSubmission.Image5Url;
                 if (!image5Url.Equals(""))
                 {
-                    ImageSource img5 = CanvasDataReader.downloadImage(image5Url, CanvasUser);
+                    ImageSource img5 = CanvasDataReader.downloadImage(image5Url, CanvasUser, FullUrl);
 
                     //If there has been an error with the image download, then return an empty collection
                     if (img5 == null)
@@ -270,5 +272,17 @@ namespace Service_Reader
             }
         }
 
+        public static bool FullUrl
+        {
+            get
+            {
+                return m_fullUrl;
+            }
+
+            set
+            {
+                m_fullUrl = value;
+            }
+        }
     }
 }

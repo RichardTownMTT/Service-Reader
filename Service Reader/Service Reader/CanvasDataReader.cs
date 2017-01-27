@@ -54,9 +54,22 @@ namespace Service_Reader
         public static string RESPONSE_DATE_TIME = "Date";
         public static string DEVICE_DATE_TIME = "DeviceDate";
 
-        public static ImageSource downloadImage(string downloadUrl, UserViewModel currentUser)
+        public static ImageSource downloadImage(string downloadUrl, UserViewModel currentUser, bool fullUrl)
         {
-            string canvasUrl = "https://www.gocanvas.com/apiv2/images.xml?image_id=" + downloadUrl + "&username=" + currentUser.UserName +"&password=" + currentUser.PasswordBoxObj.Password;
+            //RT 27/1/17 - Canvas string changes, depending on if the full url is provided
+            string canvasUrl = "";
+            if (fullUrl)
+            {
+                //Get everything from the last /
+                int lastSlash = downloadUrl.LastIndexOf("/");
+                string imageId = downloadUrl.Substring(lastSlash + 1);
+                canvasUrl = "https://www.gocanvas.com/apiv2/images.xml?image_id=" + imageId + "&username=" + currentUser.UserName + "&password=" + currentUser.PasswordBoxObj.Password;
+            }
+            else
+            {
+                canvasUrl = "https://www.gocanvas.com/apiv2/images.xml?image_id=" + downloadUrl + "&username=" + currentUser.UserName + "&password=" + currentUser.PasswordBoxObj.Password;
+            }
+            //string canvasUrl = "https://www.gocanvas.com/apiv2/images.xml?image_id=" + downloadUrl + "&username=" + currentUser.UserName +"&password=" + currentUser.PasswordBoxObj.Password;
 
             ImageSource returnedImage;
 
