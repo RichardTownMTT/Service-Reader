@@ -143,6 +143,17 @@ namespace Service_Reader
             this.AllServiceDays = serviceDaysEntered;
         }
 
+        public static List<ServiceSheetViewModel> loadFromModel(IQueryable<ServiceSheet> serviceSheets)
+        {
+            List<ServiceSheetViewModel> retval = new List<ServiceSheetViewModel>();
+            foreach (var serviceSheet in serviceSheets)
+            {
+                ServiceSheetViewModel sheetLoaded = new ServiceSheetViewModel(serviceSheet);
+                retval.Add(sheetLoaded);
+            }
+            return retval;
+        }
+
         //RT 11/12/16 - This loads the values from the ServiceSheet and the ServiceDays
         public void CancelEdit()
         {
@@ -202,6 +213,66 @@ namespace Service_Reader
         public ServiceSheetViewModel()
         {
             ServiceSubmission = new ServiceSheet();
+        }
+
+        public ServiceSheetViewModel(ServiceSheet serviceSheet)
+        {
+            this.SubmissionNumber = serviceSheet.SubmissionNumber;
+            this.AppName = serviceSheet.AppName;
+            this.UserFirstName = serviceSheet.UserFirstName;
+            this.UserSurname = serviceSheet.UserSurname;
+            this.Username = serviceSheet.Username;
+            this.CanvasResponseId = serviceSheet.CanvasResponseId;
+            this.DtResponse = serviceSheet.DtResponse;
+            this.DtDevice = serviceSheet.DtDevice;
+            this.SubmissionFormName = serviceSheet.SubmissionFormName;
+            this.SubmissionFormVersion = serviceSheet.SubmissionFormVersion;
+            this.Customer = serviceSheet.Customer;
+            this.AddressLine1 = serviceSheet.AddressLine1;
+            this.AddressLine2 = serviceSheet.AddressLine2;
+            this.TownCity = serviceSheet.TownCity;
+            this.Postcode = serviceSheet.Postcode;
+            this.CustomerContact = serviceSheet.CustomerContact;
+            this.CustomerPhoneNo = serviceSheet.CustomerPhoneNo;
+            this.MachineMakeModel = serviceSheet.MachineMakeModel;
+            this.MachineSerial = serviceSheet.MachineSerial;
+            this.CncControl = serviceSheet.CncControl;
+            this.DtJobStart = serviceSheet.DtJobStart;
+            this.CustomerOrderNo = serviceSheet.CustomerOrderNo;
+            this.MttJobNumber = serviceSheet.MttJobNumber;
+            this.JobDescription = serviceSheet.JobDescription;
+            this.JobTotalTimeOnsite = serviceSheet.JobTotalTimeOnsite;
+            this.JobTotalTravelTime = serviceSheet.JobTotalTravelTime;
+            this.JobTotalMileage = serviceSheet.JobTotalMileage;
+            this.TotalDailyAllowances = serviceSheet.TotalDailyAllowances;
+            this.TotalOvernightAllowances = serviceSheet.TotalOvernightAllowances;
+            this.TotalBarrierPayments = serviceSheet.TotalBarrierPayments;
+            this.JobStatus = serviceSheet.JobStatus;
+            this.FinalJobReport = serviceSheet.FinalJobReport;
+            this.AdditionalFaults = serviceSheet.AdditionalFaults;
+            this.QuoteRequired = serviceSheet.QuoteRequired;
+            this.FollowUpPartsRequired = serviceSheet.FollowUpPartsRequired;
+            this.Image1Url = serviceSheet.Image1Url;
+            this.Image2Url = serviceSheet.Image2Url;
+            this.Image3Url = serviceSheet.Image3Url;
+            this.Image4Url = serviceSheet.Image4Url;
+            this.Image5Url = serviceSheet.Image5Url;
+            this.CustomerSignatureUrl = serviceSheet.CustomerSignatureUrl;
+            this.CustomerName = serviceSheet.CustomerName;
+            this.DtSigned = serviceSheet.DtSigned;
+            this.MttEngSignatureUrl = serviceSheet.MttEngSignatureUrl;
+            //We need to set the service sheet reference on the day
+            //We also need to set the service days on the sheet
+            this.ServiceSubmission.ServiceDays = new List<ServiceDay>();
+
+
+            //Load the service days from the models
+            foreach (ServiceDay sd in serviceSheet.ServiceDays)
+            {
+                ServiceDayViewModel serviceDayVM = new ServiceDayViewModel(sd);
+                this.AllServiceDays.AddServiceDay(serviceDayVM);
+                serviceDayVM.ParentServiceSheetVM = this;
+            }
         }
 
         //Method to save the data back to the model

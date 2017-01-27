@@ -60,6 +60,7 @@ namespace Service_Reader
             //RT 5/7/16 - Adding save dialog
             SaveFileDialog saveDialog = new SaveFileDialog();
             saveDialog.Filter = "pdf files (*.pdf)|*.pdf";
+            saveDialog.FileName = "Service report " + serviceSubmissionSheet.SubmissionNumber;
             Nullable<bool> result = saveDialog.ShowDialog();
 
             if (result == true)

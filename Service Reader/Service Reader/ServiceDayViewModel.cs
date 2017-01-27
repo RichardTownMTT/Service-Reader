@@ -29,6 +29,7 @@ namespace Service_Reader
         private ServiceDay m_serviceDayModel;
         //Adding a reference to the containing service sheet, so the total times can be updated
         private ServiceSheetViewModel m_parentServiceSheetVM;
+        private ServiceDay sd;
 
         //Class constructors
         public ServiceDayViewModel(DateTime dtTravelStart, DateTime dtArrivalOnsite, DateTime dtDepartSite, DateTime dtTravelEnd, int mileageEntered, bool dailyAllowanceEntered,
@@ -56,6 +57,58 @@ namespace Service_Reader
         private ServiceDayViewModel()
         {
 
+        }
+
+        public ServiceDayViewModel(ServiceDay sd)
+        {
+            this.TravelStartTime = sd.TravelStartTime;
+            this.ArrivalOnsiteTime = sd.ArrivalOnsiteTime;
+            this.DepartureSiteTime = sd.DepartureSiteTime;
+            this.TravelEndTime = sd.TravelEndTime;
+            this.Mileage = sd.Mileage;
+            if (sd.DailyAllowance == 0)
+            {
+                this.DailyAllowance = false;
+            }
+            else if(sd.DailyAllowance == 1)
+            {
+                this.DailyAllowance = true;
+            }
+            else
+            {
+                throw new Exception("Unknown daily allowance value: " + sd.DailyAllowance);
+            }
+            if (sd.OvernightAllowance == 0)
+            {
+                this.OvernightAllowance = false;
+            }
+            else if (sd.OvernightAllowance == 1)
+            {
+                this.OvernightAllowance = true;
+            }
+            else
+            {
+                throw new Exception("Unknown Overnight Allowance value: " + sd.OvernightAllowance);
+            }
+            if (sd.BarrierPayment == 0)
+            {
+                this.BarrierPayment = false;
+            }
+            else if (sd.BarrierPayment == 1)
+            {
+                this.BarrierPayment = true;
+            }
+            else
+            {
+                throw new Exception("Unknown Barrier Payment value: " + sd.BarrierPayment);
+            }
+            this.TravelTimeToSite = sd.TravelToSiteTime;
+            this.TravelTimeFromSite = sd.TravelFromSiteTime;
+            this.TotalTravelTime = sd.TotalTravelTime;
+            this.TotalOnsiteTime = sd.TotalOnsiteTime;
+            this.DailyReport = sd.DailyReport;
+            this.PartsSuppliedToday = sd.PartsSuppliedToday;
+            this.DtReport = sd.DtReport;
         }
 
         public void Save()

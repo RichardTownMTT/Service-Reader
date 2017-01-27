@@ -17,7 +17,10 @@ namespace Service_Reader
         private ICommand m_loadCsvCommand;
         private ICommand m_createServiceSheetCommand;
         private ServiceSheetViewModel m_selectedSubmission;
-        
+        //Adding database download
+        private ICommand m_downloadSheetsDatabaseCommand;
+
+
         public ObservableCollection<ServiceSheetViewModel> AllServiceSheets
         {
             get
@@ -87,6 +90,33 @@ namespace Service_Reader
             {
                 m_createServiceSheetCommand = value;
             }
+        }
+
+        public ICommand DownloadSheetsDatabaseCommand
+        {
+            get
+            {
+                if (m_downloadSheetsDatabaseCommand == null)
+                {
+                    m_downloadSheetsDatabaseCommand = new RelayCommand(param => downloadDataFromDatabase());
+                }
+                return m_downloadSheetsDatabaseCommand;
+            }
+
+            set
+            {
+                m_downloadSheetsDatabaseCommand = value;
+            }
+        }
+
+        private void downloadDataFromDatabase()
+        {
+            List<ServiceSheetViewModel> serviceSheetsDownloaded = DbServiceSheet.downloadAllServiceSheets();
+            if (serviceSheetsDownloaded == null)
+            {
+                return;
+            }
+            AllServiceSheets = new ObservableCollection<ServiceSheetViewModel>(serviceSheetsDownloaded);
         }
 
         private void createPdfServiceSheetForSubmission()

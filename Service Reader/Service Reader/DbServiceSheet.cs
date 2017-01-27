@@ -93,6 +93,35 @@ namespace Service_Reader
             return retval;
         }
 
+        public static List<ServiceSheetViewModel> downloadAllServiceSheets()
+        {
+            List<ServiceSheetViewModel> retval = new List<ServiceSheetViewModel>();
+
+            UserViewModel dbUserVM = getDbUserVM();
+            if (dbUserVM == null)
+            {
+                return null;
+            }
+            //Downloads the service sheets from the database and creates the vms
+            try
+            {
+                using (var dbContext = new ServiceSheetsEntities())
+                {
+                    updateContextConnection(dbUserVM, dbContext);
+                    var serviceSheets = from ServiceSheet in dbContext.ServiceSheets
+                                        where ServiceSheet.SubmissionNumber > 15678
+                                        select ServiceSheet;
+                    retval = ServiceSheetViewModel.loadFromModel(serviceSheets);
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return null;
+            }
+            return retval;
+        }
+
         private static void updateContextConnection(UserViewModel dbUserVM, ServiceSheetsEntities dbContext)
         {
             System.Data.Common.DbConnection connection = dbContext.Database.Connection;
