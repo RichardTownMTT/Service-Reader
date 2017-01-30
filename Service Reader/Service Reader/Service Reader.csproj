@@ -280,6 +280,7 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\logo.jpg" />
     <Content Include="ServiceModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ServiceModel.edmx</DependentUpon>

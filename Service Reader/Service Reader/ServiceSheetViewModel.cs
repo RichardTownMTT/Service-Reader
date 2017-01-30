@@ -69,6 +69,8 @@ namespace Service_Reader
         private ImageSource m_image3;
         private ImageSource m_image4;
         private ImageSource m_image5;
+        //RT 30/1/17 - Adding a flag for Uk/US sheets.  This doesn't save to the model.  Calculated from the job number
+        private bool? ukServiceSheet = null;
 
         private AllServiceDayViewModels m_AllServiceDays;
         //RT 11/12/16 - Adding an edit mode for the submission.
@@ -143,6 +145,25 @@ namespace Service_Reader
             this.AllServiceDays = serviceDaysEntered;
         }
 
+        private void checkUkJobNumber()
+        {
+            if(string.IsNullOrEmpty(MttJobNumber))
+            {
+                UkServiceSheet = null;
+                return;
+            }
+            string jobNumberFirstTwoChars = MttJobNumber.Substring(0, 2);
+            jobNumberFirstTwoChars = jobNumberFirstTwoChars.ToUpper();
+            if (jobNumberFirstTwoChars.Equals("US"))
+            {
+                UkServiceSheet = false;
+            }
+            else
+            {
+                UkServiceSheet = true;
+            }
+        }
+
         public static List<ServiceSheetViewModel> loadFromModel(IQueryable<ServiceSheet> serviceSheets)
         {
             List<ServiceSheetViewModel> retval = new List<ServiceSheetViewModel>();
@@ -207,6 +228,8 @@ namespace Service_Reader
             {
                 sd.CancelEdit();
             }
+            //If the job number starts with US, then not a uk job
+            checkUkJobNumber();
             EditMode = false;
         }
 
@@ -265,6 +288,8 @@ namespace Service_Reader
             //We also need to set the service days on the sheet
             this.ServiceSubmission.ServiceDays = new List<ServiceDay>();
 
+            //If the job number starts with US, then not a uk job
+            checkUkJobNumber();
 
             //Load the service days from the models
             foreach (ServiceDay sd in serviceSheet.ServiceDays)
@@ -1498,6 +1523,8 @@ namespace Service_Reader
             {
                 m_mttJobNumber = value;
                 onPropertyChanged("MttJobNumber");
+                //If the job number starts with US, then not a uk job
+                checkUkJobNumber();
             }
         }
 
@@ -1819,6 +1846,19 @@ namespace Service_Reader
             set
             {
                 m_selected = value;
+            }
+        }
+
+        public bool? UkServiceSheet
+        {
+            get
+            {
+                return ukServiceSheet;
+            }
+
+            set
+            {
+                ukServiceSheet = value;
             }
         }
 

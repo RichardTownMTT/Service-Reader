@@ -52,6 +52,8 @@ namespace Service_Reader
             createFooter();
             createHeader();
             createWatermark();
+            //RT 30/1/17 - Set the page size for each section
+            setPageSize();
 
             PdfDocumentRenderer docRenderer = new PdfDocumentRenderer();
             docRenderer.Document = serviceSheetDoc;
@@ -77,6 +79,28 @@ namespace Service_Reader
             }
 
             return successful;
+        }
+
+        private void setPageSize()
+        {
+            //RT 30/1/17 - If US sheet, then page size is letter
+            foreach (Section documentSection in serviceSheetDoc.Sections)
+            {
+                documentSection.PageSetup = serviceSheetDoc.DefaultPageSetup.Clone();
+                if (currentSheet.UkServiceSheet == false)
+                {
+                    documentSection.PageSetup.PageFormat = PageFormat.Letter;
+                }
+                else if (currentSheet.UkServiceSheet == true)
+                {
+                    documentSection.PageSetup.PageFormat = PageFormat.A4;
+                }
+                else
+                {
+                    Console.WriteLine("UK/US job not identified");
+                }
+            }
+            
         }
 
         private void createWatermark()
@@ -111,21 +135,46 @@ namespace Service_Reader
             tfWatermark.Orientation = MigraDoc.DocumentObjectModel.Shapes.TextOrientation.Upward;
             Paragraph lineOne = tfWatermark.AddParagraph();
 
-            addServiceToWaterMark(lineOne, "BREAKDOWN RESPONSE", true);
-            addServiceToWaterMark(lineOne, "SCHEDULED SERVICING", true);
-            addServiceToWaterMark(lineOne, "MPEOM PROCESS", true);
-            addServiceToWaterMark(lineOne, "RETROFIT & REBUILD", true);
-            addServiceToWaterMark(lineOne, "RELOCATION & INSTALLATION", true);
-            addServiceToWaterMark(lineOne, "MACHINE TOOL CALIBRATION", false);
-            
-            Paragraph lineTwo = tfWatermark.AddParagraph();
+            if (currentSheet.UkServiceSheet == true)
+            {
+                addServiceToWaterMark(lineOne, "BREAKDOWN RESPONSE", true);
+                addServiceToWaterMark(lineOne, "SCHEDULED SERVICING", true);
+                addServiceToWaterMark(lineOne, "MPEOM PROCESS", true);
+                addServiceToWaterMark(lineOne, "RETROFIT & REBUILD", true);
+                addServiceToWaterMark(lineOne, "RELOCATION & INSTALLATION", true);
+                addServiceToWaterMark(lineOne, "MACHINE TOOL CALIBRATION", false);
 
-            addServiceToWaterMark(lineTwo, "VIBRATION ANALYSIS", true);
-            addServiceToWaterMark(lineTwo, "THERMAL ANALYSIS", true);
-            addServiceToWaterMark(lineTwo, "SPINDLE ANALYSIS", true);
-            addServiceToWaterMark(lineTwo, "RESEARCH & DEVELOPMENT", true);
-            addServiceToWaterMark(lineTwo, "CUSTOMER TRAINING", true);
-            addServiceToWaterMark(lineTwo, "CONSULTATION", true);
+                Paragraph lineTwo = tfWatermark.AddParagraph();
+
+                addServiceToWaterMark(lineTwo, "VIBRATION ANALYSIS", true);
+                addServiceToWaterMark(lineTwo, "THERMAL ANALYSIS", true);
+                addServiceToWaterMark(lineTwo, "SPINDLE ANALYSIS", true);
+                addServiceToWaterMark(lineTwo, "RESEARCH & DEVELOPMENT", true);
+                addServiceToWaterMark(lineTwo, "CUSTOMER TRAINING", true);
+                addServiceToWaterMark(lineTwo, "CONSULTATION", true);
+            }
+            else if(currentSheet.UkServiceSheet == false)
+            {
+                addServiceToWaterMark(lineOne, "MPEOM PROCESS", true);
+                addServiceToWaterMark(lineOne, "RETROFIT & REBUILD", true);
+                addServiceToWaterMark(lineOne, "RELOCATION & INSTALLATION", true);
+                addServiceToWaterMark(lineOne, "MACHINE TOOL CALIBRATION", true);
+                addServiceToWaterMark(lineOne, "VIBRATION ANALYSIS", true);
+                addServiceToWaterMark(lineOne, "THERMAL ANALYSIS", true);
+
+                Paragraph lineTwo = tfWatermark.AddParagraph();
+                
+                addServiceToWaterMark(lineTwo, "SPINDLE ANALYSIS", true);
+                addServiceToWaterMark(lineTwo, "RESEARCH & DEVELOPMENT", true);
+                addServiceToWaterMark(lineTwo, "CUSTOMER TRAINING", true);
+                addServiceToWaterMark(lineTwo, "CONSULTATION", false);
+            }
+            else
+            {
+                Console.WriteLine("UK/US job not identified");
+            }
+            
+            
 
             //tfWatermark.AddParagraph("BREAKDOWN RESPONSE | SCHEDULED SERVICING | MPEOM PROCESS | RETROFIT & REBUILD | RELOCATION & INSTALLATION | MACHINE TOOL CALIBRATION | VIBRATION ANALYSIS");
             //tfWatermark.AddParagraph("THERMAL ANALYSIS | SPINDLE ANALYSIS | RESEARCH & DEVELOPMENT | CUSTOMER TRAINING | CONSULTATION");
@@ -168,9 +217,28 @@ namespace Service_Reader
             HeaderFooter firstPageHeader = currentSection.Headers.FirstPage;
             Paragraph headerParaFirstPage = firstPageHeader.AddParagraph();
             headerParaFirstPage.Format.Alignment = ParagraphAlignment.Right;
-            Image imgHeaderLogo = Service_Reader.Properties.Resources.MTTHeaderLogo;
+            //RT 30/1/17 - Adding US logo
+            Image imgHeaderLogo = null;
+            if (currentSheet.UkServiceSheet == true)
+            {
+                imgHeaderLogo = Service_Reader.Properties.Resources.MTTHeaderLogo;
+            }
+            else if(currentSheet.UkServiceSheet == false)
+            {
+                imgHeaderLogo = Service_Reader.Properties.Resources.MTTIncHeaderlogo;
+            }
+            else
+            {
+                Console.WriteLine("UK/US job not identified");
+            }
+
             string headerLogoStr = imageToMigradocString(imgHeaderLogo);
             var headerFirstPage = headerParaFirstPage.AddImage(headerLogoStr);
+            if (currentSheet.UkServiceSheet == false)
+            {
+                headerFirstPage.Height = new Unit(1.31, UnitType.Centimeter);
+                headerFirstPage.LockAspectRatio = true;
+            }
             headerFirstPage.Top = MigraDoc.DocumentObjectModel.Shapes.ShapePosition.Top;
             headerFirstPage.Left = MigraDoc.DocumentObjectModel.Shapes.ShapePosition.Right;
 
@@ -183,17 +251,100 @@ namespace Service_Reader
             MigraDoc.DocumentObjectModel.Shapes.TextFrame footerTf = currentSection.Footers.Primary.AddTextFrame();
             Table footerTable = footerTf.AddTable();
             footerTf.RelativeVertical = MigraDoc.DocumentObjectModel.Shapes.RelativeVertical.Page;
-            footerTf.MarginTop = new Unit(28.5, UnitType.Centimeter);
+            //RT - 30/1/17 - Adding US footer
+            if (currentSheet.UkServiceSheet == true)
+            {
+                footerTf.MarginTop = new Unit(28.5, UnitType.Centimeter);
+            }
+            else if (currentSheet.UkServiceSheet == false)
+            {
+                footerTf.MarginTop = new Unit(26.7, UnitType.Centimeter);
+            }
+            else
+            {
+                Console.WriteLine("UK/US job not identified");
+            }
 
             //Table footerTable = currentSection.Footers.Primary.AddTable();
             footerTable.AddColumn("4cm");
             footerTable.AddColumn("10cm");
             footerTable.AddColumn("4cm");
 
+            if (currentSheet.UkServiceSheet == true)
+            {
+                footerTf.MarginTop = new Unit(28.5, UnitType.Centimeter);
+            }
+            else if (currentSheet.UkServiceSheet == false)
+            {
+                footerTf.MarginTop = new Unit(26.7, UnitType.Centimeter);
+            }
+            else
+            {
+                Console.WriteLine("UK/US job not identified");
+            }
+
+            if (currentSheet.UkServiceSheet == true)
+            {
+                createUkFooterSection(footerTable);
+            }
+            else if (currentSheet.UkServiceSheet == false)
+            {
+                createUsFooterSection(footerTable);
+            }
+            else
+            {
+                Console.WriteLine("UK/US job not identified");
+            }
+            
+
+            currentSection.Footers.FirstPage = currentSection.Footers.Primary.Clone();
+
+        }
+
+        private void createUsFooterSection(Table footerTable)
+        {
             Row footerRow1 = footerTable.AddRow();
             footerTable.Style = "footerStyle";
             Paragraph addressParagraph = footerRow1.Cells[1].AddParagraph();
-            addressParagraph.AddText("Machine Tool Technologies Ltd , 1H Ribble Court, 1 Meadway");
+            addressParagraph.AddText("Machine Tool Technology, Inc., Registered Office: 122 W. 19th Street,");
+
+            Row footerRow2 = footerTable.AddRow();
+            Paragraph addressPara2 = footerRow2.Cells[1].AddParagraph();
+            addressPara2.AddText("Santa Ana, California, 92706, USA.");
+
+            Row footerRow3 = footerTable.AddRow();
+            Paragraph addressPara3 = footerRow3.Cells[1].AddParagraph();
+            addressPara3.AddText("Registered in California, USA. Entity Number C3844807");
+
+            Row footerRow4 = footerTable.AddRow();
+            Paragraph addressPara4 = footerRow4.Cells[1].AddParagraph();
+            addressPara4.AddText("Tel. (949) 697-9062 Web Address: www.mttinc.us.com");
+
+            //Merge the first cell, to contain the logo
+            footerRow1.Cells[0].MergeDown = 3;
+            footerRow1.Cells[2].MergeDown = 3;
+
+            Paragraph pageNumberParagraph = footerRow1.Cells[2].AddParagraph();
+            pageNumberParagraph.AddPageField();
+            pageNumberParagraph.AddText(" (");
+            pageNumberParagraph.AddNumPagesField();
+            pageNumberParagraph.AddText(")");
+
+            footerRow1.Cells[2].Style = "Normal";
+
+            Image imgFooterLogo = Service_Reader.Properties.Resources.MTTIncHeaderlogo; 
+
+            string imageFileName = imageToMigradocString(imgFooterLogo);
+            var mttIncFooter = footerRow1.Cells[0].AddImage(imageFileName);
+            mttIncFooter.Height = new Unit(1.2, UnitType.Centimeter);
+        }
+
+        private static void createUkFooterSection(Table footerTable)
+        {
+            Row footerRow1 = footerTable.AddRow();
+            footerTable.Style = "footerStyle";
+            Paragraph addressParagraph = footerRow1.Cells[1].AddParagraph();
+            addressParagraph.AddText("Machine Tool Technologies Ltd, 1H Ribble Court, 1 Meadway");
 
             Row footerRow2 = footerTable.AddRow();
             Paragraph addressPara2 = footerRow2.Cells[1].AddParagraph();
@@ -219,9 +370,6 @@ namespace Service_Reader
 
             string imageFileName = imageToMigradocString(imgFooterLogo);
             footerRow1.Cells[0].AddImage(imageFileName);
-
-            currentSection.Footers.FirstPage = currentSection.Footers.Primary.Clone();
-
         }
 
         private static string imageToMigradocString(Image selectedImage)
@@ -267,7 +415,7 @@ namespace Service_Reader
 
             addImageToSignoffTable("Customer signature", currentSheet.CustomerSignature, 2);
             addLineToSignoffTable("Customer name", currentSheet.CustomerName);
-            addLineToSignoffTable("Date", currentSheet.DtSigned.ToShortDateString());
+            addLineToSignoffTable("Date", currentSheet.DtSigned.ToString("MM/dd/yyyy"));
             addImageToSignoffTable("MTT engineer signature", currentSheet.MttEngineerSignature, 2);
             addLineToSignoffTable("MTT engineer", currentSheet.EngineerFullName);
         }
@@ -558,7 +706,7 @@ namespace Service_Reader
             //Keep the rows together
             row1Title.KeepWith = 14;    
 
-            addLineToTimesheet("Date", currentDay.DtReport.ToShortDateString());
+            addLineToTimesheet("Date", currentDay.DtReport.ToString("MM/dd/yyyy"));
             addLineToTimesheet("Day", currentDay.DtReport.ToString("dddd"));
             addLineToTimesheet("Travel start time", currentDay.TravelStartTime.ToShortTimeString());
             addLineToTimesheet("Arrival time onsite", currentDay.ArrivalOnsiteTime.ToShortTimeString());
@@ -703,7 +851,7 @@ namespace Service_Reader
             addLineToJobDetails("Machine make and model", currentSheet.MachineMakeModel);
             addLineToJobDetails("Machine serial number", currentSheet.MachineSerial);
             addLineToJobDetails("CNC controller", currentSheet.CncControl);
-            addLineToJobDetails("Job start date", currentSheet.DtJobStart.ToShortDateString());
+            addLineToJobDetails("Job start date", currentSheet.DtJobStart.ToString("MM/dd/yyyy"));
             addLineToJobDetails("Customer order no.", currentSheet.CustomerOrderNo);
             addLineToJobDetails("MTT job no.", currentSheet.MttJobNumber);
             addLineToJobDetails("Job description", currentSheet.JobDescription);
