@@ -109,7 +109,7 @@ namespace Service_Reader
                 {
                     updateContextConnection(dbUserVM, dbContext);
                     var serviceSheets = from ServiceSheet in dbContext.ServiceSheets
-                                        where ServiceSheet.SubmissionNumber > 15678
+                                        where ServiceSheet.SubmissionNumber > 15660
                                         select ServiceSheet;
                     retval = ServiceSheetViewModel.loadFromModel(serviceSheets);
                 }
