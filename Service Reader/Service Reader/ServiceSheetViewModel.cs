@@ -79,6 +79,7 @@ namespace Service_Reader
         private bool m_selected = false;
 
 
+
         //Creator for the VM
         public ServiceSheetViewModel(int submissionNoEntered, string appNameEntered, string userfirstNameEntered, string userSurnameEntered, string canvasResponseIdEntered, DateTime dtResponseEntered, 
             DateTime dtDeviceEntered, string submissionFormNameEntered, int submissionVersionEntered, string customerEntered, string address1Entered, string address2Entered, string townCityEntered,
@@ -298,6 +299,57 @@ namespace Service_Reader
                 this.AllServiceDays.AddServiceDay(serviceDayVM);
                 serviceDayVM.ParentServiceSheetVM = this;
             }
+        }
+
+        public ServiceSheetViewModel(DbEmployee selectedUser, EngineerActivity selectedActivity, DateTime startDate, DateTime endDate)
+        {
+            //RT 31/1/17 - This creates an activity not carried out on customer site. E.g. Holiday, stand by, etc
+            this.SubmissionNumber = selectedActivity.ActivityCode;
+            this.AppName = "Service Sheet";
+            this.Username = selectedUser.Username;
+            this.UserFirstName = selectedUser.Firstname;
+            this.UserSurname = selectedUser.Surname;
+            this.CanvasResponseId = "";
+            this.DtResponse = DateTime.Now;
+            this.DtDevice = DateTime.Now;
+            this.SubmissionFormName = "Service Sheet";
+            this.SubmissionFormVersion = 12;
+            this.Customer = "MTT";
+            this.AddressLine1 = "";
+            this.AddressLine2 = "";
+            this.TownCity = "";
+            this.Postcode = "";
+            this.CustomerContact = "";
+            this.CustomerPhoneNo = "";
+            this.MachineMakeModel = "";
+            this.MachineSerial = "";
+            this.CncControl = "";
+            this.DtJobStart = startDate;
+            this.CustomerOrderNo = "";
+            this.MttJobNumber = selectedActivity.ActivityDescription;
+            this.JobDescription = selectedActivity.ActivityDescription;
+            this.JobTotalTimeOnsite = 0;
+            this.JobTotalTravelTime = 0;
+            this.JobTotalMileage = 0;
+            this.TotalDailyAllowances = 0;
+            this.TotalOvernightAllowances = 0;
+            this.TotalBarrierPayments = 0;
+            this.JobStatus = "Job completed";
+            this.FinalJobReport = "";
+            this.AdditionalFaults = "";
+            this.QuoteRequired = false;
+            this.FollowUpPartsRequired = "";
+            this.Image1Url = "";
+            this.Image2Url = "";
+            this.Image3Url = "";
+            this.Image4Url = "";
+            this.Image5Url = "";
+            this.CustomerSignatureUrl = "";
+            this.CustomerName = "";
+            this.DtSigned = new DateTime();
+            this.MttEngSignatureUrl = "";
+
+            need to calculate number of business days and create days
         }
 
         //Method to save the data back to the model
@@ -1866,5 +1918,6 @@ namespace Service_Reader
         {
             AllServiceDays.AddServiceDay(serviceDayToAdd);
         }
+
     }
 }

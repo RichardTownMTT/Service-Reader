@@ -14,6 +14,8 @@ namespace Service_Reader
         private ICommand m_issueServiceReportsCommand;
         private ICommand m_historyTrackerCommand;
         private ICommand m_jobCostSheetCommand;
+        //RT 31/1/17 - Adding in a holiday / absence screen
+        private ICommand m_absenceTrackerCommand;
         private object m_currentPageView;
         private List<object> m_allPageViews;
 
@@ -23,6 +25,7 @@ namespace Service_Reader
             AllPageViews.Add(new IssueServiceReportsView());
             AllPageViews.Add(new HistoryTrackerView());
             AllPageViews.Add(new JobCostSheetView());
+            AllPageViews.Add(new AbsenceHolidayView());
             CurrentPageView = AllPageViews[0];
         }
 
@@ -132,6 +135,28 @@ namespace Service_Reader
             {
                 m_jobCostSheetCommand = value;
             }
+        }
+
+        public ICommand AbsenceTrackerCommand
+        {
+            get
+            {
+                if (m_absenceTrackerCommand == null)
+                {
+                    m_absenceTrackerCommand = new RelayCommand(param => selectAbsenceView());
+                }
+                return m_absenceTrackerCommand;
+            }
+
+            set
+            {
+                m_absenceTrackerCommand = value;
+            }
+        }
+
+        private void selectAbsenceView()
+        {
+            CurrentPageView = AllPageViews[4];
         }
 
         private void selectJobCostSheetView()

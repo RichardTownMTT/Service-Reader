@@ -47,6 +47,38 @@ namespace Service_Reader
             return true;
         }
 
+        public static List<DbEmployee> getAllUsers()
+        {
+            List<DbEmployee> retval = new List<DbEmployee>();
+            //Selects all submission numbers from the database
+            UserViewModel dbUserVM = getDbUserVM();
+            if (dbUserVM == null)
+            {
+                return null;
+            }
+
+            try
+            {
+                using (var dbContext = new ServiceSheetsEntities())
+                {
+                    updateContextConnection(dbUserVM, dbContext);
+
+                    var userQuery = dbContext.ServiceSheets
+                                        .Select(x => new { x.Username, x.UserFirstName, x.UserSurname }).Distinct();
+                    foreach (var user in userQuery)
+                    {
+                        retval.Add(new DbEmployee(user.Username, user.UserFirstName, user.UserSurname));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return null;
+            }
+            return retval;
+        }
+
         //RT 23/1/17 - Gets the database username and password.  Should be stored in the application
         public static UserViewModel getDbUserVM()
         {

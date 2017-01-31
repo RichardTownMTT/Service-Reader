@@ -13,6 +13,7 @@
                 <Button Content="Issue Service Reports" Margin="5" Command="{Binding IssueServiceReportsCommand}"/>
                 <Button Content="History Tracker" Margin="5" Command="{Binding HistoryTrackerCommand}"/>
                 <Button Content="Job Cost Sheet" Margin="5" Command="{Binding JobCostSheetCommand}"/>
+                <Button Content="Absence Manager" Margin="5" Command="{Binding AbsenceTrackerCommand}" />
             </StackPanel>
         </Border>
         <ScrollViewer HorizontalScrollBarVisibility="Auto">

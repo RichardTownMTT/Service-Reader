@@ -92,6 +92,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AbsenceHolidayView.xaml.cs">
+      <DependentUpon>AbsenceHolidayView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AbsenceHolidayViewModel.cs" />
     <Compile Include="AllServiceDayViewModels.cs" />
     <Compile Include="ApplicationWindow.xaml.cs">
       <DependentUpon>ApplicationWindow.xaml</DependentUpon>
@@ -105,7 +109,13 @@
       <DependentUpon>ServiceModel.tt</DependentUpon>
     </Compile>
     <Compile Include="CanvasSubmissionsViewModel.cs" />
+    <Compile Include="DbEmployee.cs" />
     <Compile Include="DbServiceSheet.cs" />
+    <Compile Include="EngineerActivity.cs" />
+    <Compile Include="HolidayAbsenceCreator.xaml.cs">
+      <DependentUpon>HolidayAbsenceCreator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="HolidayAbsenceCreatorViewModel.cs" />
     <Compile Include="UserViewModel.cs" />
     <Compile Include="CreateCostSheet.cs" />
     <Compile Include="CsvServiceExport.cs" />
@@ -162,11 +172,19 @@
     <Compile Include="CanvasImageDownloadView.xaml.cs">
       <DependentUpon>CanvasImageDownloadView.xaml</DependentUpon>
     </Compile>
+    <Page Include="AbsenceHolidayView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ApplicationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="HistoryTrackerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HolidayAbsenceCreator.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
