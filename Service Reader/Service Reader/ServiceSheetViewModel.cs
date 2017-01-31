@@ -349,6 +349,22 @@ namespace Service_Reader
             this.DtSigned = new DateTime();
             this.MttEngSignatureUrl = "";
 
+            TimeSpan noOfDaysSpan =  endDate - startDate;
+            double noOfDays = noOfDaysSpan.TotalDays;
+            
+            for (DateTime currentDate = startDate; currentDate <= endDate; currentDate = currentDate.AddDays(1))
+            {
+                ServiceDayViewModel sdVM = ServiceDayViewModel.createServiceDayForHolidayAbsence(currentDate);
+                //If it is a weekend, then the day will be null
+                if (sdVM == null)
+                {
+                    continue;
+                }
+                sdVM.ParentServiceSheetVM = this;
+
+                AllServiceDays.AddServiceDay(sdVM);
+            }
+
             need to calculate number of business days and create days
         }
 

@@ -578,6 +578,60 @@ namespace Service_Reader
             recalculateTotalTravelTime();
         }
 
+        public static ServiceDayViewModel createServiceDayForHolidayAbsence(DateTime currentDate)
+        {
+            //Creates a day for a holiday / absence.  May not need to complete all fields
+            ServiceDayViewModel retval = new ServiceDayViewModel();
+            DayOfWeek currentDay = currentDate.DayOfWeek;
+
+            if (currentDay.Equals(DayOfWeek.Saturday) || currentDay.Equals(DayOfWeek.Sunday))
+            {
+                //We don't set it for weekends
+                return null;
+            }
+
+            //Set the items which don't change by the day
+            retval.DailyReport = "";
+            retval.DtReport = currentDate;
+            retval.Mileage = 0;
+            retval.OvernightAllowance = false;
+            retval.PartsSuppliedToday = "";
+            retval.TravelTimeFromSite = 0;
+            retval.TravelTimeToSite = 0;
+
+            //Day always starts at 8 am.
+            TimeSpan dayStartTime = new TimeSpan(8, 0, 0);
+            DateTime dayStartDateTime = currentDate.Date + dayStartTime;
+            DateTime dayEndDateTime = new DateTime();
+            int totalTimeOnsite = 0;
+
+            switch (currentDay)
+            {
+                case DayOfWeek.Monday:
+                case DayOfWeek.Tuesday:
+                case DayOfWeek.Wednesday:
+                case DayOfWeek.Thursday:
+                    totalTimeOnsite = 8;
+                    dayEndDateTime = dayStartDateTime.AddHours(totalTimeOnsite);
+                    break;
+                case DayOfWeek.Friday:
+                    totalTimeOnsite = 6;
+                    dayEndDateTime = dayStartDateTime.AddHours(totalTimeOnsite);
+                    break;
+                default:
+                    throw new Exception("Unknown day: " + currentDay.ToString());
+            }
+
+            retval.TravelStartTime = dayStartDateTime;
+            retval.ArrivalOnsiteTime = dayStartDateTime;
+            retval.DepartureSiteTime = dayEndDateTime;
+            retval.TravelEndTime = dayEndDateTime;
+            retval.TotalOnsiteTime = totalTimeOnsite;
+            retval.TotalTravelTime = 0;
+
+            return retval;
+        }
+
         //public DateTime ArrivalOnsiteTime
         //{
         //    get
