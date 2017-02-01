@@ -47,6 +47,35 @@ namespace Service_Reader
             return true;
         }
 
+        public static List<ServiceSheetViewModel> loadHolidayAbsenceSheets()
+        {
+            List<ServiceSheetViewModel> retval = new List<ServiceSheetViewModel>();
+
+            UserViewModel dbUserVM = getDbUserVM();
+            if (dbUserVM == null)
+            {
+                return null;
+            }
+            //Downloads the service sheets from the database and creates the vms
+            try
+            {
+                using (var dbContext = new ServiceSheetsEntities())
+                {
+                    updateContextConnection(dbUserVM, dbContext);
+                    var serviceSheets = from ServiceSheet in dbContext.ServiceSheets
+                                        where ServiceSheet.SubmissionNumber < 0
+                                        select ServiceSheet;
+                    retval = ServiceSheetViewModel.loadFromModel(serviceSheets);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return null;
+            }
+            return retval;
+        }
+
         public static List<DbEmployee> getAllUsers()
         {
             List<DbEmployee> retval = new List<DbEmployee>();
@@ -151,6 +180,14 @@ namespace Service_Reader
                 Console.WriteLine(ex.ToString());
                 return null;
             }
+            return retval;
+        }
+
+        public static bool saveSheetsAndDays(ServiceSheetViewModel serviceSheetCreated)
+        {
+            ObservableCollection<ServiceSheetViewModel> sheetToSave = new ObservableCollection<ServiceSheetViewModel>();
+            sheetToSave.Add(serviceSheetCreated);
+            bool retval = saveSheetsAndDays(sheetToSave);
             return retval;
         }
 

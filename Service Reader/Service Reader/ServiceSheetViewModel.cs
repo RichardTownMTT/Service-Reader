@@ -71,6 +71,8 @@ namespace Service_Reader
         private ImageSource m_image5;
         //RT 30/1/17 - Adding a flag for Uk/US sheets.  This doesn't save to the model.  Calculated from the job number
         private bool? ukServiceSheet = null;
+        //RT 1/2/17 - Adding a date for the last date on the job.  
+        private DateTime m_sheetFinishDate;
 
         private AllServiceDayViewModels m_AllServiceDays;
         //RT 11/12/16 - Adding an edit mode for the submission.
@@ -142,8 +144,23 @@ namespace Service_Reader
             {
                 this.ServiceSubmission.ServiceDays.Add(sd.ServiceDayModel);
                 sd.ParentServiceSheetVM = this;
+                //RT 1/2/17 - Need to calculate the date of the last sheet
+                checkLastServiceDayDate(sd.DtReport);
             }
             this.AllServiceDays = serviceDaysEntered;
+        }
+
+        private void checkLastServiceDayDate(DateTime dtReport)
+        {
+            //Checks if the service day date is greater than the one currently set
+            if (SheetFinishDate == new DateTime())
+            {
+                SheetFinishDate = dtReport;
+            }
+            else if (SheetFinishDate < dtReport)
+            {
+                SheetFinishDate = dtReport;
+            }
         }
 
         private void checkUkJobNumber()
@@ -228,6 +245,8 @@ namespace Service_Reader
             foreach (ServiceDayViewModel sd in AllServiceDays.AllServiceDayVMs)
             {
                 sd.CancelEdit();
+                //RT 1/2/17 - need to reset the sheet finish date
+                checkLastServiceDayDate(sd.DtReport);
             }
             //If the job number starts with US, then not a uk job
             checkUkJobNumber();
@@ -298,6 +317,8 @@ namespace Service_Reader
                 ServiceDayViewModel serviceDayVM = new ServiceDayViewModel(sd);
                 this.AllServiceDays.AddServiceDay(serviceDayVM);
                 serviceDayVM.ParentServiceSheetVM = this;
+                //Need to set the last date from the service days
+                checkLastServiceDayDate(serviceDayVM.DtReport);
             }
         }
 
@@ -350,7 +371,7 @@ namespace Service_Reader
             this.MttEngSignatureUrl = "";
 
             TimeSpan noOfDaysSpan =  endDate - startDate;
-            double noOfDays = noOfDaysSpan.TotalDays;
+            double noOfDays = noOfDaysSpan.TotalDays + 1;
             
             for (DateTime currentDate = startDate; currentDate <= endDate; currentDate = currentDate.AddDays(1))
             {
@@ -363,13 +384,14 @@ namespace Service_Reader
                 sdVM.ParentServiceSheetVM = this;
 
                 AllServiceDays.AddServiceDay(sdVM);
-            }
 
-            need to calculate number of business days and create days
+                checkLastServiceDayDate(sdVM.DtReport);
+            }
+            
         }
 
         //Method to save the data back to the model
-        public void Save()
+        public void SaveToModel()
         {
             if (ServiceSubmission == null)
             {
@@ -1927,6 +1949,19 @@ namespace Service_Reader
             set
             {
                 ukServiceSheet = value;
+            }
+        }
+
+        public DateTime SheetFinishDate
+        {
+            get
+            {
+                return m_sheetFinishDate;
+            }
+
+            set
+            {
+                m_sheetFinishDate = value;
             }
         }
 

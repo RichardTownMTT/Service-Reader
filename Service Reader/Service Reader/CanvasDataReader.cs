@@ -439,7 +439,7 @@ namespace Service_Reader
                         jobTotalTimeOnsiteEntered, jobTotalTravelTimeEntered, mileageEntered, totalDaEntered, totalOaEntered, totalBpEntered, jobStatusEntered, finalJobReportEntered, additionalFaultsEntered,
                         quoteRequiredEntered, followUpPartsRequiredEntered, image1UrlEntered, image2UrlEntered, image3UrlEntered, image4UrlEntered, image5UrlEntered, customerSignatureUrlEntered, customerNameEntered, dtSignedEntered,
                         mttEngSignatureUrlEntered, dayVMs, usernameEntered);
-                    retval.Save();
+                    retval.SaveToModel();
 
                     return retval;
                 }

@@ -45,10 +45,10 @@ namespace Service_Reader
         }
 
         //RT 31/1/17 - Activity type records
-        private const int ACTIVITY_HOLIDAY = -1;
-        private const int ACTIVITY_ILLNESS = -2;
-        private const int ACTIVITY_TRAINING = -3;
-        private const int ACTIVITY_STAND_BY = -4;
+        public const int ACTIVITY_HOLIDAY = -1;
+        public const int ACTIVITY_ILLNESS = -2;
+        public const int ACTIVITY_TRAINING = -3;
+        public const int ACTIVITY_STAND_BY = -4;
 
         public int ActivityCode
         {

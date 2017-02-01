@@ -359,7 +359,7 @@ namespace Service_Reader
                 MessageBox.Show("Nothing to save. This submission has not been edited.");
                 return;
             }
-            SelectedSubmission.Save();
+            SelectedSubmission.SaveToModel();
         }
 
         private void editSubmissionMode()

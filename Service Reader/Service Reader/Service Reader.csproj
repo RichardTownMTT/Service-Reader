@@ -92,10 +92,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AbsenceHolidayView.xaml.cs">
-      <DependentUpon>AbsenceHolidayView.xaml</DependentUpon>
+    <Compile Include="HolidayAbsenceView.xaml.cs">
+      <DependentUpon>HolidayAbsenceView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AbsenceHolidayViewModel.cs" />
+    <Compile Include="HolidayAbsenceViewModel.cs" />
     <Compile Include="AllServiceDayViewModels.cs" />
     <Compile Include="ApplicationWindow.xaml.cs">
       <DependentUpon>ApplicationWindow.xaml</DependentUpon>
@@ -172,7 +172,7 @@
     <Compile Include="CanvasImageDownloadView.xaml.cs">
       <DependentUpon>CanvasImageDownloadView.xaml</DependentUpon>
     </Compile>
-    <Page Include="AbsenceHolidayView.xaml">
+    <Page Include="HolidayAbsenceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

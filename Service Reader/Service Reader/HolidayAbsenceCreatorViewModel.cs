@@ -176,6 +176,14 @@ namespace Service_Reader
 
             //Need to create the service sheet / day entities and save
             ServiceSheetViewModel serviceSheetCreated = new ServiceSheetViewModel(SelectedUser, SelectedActivity, StartDate, EndDate);
+            //Now save
+            serviceSheetCreated.SaveToModel();
+            bool saveSuccessful = DbServiceSheet.saveSheetsAndDays(serviceSheetCreated);
+            if (!saveSuccessful)
+            {
+                MessageBox.Show("Error saving to database.  Need to show error message!");
+                return;
+            }
         }
 
         private bool validateEntry()
@@ -200,7 +208,7 @@ namespace Service_Reader
                 MessageBox.Show("You must select an end date");
                 return false;
             }
-            else if (StartDate >= EndDate)
+            else if (StartDate > EndDate)
             {
                 MessageBox.Show("Start date must be before end date");
                 return false;
