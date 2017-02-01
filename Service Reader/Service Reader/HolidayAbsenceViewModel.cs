@@ -47,6 +47,10 @@ namespace Service_Reader
         private void loadHolidayAbsences()
         {
             List<ServiceSheetViewModel> loadedSheets = DbServiceSheet.loadHolidayAbsenceSheets();
+            if (loadedSheets == null)
+            {
+                return;
+            }
             AllAbsenceHolidays = new ObservableCollection<ServiceSheetViewModel>(loadedSheets);
         }
     }

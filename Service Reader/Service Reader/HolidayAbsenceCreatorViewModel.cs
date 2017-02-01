@@ -214,6 +214,19 @@ namespace Service_Reader
                 return false;
             }
 
+            //Check that a service sheet doesn't exist for the absence dates
+            bool? clashingDate = DbServiceSheet.checkForClashingDates(StartDate, EndDate, SelectedUser.Username);
+            if (clashingDate == null)
+            {
+                MessageBox.Show("Error checking duplicates in database. Not saved.  Need to show error message!");
+                return false;
+            }
+            else if (clashingDate == true)
+            {
+                MessageBox.Show("A sheet already exists for these dates.");
+                return false;
+            }
+
             return true;
         }
     }

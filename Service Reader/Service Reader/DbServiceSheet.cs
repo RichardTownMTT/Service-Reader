@@ -183,6 +183,45 @@ namespace Service_Reader
             return retval;
         }
 
+        public static bool? checkForClashingDates(DateTime startDate, DateTime endDate, string username)
+        {
+            //Returns true if a service day exists for between the given dates.
+            List<ServiceSheetViewModel> retval = new List<ServiceSheetViewModel>();
+
+            UserViewModel dbUserVM = getDbUserVM();
+            if (dbUserVM == null)
+            {
+                return null;
+            }
+            
+
+            try
+            {
+                using (var dbContext = new ServiceSheetsEntities())
+                {
+                    updateContextConnection(dbUserVM, dbContext);
+                    var serviceSheets =
+                    from ss in dbContext.ServiceSheets
+                    join sd in dbContext.ServiceDays on ss.Id equals sd.ServiceSheetId
+                    where ss.Username == username && sd.DtReport >= startDate && sd.DtReport <= endDate
+                    select ss;
+
+                    retval = ServiceSheetViewModel.loadFromModel(serviceSheets);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return null;
+            }
+
+            if (retval == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
         public static bool saveSheetsAndDays(ServiceSheetViewModel serviceSheetCreated)
         {
             ObservableCollection<ServiceSheetViewModel> sheetToSave = new ObservableCollection<ServiceSheetViewModel>();
