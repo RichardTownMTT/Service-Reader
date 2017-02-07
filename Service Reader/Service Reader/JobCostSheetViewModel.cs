@@ -17,7 +17,7 @@ namespace Service_Reader
         private ObservableCollection<ServiceSheetViewModel> m_allServiceSheets;
         private ICommand m_loadCsvCommand;
         private ICommand m_createCostSheetCommand;
-        private ObservableCollection<ServiceSheetViewModel> m_selectedSubmissions;
+        //private ObservableCollection<ServiceSheetViewModel> m_selectedSubmissions;
 
         public ObservableCollection<ServiceSheetViewModel> AllServiceSheets
         {

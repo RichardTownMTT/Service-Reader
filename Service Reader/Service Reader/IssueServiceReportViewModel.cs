@@ -119,20 +119,31 @@ namespace Service_Reader
             AllServiceSheets = new ObservableCollection<ServiceSheetViewModel>(serviceSheetsDownloaded);
 
             //Now we need to download the images from Canvas
+            //RT 7/2/17 - Moving to caching
+            //UserViewModel canvasUserVM = new UserViewModel(UserViewModel.MODE_CANVAS);
+            //UserView userView = new UserView();
+            //userView.DataContext = canvasUserVM;
+            //bool? userResult = userView.ShowDialog();
 
-            UserViewModel canvasUserVM = new UserViewModel(UserViewModel.DISPLAY_MODE_CANVAS);
-            UserView userView = new UserView();
-            userView.DataContext = canvasUserVM;
-            bool? userResult = userView.ShowDialog();
+            ////RT 3/12/16 - The box may have been cancelled
+            //if (userResult != true)
+            //{
+            //    MessageBox.Show("Unable to download images. Exiting.");
+            //    AllServiceSheets = null;
+            //    return;
+            //}
+
+            UserViewModel userResult = CanvasDataReader.getCanvasUser();
 
             //RT 3/12/16 - The box may have been cancelled
-            if (userResult != true)
+            if (userResult == null)
             {
                 MessageBox.Show("Unable to download images. Exiting.");
                 AllServiceSheets = null;
                 return;
             }
-            CanvasImageDownloadViewModel imageVM = new CanvasImageDownloadViewModel(AllServiceSheets.ToList(), canvasUserVM, true);
+
+            CanvasImageDownloadViewModel imageVM = new CanvasImageDownloadViewModel(AllServiceSheets.ToList(), userResult, true);
             CanvasImageDownloadView imageDownloadView = new CanvasImageDownloadView();
             imageDownloadView.DataContext = imageVM;
             bool? result = imageDownloadView.ShowDialog();

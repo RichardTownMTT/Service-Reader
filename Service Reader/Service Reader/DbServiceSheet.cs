@@ -4,6 +4,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.Caching;
+using System.Data.SqlClient;
+using System.Data.Entity.Core;
 
 namespace Service_Reader
 {
@@ -12,7 +15,7 @@ namespace Service_Reader
         //Class for handling data from the service sheet database table
         public static bool saveSheetsAndDays(ObservableCollection<ServiceSheetViewModel> allServiceSheets)
         {
-            UserViewModel dbUserVM = getDbUserVM();
+            UserViewModel dbUserVM = getDbUser();
             if (dbUserVM == null)
             {
                 return false;
@@ -22,11 +25,12 @@ namespace Service_Reader
             {
                 using (var dbContext = new ServiceSheetsEntities())
                 {
-                    System.Data.Common.DbConnection connection = dbContext.Database.Connection;
-                    System.Data.Common.DbConnectionStringBuilder str = new System.Data.Common.DbConnectionStringBuilder();
-                    str.ConnectionString = dbContext.Database.Connection.ConnectionString;
-                    str.Add("Password", dbUserVM.PasswordBoxObj.Password);
-                    dbContext.Database.Connection.ConnectionString = str.ConnectionString;
+                    updateContextConnection(dbUserVM, dbContext);
+                    //System.Data.Common.DbConnection connection = dbContext.Database.Connection;
+                    //System.Data.Common.DbConnectionStringBuilder str = new System.Data.Common.DbConnectionStringBuilder();
+                    //str.ConnectionString = dbContext.Database.Connection.ConnectionString;
+                    //str.Add("Password", dbUserVM.PasswordBoxEntry.Password);
+                    //dbContext.Database.Connection.ConnectionString = str.ConnectionString;
                     //dbContext.Database.Log = Console.Write;
                     foreach (ServiceSheetViewModel serviceVM in allServiceSheets)
                     {
@@ -51,8 +55,8 @@ namespace Service_Reader
         {
             List<ServiceSheetViewModel> retval = new List<ServiceSheetViewModel>();
 
-            UserViewModel dbUserVM = getDbUserVM();
-            if (dbUserVM == null)
+            UserViewModel dbUser = getDbUser();
+            if (dbUser == null)
             {
                 return null;
             }
@@ -61,7 +65,7 @@ namespace Service_Reader
             {
                 using (var dbContext = new ServiceSheetsEntities())
                 {
-                    updateContextConnection(dbUserVM, dbContext);
+                    updateContextConnection(dbUser, dbContext);
                     var serviceSheets = from ServiceSheet in dbContext.ServiceSheets
                                         where ServiceSheet.SubmissionNumber < 0
                                         select ServiceSheet;
@@ -80,8 +84,8 @@ namespace Service_Reader
         {
             List<DbEmployee> retval = new List<DbEmployee>();
             //Selects all submission numbers from the database
-            UserViewModel dbUserVM = getDbUserVM();
-            if (dbUserVM == null)
+            UserViewModel dbUser = getDbUser();
+            if (dbUser == null)
             {
                 return null;
             }
@@ -90,7 +94,7 @@ namespace Service_Reader
             {
                 using (var dbContext = new ServiceSheetsEntities())
                 {
-                    updateContextConnection(dbUserVM, dbContext);
+                    updateContextConnection(dbUser, dbContext);
 
                     var userQuery = dbContext.ServiceSheets
                                         .Select(x => new { x.Username, x.UserFirstName, x.UserSurname }).Distinct();
@@ -100,6 +104,13 @@ namespace Service_Reader
                     }
                 }
             }
+            catch (EntityException entityEx)
+            {
+                //Something went wrong with the load.  Clear the cache for the username.
+                clearCacheDbUsername();
+                Console.WriteLine(entityEx.ToString());
+                return null;
+            }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
@@ -108,12 +119,28 @@ namespace Service_Reader
             return retval;
         }
 
-        //RT 23/1/17 - Gets the database username and password.  Should be stored in the application
-        public static UserViewModel getDbUserVM()
+        private static void clearCacheDbUsername()
         {
-            UserViewModel DbUserVM = new UserViewModel(UserViewModel.DISPLAY_MODE_DATABASE);
+            ObjectCache objCache = MemoryCache.Default;
+            if (objCache.Contains(UserViewModel.CACHE_DATABASE_USER))
+            {
+                objCache.Remove(UserViewModel.CACHE_DATABASE_USER);
+            }
+        }
+
+        //RT 23/1/17 - Gets the database username and password.  Should be stored in the application
+        public static UserViewModel getDbUser()
+        {
+            //Get the username from the Cache
+            ObjectCache objCache = MemoryCache.Default;
+            if (objCache.Contains(UserViewModel.CACHE_DATABASE_USER))
+            {
+                return (UserViewModel)objCache.Get(UserViewModel.CACHE_DATABASE_USER);
+            }
+
+            UserViewModel dbUserVM = new UserViewModel(UserViewModel.MODE_DATABASE);
             UserView userView = new UserView();
-            userView.DataContext = DbUserVM;
+            userView.DataContext = dbUserVM;
             bool? userResult = userView.ShowDialog();
 
             //RT - The box may have been cancelled
@@ -122,15 +149,21 @@ namespace Service_Reader
                 return null;
             }
 
-            return DbUserVM;
+            //Add the item to the cache.  We don't know if the username and password are correct.
+            CacheItemPolicy policy = new CacheItemPolicy();
+            policy.AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(5);
+
+            objCache.Add(UserViewModel.CACHE_DATABASE_USER, dbUserVM, policy);
+
+            return dbUserVM;
         }
 
         public static List<int> getAllSubmissionNumbers()
         {
             List<int> retval = new List<int>();
             //Selects all submission numbers from the database
-            UserViewModel dbUserVM = getDbUserVM();
-            if (dbUserVM == null)
+            UserViewModel dbUser = getDbUser();
+            if (dbUser == null)
             {
                 return null;
             }
@@ -139,12 +172,19 @@ namespace Service_Reader
             {
                 using (var dbContext = new ServiceSheetsEntities())
                 {
-                    updateContextConnection(dbUserVM, dbContext);
+                    updateContextConnection(dbUser, dbContext);
 
                     var submissionNumberQuery = from submissions in dbContext.ServiceSheets
                                                 select submissions.SubmissionNumber;
                     retval = submissionNumberQuery.ToList<int>();
                 }
+            }
+            catch (EntityException entityEx)
+            {
+                //Something went wrong with the load.  Clear the cache for the username.
+                clearCacheDbUsername();
+                Console.WriteLine(entityEx.ToString());
+                return null;
             }
             catch (Exception ex)
             {
@@ -158,8 +198,8 @@ namespace Service_Reader
         {
             List<ServiceSheetViewModel> retval = new List<ServiceSheetViewModel>();
 
-            UserViewModel dbUserVM = getDbUserVM();
-            if (dbUserVM == null)
+            UserViewModel dbUser = getDbUser();
+            if (dbUser == null)
             {
                 return null;
             }
@@ -168,14 +208,21 @@ namespace Service_Reader
             {
                 using (var dbContext = new ServiceSheetsEntities())
                 {
-                    updateContextConnection(dbUserVM, dbContext);
+                    updateContextConnection(dbUser, dbContext);
                     var serviceSheets = from ServiceSheet in dbContext.ServiceSheets
                                         where ServiceSheet.SubmissionNumber > 15679
                                         select ServiceSheet;
                     retval = ServiceSheetViewModel.loadFromModel(serviceSheets);
                 }
             }
-            catch(Exception ex)
+            catch (EntityException entityEx)
+            {
+                //Something went wrong with the load.  Clear the cache for the username.
+                clearCacheDbUsername();
+                Console.WriteLine(entityEx.ToString());
+                return null;
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
                 return null;
@@ -188,8 +235,8 @@ namespace Service_Reader
             //Returns true if a service day exists for between the given dates.
             List<ServiceSheetViewModel> retval = new List<ServiceSheetViewModel>();
 
-            UserViewModel dbUserVM = getDbUserVM();
-            if (dbUserVM == null)
+            UserViewModel dbUser = getDbUser();
+            if (dbUser == null)
             {
                 return null;
             }
@@ -199,7 +246,7 @@ namespace Service_Reader
             {
                 using (var dbContext = new ServiceSheetsEntities())
                 {
-                    updateContextConnection(dbUserVM, dbContext);
+                    updateContextConnection(dbUser, dbContext);
                     var serviceSheets =
                     from ss in dbContext.ServiceSheets
                     join sd in dbContext.ServiceDays on ss.Id equals sd.ServiceSheetId
@@ -208,6 +255,13 @@ namespace Service_Reader
 
                     retval = ServiceSheetViewModel.loadFromModel(serviceSheets);
                 }
+            }
+            catch (EntityException entityEx)
+            {
+                //Something went wrong with the load.  Clear the cache for the username.
+                clearCacheDbUsername();
+                Console.WriteLine(entityEx.ToString());
+                return null;
             }
             catch (Exception ex)
             {
@@ -230,12 +284,12 @@ namespace Service_Reader
             return retval;
         }
 
-        private static void updateContextConnection(UserViewModel dbUserVM, ServiceSheetsEntities dbContext)
+        private static void updateContextConnection(UserViewModel dbUser, ServiceSheetsEntities dbContext)
         {
             System.Data.Common.DbConnection connection = dbContext.Database.Connection;
             System.Data.Common.DbConnectionStringBuilder str = new System.Data.Common.DbConnectionStringBuilder();
             str.ConnectionString = dbContext.Database.Connection.ConnectionString;
-            str.Add("Password", dbUserVM.PasswordBoxObj.Password);
+            str.Add("Password", dbUser.PasswordBoxObj.Password);
             dbContext.Database.Connection.ConnectionString = str.ConnectionString;
         }
     }

@@ -11,7 +11,7 @@ namespace Service_Reader
     public class CanvasSubmissionsViewModel : ObservableObject
     {
         //Stores the login details for Canvas
-        private UserViewModel m_canvasUser;
+        //private UserViewModel m_canvasUser;
         private DateTime m_dtStartSubmissionsDownload;
         private DateTime m_dtEndSubmissionsDownload;
         private ServiceSheetViewModel m_selectedSubmission;
@@ -43,19 +43,19 @@ namespace Service_Reader
             //CanvasUserVM = new CanvasUserViewModel();
         }
 
-        public UserViewModel CanvasUserVM
-        {
-            get
-            {
-                return m_canvasUser;
-            }
+        //public UserViewModel CanvasUserVM
+        //{
+        //    get
+        //    {
+        //        return m_canvasUser;
+        //    }
 
-            set
-            {
-                m_canvasUser = value;
-                onPropertyChanged("CanvasUser");
-            }
-        }
+        //    set
+        //    {
+        //        m_canvasUser = value;
+        //        onPropertyChanged("CanvasUser");
+        //    }
+        //}
 
         public DateTime DtStartSubmissionsDownload
         {
@@ -374,13 +374,16 @@ namespace Service_Reader
 
         private void downloadCanvasData(object canvasPasswordBox)
         {
-            CanvasUserVM = new UserViewModel(UserViewModel.DISPLAY_MODE_CANVAS);
-            UserView userView = new UserView();
-            userView.DataContext = CanvasUserVM;
-            bool? userResult = userView.ShowDialog();
+            //RT 7/2/17 - Moving the canvas user to the cache
+            //CanvasUserVM = new UserViewModel(UserViewModel.MODE_CANVAS);
+            //UserView userView = new UserView();
+            //userView.DataContext = CanvasUserVM;
+            //bool? userResult = userView.ShowDialog();
+
+            UserViewModel userResultVM = CanvasDataReader.getCanvasUser();
 
             //RT 3/12/16 - The box may have been cancelled
-            if (userResult != true)
+            if (userResultVM == null)
             {
                 return;
             }
@@ -388,7 +391,7 @@ namespace Service_Reader
             //CanvasUserVM.CanvasPasswordBox = (PasswordBox)canvasPasswordBox;
             //RT 26/11/16 - Changing the password to use a PasswordBox for security
             //AllServiceSheets = CanvasDataReader.downloadXml(CanvasUser.Username, CanvasUser.Password, DtStartSubmissionsDownload, DtEndSubmissionsDownload);
-            AllServiceSheets = CanvasDataReader.downloadXml(CanvasUserVM, DtStartSubmissionsDownload, DtEndSubmissionsDownload);
+            AllServiceSheets = CanvasDataReader.downloadXml(userResultVM, DtStartSubmissionsDownload, DtEndSubmissionsDownload);
 
             //If no submissions have been returned, then exit.  None available, or error has occured.  Error will have been shown already
             if (AllServiceSheets == null)
@@ -399,7 +402,7 @@ namespace Service_Reader
             //Now we need to download the images from Canvas, using a progress bar
             CanvasImageDownloadView imageDownloadView = new CanvasImageDownloadView();
             List<ServiceSheetViewModel> serviceSheetList = new List<ServiceSheetViewModel>(AllServiceSheets);
-            CanvasImageDownloadViewModel imageVM = new CanvasImageDownloadViewModel(serviceSheetList, CanvasUserVM, false);
+            CanvasImageDownloadViewModel imageVM = new CanvasImageDownloadViewModel(serviceSheetList, userResultVM, false);
             imageDownloadView.DataContext = imageVM;
             bool? result = imageDownloadView.ShowDialog();
             //Set the servicesheets back to the result from the dialog

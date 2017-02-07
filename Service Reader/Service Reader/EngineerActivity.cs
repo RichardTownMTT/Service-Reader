@@ -18,6 +18,8 @@ namespace Service_Reader
             retval.Add(new EngineerActivity(ACTIVITY_ILLNESS));
             retval.Add(new EngineerActivity(ACTIVITY_TRAINING));
             retval.Add(new EngineerActivity(ACTIVITY_STAND_BY));
+            retval.Add(new EngineerActivity(ACTIVITY_MANAGEMENT));
+            retval.Add(new EngineerActivity(ACTIVITY_SALES));
             return retval;
         }
 
@@ -36,7 +38,13 @@ namespace Service_Reader
                     this.ActivityDescription = "Training";
                     break;
                 case ACTIVITY_STAND_BY:
-                    this.ActivityDescription = "Stand By";
+                    this.ActivityDescription = "Stand By / MTT";
+                    break;
+                case ACTIVITY_MANAGEMENT:
+                    this.ActivityDescription = "Management";
+                    break;
+                case ACTIVITY_SALES:
+                    this.ActivityDescription = "Sales";
                     break;
                 default:
                     new Exception("Unknown activity type " + actCode);
@@ -49,6 +57,8 @@ namespace Service_Reader
         public const int ACTIVITY_ILLNESS = -2;
         public const int ACTIVITY_TRAINING = -3;
         public const int ACTIVITY_STAND_BY = -4;
+        public const int ACTIVITY_MANAGEMENT = -5;
+        public const int ACTIVITY_SALES = -6;
 
         public int ActivityCode
         {

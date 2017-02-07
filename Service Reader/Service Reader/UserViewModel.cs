@@ -11,13 +11,16 @@ namespace Service_Reader
 {
     public class UserViewModel : ObservableObject
     {
-        private int displayMode = -1;
-        public static int DISPLAY_MODE_CANVAS = 1;
-        public static int DISPLAY_MODE_DATABASE = 2;
+        private int mode = -1;
+        public static int MODE_CANVAS = 1;
+        public static int MODE_DATABASE = 2;
 
-        public UserViewModel(int displayModeSet)
+        public static readonly string CACHE_DATABASE_USER = "DbUserDetails";
+        public static readonly string CACHE_CANVAS_USER = "CanvasUserDetails";
+
+        public UserViewModel(int modeSet)
         {
-            DisplayMode = displayModeSet;
+            Mode = modeSet;
             User = new UserModel();
         }
 
@@ -50,7 +53,7 @@ namespace Service_Reader
             
         }
 
-        private UserModel User
+        public UserModel User
         {
             get
             {
@@ -89,17 +92,17 @@ namespace Service_Reader
             }
         }
 
-        public int DisplayMode
+        public int Mode
         {
             get
             {
-                return displayMode;
+                return mode;
             }
 
             set
             {
-                displayMode = value;
-                onPropertyChanged("DisplayMode");
+                mode = value;
+                onPropertyChanged("Mode");
                 //Update the display message
                 onPropertyChanged("DisplayMessage");
             }
@@ -109,17 +112,17 @@ namespace Service_Reader
         {
             get
             {
-                if (displayMode == DISPLAY_MODE_CANVAS)
+                if (mode == MODE_CANVAS)
                 {
                     return "Enter your Canvas username and password.";
                 }
-                else if(displayMode == DISPLAY_MODE_DATABASE)
+                else if(mode == MODE_DATABASE)
                 {
                     return "Enter your service database username and password";
                 }
                 else
                 {
-                    throw new Exception("Display mode not found for " + displayMode);
+                    throw new Exception("Display mode not found for " + mode);
                 }
             }
         }

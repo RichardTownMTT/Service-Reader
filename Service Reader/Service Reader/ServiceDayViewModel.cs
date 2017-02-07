@@ -29,7 +29,7 @@ namespace Service_Reader
         private ServiceDay m_serviceDayModel;
         //Adding a reference to the containing service sheet, so the total times can be updated
         private ServiceSheetViewModel m_parentServiceSheetVM;
-        private ServiceDay sd;
+        //private ServiceDay sd;
 
         //Class constructors
         public ServiceDayViewModel(DateTime dtTravelStart, DateTime dtArrivalOnsite, DateTime dtDepartSite, DateTime dtTravelEnd, int mileageEntered, bool dailyAllowanceEntered,

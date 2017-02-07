@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using System.Drawing;
 using System.Windows.Media;
 using System.Text;
+using System.Runtime.Caching;
 
 namespace Service_Reader
 {
@@ -96,6 +97,7 @@ namespace Service_Reader
             }
             catch (Exception ex)
             {
+                clearCacheCanvasUser();
                 MessageBox.Show("Unable to download data.");
                 Console.WriteLine(ex.ToString());
                 return null;
@@ -109,6 +111,14 @@ namespace Service_Reader
             //    return null;
             //}
             return returnedImage;
+        }
+
+        private static void clearCacheCanvasUser()
+        {
+            //If an error has occured, canvas login may be incorrect
+            ObjectCache objCache = MemoryCache.Default;
+            objCache.Remove(UserViewModel.CACHE_CANVAS_USER);
+            
         }
 
         private static string canvasErrorCode(byte[] downloadedData)
@@ -164,7 +174,7 @@ namespace Service_Reader
         public static string SCREENS = "Screens";
         public static string SCREEN = "Screen";
         public static string RESPONSES = "Responses";
-        private static string RESPONSE_GROUP = "ResponseGroup";
+        //private static string RESPONSE_GROUP = "ResponseGroup";
 
         public static string RESPONSE_GROUPS = "ResponseGroups";
         public static string JOB_DETAILS = "Job details";
@@ -241,6 +251,7 @@ namespace Service_Reader
             }
             catch
             {
+                clearCacheCanvasUser();
                 MessageBox.Show("Unable to download data.");
                 return null;
             }
@@ -273,6 +284,34 @@ namespace Service_Reader
             }
 
             return retval;
+        }
+
+        public static UserViewModel getCanvasUser()
+        {
+            ObjectCache objCache = MemoryCache.Default;
+            if (objCache.Contains(UserViewModel.CACHE_CANVAS_USER))
+            {
+                return (UserViewModel)objCache.Get(UserViewModel.CACHE_CANVAS_USER);
+            }
+
+            UserViewModel canvasUserVM = new UserViewModel(UserViewModel.MODE_CANVAS);
+            UserView userView = new UserView();
+            userView.DataContext = canvasUserVM;
+            bool? userResult = userView.ShowDialog();
+
+            //RT - The box may have been cancelled
+            if (userResult != true)
+            {
+                return null;
+            }
+
+            //Add the item to the cache.  We don't know if the username and password are correct.
+            CacheItemPolicy policy = new CacheItemPolicy();
+            policy.AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(5);
+
+            objCache.Add(UserViewModel.CACHE_CANVAS_USER, canvasUserVM, policy);
+
+            return canvasUserVM;
         }
 
         //private static ServiceSubmissionModel[] parseSubmissions(XElement submissions)
