@@ -109,6 +109,7 @@ namespace Service_Reader
             this.DailyReport = sd.DailyReport;
             this.PartsSuppliedToday = sd.PartsSuppliedToday;
             this.DtReport = sd.DtReport;
+            this.ServiceDayModel = sd;
         }
 
         public void Save()

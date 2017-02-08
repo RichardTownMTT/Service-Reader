@@ -307,6 +307,7 @@ namespace Service_Reader
             //We need to set the service sheet reference on the day
             //We also need to set the service days on the sheet
             this.ServiceSubmission.ServiceDays = new List<ServiceDay>();
+            this.ServiceSubmission = serviceSheet;
 
             //If the job number starts with US, then not a uk job
             checkUkJobNumber();
