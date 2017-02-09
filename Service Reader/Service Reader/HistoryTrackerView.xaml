@@ -5,34 +5,43 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Service_Reader"
              mc:Ignorable="d" >
-   <Grid>
+    <Grid>
         <Grid.DataContext>
             <local:HistoryTrackerViewModel/>
         </Grid.DataContext>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="250"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Button Content="Load CSV" Grid.Column="0" Grid.Row="0" Margin="5" Command="{Binding LoadCsvCommand}"/>
-        <DataGrid x:Name="dataGrid" ItemsSource="{Binding AllServiceSheets}" SelectedItem="{Binding SelectedSubmission}" AutoGenerateColumns="False" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="6" Margin="5" SelectionMode="Single" CanUserAddRows="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Submission No" Binding="{Binding SubmissionNumber}" />
-                <DataGridTextColumn Header="Engineer" Binding="{Binding EngineerFullName}" />
-                <DataGridTextColumn Header="Customer" Binding="{Binding Customer}" />
-                <DataGridTextColumn Header="Job Start Date" Binding="{Binding DtJobStart, StringFormat=dd/MM/yyyy}" />
-                <DataGridTextColumn Header="Machine" Binding="{Binding MachineMakeModel}" />
-                <DataGridTextColumn Header="MTT Job Number" Binding="{Binding MttJobNumber}" />
-                <DataGridTextColumn Header="Job Description" Binding="{Binding JobDescription}" />
-            </DataGrid.Columns>
-        </DataGrid>
-        <local:ServiceSubmissionDetails x:Name="ucSubmissions" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5" Margin="5" currentSubmissionVM ="{Binding SelectedSubmission}"/>
+        <WrapPanel Grid.Row="0">
+            <Label Content="Month" Grid.Row="0"/>
+            <DatePicker Grid.Row="0" SelectedDate="{Binding MonthFirstDay}"/>
+            <Button Content="Update" Command="{Binding UpdateMonthCommand}"/>
+        </WrapPanel>
+        <DockPanel Grid.Row="1">
+            <ItemsControl ItemsSource="{Binding CalendarRows}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Rows="5"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <ItemsControl ItemsSource="{Binding Days}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Columns="7"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <local:CalendarDaySquare BorderBrush="Black" BorderThickness="1"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </DockPanel>
     </Grid>
 </UserControl>
