@@ -12,14 +12,16 @@ namespace Service_Reader
 {
     public class HistoryTrackerViewModel : ObservableObject
     {
-        private ObservableCollection<ServiceSheetViewModel> m_allServiceSheets;
-        private ICommand loadCsvCommand;
+        private List<ServiceSheetViewModel> m_allServiceSheets;
+        private ICommand m_downloadDatabaseCommand;
         private ICommand m_updateMonthCommand;
 
         private DateTime m_monthFirstDay = DateTime.Now;
         private DateTime m_rowOneStartDate;
         private ObservableCollection<CalendarRow> m_calendarRows;
 
+
+        private List<DbEmployee> m_engineers;
         public HistoryTrackerViewModel()
         {
             updateCalendar();
@@ -99,7 +101,7 @@ namespace Service_Reader
             }
         }
 
-        public ObservableCollection<ServiceSheetViewModel> AllServiceSheets
+        public List<ServiceSheetViewModel> AllServiceSheets
         {
             get
             {
@@ -109,26 +111,10 @@ namespace Service_Reader
             set
             {
                 m_allServiceSheets = value;
-                onPropertyChanged("AllServiceSheets");
             }
         }
 
-        public ICommand LoadCsvCommand
-        {
-            get
-            {
-                if (loadCsvCommand == null)
-                {
-                    loadCsvCommand = new RelayCommand(param => loadHistoricalDataFromCsv());
-                }
-                return loadCsvCommand;
-            }
-
-            set
-            {
-                loadCsvCommand = value;
-            }
-        }
+       
 
         public ICommand UpdateMonthCommand
         {
@@ -147,6 +133,134 @@ namespace Service_Reader
             }
         }
 
+        public ICommand DownloadDatabaseCommand
+        {
+            get
+            {
+                if (m_downloadDatabaseCommand == null)
+                {
+                    m_downloadDatabaseCommand = new RelayCommand(x => downloadDatabaseEntries());
+                }
+                return m_downloadDatabaseCommand;
+            }
+
+            set
+            {
+                m_downloadDatabaseCommand = value;
+            }
+        }
+
+        private void downloadDatabaseEntries()
+        {
+            List<ServiceSheetViewModel> downloadedServiceSheets = DbServiceSheet.downloadAllServiceSheets();
+
+            if (downloadedServiceSheets == null)
+            {
+                return;
+            }
+
+            //Create the list of possible days for each engineer
+            Dictionary<DateTime, List<DbEmployee>> possibleDays = createPossibleEngineerDaysCalendar();
+            if (possibleDays == null)
+            {
+                return;
+            }
+
+            //Copy the possible days to the missing.
+            Dictionary<DateTime, List<DbEmployee>> missingDays = new Dictionary<DateTime, List<DbEmployee>>(possibleDays);
+
+            //Create actual days list and update missing list
+            updateActualandMissingCalendars(possibleDays, missingDays, downloadedServiceSheets);
+
+
+        }
+
+        private void updateActualandMissingCalendars(Dictionary<DateTime, List<DbEmployee>> possibleDays, Dictionary<DateTime, List<DbEmployee>> missingDays, List<ServiceSheetViewModel> downloadedServiceSheets)
+        {
+            var allDayVMs = downloadedServiceSheets.Select(days => days.AllServiceDays);
+            var allServiceDays = allDayVMs.SelectMany(serviceDays => serviceDays.AllServiceDayVMs).OrderBy(days => days.DtReport);
+
+            Dictionary<DateTime, List<DbEmployee>> actualDays = new Dictionary<DateTime, List<DbEmployee>>();
+
+            foreach (var day in allServiceDays)
+            {
+                //Add to actual calendar and remove from missing calendar
+                addItemToActualDaysCalendar(day, actualDays);
+                removeFromMissingCalendar(day, missingDays);
+            }
+        }
+
+        private void removeFromMissingCalendar(ServiceDayViewModel day, Dictionary<DateTime, List<DbEmployee>> missingDays)
+        {
+            DateTime currentDay = day.DtReport;
+            DbEmployee employeeFound = getEmployeeForUsername(day.ParentServiceSheetVM.Username);
+
+            List<DbEmployee> employeeListForDay;
+            if (missingDays.TryGetValue(currentDay, out employeeListForDay))
+            {
+                employeeListForDay.Remove(employeeFound);
+                missingDays[currentDay] = employeeListForDay;
+            }
+            
+        }
+
+        private void addItemToActualDaysCalendar(ServiceDayViewModel day, Dictionary<DateTime, List<DbEmployee>> actualDays)
+        {
+            DateTime currentDate = day.DtReport;
+
+            //Find engineer for day
+            string usernameDay = day.ParentServiceSheetVM.Username;
+            DbEmployee employeeMatch = getEmployeeForUsername(usernameDay);
+
+            List<DbEmployee> employeeListDay;
+            if (actualDays.TryGetValue(currentDate, out employeeListDay))
+            {
+                employeeListDay.Add(employeeMatch);
+                actualDays[currentDate] = employeeListDay;
+            }
+            else
+            {
+                employeeListDay = new List<DbEmployee>();
+                employeeListDay.Add(employeeMatch);
+                actualDays.Add(currentDate, employeeListDay);
+            }
+        }
+
+        private DbEmployee getEmployeeForUsername(string usernameDay)
+        {
+            var retval = (from engineers in m_engineers
+                         where engineers.Username == usernameDay
+                         select engineers).Distinct().First();
+            if (retval == null)
+            {
+                throw new Exception("User not found for: " + usernameDay);
+            }
+
+            return retval;
+        }
+
+        private Dictionary<DateTime, List<DbEmployee>> createPossibleEngineerDaysCalendar()
+        {
+            Dictionary<DateTime, List<DbEmployee>> possibleDays = new Dictionary<DateTime, List<DbEmployee>>();
+            //Download all the engineers names
+
+            m_engineers = DbServiceSheet.getAllUsers();
+            if (m_engineers == null)
+            {
+                return null;
+            }
+
+            DateTime calendarStart = new DateTime(2017, 1, 1);
+            DateTime calendarEnd = new DateTime(2017, 1, 31);
+
+            for(DateTime currentDate = calendarStart; currentDate.Date <= calendarEnd.Date; currentDate = currentDate.AddDays(1))
+            {
+                possibleDays.Add(currentDate, new List<DbEmployee>(m_engineers));
+            }
+
+            return possibleDays;
+        }
+
         private void updateCalendar()
         {
             Stopwatch renderTimer = new Stopwatch();
@@ -161,12 +275,5 @@ namespace Service_Reader
             Console.WriteLine("Render Time: = " + renderTimer.ElapsedMilliseconds);
         }
 
-        private void loadHistoricalDataFromCsv()
-        {
-            //RT - This calls the import csv and loads the csv file previously created from the Canvas Submissions screen.
-            CsvServiceImport importer = new CsvServiceImport();
-            bool result = importer.importCsvData();
-            AllServiceSheets = importer.AllServiceSubmissions;
-        }
     }
 }

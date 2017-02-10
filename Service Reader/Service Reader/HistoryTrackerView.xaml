@@ -14,9 +14,10 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <WrapPanel Grid.Row="0">
-            <Label Content="Month" Grid.Row="0"/>
-            <DatePicker Grid.Row="0" SelectedDate="{Binding MonthFirstDay}"/>
-            <Button Content="Update" Command="{Binding UpdateMonthCommand}"/>
+            <Button Content="Database Download" Command="{Binding DownloadDatabaseCommand}" Margin="5"/>
+            <Label Content="Month" Margin="5"/>
+            <DatePicker Grid.Row="0" SelectedDate="{Binding MonthFirstDay}" Margin="5"/>
+            <Button Content="Update" Command="{Binding UpdateMonthCommand}" Margin="5"/>
         </WrapPanel>
         <DockPanel Grid.Row="1">
             <ItemsControl ItemsSource="{Binding CalendarRows}">
