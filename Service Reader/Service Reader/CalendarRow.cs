@@ -92,5 +92,63 @@ namespace Service_Reader
                 //onPropertyChanged("Days");
             }
         }
+
+        public void updateOnsiteDays(Dictionary<DateTime, List<DbEmployee>> onsiteDaysForWeek)
+        {
+            foreach (var day in Days)
+            {
+                DateTime currentDay = day.CurrentDay.Date;
+                var engineers = (from onsiteDays in onsiteDaysForWeek
+                                where onsiteDays.Key == currentDay
+                                select onsiteDays.Value).FirstOrDefault();
+
+                //No engineers may have submitted for that day.
+                if (engineers == null)
+                {
+                    continue;
+                }
+
+                foreach (var currentEng in engineers)
+                {
+                    string engInitials = currentEng.Firstname.Substring(0, 1) + currentEng.Surname.Substring(0, 1);
+                    CalendarDay requiredDay = Days.Where(x => x.CurrentDay == currentDay).FirstOrDefault();
+
+                    if (requiredDay == null)
+                    {
+                        throw new Exception("Cannot find calendar day " + currentDay);
+                    }
+                    requiredDay.EngineersInitials.Add(engInitials);
+                }
+            }
+        }
+
+        public void updateMissingDays(Dictionary<DateTime, List<DbEmployee>> missingDaysForWeek)
+        {
+            foreach (var day in Days)
+            {
+                DateTime currentDay = day.CurrentDay.Date;
+                var engineers = (from missingDays in missingDaysForWeek
+                                 where missingDays.Key == currentDay
+                                 select missingDays.Value).FirstOrDefault();
+
+                //No engineers may have submitted for that day.
+                if (engineers == null)
+                {
+                    continue;
+                }
+
+                foreach (var currentEng in engineers)
+                {
+                    string engInitials = currentEng.Firstname.Substring(0, 1) + currentEng.Surname.Substring(0, 1);
+                    CalendarDay requiredDay = Days.Where(x => x.CurrentDay == currentDay).FirstOrDefault();
+
+                    if (requiredDay == null)
+                    {
+                        throw new Exception("Cannot find calendar day " + currentDay);
+                    }
+                    requiredDay.MissingEngineersInitials.Add(engInitials);
+                }
+            }
+        }
     }
 }

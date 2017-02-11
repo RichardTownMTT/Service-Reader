@@ -269,7 +269,7 @@ namespace Service_Reader
                 return null;
             }
 
-            if (retval == null)
+            if (retval.Count == 0)
             {
                 return false;
             }

@@ -31,7 +31,7 @@ namespace Service_Reader
         {
             CalendarRows = new ObservableCollection<CalendarRow>();
             int startOfWeekMonth = MonthFirstDay.Month;
-            DateTime currentRowStartOfWeek = RowOneStartDate;
+            DateTime currentRowStartOfWeek = RowOneStartDate.Date;
             int rowNumber = 1;
             CalendarRow rowCreated;
             while (startOfWeekMonth <= MonthFirstDay.Month)
@@ -160,27 +160,50 @@ namespace Service_Reader
             }
 
             //Create the list of possible days for each engineer
-            Dictionary<DateTime, List<DbEmployee>> possibleDays = createPossibleEngineerDaysCalendar();
-            if (possibleDays == null)
+            Dictionary<DateTime, List<DbEmployee>> missingDays = createPossibleEngineerDaysCalendar();
+
+            Dictionary<DateTime, List<DbEmployee>> actualDays = new Dictionary<DateTime, List<DbEmployee>>();
+
+            if (missingDays == null)
             {
                 return;
             }
 
             //Copy the possible days to the missing.
-            Dictionary<DateTime, List<DbEmployee>> missingDays = new Dictionary<DateTime, List<DbEmployee>>(possibleDays);
+            //Dictionary<DateTime, List<DbEmployee>> missingDays = new Dictionary<DateTime, List<DbEmployee>>(possibleDays);
 
             //Create actual days list and update missing list
-            updateActualandMissingCalendars(possibleDays, missingDays, downloadedServiceSheets);
+            updateActualandMissingCalendars(actualDays, missingDays, downloadedServiceSheets);
 
-
+            //Set the actual and missing calendar days on the calendar rows
+            updateCalendarActualAndMissingDates(actualDays, missingDays);
         }
 
-        private void updateActualandMissingCalendars(Dictionary<DateTime, List<DbEmployee>> possibleDays, Dictionary<DateTime, List<DbEmployee>> missingDays, List<ServiceSheetViewModel> downloadedServiceSheets)
+        private void updateCalendarActualAndMissingDates(Dictionary<DateTime, List<DbEmployee>> actualDays, Dictionary<DateTime, List<DbEmployee>> missingDays)
+        {
+            foreach (var calendarRowItem in CalendarRows)
+            {
+                DateTime weekStart = calendarRowItem.CurrentRowStartOfWeek;
+                DateTime weekEnd = weekStart.AddDays(7);
+
+                var onsiteDaysForWeek = (from days in actualDays
+                                         where days.Key >= weekStart && days.Key < weekEnd
+                                         select days).ToDictionary(dict => dict.Key, dict => dict.Value);
+
+                 calendarRowItem.updateOnsiteDays(onsiteDaysForWeek);
+
+                //Add the missing dates
+                var missingDaysForWeek = (from days in missingDays
+                                          where days.Key >= weekStart && days.Key < weekEnd
+                                          select days).ToDictionary(dict => dict.Key, dictValue => dictValue.Value);
+                calendarRowItem.updateMissingDays(missingDaysForWeek);
+            }
+        }
+
+        private void updateActualandMissingCalendars(Dictionary<DateTime, List<DbEmployee>> actualDays, Dictionary<DateTime, List<DbEmployee>> missingDays, List<ServiceSheetViewModel> downloadedServiceSheets)
         {
             var allDayVMs = downloadedServiceSheets.Select(days => days.AllServiceDays);
             var allServiceDays = allDayVMs.SelectMany(serviceDays => serviceDays.AllServiceDayVMs).OrderBy(days => days.DtReport);
-
-            Dictionary<DateTime, List<DbEmployee>> actualDays = new Dictionary<DateTime, List<DbEmployee>>();
 
             foreach (var day in allServiceDays)
             {
@@ -250,10 +273,11 @@ namespace Service_Reader
                 return null;
             }
 
-            DateTime calendarStart = new DateTime(2017, 1, 1);
-            DateTime calendarEnd = new DateTime(2017, 1, 31);
+            DateTime calendarStart = MonthFirstDay.Date;
+            //Use the entre calendar month
+            DateTime calendarEnd = calendarStart.AddMonths(1);
 
-            for(DateTime currentDate = calendarStart; currentDate.Date <= calendarEnd.Date; currentDate = currentDate.AddDays(1))
+            for(DateTime currentDate = calendarStart; currentDate.Date < calendarEnd.Date; currentDate = currentDate.AddDays(1))
             {
                 possibleDays.Add(currentDate, new List<DbEmployee>(m_engineers));
             }

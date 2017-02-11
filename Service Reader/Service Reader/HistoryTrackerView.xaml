@@ -23,7 +23,7 @@
             <ItemsControl ItemsSource="{Binding CalendarRows}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <UniformGrid Rows="5"/>
+                        <UniformGrid Rows="6"/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>

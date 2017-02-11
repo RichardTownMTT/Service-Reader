@@ -17,26 +17,8 @@ namespace Service_Reader
         {
             CurrentDay = currentDayEntry;
             EngineersInitials = new ObservableCollection<string>();
-            EngineersInitials.Add("AH");
-            EngineersInitials.Add("AH");
-            EngineersInitials.Add("AH");
-            EngineersInitials.Add("AH");
-            EngineersInitials.Add("AH");
-            EngineersInitials.Add("AH");
-            EngineersInitials.Add("AH");
-            EngineersInitials.Add("AH");
-            EngineersInitials.Add("AH");
-            EngineersInitials.Add("AH");
 
             MissingEngineersInitials = new ObservableCollection<string>();
-            MissingEngineersInitials.Add("RH");
-            MissingEngineersInitials.Add("RH");
-            MissingEngineersInitials.Add("RH");
-            MissingEngineersInitials.Add("RH");
-            MissingEngineersInitials.Add("RH");
-            MissingEngineersInitials.Add("RH");
-            MissingEngineersInitials.Add("RH");
-
         }
 
         public DateTime CurrentDay
