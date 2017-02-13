@@ -205,10 +205,10 @@ namespace Service_Reader
 
         private void updateActualandMissingCalendars(Dictionary<DateTime, List<DbEmployee>> actualDays, Dictionary<DateTime, List<DbEmployee>> missingDays, List<ServiceSheetViewModel> downloadedServiceSheets)
         {
-            var allDayVMs = downloadedServiceSheets.Select(days => days.AllServiceDays);
-            var allServiceDays = allDayVMs.SelectMany(serviceDays => serviceDays).OrderBy(days => days.DtReport);
+            var allDayVMs = downloadedServiceSheets.Select(days => days.AllServiceDays).SelectMany(x => x).ToList();
+            //var allServiceDays = allDayVMs.SelectMany(serviceDays => serviceDays).OrderBy(days => days.DtReport);
 
-            foreach (var day in allServiceDays)
+            foreach (var day in allDayVMs)
             {
                 //Add to actual calendar and remove from missing calendar
                 addItemToActualDaysCalendar(day, actualDays);

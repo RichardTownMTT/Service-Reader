@@ -135,9 +135,9 @@ namespace Service_Reader
                 {
                     updateContextConnection(dbUser, dbContext);
                     var serviceSheets = from ServiceSheet in dbContext.ServiceSheets
-                                        join sDay in dbContext.ServiceDays
-                                        on ServiceSheet.Id equals sDay.ServiceSheetId
-                                        where sDay.DtReport >= monthFirstDay && sDay.DtReport <= monthEndDay
+                                        //join sDay in dbContext.ServiceDays
+                                        //on ServiceSheet.Id equals sDay.ServiceSheetId
+                                        where ServiceSheet.ServiceDays.Any(sDays => sDays.DtReport >= monthFirstDay && sDays.DtReport <= monthEndDay)
                                         select ServiceSheet;
                     retval = ServiceSheetViewModel.loadFromModel(serviceSheets);
                 }
