@@ -152,7 +152,10 @@ namespace Service_Reader
 
         private void downloadDatabaseEntries()
         {
-            List<ServiceSheetViewModel> downloadedServiceSheets = DbServiceSheet.downloadAllServiceSheets();
+            DateTime monthEndDay = MonthFirstDay.AddMonths(1);
+            monthEndDay = monthEndDay.AddDays(-1);
+
+            List<ServiceSheetViewModel> downloadedServiceSheets = DbServiceSheet.downloadServiceSheets(MonthFirstDay, monthEndDay);
 
             if (downloadedServiceSheets == null)
             {
@@ -203,7 +206,7 @@ namespace Service_Reader
         private void updateActualandMissingCalendars(Dictionary<DateTime, List<DbEmployee>> actualDays, Dictionary<DateTime, List<DbEmployee>> missingDays, List<ServiceSheetViewModel> downloadedServiceSheets)
         {
             var allDayVMs = downloadedServiceSheets.Select(days => days.AllServiceDays);
-            var allServiceDays = allDayVMs.SelectMany(serviceDays => serviceDays.AllServiceDayVMs).OrderBy(days => days.DtReport);
+            var allServiceDays = allDayVMs.SelectMany(serviceDays => serviceDays).OrderBy(days => days.DtReport);
 
             foreach (var day in allServiceDays)
             {

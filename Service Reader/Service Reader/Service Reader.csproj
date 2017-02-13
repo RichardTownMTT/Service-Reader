@@ -102,7 +102,6 @@
       <DependentUpon>HolidayAbsenceView.xaml</DependentUpon>
     </Compile>
     <Compile Include="HolidayAbsenceViewModel.cs" />
-    <Compile Include="AllServiceDayViewModels.cs" />
     <Compile Include="ApplicationWindow.xaml.cs">
       <DependentUpon>ApplicationWindow.xaml</DependentUpon>
     </Compile>

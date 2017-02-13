@@ -646,7 +646,7 @@ namespace Service_Reader
             timesheetTable.Borders.Width = borderWidth;
 
             int counter = 0;
-            foreach (ServiceDayViewModel sd in currentSheet.AllServiceDays.AllServiceDayVMs)
+            foreach (ServiceDayViewModel sd in currentSheet.AllServiceDays)
             {
                 if (counter == 0)
                 {

@@ -398,7 +398,7 @@ namespace Service_Reader
             string customerNameEntered = "";
             DateTime dtSignedEntered;
             string mttEngSignatureUrlEntered = "";
-            AllServiceDayViewModels dayVMs = null;
+            List<ServiceDayViewModel> dayVMs = null;
 
             XElement sectionsXml = submissionXml.Element(SECTIONS);
             // Loop through the sections
@@ -597,9 +597,9 @@ namespace Service_Reader
         //}
 
         //RT 29/11/16 - Rewiting to use new MVVM methods
-        public static AllServiceDayViewModels createDays(XElement allDays)
+        public static List<ServiceDayViewModel> createDays(XElement allDays)
         {
-            AllServiceDayViewModels retval = new AllServiceDayViewModels();
+            List<ServiceDayViewModel> retval = new List<ServiceDayViewModel>();
 
             foreach (XElement responseGroupXml in allDays.Elements())
             {
@@ -662,12 +662,12 @@ namespace Service_Reader
                 ServiceDayViewModel sd = new ServiceDayViewModel(TravelStartTime, ArrivalOnsiteTime, DepartureSiteTime, TravelEndTime, Mileage, da, oN,
                     bP, TravelToSiteTime, TravelFromSiteTime, TotalTravelTime, TotalOnsiteTime, DailyReport, PartsSuppliedToday, dtReport, null);
 
-                retval.AddServiceDay(sd);
+                retval.Add(sd);
             }
 
             //Need to sort the observable collection
-            ObservableCollection<ServiceDayViewModel> sortedDays = new ObservableCollection<ServiceDayViewModel>(retval.AllServiceDayVMs.OrderBy(a => a.DtReport));
-            retval.AllServiceDayVMs = sortedDays;
+            List<ServiceDayViewModel> sortedDays = new List<ServiceDayViewModel>(retval.OrderBy(a => a.DtReport));
+            retval = sortedDays;
 
             return retval;
         }

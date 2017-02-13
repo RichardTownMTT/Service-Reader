@@ -74,7 +74,8 @@ namespace Service_Reader
         //RT 1/2/17 - Adding a date for the last date on the job.  
         private DateTime m_sheetFinishDate;
 
-        private AllServiceDayViewModels m_AllServiceDays;
+        //RT 13/2/17 - Changing this to an Observable Collection
+        private List<ServiceDayViewModel> m_AllServiceDays;
         //RT 11/12/16 - Adding an edit mode for the submission.
         private bool m_editMode = false;
         //RT 13/12/16 - Following is used to see if multiple sheets have been selected in datagrid
@@ -83,13 +84,20 @@ namespace Service_Reader
 
 
         //Creator for the VM
-        public ServiceSheetViewModel(int submissionNoEntered, string appNameEntered, string userfirstNameEntered, string userSurnameEntered, string canvasResponseIdEntered, DateTime dtResponseEntered, 
+        //public ServiceSheetViewModel(int submissionNoEntered, string appNameEntered, string userfirstNameEntered, string userSurnameEntered, string canvasResponseIdEntered, DateTime dtResponseEntered, 
+        //    DateTime dtDeviceEntered, string submissionFormNameEntered, int submissionVersionEntered, string customerEntered, string address1Entered, string address2Entered, string townCityEntered,
+        //    string postcodeEntered, string contactEntered, string phoneNumberEntered, string makeModelEntered, string serialNumberEntered, string cncControlEntered, DateTime dtJobStartEntered, 
+        //    string customerOrderEntered, string mttJobNumberEntered, string jobDescEntered, double totalTimeOnsiteEntered, double totalTravelTimeEntered, int totalMileageEntered,
+        //    int totalDAEntered, int totalOAEntered, int totalBPEntered, string jobStatusEntered, string finalJobReportEntered, string additionalFaultsEntered, bool quoteEntered, string followupPartsEntered,
+        //    string image1UrlEntered, string image2UrlEntered, string image3UrlEntered, string image4UrlEntered, string image5UrlEntered, string customerSignatureUrlEntered, string custSignedNameEntered,
+        //    DateTime dtSignedEntered, string mttEngSignatureUrlEntered, AllServiceDayViewModels serviceDaysEntered, string usernameEntered)
+        public ServiceSheetViewModel(int submissionNoEntered, string appNameEntered, string userfirstNameEntered, string userSurnameEntered, string canvasResponseIdEntered, DateTime dtResponseEntered,
             DateTime dtDeviceEntered, string submissionFormNameEntered, int submissionVersionEntered, string customerEntered, string address1Entered, string address2Entered, string townCityEntered,
-            string postcodeEntered, string contactEntered, string phoneNumberEntered, string makeModelEntered, string serialNumberEntered, string cncControlEntered, DateTime dtJobStartEntered, 
+            string postcodeEntered, string contactEntered, string phoneNumberEntered, string makeModelEntered, string serialNumberEntered, string cncControlEntered, DateTime dtJobStartEntered,
             string customerOrderEntered, string mttJobNumberEntered, string jobDescEntered, double totalTimeOnsiteEntered, double totalTravelTimeEntered, int totalMileageEntered,
             int totalDAEntered, int totalOAEntered, int totalBPEntered, string jobStatusEntered, string finalJobReportEntered, string additionalFaultsEntered, bool quoteEntered, string followupPartsEntered,
             string image1UrlEntered, string image2UrlEntered, string image3UrlEntered, string image4UrlEntered, string image5UrlEntered, string customerSignatureUrlEntered, string custSignedNameEntered,
-            DateTime dtSignedEntered, string mttEngSignatureUrlEntered, AllServiceDayViewModels serviceDaysEntered, string usernameEntered)
+            DateTime dtSignedEntered, string mttEngSignatureUrlEntered, List<ServiceDayViewModel> serviceDaysEntered, string usernameEntered)
         {
             //ServiceSheetViewModel retval = new ServiceSheetViewModel();
             this.SubmissionNumber = submissionNoEntered;
@@ -140,7 +148,8 @@ namespace Service_Reader
             //We also need to set the service days on the sheet
             this.ServiceSubmission.ServiceDays = new List<ServiceDay>();
 
-            foreach (ServiceDayViewModel sd in serviceDaysEntered.AllServiceDayVMs)
+            //foreach (ServiceDayViewModel sd in serviceDaysEntered.AllServiceDayVMs)
+            foreach (ServiceDayViewModel sd in serviceDaysEntered)
             {
                 this.ServiceSubmission.ServiceDays.Add(sd.ServiceDayModel);
                 sd.ParentServiceSheetVM = this;
@@ -242,7 +251,7 @@ namespace Service_Reader
             UserFirstName = ServiceSubmission.UserFirstName;
             Username = ServiceSubmission.Username;
             UserSurname = ServiceSubmission.UserSurname;
-            foreach (ServiceDayViewModel sd in AllServiceDays.AllServiceDayVMs)
+            foreach (ServiceDayViewModel sd in AllServiceDays)
             {
                 sd.CancelEdit();
                 //RT 1/2/17 - need to reset the sheet finish date
@@ -316,7 +325,7 @@ namespace Service_Reader
             foreach (ServiceDay sd in serviceSheet.ServiceDays)
             {
                 ServiceDayViewModel serviceDayVM = new ServiceDayViewModel(sd);
-                this.AllServiceDays.AddServiceDay(serviceDayVM);
+                this.AllServiceDays.Add(serviceDayVM);
                 serviceDayVM.ParentServiceSheetVM = this;
                 //Need to set the last date from the service days
                 checkLastServiceDayDate(serviceDayVM.DtReport);
@@ -384,7 +393,7 @@ namespace Service_Reader
                 }
                 sdVM.ParentServiceSheetVM = this;
 
-                AllServiceDays.AddServiceDay(sdVM);
+                AllServiceDays.Add(sdVM);
 
                 checkLastServiceDayDate(sdVM.DtReport);
             }
@@ -446,7 +455,7 @@ namespace Service_Reader
             ServiceSubmission.Username = m_username;
             ServiceSubmission.UserSurname = m_userSurname;
             //Need to call the save on the service days
-            foreach (ServiceDayViewModel sd in AllServiceDays.AllServiceDayVMs)
+            foreach (ServiceDayViewModel sd in AllServiceDays)
             {
                 sd.Save();
             }
@@ -520,7 +529,7 @@ namespace Service_Reader
         public void recalculateTravelTime()
         {
             double travelTime = 0;
-            foreach(ServiceDayViewModel day in AllServiceDays.AllServiceDayVMs)
+            foreach(ServiceDayViewModel day in AllServiceDays)
             {
                 travelTime += day.TotalTravelTime;
             }
@@ -556,7 +565,7 @@ namespace Service_Reader
         public void recalulateTimeOnsite()
         {
             double timeOnsite = 0;
-            foreach (ServiceDayViewModel serviceDay in AllServiceDays.AllServiceDayVMs)
+            foreach (ServiceDayViewModel serviceDay in AllServiceDays)
             {
                 timeOnsite += serviceDay.TotalOnsiteTime;
             }
@@ -616,7 +625,7 @@ namespace Service_Reader
         public void recalculateMileage()
         {
             int updatedMileage = 0;
-            foreach(ServiceDayViewModel day in AllServiceDays.AllServiceDayVMs)
+            foreach(ServiceDayViewModel day in AllServiceDays)
             {
                 updatedMileage += day.Mileage;
             }
@@ -639,7 +648,7 @@ namespace Service_Reader
         public void recalculateDailyAllowances()
         {
             int updatedDA = 0;
-            foreach (ServiceDayViewModel day in AllServiceDays.AllServiceDayVMs)
+            foreach (ServiceDayViewModel day in AllServiceDays)
             {
                 if (day.DailyAllowance)
                 {
@@ -665,7 +674,7 @@ namespace Service_Reader
         public void recalculateOvernightAllowances()
         {
             int updatedOA = 0;
-            foreach(ServiceDayViewModel day in AllServiceDays.AllServiceDayVMs)
+            foreach(ServiceDayViewModel day in AllServiceDays)
             {
                 if (day.OvernightAllowance)
                 {
@@ -691,7 +700,7 @@ namespace Service_Reader
         public void recalculateBarrierPayments()
         {
             int updatedBP = 0;
-            foreach(ServiceDayViewModel day in AllServiceDays.AllServiceDayVMs)
+            foreach(ServiceDayViewModel day in AllServiceDays)
             {
                 if(day.BarrierPayment)
                 {
@@ -1232,13 +1241,29 @@ namespace Service_Reader
         //    }
         //}
 
-        public AllServiceDayViewModels AllServiceDays
+        //public AllServiceDayViewModels AllServiceDays
+        //{
+        //    get
+        //    {
+        //        if (m_AllServiceDays == null)
+        //        {
+        //            m_AllServiceDays = new AllServiceDayViewModels();
+        //        }
+        //        return m_AllServiceDays;
+        //    }
+        //    set
+        //    {
+        //        m_AllServiceDays = value;
+        //        onPropertyChanged("AllServiceDays");
+        //    }
+        //}
+        public List<ServiceDayViewModel> AllServiceDays
         {
             get
             {
                 if (m_AllServiceDays == null)
                 {
-                    m_AllServiceDays = new AllServiceDayViewModels();
+                    m_AllServiceDays = new List<ServiceDayViewModel>();
                 }
                 return m_AllServiceDays;
             }
@@ -1968,7 +1993,7 @@ namespace Service_Reader
 
         public void AddServiceDayViewModel(ServiceDayViewModel serviceDayToAdd)
         {
-            AllServiceDays.AddServiceDay(serviceDayToAdd);
+            AllServiceDays.Add(serviceDayToAdd);
         }
 
     }

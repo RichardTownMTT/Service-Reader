@@ -35,7 +35,7 @@ namespace Service_Reader
                     foreach (ServiceSheetViewModel serviceVM in allServiceSheets)
                     {
                         dbContext.ServiceSheets.Add(serviceVM.ServiceSubmission);
-                        foreach (ServiceDayViewModel day in serviceVM.AllServiceDays.AllServiceDayVMs)
+                        foreach (ServiceDayViewModel day in serviceVM.AllServiceDays)
                         {
                             dbContext.ServiceDays.Add(day.ServiceDayModel);
                         }
@@ -102,6 +102,44 @@ namespace Service_Reader
                     {
                         retval.Add(new DbEmployee(user.Username, user.UserFirstName, user.UserSurname));
                     }
+                }
+            }
+            catch (EntityException entityEx)
+            {
+                //Something went wrong with the load.  Clear the cache for the username.
+                clearCacheDbUsername();
+                Console.WriteLine(entityEx.ToString());
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return null;
+            }
+            return retval;
+        }
+
+        public static List<ServiceSheetViewModel> downloadServiceSheets(DateTime monthFirstDay, DateTime monthEndDay)
+        {
+            List<ServiceSheetViewModel> retval = new List<ServiceSheetViewModel>();
+
+            UserViewModel dbUser = getDbUser();
+            if (dbUser == null)
+            {
+                return null;
+            }
+            //Downloads the service sheets from the database and creates the vms
+            try
+            {
+                using (var dbContext = new ServiceSheetsEntities())
+                {
+                    updateContextConnection(dbUser, dbContext);
+                    var serviceSheets = from ServiceSheet in dbContext.ServiceSheets
+                                        join sDay in dbContext.ServiceDays
+                                        on ServiceSheet.Id equals sDay.ServiceSheetId
+                                        where sDay.DtReport >= monthFirstDay && sDay.DtReport <= monthEndDay
+                                        select ServiceSheet;
+                    retval = ServiceSheetViewModel.loadFromModel(serviceSheets);
                 }
             }
             catch (EntityException entityEx)

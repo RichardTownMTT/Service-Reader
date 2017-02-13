@@ -93,7 +93,7 @@
             </Grid>
         </GroupBox>
         <GroupBox Header="Timesheets">
-            <ItemsControl ItemsSource="{Binding currentSubmissionVM.AllServiceDays.AllServiceDayVMs}">
+            <ItemsControl ItemsSource="{Binding currentSubmissionVM.AllServiceDays}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <local:ServiceDayView DataContext="{Binding}"/>

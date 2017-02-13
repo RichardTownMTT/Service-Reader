@@ -77,6 +77,7 @@ C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Read
 C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\bin\Debug\de\PdfSharp-wpf.resources.dll
 C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\bin\Debug\de\PdfSharp.Charting-wpf.resources.dll
 C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\Service Reader.csproj.ResolveComReference.cache
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\CalendarDaySquare.g.cs
 C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\HolidayAbsenceView.g.cs
 C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\ApplicationWindow.g.cs
 C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\HistoryTrackerView.g.cs
@@ -93,6 +94,7 @@ C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Read
 C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\Service Reader_MarkupCompile.cache
 C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\Service Reader_MarkupCompile.lref
+C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\CalendarDaySquare.baml
 C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\HolidayAbsenceView.baml
 C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\ApplicationWindow.baml
 C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\HistoryTrackerView.baml
@@ -109,6 +111,3 @@ C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Read
 C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\Service Reader.csproj.GenerateResource.Cache
 C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\Service Reader.exe
 C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\Service Reader.pdb
-C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\Service Reader.csprojResolveAssemblyReference.cache
-C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\CalendarDaySquare.g.cs
-C:\Users\rtown\Documents\Visual Studio 2015\Projects\Service Reader\Service Reader\Service Reader\Service Reader\obj\Debug\CalendarDaySquare.baml

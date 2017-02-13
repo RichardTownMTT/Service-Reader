@@ -89,7 +89,7 @@ namespace Service_Reader
                 range.Value2 = submission.MttJobNumber;
             }
             //Load all the days and loop through them. Output to the sheet
-            AllServiceDayViewModels serviceDays = submission.AllServiceDays;
+            List<ServiceDayViewModel> serviceDays = submission.AllServiceDays;
 
             //Need the engineers initials for each row
             string engFirstName = submission.UserFirstName;
@@ -110,7 +110,7 @@ namespace Service_Reader
             }
 
 
-            foreach (ServiceDayViewModel currentDay in serviceDays.AllServiceDayVMs)
+            foreach (ServiceDayViewModel currentDay in serviceDays)
             {
                 range = excelWorksheet.Cells[currentSpreadsheetRow, 1];
                 range.Value2 = currentDay.DtReport;

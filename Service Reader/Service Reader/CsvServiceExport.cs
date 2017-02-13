@@ -57,10 +57,10 @@ namespace Service_Reader
         {
             //A line is created for each service day, not submission, so we need to go through the number of days.  
             //There will be multiple duplicated fields.
-            AllServiceDayViewModels allServiceDays = submission.AllServiceDays;
+            List<ServiceDayViewModel> allServiceDays = submission.AllServiceDays;
             //ObservableCollection<ServiceDayViewModel> serviceDays = submission.AllServiceDayVMs;
 
-            foreach (ServiceDayViewModel day in allServiceDays.AllServiceDayVMs)
+            foreach (ServiceDayViewModel day in allServiceDays)
             {
                 //extract the sections from the service sheet that go into the CSV export
                 //Start date and end date are not taken - They only appear in the csv export
