@@ -39,6 +39,6 @@
                 <DataGridTextColumn Header="Job Description" Binding="{Binding JobDescription}" />
             </DataGrid.Columns>
         </DataGrid>
-        <local:ServiceSubmissionDetails x:Name="ucSubmissions" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5" Margin="5" currentSubmissionVM ="{Binding SelectedSubmission}"/>
+        <local:ServiceSubmissionDetails x:Name="ucSubmissions" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5" Margin="5"/>
     </Grid>
 </UserControl>
