@@ -308,6 +308,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\logo.jpg" />
+    <Resource Include="Resources\UserIcon.png" />
+    <Resource Include="Resources\PasswordIcon.png" />
     <Content Include="ServiceModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ServiceModel.edmx</DependentUpon>

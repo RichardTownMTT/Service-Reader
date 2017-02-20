@@ -4,24 +4,71 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Service_Reader"
-             mc:Ignorable="d" WindowStartupLocation="CenterScreen" 
-            Width="500" Height="175" DataContext="UserViewModel">
-    <Grid FocusManager.FocusedElement="{Binding ElementName=txtUsername}">        
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="150"/>
-        </Grid.ColumnDefinitions>
-        <Label Content="{Binding DisplayMessage}" Grid.Column="0" Grid.Row="0" Margin="5" />
-        <Label Content="Username" Grid.Column="0" Grid.Row="1" Margin="5"/>
-        <TextBox Name="txtUsername" TabIndex="0" Grid.Column="1" Grid.Row="1" Margin="5" Text="{Binding Path=UserName}"/>
-        <Label Content="Password" Grid.Column="0" Grid.Row="2" Margin="5"/>
-        <PasswordBox Name="txtPassword" TabIndex="1" Grid.Column="1" Grid.Row="2" Margin="5" />
-        <Button Content="Ok" Command="{Binding SetUserCommand}" Grid.Row="3" Grid.Column="1"/>
-    </Grid>
+             mc:Ignorable="d" WindowStartupLocation="CenterScreen" SnapsToDevicePixels="True"
+             DataContext="UserViewModel" SizeToContent="WidthAndHeight" UseLayoutRounding="True">
+    <Window.Resources>
+        <BitmapImage x:Key="UserIcon" UriSource="pack://application:,,,/Resources/UserIcon.png" RenderOptions.BitmapScalingMode="HighQuality" />
+        <BitmapImage x:Key="PasswordIcon" UriSource="pack://application:,,,/Resources/PasswordIcon.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+    </Window.Resources>
+    <StackPanel FocusManager.FocusedElement="{Binding ElementName=txtUsername}" Orientation="Vertical">
+        <StackPanel Background="CornflowerBlue" Margin="0, 5">
+            <Label Content="Login" HorizontalAlignment="Center" Foreground="White" />
+        </StackPanel>
+        <Label Content="{Binding DisplayMessage}" Margin="5" HorizontalAlignment="Center"/>
+        <StackPanel Orientation="Horizontal">
+            <Image Source="{StaticResource UserIcon}" MaxHeight="25" />
+            <TextBox Name="txtUsername" TabIndex="0" Margin="5" Text="{Binding Path=UserName}" Width="250" Height="Auto">
+            <TextBox.Style>
+                <Style TargetType="TextBox">
+                    <Style.Resources>
+                        <VisualBrush x:Key="backgroundTextBrush" Stretch="None">
+                            <VisualBrush.Visual>
+                                <Label Content="Username" Foreground="Gray"/>
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </Style.Resources>
+                    <Style.Triggers>
+                        <Trigger Property="Text" Value="{x:Null}">
+                            <Setter Property="Background" Value="{StaticResource backgroundTextBrush}"/>
+                        </Trigger>
+                        <Trigger Property="Text" Value="">
+                            <Setter Property="Background" Value="{StaticResource backgroundTextBrush}"/>
+                        </Trigger>
+                        <!--<Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter Property="Background" Value="White"/>
+                        </Trigger>-->
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Image Source="{StaticResource PasswordIcon}" MaxHeight="25"/>
+            <PasswordBox Name="txtPassword" TabIndex="1" Margin="5" Width="250" >
+            <PasswordBox.Style>
+                <Style TargetType="PasswordBox">
+                    <Style.Resources>
+                        <VisualBrush x:Key="backgroundTextBrush" Stretch="None">
+                            <VisualBrush.Visual>
+                                <Label Content="Password" Foreground="Gray"/>
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </Style.Resources>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=Password}"  Value="{x:Null}">
+                            <Setter Property="Background" Value="{StaticResource backgroundTextBrush}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Path=Password}"  Value="">
+                            <Setter Property="Background" Value="{StaticResource backgroundTextBrush}"/>
+                        </DataTrigger>
+                        <Trigger Property="IsKeyboardFocused"  Value="True">
+                            <Setter Property="Background" Value="White"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </PasswordBox.Style>
+        </PasswordBox>
+        </StackPanel>
+        <Button Content="Ok" Command="{Binding SetUserCommand}" HorizontalAlignment="Center" Margin="5,1,5,10" Padding="20,2"/>
+    </StackPanel>
 </Window>
