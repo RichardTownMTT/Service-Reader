@@ -121,6 +121,11 @@
       <DependentUpon>HolidayAbsenceCreator.xaml</DependentUpon>
     </Compile>
     <Compile Include="HolidayAbsenceCreatorViewModel.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="UserViewModel.cs" />
     <Compile Include="CreateCostSheet.cs" />
     <Compile Include="CsvServiceExport.cs" />
@@ -239,11 +244,6 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -251,8 +251,8 @@
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -308,8 +308,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\logo.jpg" />
-    <Resource Include="Resources\UserIcon.png" />
     <Resource Include="Resources\PasswordIcon.png" />
+    <Resource Include="Resources\UserIcon.png" />
     <Content Include="ServiceModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ServiceModel.edmx</DependentUpon>

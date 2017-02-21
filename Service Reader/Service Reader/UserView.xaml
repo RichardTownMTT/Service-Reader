@@ -7,7 +7,7 @@
              mc:Ignorable="d" WindowStartupLocation="CenterScreen" SnapsToDevicePixels="True"
              DataContext="UserViewModel" SizeToContent="WidthAndHeight" UseLayoutRounding="True">
     <Window.Resources>
-        <BitmapImage x:Key="UserIcon" UriSource="pack://application:,,,/Resources/UserIcon.png" RenderOptions.BitmapScalingMode="HighQuality" />
+        <BitmapImage x:Key="UserIcon" UriSource="pack://application:,,,/Resources/UserIcon.png" RenderOptions.BitmapScalingMode="NearestNeighbor" />
         <BitmapImage x:Key="PasswordIcon" UriSource="pack://application:,,,/Resources/PasswordIcon.png" RenderOptions.BitmapScalingMode="HighQuality"/>
     </Window.Resources>
     <StackPanel FocusManager.FocusedElement="{Binding ElementName=txtUsername}" Orientation="Vertical">

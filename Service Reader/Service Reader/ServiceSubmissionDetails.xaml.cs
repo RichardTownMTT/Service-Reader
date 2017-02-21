@@ -17,14 +17,14 @@ namespace Service_Reader
         {
             get
             {
-                return (ServiceSheetViewModel)GetValue(currentSubmissionDP);
+                return (ServiceSheetViewModel)GetValue(currentSubmissionVMProperty);
             }
             set
             {
-                SetValue(currentSubmissionDP, value);
+                SetValue(currentSubmissionVMProperty, value);
             }
         }
-        public static readonly DependencyProperty currentSubmissionDP =
+        public static readonly DependencyProperty currentSubmissionVMProperty =
             DependencyProperty.Register("currentSubmissionVM", typeof(ServiceSheetViewModel), typeof(ServiceSubmissionDetails), new PropertyMetadata(null));
 
         //public ServiceSubmissionDetails(ServiceSubmission serviceSheet, string username, string password)
