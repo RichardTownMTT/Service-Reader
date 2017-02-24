@@ -5,10 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Service_Reader"
         mc:Ignorable="d"
-        Title="Service Reader" WindowState="Maximized" Height="300" Width="300" >
+        Title="Service Reader" WindowState="Maximized" Height="300" Width="654.969" >
     <DockPanel>
-        <Border DockPanel.Dock="Left" BorderBrush="Black" BorderThickness="0,0,1,0" Width="Auto">
+        <Border DockPanel.Dock="Left" BorderBrush="Black" BorderThickness="0,0,1,0" Width="Auto" CornerRadius="15">
             <StackPanel Orientation="Vertical" >
+                <TreeView>
+                    <TreeView.ItemContainerStyle>
+                        <Style TargetType="{x:Type TreeViewItem}">
+                            <Setter Property="IsExpanded" Value="True" />
+                        </Style>
+                    </TreeView.ItemContainerStyle>
+                    <TreeViewItem Header="Data Processing" >
+                    <TreeViewItem Header="Canvas Data" Margin="1"/>
+                    <TreeViewItem Header="Issue Service Reports" Margin="1"/>
+                    <TreeViewItem Header="Job Cost Sheet" Margin="1"/>
+                    </TreeViewItem>
+                    <TreeViewItem Header="Management">
+                        <TreeViewItem Header="History Tracker" Margin="1"/>
+                        <TreeViewItem Header="Absence Manager" Margin="1"/>
+                    </TreeViewItem>
+                </TreeView>
                 <Button Content="Process Canvas Data" Margin="5" Command="{Binding ProcessCanvasDataCommand}"/>
                 <Button Content="Issue Service Reports" Margin="5" Command="{Binding IssueServiceReportsCommand}"/>
                 <Button Content="History Tracker" Margin="5" Command="{Binding HistoryTrackerCommand}"/>
@@ -16,8 +32,6 @@
                 <Button Content="Absence Manager" Margin="5" Command="{Binding AbsenceTrackerCommand}" />
             </StackPanel>
         </Border>
-        <ScrollViewer HorizontalScrollBarVisibility="Auto">
             <ContentControl Content="{Binding CurrentPageView, Mode=OneWay}" />
-        </ScrollViewer>
         </DockPanel>
     </Window>

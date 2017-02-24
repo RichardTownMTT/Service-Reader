@@ -17,7 +17,7 @@
         <Label Content="{Binding DisplayMessage}" Margin="5" HorizontalAlignment="Center"/>
         <StackPanel Orientation="Horizontal">
             <Image Source="{StaticResource UserIcon}" MaxHeight="25" />
-            <TextBox Name="txtUsername" TabIndex="0" Margin="5" Text="{Binding Path=UserName}" Width="250" Height="Auto">
+            <TextBox Name="txtUsername" TabIndex="0" Margin="5" Padding="1" Text="{Binding Path=UserName}" Width="250" Height="Auto">
             <TextBox.Style>
                 <Style TargetType="TextBox">
                     <Style.Resources>
@@ -44,7 +44,7 @@
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <Image Source="{StaticResource PasswordIcon}" MaxHeight="25"/>
-            <PasswordBox Name="txtPassword" TabIndex="1" Margin="5" Width="250" >
+            <PasswordBox Name="txtPassword" TabIndex="1" Margin="5" Padding="1" Width="250" >
             <PasswordBox.Style>
                 <Style TargetType="PasswordBox">
                     <Style.Resources>
@@ -69,6 +69,6 @@
             </PasswordBox.Style>
         </PasswordBox>
         </StackPanel>
-        <Button Content="Ok" Command="{Binding SetUserCommand}" HorizontalAlignment="Center" Margin="5,1,5,10" Padding="20,2"/>
+        <Button Content="Ok" Command="{Binding SetUserCommand}" HorizontalAlignment="Center" Margin="5,5,5,10" Padding="20,2"/>
     </StackPanel>
 </Window>
