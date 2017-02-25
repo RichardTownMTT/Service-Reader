@@ -69,6 +69,6 @@
             </PasswordBox.Style>
         </PasswordBox>
         </StackPanel>
-        <Button Content="Ok" Command="{Binding SetUserCommand}" HorizontalAlignment="Center" Margin="5,5,5,10" Padding="20,2"/>
+        <Button Content="Ok" Command="{Binding SetUserCommand}" HorizontalAlignment="Center" Margin="5,5,5,10" Padding="20,2" IsDefault="True"/>
     </StackPanel>
 </Window>

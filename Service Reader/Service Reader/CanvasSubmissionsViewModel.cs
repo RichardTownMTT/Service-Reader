@@ -120,6 +120,10 @@ namespace Service_Reader
 
         private bool exportCsvData()
         {
+            if (AllServiceSheets == null)
+            {
+                return false;
+            }
             //Need to go through the submissions and check that each has been approved.
             foreach (ServiceSheetViewModel sheet in AllServiceSheets)
             {
