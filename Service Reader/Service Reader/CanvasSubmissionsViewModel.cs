@@ -12,8 +12,8 @@ namespace Service_Reader
     {
         //Stores the login details for Canvas
         //private UserViewModel m_canvasUser;
-        private DateTime m_dtStartSubmissionsDownload;
-        private DateTime m_dtEndSubmissionsDownload;
+        //private DateTime m_dtStartSubmissionsDownload;
+        //private DateTime m_dtEndSubmissionsDownload;
         private ServiceSheetViewModel m_selectedSubmission;
         //RT 11/12/16 - Adding previous submission.  If editing and select submission changes, need to revert changes
         private ServiceSheetViewModel m_previousSubmission;
@@ -35,10 +35,10 @@ namespace Service_Reader
         //Creator for the class.  Sets the defaults, e.g. start/end date
         public CanvasSubmissionsViewModel()
         {
-            DtStartSubmissionsDownload = DateTime.Today;
-            DtEndSubmissionsDownload = DateTime.Today;
-            //Set the start to be a week ago by default
-            DtStartSubmissionsDownload = DtStartSubmissionsDownload.AddDays(-7);
+            //DtStartSubmissionsDownload = DateTime.Today;
+            //DtEndSubmissionsDownload = DateTime.Today;
+            ////Set the start to be a week ago by default
+            //DtStartSubmissionsDownload = DtStartSubmissionsDownload.AddDays(-7);
 
             //CanvasUserVM = new CanvasUserViewModel();
         }
@@ -57,33 +57,33 @@ namespace Service_Reader
         //    }
         //}
 
-        public DateTime DtStartSubmissionsDownload
-        {
-            get
-            {
-                return m_dtStartSubmissionsDownload;
-            }
+        //public DateTime DtStartSubmissionsDownload
+        //{
+        //    get
+        //    {
+        //        return m_dtStartSubmissionsDownload;
+        //    }
 
-            set
-            {
-                m_dtStartSubmissionsDownload = value;
-                onPropertyChanged("DtStartSubmissionsDownload");
-            }
-        }
+        //    set
+        //    {
+        //        m_dtStartSubmissionsDownload = value;
+        //        onPropertyChanged("DtStartSubmissionsDownload");
+        //    }
+        //}
 
-        public DateTime DtEndSubmissionsDownload
-        {
-            get
-            {
-                return m_dtEndSubmissionsDownload;
-            }
+        //public DateTime DtEndSubmissionsDownload
+        //{
+        //    get
+        //    {
+        //        return m_dtEndSubmissionsDownload;
+        //    }
 
-            set
-            {
-                m_dtEndSubmissionsDownload = value;
-                onPropertyChanged("DtEndSubmissionsDownload");
-            }
-        }
+        //    set
+        //    {
+        //        m_dtEndSubmissionsDownload = value;
+        //        onPropertyChanged("DtEndSubmissionsDownload");
+        //    }
+        //}
 
         public ICommand CanvasDataDownloadCommand
         {
@@ -387,11 +387,21 @@ namespace Service_Reader
             {
                 return;
             }
-            
+
+            //RT 25/2/17 - Get the latest submission date from the database
+            DateTime? lastSubmissionDateFound = DbServiceSheet.getLastSubmissionDate();
+            if (lastSubmissionDateFound == null)
+            {
+                return;
+            }
+
+            DateTime lastSubmissionDate = lastSubmissionDateFound.Value;
+            lastSubmissionDate = lastSubmissionDate.AddDays(-1);
+
             //CanvasUserVM.CanvasPasswordBox = (PasswordBox)canvasPasswordBox;
             //RT 26/11/16 - Changing the password to use a PasswordBox for security
             //AllServiceSheets = CanvasDataReader.downloadXml(CanvasUser.Username, CanvasUser.Password, DtStartSubmissionsDownload, DtEndSubmissionsDownload);
-            AllServiceSheets = CanvasDataReader.downloadXml(userResultVM, DtStartSubmissionsDownload, DtEndSubmissionsDownload);
+            AllServiceSheets = CanvasDataReader.downloadXml(userResultVM, lastSubmissionDate, DateTime.Now);
 
             //If no submissions have been returned, then exit.  None available, or error has occured.  Error will have been shown already
             if (AllServiceSheets == null)

@@ -330,5 +330,43 @@ namespace Service_Reader
             str.Add("Password", dbUser.PasswordBoxObj.Password);
             dbContext.Database.Connection.ConnectionString = str.ConnectionString;
         }
+
+        public static DateTime? getLastSubmissionDate()
+        {
+            UserViewModel dbUser = getDbUser();
+            if (dbUser == null)
+            {
+                return null;
+            }
+
+            DateTime retval;
+
+            try
+            {
+                using (var dbContext = new ServiceSheetsEntities())
+                {
+                    updateContextConnection(dbUser, dbContext);
+                    var serviceSheets = (from sheets in dbContext.ServiceSheets
+                                         orderby sheets.DtResponse descending
+                                         select sheets.DtResponse).FirstOrDefault();
+
+
+                    retval = serviceSheets;
+                }
+            }
+            catch (EntityException entityEx)
+            {
+                //Something went wrong with the load.  Clear the cache for the username.
+                clearCacheDbUsername();
+                Console.WriteLine(entityEx.ToString());
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return null;
+            }
+            return retval;
+        }
     }
 }

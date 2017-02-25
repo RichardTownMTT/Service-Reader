@@ -9,13 +9,7 @@
         <StackPanel.DataContext>
             <local:CanvasSubmissionsViewModel/>
         </StackPanel.DataContext>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="From" Margin="5"/>
-                <DatePicker SelectedDate="{Binding DtStartSubmissionsDownload}" Margin="5"/>
-                <Label Content="To" Margin="5"/>
-                <DatePicker SelectedDate="{Binding DtEndSubmissionsDownload}" Margin="5"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Horizontal">
                 <Button Content="Download Sheets" Command="{Binding CanvasDataDownloadCommand}" Margin="5" Padding="5" MinWidth="100"/>
                 <Button Content="Edit" Margin="5" Command="{Binding EditSubmissionCommand}" Padding="5" MinWidth="100"/>
                 <Button Content="Save" Margin="5" Command="{Binding SaveSubmissionCommand}" Padding="5" MinWidth="100"/>
@@ -23,7 +17,7 @@
                 <Button Content="Export to csv" Margin="5" Command="{Binding CsvExportCommand}" Padding="5" MinWidth="100"/>
                 <Button Content="Save to Database" Margin="5" Command="{Binding SaveDatabaseCommand}" Padding="5" MinWidth="100"/>
             </StackPanel>
-            <DataGrid HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding AllServiceSheets}" AutoGenerateColumns="False" SelectedItem="{Binding Path=SelectedSubmission}" CanUserAddRows="False" IsReadOnly="True" SelectionMode="Single">
+            <DataGrid HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding AllServiceSheets}" AutoGenerateColumns="False" SelectedItem="{Binding Path=SelectedSubmission}" CanUserAddRows="False" IsReadOnly="True" SelectionMode="Single" MaxHeight="250">
                 <DataGrid.Columns>
                 <DataGridTextColumn Header="Submission No" Binding="{Binding SubmissionNumber}" Width="*"/>
                 <DataGridTextColumn Header="Engineer" Binding="{Binding EngineerFullName}" Width="2*"/>
