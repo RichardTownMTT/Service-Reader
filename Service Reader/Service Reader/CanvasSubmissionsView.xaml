@@ -14,18 +14,17 @@
                 <Button Content="Edit" Margin="5" Command="{Binding EditSubmissionCommand}" Padding="5" MinWidth="100"/>
                 <Button Content="Save" Margin="5" Command="{Binding SaveSubmissionCommand}" Padding="5" MinWidth="100"/>
                 <Button Content="Cancel" Margin="5" Command="{Binding CancelEditCommand}" Padding="5" MinWidth="100"/>
-                <Button Content="Export to csv" Margin="5" Command="{Binding CsvExportCommand}" Padding="5" MinWidth="100"/>
-                <Button Content="Save to Database" Margin="5" Command="{Binding SaveDatabaseCommand}" Padding="5" MinWidth="100"/>
+            <Button Content="Save to Database" Margin="5" Command="{Binding SaveDatabaseCommand}" Padding="5" MinWidth="100"/>
             </StackPanel>
-            <DataGrid HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding AllServiceSheets}" AutoGenerateColumns="False" SelectedItem="{Binding Path=SelectedSubmission}" CanUserAddRows="False" IsReadOnly="True" SelectionMode="Single" MaxHeight="250">
+            <DataGrid HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding AllServiceSheets}" AutoGenerateColumns="False" SelectedItem="{Binding Path=SelectedSubmission}" CanUserAddRows="False" IsReadOnly="True" SelectionMode="Single" MaxHeight="250" MinHeight="150">
                 <DataGrid.Columns>
-                <DataGridTextColumn Header="Submission No" Binding="{Binding SubmissionNumber}" Width="*"/>
-                <DataGridTextColumn Header="Engineer" Binding="{Binding EngineerFullName}" Width="2*"/>
-                <DataGridTextColumn Header="Customer" Binding="{Binding Customer}" Width="2*"/>
+                <DataGridTextColumn Header="Submission No" Binding="{Binding SubmissionNumber}" Width="3*"/>
+                <DataGridTextColumn Header="Engineer" Binding="{Binding EngineerFullName}" Width="3*"/>
+                <DataGridTextColumn Header="Customer" Binding="{Binding Customer}" Width="3*"/>
                 <DataGridTextColumn Header="Job Start Date" Binding="{Binding DtJobStart, StringFormat=dd/MM/yyyy}" Width="*"/>
-                <DataGridTextColumn Header="Machine" Binding="{Binding MachineMakeModel}" Width="2*"/>
+                <DataGridTextColumn Header="Machine" Binding="{Binding MachineMakeModel}" Width="3*"/>
                 <DataGridTextColumn Header="MTT Job Number" Binding="{Binding MttJobNumber}" Width="2*"/>
-                <DataGridTextColumn Header="Job Description" Binding="{Binding JobDescription}" Width="4*"/>
+                <DataGridTextColumn Header="Job Description" Binding="{Binding JobDescription}" Width="5*"/>
                 </DataGrid.Columns>
                 <DataGrid.Resources>
                     <Style TargetType="{x:Type DataGridRow}">

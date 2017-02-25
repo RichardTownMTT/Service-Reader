@@ -24,7 +24,7 @@ namespace Service_Reader
         //Command to download the canvas data
         private ICommand m_canvasDataDownloadCommand;
         //RT 23/11/16 - Adding command to create CSV from data
-        private ICommand m_exportCsvCommand;
+        //private ICommand m_exportCsvCommand;
         //RT 11/12/16 - Adding edit, save and cancel buttons
         private ICommand m_editSubmissionCommand;
         private ICommand m_saveSubmissionCommand;
@@ -102,23 +102,23 @@ namespace Service_Reader
             }
         }
 
-        public ICommand CsvExportCommand
-        {
-            get
-            {
-                if (m_exportCsvCommand == null)
-                {
-                    m_exportCsvCommand = new RelayCommand(param => exportCsvData());
-                }
-                return m_exportCsvCommand;
-            }
-            set
-            {
-                m_exportCsvCommand = value;
-            }
-        }
+        //public ICommand CsvExportCommand
+        //{
+        //    get
+        //    {
+        //        if (m_exportCsvCommand == null)
+        //        {
+        //            m_exportCsvCommand = new RelayCommand(param => exportCsvData());
+        //        }
+        //        return m_exportCsvCommand;
+        //    }
+        //    set
+        //    {
+        //        m_exportCsvCommand = value;
+        //    }
+        //}
 
-        private void exportCsvData()
+        private bool exportCsvData()
         {
             //Need to go through the submissions and check that each has been approved.
             foreach (ServiceSheetViewModel sheet in AllServiceSheets)
@@ -126,7 +126,7 @@ namespace Service_Reader
                 if(!sheet.OfficeApproval)
                 {
                     MessageBox.Show("Service sheets need approving before they can be exported.", "Error");
-                    return;
+                    return false;
                 }
             }
 
@@ -134,7 +134,7 @@ namespace Service_Reader
             MessageBoxResult result = MessageBox.Show(noOfSheets.ToString() + " sheets will be exported to csv.  Do you want to continue?", "Export", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.No)
             {
-                return;
+                return true;
             }
 
             //This exports all the downloaded service sheets to csv
@@ -144,6 +144,11 @@ namespace Service_Reader
             if (success)
             {
                 MessageBox.Show("Canvas data exported to CSV", "Exported");
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
@@ -287,38 +292,14 @@ namespace Service_Reader
 
         private void saveToDatabase()
         {
-            //RT 23/1/17 - Moving this to the db class
-            //UserViewModel DBUserVM = new UserViewModel(UserViewModel.DISPLAY_MODE_DATABASE);
-            //UserView userView = new UserView();
-            //userView.DataContext = DBUserVM;
-            //bool? userResult = userView.ShowDialog();
+            //Export to csv
+            bool csvExportSuccessful = exportCsvData();
+            if (!csvExportSuccessful)
+            {
+                MessageBox.Show("Error exporting to csv.  Database save not completed");
+                return;
+            }
 
-            ////RT 3/12/16 - The box may have been cancelled
-            //if (userResult != true)
-            //{
-            //    return;
-            //}
-
-            //RT 23/1/17 - Moving this to db class
-            //Saves all submissions to database
-            //using (var dbContext = new ServiceSheetsEntities())
-            //{
-            //    System.Data.Common.DbConnection connection = dbContext.Database.Connection;
-            //    System.Data.Common.DbConnectionStringBuilder str = new System.Data.Common.DbConnectionStringBuilder();
-            //    str.ConnectionString = dbContext.Database.Connection.ConnectionString;
-            //    str.Add("Password", CanvasUserVM.PasswordBoxObj.Password);
-            //    dbContext.Database.Connection.ConnectionString = str.ConnectionString;
-            //    //dbContext.Database.Log = Console.Write;
-            //    foreach (ServiceSheetViewModel serviceVM in AllServiceSheets)
-            //    {
-            //        dbContext.ServiceSheets.Add(serviceVM.ServiceSubmission);
-            //        foreach (ServiceDayViewModel day in serviceVM.AllServiceDays.AllServiceDayVMs)
-            //        {
-            //            dbContext.ServiceDays.Add(day.ServiceDayModel);
-            //        }
-            //    }
-            //    dbContext.SaveChanges();
-            //}
             bool saveSuccessful = DbServiceSheet.saveSheetsAndDays(AllServiceSheets);
             if (!saveSuccessful)
             {
