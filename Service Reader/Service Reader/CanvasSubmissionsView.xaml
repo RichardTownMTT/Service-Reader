@@ -5,18 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Service_Reader" 
         mc:Ignorable="d" d:DesignHeight="2000" Name="ucSubmissionOverview" >
-    <StackPanel Orientation="Vertical">
-        <StackPanel.DataContext>
+    <DockPanel>
+        <DockPanel.DataContext>
             <local:CanvasSubmissionsViewModel/>
-        </StackPanel.DataContext>
-        <StackPanel Orientation="Horizontal">
+        </DockPanel.DataContext>
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
                 <Button Content="Download Sheets" Command="{Binding CanvasDataDownloadCommand}" Margin="5" Padding="5" MinWidth="100"/>
                 <Button Content="Edit" Margin="5" Command="{Binding EditSubmissionCommand}" Padding="5" MinWidth="100"/>
                 <Button Content="Save" Margin="5" Command="{Binding SaveSubmissionCommand}" Padding="5" MinWidth="100"/>
                 <Button Content="Cancel" Margin="5" Command="{Binding CancelEditCommand}" Padding="5" MinWidth="100"/>
             <Button Content="Save to Database" Margin="5" Command="{Binding SaveDatabaseCommand}" Padding="5" MinWidth="100"/>
             </StackPanel>
-            <DataGrid HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding AllServiceSheets}" AutoGenerateColumns="False" SelectedItem="{Binding Path=SelectedSubmission}" CanUserAddRows="False" IsReadOnly="True" SelectionMode="Single" MaxHeight="250" MinHeight="150">
+            <DataGrid HorizontalScrollBarVisibility="Disabled" DockPanel.Dock="Top" ItemsSource="{Binding AllServiceSheets}" AutoGenerateColumns="False" SelectedItem="{Binding Path=SelectedSubmission}" CanUserAddRows="False" IsReadOnly="True" SelectionMode="Single" MaxHeight="250" MinHeight="150">
                 <DataGrid.Columns>
                 <DataGridTextColumn Header="Submission No" Binding="{Binding SubmissionNumber}" Width="3*"/>
                 <DataGridTextColumn Header="Engineer" Binding="{Binding EngineerFullName}" Width="3*"/>
@@ -36,6 +36,6 @@
                     </Style>
                 </DataGrid.Resources>
             </DataGrid>
-            <local:ServiceSubmissionDetails x:Name="ucSubmissions" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5" Margin="5" currentSubmissionVM ="{Binding SelectedSubmission}"/>
-        </StackPanel>
+            <local:ServiceSubmissionDetails x:Name="ucSubmissions" DockPanel.Dock="Top" Margin="5" currentSubmissionVM ="{Binding SelectedSubmission}"/>
+        </DockPanel>
 </UserControl>

@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Service_Reader"
         mc:Ignorable="d" >
-    <StackPanel Orientation="Vertical" x:Name="LayoutRoot">
+    <DockPanel x:Name="LayoutRoot">
         <TabControl>
                 <TabItem Header="Submission Overview">
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <StackPanel>
-                            <GroupBox Header="Submission Details">
+                    <ScrollViewer VerticalScrollBarVisibility="Visible" CanContentScroll="True">
+                        <DockPanel>
+                            <GroupBox Header="Submission Details" DockPanel.Dock="Top">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="30"/>
@@ -27,7 +27,7 @@
                                     <TextBox Name="txtEngineer" Grid.Column="1" Grid.Row="1" Margin="5" Width="200" HorizontalAlignment="Left" IsReadOnly="True" Text="{Binding Path=currentSubmissionVM.EngineerFullName, Mode=OneWay}"/>
                                 </Grid>
                             </GroupBox>
-                            <GroupBox Header="Customer" IsEnabled="{Binding currentSubmissionVM.EditMode}">
+                        <GroupBox Header="Customer" IsEnabled="{Binding currentSubmissionVM.EditMode}" DockPanel.Dock="Top">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="30"/>
@@ -61,7 +61,7 @@
                                     <TextBox Name="txtCustomerPhone" Grid.Column="3" Grid.Row="3" Margin="5" Text="{Binding currentSubmissionVM.CustomerPhoneNo}"/>
                                 </Grid>
                             </GroupBox>
-                            <GroupBox Header="Job Details" IsEnabled="{Binding currentSubmissionVM.EditMode}">
+                        <GroupBox Header="Job Details" DockPanel.Dock="Top" IsEnabled="{Binding currentSubmissionVM.EditMode}">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="30"/>
@@ -95,7 +95,7 @@
                                     <TextBox Name="txtJobDescription" Grid.Column="1" Grid.Row="3" Margin="5" Grid.ColumnSpan="3" Height="50" Text="{Binding currentSubmissionVM.JobDescription}"/>
                                 </Grid>
                             </GroupBox>
-                            <GroupBox Header="Submission Times" IsEnabled="{Binding currentSubmissionVM.EditMode}">
+                        <GroupBox Header="Submission Times" DockPanel.Dock="Top" IsEnabled="{Binding currentSubmissionVM.EditMode}">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"/>
@@ -123,10 +123,11 @@
                                     <TextBox Name="txtTotalBarrierPayments" Grid.Column="1" Grid.Row="5" Margin ="5" IsReadOnly="True" Text="{Binding currentSubmissionVM.TotalBarrierPayments, Mode=OneWay}"/>
                                 </Grid>
                             </GroupBox>
-                        </StackPanel>
+                        </DockPanel>
                     </ScrollViewer>
                 </TabItem>
                 <TabItem Header="Timesheets">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True">
                     <GroupBox Header="Timesheets">
                         <ItemsControl ItemsSource="{Binding currentSubmissionVM.AllServiceDays}">
                             <ItemsControl.ItemTemplate>
@@ -136,8 +137,10 @@
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
                     </GroupBox>
-                </TabItem>
+                </ScrollViewer>
+            </TabItem>
                 <TabItem Header="Job Completion Details">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True">
                     <GroupBox Header="Job Completion Details" IsEnabled="{Binding currentSubmissionVM.EditMode}">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -178,10 +181,12 @@
                             <Image Grid.Column="1" Grid.Row="9" Margin ="5" Source="{Binding Path=currentSubmissionVM.Image5}" HorizontalAlignment="Left" Stretch="Fill" Width="300" Grid.ColumnSpan="2"/>
                         </Grid>
                     </GroupBox>
-                </TabItem>
+                </ScrollViewer>
+            </TabItem>
                 <TabItem Header="Signoff">
-                    <StackPanel>
-                        <GroupBox Header="Job Signoff" IsEnabled="{Binding currentSubmissionVM.EditMode}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True">
+                    <DockPanel>
+                        <GroupBox Header="Job Signoff" DockPanel.Dock="Top" IsEnabled="{Binding currentSubmissionVM.EditMode}">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="100"/>
@@ -204,7 +209,7 @@
                                 <Image Name="imgEngineerSignature" Source="{Binding currentSubmissionVM.MttEngineerSignature}" HorizontalAlignment="Left" Stretch="Fill" Grid.Column="1" Grid.Row="3" Margin="5" Width="300" Grid.ColumnSpan="2"/>
                             </Grid>
                         </GroupBox>
-                        <GroupBox Header="Office Approval" IsEnabled="{Binding currentSubmissionVM.EditMode}">
+                        <GroupBox Header="Office Approval" DockPanel.Dock="Top" IsEnabled="{Binding currentSubmissionVM.EditMode}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
@@ -217,8 +222,9 @@
                                 <CheckBox Content="Approved" IsChecked="{Binding currentSubmissionVM.OfficeApproval}" Grid.Column="1"/>
                             </Grid>
                         </GroupBox>
-                    </StackPanel>
-                </TabItem>
+                    </DockPanel>
+                </ScrollViewer>
+            </TabItem>
             </TabControl>
-    </StackPanel>
+    </DockPanel>
 </UserControl>
