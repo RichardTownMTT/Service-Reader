@@ -119,6 +119,42 @@ namespace Service_Reader
             return retval;
         }
 
+        public static List<ServiceSheetViewModel> downloadServiceSheetsForSubmissions(int startNumber, int endNumber)
+        {
+            List<ServiceSheetViewModel> retval = new List<ServiceSheetViewModel>();
+
+            UserViewModel dbUser = getDbUser();
+            if (dbUser == null)
+            {
+                return null;
+            }
+            //Downloads the service sheets from the database and creates the vms
+            try
+            {
+                using (var dbContext = new ServiceSheetsEntities())
+                {
+                    updateContextConnection(dbUser, dbContext);
+                    var serviceSheets = from ServiceSheet in dbContext.ServiceSheets
+                                        where ServiceSheet.SubmissionNumber >= startNumber && ServiceSheet.SubmissionNumber <= endNumber
+                                        select ServiceSheet;
+                    retval = ServiceSheetViewModel.loadFromModel(serviceSheets);
+                }
+            }
+            catch (EntityException entityEx)
+            {
+                //Something went wrong with the load.  Clear the cache for the username.
+                clearCacheDbUsername();
+                Console.WriteLine(entityEx.ToString());
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return null;
+            }
+            return retval;
+        }
+
         public static List<ServiceSheetViewModel> downloadServiceSheets(DateTime monthFirstDay, DateTime monthEndDay)
         {
             List<ServiceSheetViewModel> retval = new List<ServiceSheetViewModel>();

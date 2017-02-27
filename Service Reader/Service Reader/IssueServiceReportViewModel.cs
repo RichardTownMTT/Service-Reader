@@ -19,6 +19,8 @@ namespace Service_Reader
         private ServiceSheetViewModel m_selectedSubmission;
         //Adding database download
         private ICommand m_downloadSheetsDatabaseCommand;
+        private string _submissionStartNumber;
+        private string _submissionEndNumber;
 
 
         public ObservableCollection<ServiceSheetViewModel> AllServiceSheets
@@ -109,9 +111,52 @@ namespace Service_Reader
             }
         }
 
+        public string SubmissionStartNumber
+        {
+            get
+            {
+                return _submissionStartNumber;
+            }
+
+            set
+            {
+                _submissionStartNumber = value;
+                onPropertyChanged("SubmissionStartNumber");
+            }
+        }
+
+        public string SubmissionEndNumber
+        {
+            get
+            {
+                return _submissionEndNumber;
+            }
+
+            set
+            {
+                _submissionEndNumber = value;
+                onPropertyChanged("SubmissionEndNumber");
+            }
+        }
+
         private void downloadDataFromDatabase()
         {
-            List<ServiceSheetViewModel> serviceSheetsDownloaded = DbServiceSheet.downloadAllServiceSheets();
+            //RT 27/2/17 - This now downloads for given service sheet numbers
+            bool validEntries = validateEntries();
+
+            if (!validEntries)
+            {
+                return;
+            }
+
+            int startNumber;
+            bool startNumberParsed = int.TryParse(SubmissionStartNumber, out startNumber);
+            int endNumber;
+            bool endNumberParsed = int.TryParse(SubmissionEndNumber, out endNumber);
+            
+
+            List<ServiceSheetViewModel> serviceSheetsDownloaded = DbServiceSheet.downloadServiceSheetsForSubmissions(startNumber, endNumber);
+
             if (serviceSheetsDownloaded == null)
             {
                 return;
@@ -157,6 +202,41 @@ namespace Service_Reader
             {
                 AllServiceSheets = new ObservableCollection<ServiceSheetViewModel>();
             }
+        }
+
+        private bool validateEntries()
+        {
+            bool retval = true;
+            //Check that the entries for the submission numbers are numbers
+            int startNumber;
+            bool startNumberParsed = int.TryParse(SubmissionStartNumber, out startNumber);
+
+            if (startNumberParsed == false)
+            {
+                MessageBox.Show("Start number must be numerical.");
+                SubmissionStartNumber = "";
+                retval = false;
+            }
+
+            int endNumber;
+            bool endNumberParsed = int.TryParse(SubmissionEndNumber, out endNumber);
+
+            if(endNumberParsed == false)
+            {
+                MessageBox.Show("End number must be numerical.");
+                SubmissionEndNumber = "";
+                retval = false;
+            }
+
+            if (startNumber > endNumber)
+            {
+                MessageBox.Show("Start number must be less than or equal to the end number");
+                SubmissionStartNumber = "";
+                SubmissionEndNumber = "";
+                retval = false;
+            }
+
+            return retval;
         }
 
         private void createPdfServiceSheetForSubmission()

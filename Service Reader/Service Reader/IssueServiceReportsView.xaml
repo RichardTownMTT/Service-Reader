@@ -10,6 +10,10 @@
             <local:IssueServiceReportViewModel/>
         </DockPanel.DataContext>
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+            <Label Content="Submission number start:" Margin="5"/>
+            <TextBox MinWidth="100" Margin="5" Text="{Binding SubmissionStartNumber}" Padding="5"/>
+            <Label Content="Submission number end:" Margin="5"/>
+            <TextBox MinWidth="100" Margin="5" Text="{Binding SubmissionEndNumber}" Padding="5"/>
             <Button Content="Database Download" Command="{Binding DownloadSheetsDatabaseCommand}" Margin="5" Padding="5" MinWidth="100"/>
             <Button Content="Print Sheet" Command="{Binding CreateServiceSheetCommand}" Margin="5" Padding="5" MinWidth="100"/>
         </StackPanel>
