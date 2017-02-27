@@ -14,7 +14,7 @@ namespace Service_Reader
         //RT 12/12/16 - Rewriting this class to use viewmodels
 
         private ObservableCollection<ServiceSheetViewModel> m_allServiceSheets;
-        private ICommand m_loadCsvCommand;
+        //private ICommand m_loadCsvCommand;
         private ICommand m_createServiceSheetCommand;
         private ServiceSheetViewModel m_selectedSubmission;
         //Adding database download
@@ -35,22 +35,22 @@ namespace Service_Reader
             }
         }
 
-        public ICommand LoadCsvCommand
-        {
-            get
-            {
-                if (m_loadCsvCommand == null)
-                {
-                    m_loadCsvCommand = new RelayCommand(param => loadHistoricalDataFromCsv());
-                }
-                return m_loadCsvCommand;
-            }
+        //public ICommand LoadCsvCommand
+        //{
+        //    get
+        //    {
+        //        if (m_loadCsvCommand == null)
+        //        {
+        //            m_loadCsvCommand = new RelayCommand(param => loadHistoricalDataFromCsv());
+        //        }
+        //        return m_loadCsvCommand;
+        //    }
 
-            set
-            {
-                m_loadCsvCommand = value;
-            }
-        }
+        //    set
+        //    {
+        //        m_loadCsvCommand = value;
+        //    }
+        //}
 
         public ServiceSheetViewModel SelectedSubmission
         {
@@ -66,13 +66,13 @@ namespace Service_Reader
             }
         }
 
-        private void loadHistoricalDataFromCsv()
-        {
-            //RT - This calls the import csv and loads the csv file previously created from the Canvas Submissions screen.
-            CsvServiceImport importer = new CsvServiceImport();
-            bool result = importer.importCsvData();
-            AllServiceSheets = importer.AllServiceSubmissions;
-        }
+        //private void loadHistoricalDataFromCsv()
+        //{
+        //    //RT - This calls the import csv and loads the csv file previously created from the Canvas Submissions screen.
+        //    CsvServiceImport importer = new CsvServiceImport();
+        //    bool result = importer.importCsvData();
+        //    AllServiceSheets = importer.AllServiceSubmissions;
+        //}
 
 
         public ICommand CreateServiceSheetCommand
