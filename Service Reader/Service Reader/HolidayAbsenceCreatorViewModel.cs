@@ -21,6 +21,7 @@ namespace Service_Reader
         private DateTime m_startDate = DateTime.Now;
         private DateTime m_endDate = DateTime.Now;
 
+
         public HolidayAbsenceCreatorViewModel()
          {
             HolidayAbsence = new ServiceSheetViewModel();
@@ -183,6 +184,10 @@ namespace Service_Reader
             {
                 MessageBox.Show("Error saving to database.  Need to show error message!");
                 return;
+            }
+            else
+            {
+                MessageBox.Show("Activity added to database");
             }
         }
 

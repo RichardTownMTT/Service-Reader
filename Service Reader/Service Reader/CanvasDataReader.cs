@@ -261,6 +261,7 @@ namespace Service_Reader
 
             if (!errorCode.Equals(""))
             {
+                clearCacheCanvasUser();
                 return null;
             }
             return rootElement;

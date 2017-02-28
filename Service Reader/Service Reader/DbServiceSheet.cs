@@ -383,6 +383,7 @@ namespace Service_Reader
                 {
                     updateContextConnection(dbUser, dbContext);
                     var serviceSheets = (from sheets in dbContext.ServiceSheets
+                                         where sheets.SubmissionNumber > 0
                                          orderby sheets.DtResponse descending
                                          select sheets.DtResponse).FirstOrDefault();
 
