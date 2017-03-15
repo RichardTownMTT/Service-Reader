@@ -121,6 +121,7 @@
       <DependentUpon>HolidayAbsenceCreator.xaml</DependentUpon>
     </Compile>
     <Compile Include="HolidayAbsenceCreatorViewModel.cs" />
+    <Compile Include="IUser.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

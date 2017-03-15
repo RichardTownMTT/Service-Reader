@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service Reader", "Service Reader\Service Reader.csproj", "{97EC8B73-50B5-4EEA-8397-6021456A8AF8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D64B2158-4FCD-495E-90A5-3D2BC81F4DF8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service ReaderTests", "Service ReaderTests\Service ReaderTests.csproj", "{6E9301DC-12B1-4FFF-A673-7715D74970FC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceReaderTests-NUnit", "ServiceReaderTests-NUnit\ServiceReaderTests-NUnit.csproj", "{FA3C4F80-3816-4CA2-B346-A07BE0EEF22F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,10 +19,10 @@ Global
 		{97EC8B73-50B5-4EEA-8397-6021456A8AF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97EC8B73-50B5-4EEA-8397-6021456A8AF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97EC8B73-50B5-4EEA-8397-6021456A8AF8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6E9301DC-12B1-4FFF-A673-7715D74970FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6E9301DC-12B1-4FFF-A673-7715D74970FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6E9301DC-12B1-4FFF-A673-7715D74970FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6E9301DC-12B1-4FFF-A673-7715D74970FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA3C4F80-3816-4CA2-B346-A07BE0EEF22F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA3C4F80-3816-4CA2-B346-A07BE0EEF22F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA3C4F80-3816-4CA2-B346-A07BE0EEF22F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA3C4F80-3816-4CA2-B346-A07BE0EEF22F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

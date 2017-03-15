@@ -318,13 +318,13 @@ namespace Service_Reader
         {
             //This adds the day to the export
             DateTime travelStart = currentDay.TravelStartTime;
-            csvWriterOutput.WriteField(travelStart);
+            csvWriterOutput.WriteField(travelStart.ToShortTimeString());
             DateTime arrivalOnsite = currentDay.ArrivalOnsiteTime;
-            csvWriterOutput.WriteField(arrivalOnsite);
+            csvWriterOutput.WriteField(arrivalOnsite.ToShortTimeString());
             DateTime departureFromSite = currentDay.DepartureSiteTime;
-            csvWriterOutput.WriteField(departureFromSite);
+            csvWriterOutput.WriteField(departureFromSite.ToShortTimeString());
             DateTime travelEnd = currentDay.TravelEndTime;
-            csvWriterOutput.WriteField(travelEnd);
+            csvWriterOutput.WriteField(travelEnd.ToShortTimeString());
             double mileage = currentDay.Mileage;
             csvWriterOutput.WriteField(mileage);
             Boolean dailyAllowance = currentDay.DailyAllowance;

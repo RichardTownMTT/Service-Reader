@@ -114,7 +114,7 @@ namespace Service_Reader
             {
                 if (mode == MODE_CANVAS)
                 {
-                    return "Enter your Canvas username and password.";
+                    return "Enter your Canvas username and password";
                 }
                 else if(mode == MODE_DATABASE)
                 {

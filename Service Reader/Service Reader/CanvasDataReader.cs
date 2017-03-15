@@ -55,6 +55,50 @@ namespace Service_Reader
         public static string RESPONSE_DATE_TIME = "Date";
         public static string DEVICE_DATE_TIME = "DeviceDate";
 
+        public static string FOLLOWUP_PARTS = "Parts required for follow-up work";
+        public static string IMAGE_1_URL = "Image 1";
+        public static string IMAGE_2_URL = "Image 2";
+        public static string IMAGE_3_URL = "Image 3";
+        public static string IMAGE_4_URL = "Image 4";
+        public static string IMAGE_5_URL = "Image 5";
+        public static string CUSTOMER_SIGNATURE = "Customer signature";
+        public static string CUSTOMER_NAME = "Customer name";
+        public static string DATE_SIGNED = "Date Signed";
+        public static string MTT_ENG_SIGNATURE = "MTT engineer signature";
+
+        //Service day tags
+        private static string DATE = "Date";
+        private static string TRAVEL_START = "Travel time start";
+        private static string ARRIVE_ONSITE = "Arrival time on site";
+        private static string DEPART_SITE = "Departure time from site";
+        private static string TRAVEL_END = "Travel end time";
+        private static string MILEAGE = "Mileage";
+        private static string DAILY_ALLOWANCE = "Daily allowance";
+        private static string OVERNIGHT_ALLOWANCE = "Overnight allowance";
+        private static string BARRIER_PAYMENT = "Barrier payment";
+        private static string TRAVEL_TO_SITE = "Travel time to site";
+        private static string TRAVEL_FROM_SITE = "Travel time from site";
+        private static string TOTAL_TRAVEL = "Total travel time";
+        private static string TOTAL_TIME_ONSITE = "Total time onsite";
+        private static string DAILY_REPORT = "Daily report";
+        private static string PARTS_SUPPLIED = "Parts supplied today";
+
+        //XML tags for sections
+        public static string SECTIONS = "Sections";
+        public static string SECTION = "Section";
+        public static string SECTION_NAME = "Name";
+        public static string FORM = "Form";
+        public static string SCREENS = "Screens";
+        public static string SCREEN = "Screen";
+        public static string RESPONSES = "Responses";
+        //private static string RESPONSE_GROUP = "ResponseGroup";
+
+        public static string RESPONSE_GROUPS = "ResponseGroups";
+        public static string JOB_DETAILS = "Job details";
+        public static string TIME_SHEET = "Time Sheet";
+        public static string JOB_SIGNOFF = "Job Signoff";
+
+
         public static ImageSource downloadImage(string downloadUrl, UserViewModel currentUser, bool fullUrl)
         {
             //RT 27/1/17 - Canvas string changes, depending on if the full url is provided
@@ -138,49 +182,7 @@ namespace Service_Reader
             }
         }
 
-        public static string FOLLOWUP_PARTS = "Parts required for follow-up work";
-        public static string IMAGE_1_URL = "Image 1";
-        public static string IMAGE_2_URL = "Image 2";
-        public static string IMAGE_3_URL = "Image 3";
-        public static string IMAGE_4_URL = "Image 4";
-        public static string IMAGE_5_URL = "Image 5";
-        public static string CUSTOMER_SIGNATURE = "Customer signature";
-        public static string CUSTOMER_NAME = "Customer name";
-        public static string DATE_SIGNED = "Date Signed";
-        public static string MTT_ENG_SIGNATURE = "MTT engineer signature";
-
-        //Service day tags
-        private static string DATE = "Date";
-        private static string TRAVEL_START = "Travel time start";
-        private static string ARRIVE_ONSITE = "Arrival time on site";
-        private static string DEPART_SITE = "Departure time from site";
-        private static string TRAVEL_END = "Travel end time";
-        private static string MILEAGE = "Mileage";
-        private static string DAILY_ALLOWANCE = "Daily allowance";
-        private static string OVERNIGHT_ALLOWANCE = "Overnight allowance";
-        private static string BARRIER_PAYMENT = "Barrier payment";
-        private static string TRAVEL_TO_SITE = "Travel time to site";
-        private static string TRAVEL_FROM_SITE = "Travel time from site";
-        private static string TOTAL_TRAVEL = "Total travel time";
-        private static string TOTAL_TIME_ONSITE = "Total time onsite";
-        private static string DAILY_REPORT = "Daily report";
-        private static string PARTS_SUPPLIED = "Parts supplied today";
-
-        //XML tags for sections
-        public static string SECTIONS = "Sections";
-        public static string SECTION = "Section";
-        public static string SECTION_NAME = "Name";
-        public static string FORM = "Form";
-        public static string SCREENS = "Screens";
-        public static string SCREEN = "Screen";
-        public static string RESPONSES = "Responses";
-        //private static string RESPONSE_GROUP = "ResponseGroup";
-
-        public static string RESPONSE_GROUPS = "ResponseGroups";
-        public static string JOB_DETAILS = "Job details";
-        public static string TIME_SHEET = "Time Sheet";
-        public static string JOB_SIGNOFF = "Job Signoff";
-
+        
         //RT 12/10/16 - Rewriting to use new classes of servicesheet, serviceDay
         //public static List<oldServiceSubmissionModel> downloadXml(string canvasUsername, string canvasPassword, string beginDate, string endDate)
         //RT 26/11/16 - Changing to use canvasUser
@@ -739,35 +741,35 @@ namespace Service_Reader
         //    }
         //}
 
-        public static BitmapImage getImage(string imageReference, string username, string password)
-        {
-            BitmapImage retval = null;
+        //public static BitmapImage getImage(string imageReference, string username, string password)
+        //{
+        //    BitmapImage retval = null;
 
-            string canvasUrl = "https://www.gocanvas.com/apiv2/images.xml?image_id=" + imageReference + "&username=" + username + "&password=" + password;
+        //    string canvasUrl = "https://www.gocanvas.com/apiv2/images.xml?image_id=" + imageReference + "&username=" + username + "&password=" + password;
 
 
-            try
-            {
-                WebClient wc = new WebClient();
+        //    try
+        //    {
+        //        WebClient wc = new WebClient();
                 
-                byte[] imageBytes = wc.DownloadData(canvasUrl);
-                MemoryStream ms = new MemoryStream(imageBytes);
-                retval = new BitmapImage();
-                retval.BeginInit();
-                retval.StreamSource = ms;
-                retval.EndInit();
+        //        byte[] imageBytes = wc.DownloadData(canvasUrl);
+        //        MemoryStream ms = new MemoryStream(imageBytes);
+        //        retval = new BitmapImage();
+        //        retval.BeginInit();
+        //        retval.StreamSource = ms;
+        //        retval.EndInit();
 
-            }
-            catch
-            {
-                MessageBox.Show("Catch Error");
-            }
+        //    }
+        //    catch
+        //    {
+        //        MessageBox.Show("Catch Error");
+        //    }
 
-            return retval;
-        }
+        //    return retval;
+        //}
 
         //Method to retrieve the result daata for a given label in the xml
-        public static string xmlResult(string label, XElement xmlInput)
+        private static string xmlResult(string label, XElement xmlInput)
         {
             var resultXML = xmlInput.Elements("Response").Where(x => x.Element("Label").Value == label);
             XElement result = resultXML.First();
