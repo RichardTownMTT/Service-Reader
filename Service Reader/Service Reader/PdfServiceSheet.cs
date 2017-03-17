@@ -415,7 +415,7 @@ namespace Service_Reader
 
             addImageToSignoffTable("Customer signature", currentSheet.CustomerSignature, 2);
             addLineToSignoffTable("Customer name", currentSheet.CustomerName);
-            addLineToSignoffTable("Date", currentSheet.DtSigned.ToString("MM/dd/yyyy"));
+            addLineToSignoffTable("Date", currentSheet.DtSigned.ToString("dd/MM/yyyy"));
             addImageToSignoffTable("MTT engineer signature", currentSheet.MttEngineerSignature, 2);
             addLineToSignoffTable("MTT engineer", currentSheet.EngineerFullName);
         }
@@ -706,7 +706,7 @@ namespace Service_Reader
             //Keep the rows together
             row1Title.KeepWith = 14;    
 
-            addLineToTimesheet("Date", currentDay.DtReport.ToString("MM/dd/yyyy"));
+            addLineToTimesheet("Date", currentDay.DtReport.ToString("dd/MM/yyyy"));
             addLineToTimesheet("Day", currentDay.DtReport.ToString("dddd"));
             addLineToTimesheet("Travel start time", currentDay.TravelStartTime.ToShortTimeString());
             addLineToTimesheet("Arrival time onsite", currentDay.ArrivalOnsiteTime.ToShortTimeString());
@@ -851,7 +851,7 @@ namespace Service_Reader
             addLineToJobDetails("Machine make and model", currentSheet.MachineMakeModel);
             addLineToJobDetails("Machine serial number", currentSheet.MachineSerial);
             addLineToJobDetails("CNC controller", currentSheet.CncControl);
-            addLineToJobDetails("Job start date", currentSheet.DtJobStart.ToString("MM/dd/yyyy"));
+            addLineToJobDetails("Job start date", currentSheet.DtJobStart.ToString("dd/MM/yyyy"));
             addLineToJobDetails("Customer order no.", currentSheet.CustomerOrderNo);
             addLineToJobDetails("MTT job no.", currentSheet.MttJobNumber);
             addLineToJobDetails("Job description", currentSheet.JobDescription);
