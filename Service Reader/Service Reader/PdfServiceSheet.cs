@@ -306,11 +306,11 @@ namespace Service_Reader
             Row footerRow1 = footerTable.AddRow();
             footerTable.Style = "footerStyle";
             Paragraph addressParagraph = footerRow1.Cells[1].AddParagraph();
-            addressParagraph.AddText("Machine Tool Technology, Inc., Registered Office: 122 W. 19th Street,");
+            addressParagraph.AddText("Machine Tool Technology, Inc., Registered Office: 7 Burroughs,");
 
             Row footerRow2 = footerTable.AddRow();
             Paragraph addressPara2 = footerRow2.Cells[1].AddParagraph();
-            addressPara2.AddText("Santa Ana, California, 92706, USA.");
+            addressPara2.AddText("Irvine, California, 92618, USA.");
 
             Row footerRow3 = footerTable.AddRow();
             Paragraph addressPara3 = footerRow3.Cells[1].AddParagraph();
@@ -413,10 +413,10 @@ namespace Service_Reader
             signoffParaCertify.AddText("I hereby certify that the service work has been carried out to my satisfaction");
             row2Title.Cells[0].Shading.Color = entryHeaderGrey;
 
-            addImageToSignoffTable("Customer signature", currentSheet.CustomerSignature, 2);
+            addImageToSignoffTable("Customer signature", currentSheet.CustomerSignature, 1);
             addLineToSignoffTable("Customer name", currentSheet.CustomerName);
             addLineToSignoffTable("Date", currentSheet.DtSigned.ToString("dd/MM/yyyy"));
-            addImageToSignoffTable("MTT engineer signature", currentSheet.MttEngineerSignature, 2);
+            addImageToSignoffTable("MTT engineer signature", currentSheet.MttEngineerSignature, 1);
             addLineToSignoffTable("MTT engineer", currentSheet.EngineerFullName);
         }
 
