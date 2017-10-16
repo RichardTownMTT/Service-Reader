@@ -102,7 +102,7 @@ namespace Service_Reader
             currentServiceSubmission.UserSurname = row[5];
             currentServiceSubmission.UserFirstName = row[6];
             currentServiceSubmission.CanvasResponseId = row[7];
-            string dateFormatMinutes = "d/M/yyyy HH:mm";
+            string dateFormatMinutes = "d/M/yyyy HH:mm:ss";
             string dateFormatSecondsUSA = "M/d/yyyy HH:mm:ss";
             string responseDate = row[8];
             //RT 15/8/16 - The time is either includes minutes or does not. 
@@ -368,7 +368,7 @@ namespace Service_Reader
                 serviceReaderCsv = true;
             }
 
-            string dateFormatMinutes = "d/M/yyyy HH:mm";
+            string dateFormatMinutes = "d/M/yyyy HH:mm:ss";
             //RT 6/12/16 - varable no longer needed.  Added by accident
             //string dateFormatSeconds = "d/M/yyyy H:mm:ss";
 
@@ -394,7 +394,7 @@ namespace Service_Reader
             DateTime dtTravelStart;
             if (serviceReaderCsv)
             {
-                dtTravelStart = DateTime.ParseExact(travelStartTime, dateFormatMinutes, CultureInfo.InvariantCulture);
+                dtTravelStart = DateTime.ParseExact(travelStartTime, "HH:mm" , CultureInfo.InvariantCulture);
             }
             else
             {
@@ -422,7 +422,7 @@ namespace Service_Reader
             DateTime dtArrivalOnsite;
             if (serviceReaderCsv)
             {
-                dtArrivalOnsite = DateTime.ParseExact(arrivalTimeOnsite, dateFormatMinutes, CultureInfo.InvariantCulture);
+                dtArrivalOnsite = DateTime.ParseExact(arrivalTimeOnsite, "HH:mm", CultureInfo.InvariantCulture);
             }
             else
             {
@@ -451,7 +451,7 @@ namespace Service_Reader
             DateTime dtDeparture;
             if (serviceReaderCsv)
             {
-                dtDeparture = DateTime.ParseExact(departureTime, dateFormatMinutes, CultureInfo.InvariantCulture);
+                dtDeparture = DateTime.ParseExact(departureTime, "HH:mm", CultureInfo.InvariantCulture);
             }
             else
             {
@@ -479,7 +479,7 @@ namespace Service_Reader
             DateTime dtTravelEnd;
             if (serviceReaderCsv)
             {
-                dtTravelEnd = DateTime.ParseExact(travelEndTime, dateFormatMinutes, CultureInfo.InvariantCulture);
+                dtTravelEnd = DateTime.ParseExact(travelEndTime, "HH:mm", CultureInfo.InvariantCulture);
             }
             else
             {

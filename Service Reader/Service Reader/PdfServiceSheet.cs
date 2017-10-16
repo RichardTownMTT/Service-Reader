@@ -415,7 +415,16 @@ namespace Service_Reader
 
             addImageToSignoffTable("Customer signature", currentSheet.CustomerSignature, 1);
             addLineToSignoffTable("Customer name", currentSheet.CustomerName);
-            addLineToSignoffTable("Date", currentSheet.DtSigned.ToString("dd/MM/yyyy"));
+            //RT 7/9/17 - Adding USA date format
+            if (currentSheet.UkServiceSheet == true)
+            {
+                addLineToSignoffTable("Date", currentSheet.DtSigned.ToString("dd/MM/yyyy"));
+            }
+            else
+            {
+                addLineToSignoffTable("Date", currentSheet.DtSigned.ToString("MM/dd/yyyy"));
+            }
+            
             addImageToSignoffTable("MTT engineer signature", currentSheet.MttEngineerSignature, 1);
             addLineToSignoffTable("MTT engineer", currentSheet.EngineerFullName);
         }
@@ -658,7 +667,7 @@ namespace Service_Reader
                     row1Title.Cells[0].Shading.Color = headerGrey;
                 }
                 
-                addDayToTimesheet(sd, counter);
+                addDayToTimesheet(sd, counter, currentSheet.UkServiceSheet);
 
                 counter = counter + 1;
             }
@@ -689,7 +698,7 @@ namespace Service_Reader
             currentSection.AddParagraph();
         }
 
-        private void addDayToTimesheet(ServiceDayViewModel currentDay, int dayCounter)
+        private void addDayToTimesheet(ServiceDayViewModel currentDay, int dayCounter, bool? UkSheet)
         {
             //Add the header of the day title
 
@@ -706,7 +715,16 @@ namespace Service_Reader
             //Keep the rows together
             row1Title.KeepWith = 14;    
 
-            addLineToTimesheet("Date", currentDay.DtReport.ToString("dd/MM/yyyy"));
+            //RT 7/9/17 - Adding USA date format
+            if (UkSheet == true)
+            {
+                addLineToTimesheet("Date", currentDay.DtReport.ToString("dd/MM/yyyy"));
+            }
+            else
+            {
+                addLineToTimesheet("Date", currentDay.DtReport.ToString("MM/dd/yyyy"));
+            }
+            
             addLineToTimesheet("Day", currentDay.DtReport.ToString("dddd"));
             addLineToTimesheet("Travel start time", currentDay.TravelStartTime.ToShortTimeString());
             addLineToTimesheet("Arrival time onsite", currentDay.ArrivalOnsiteTime.ToShortTimeString());
@@ -844,14 +862,34 @@ namespace Service_Reader
             addLineToJobDetails("Customer", currentSheet.Customer);
             addLineToJobDetails("Address Line 1", currentSheet.AddressLine1);
             addLineToJobDetails("Address Line 2", currentSheet.AddressLine2);
-            addLineToJobDetails("Town/City", currentSheet.TownCity);
-            addLineToJobDetails("Postcode", currentSheet.Postcode);
+            //RT 7/9/17 - Adding USA formatting
+            if (currentSheet.UkServiceSheet == true)
+            {
+                addLineToJobDetails("Town/City", currentSheet.TownCity);
+                addLineToJobDetails("Postcode", currentSheet.Postcode);
+            }
+            else
+            {
+                addLineToJobDetails("City", currentSheet.TownCity);
+                addLineToJobDetails("Zip code", currentSheet.Postcode);
+            }
+            
+            
             addLineToJobDetails("Customer contact", currentSheet.CustomerContact);
             addLineToJobDetails("Customer phone number", currentSheet.CustomerPhoneNo);
             addLineToJobDetails("Machine make and model", currentSheet.MachineMakeModel);
             addLineToJobDetails("Machine serial number", currentSheet.MachineSerial);
             addLineToJobDetails("CNC controller", currentSheet.CncControl);
-            addLineToJobDetails("Job start date", currentSheet.DtJobStart.ToString("dd/MM/yyyy"));
+            //RT 7/9/17 - Adding USA date format
+            if (currentSheet.UkServiceSheet == true)
+            {
+                addLineToJobDetails("Job start date", currentSheet.DtJobStart.ToString("dd/MM/yyyy"));
+            }
+            else
+            {
+                addLineToJobDetails("Job start date", currentSheet.DtJobStart.ToString("MM/dd/yyyy"));
+            }
+            
             addLineToJobDetails("Customer order no.", currentSheet.CustomerOrderNo);
             addLineToJobDetails("MTT job no.", currentSheet.MttJobNumber);
             addLineToJobDetails("Job description", currentSheet.JobDescription);
